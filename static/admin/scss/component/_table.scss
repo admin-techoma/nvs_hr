@@ -337,3 +337,23 @@ table {
 .ip {
   justify-content: space-between;
 }
+
+
+
+@media (max-width:1440px) {
+
+  .dataTable
+  {
+    thead {
+      th {
+       font-size: $font-size-normal !important;
+      }
+    }
+    tbody {
+          td {
+        font-size: $font-size-small !important;
+      }
+    }
+  }
+  
+}

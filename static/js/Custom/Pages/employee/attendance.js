@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     $('#leaveDataTable').DataTable({
         dom:'ftlp',

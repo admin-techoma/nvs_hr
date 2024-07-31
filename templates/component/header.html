@@ -42,56 +42,7 @@
                 <path d="M12 3.75A9.75 9.75 0 1021.75 13 9.75 9.75 0 0012 3.75zm0 18.5a8.75 8.75 0 110-17.5 8.75 8.75 0 010 17.5z"/>
             </svg>
         </button>
-        <div class="dropdown ms-2 d-none d-md-flex">
-            <button class="custom-notification btn outline-none dropdown-toggle border-0 border-color-none p-2" 
-                type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="bi bi-bell"></span>
-            </button>
-            <ul class="dropdown-menu notificationdropdown">
-                <li>
-                    <a class="dropdown-item" href="#">
-                        <div class="d-flex dropdown-content-wrapper">
-                            <div class="img-wrapper">
-                                <img src="/static/admin/img/sidebaricon/User add.svg" class="notification-img"
-                                    alt="img">
-                            </div>
-                            <div class="notification-detail">
-                                <h6 class="notification-title">Attention </h6>
-                                <p class="notification-text">Your attendance sheet has been updated.</p>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="#">
-                        <div class="d-flex dropdown-content-wrapper">
-                            <div class="img-wrapper">
-                                <img src="/static/admin/img/sidebaricon/User add.svg" class="notification-img" alt="">
-                            </div>
-                            <div class="notification-detail">
-                                <h6 class="notification-title">Attention </h6>
-                                <p class="notification-text">Your attendance sheet has been updated
-                                    Check for more Details .</p>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="#">
-                        <div class="d-flex dropdown-content-wrapper">
-                            <div class="img-wrapper">
-                                <img src="/static/admin/img/sidebaricon/User add.svg" class="notification-img" alt="">
-                            </div>
-                            <div class="notification-detail">
-                                <h6 class="notification-title">Attention </h6>
-                                <p class="notification-text">Your attendance sheet has been updated.<br>
-                                    Check for more Details .</p>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
+       
         <div class="dropdown d-flex justify-content-center align-items-center profile-dropdown">
             <button class="btn profile-button outline-none dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {% if profile_pic and profile_pic.c_psimg %}

@@ -15,6 +15,7 @@ body {
   box-sizing: border-box;
   overflow: hidden;
   font-family: v.$global-font-family !important;
+  font-size:  v.$font-size-body;
   line-height: 1.5 !important;
   text-transform: capitalize;
   background: transparent;
@@ -67,16 +68,19 @@ th {
   font-weight: v.$font-weight-medium;
 }
 
-input {
-  text-transform: capitalize;
+#username {
+  text-transform: lowercase;
 }
 
 input[type="email"] {
-  text-transform: none;
+  text-transform: lowercase;
 }
 
 input[type="date"] {
   text-transform: none;
+}
+input[type="password"] {
+  text-transform: unset;
 }
 
 #adminssmainWrapper {
@@ -357,7 +361,7 @@ body {
         }
   
         .card-desc {
-          font-size: 12px;
+          font-size: v.$font-size-small;
         }
       }
     }

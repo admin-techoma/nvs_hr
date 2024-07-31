@@ -1,0 +1,233 @@
+{% extends 'component/base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock title %}
+{% block extracss %}
+{% load custom_filters %}
+{% endblock extracss %}
+{% block maincontent %}
+<div class="main-content ">
+    <div class="row">
+        <div class="col-12 col-md-3 col-sm-6 ">
+            <div class="card dashboardtopcard">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Total Employees</h5>
+                    <h2 class="card-desc text-center">200</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-3 col-sm-6">
+            <div class="card dashboardtopcard">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Total Leaders</h5>
+                    <h2 class="card-desc text-center">20</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-3 col-sm-6">
+            <div class="card dashboardtopcard">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Active Employees</h5>
+                    <h2 class="card-desc text-center">100</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-3 col-sm-6">
+            <div class="card dashboardtopcard">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Total Departments</h5>
+                    <h2 class="card-desc text-center">5</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-12 col-md-8 p-2">
+            <div class="card dashboardtopcard">
+                <div class="card-body">
+                    <div class="bgprimarylight p-2 rounded" id="linechart"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-12 col-md-4 p-2">
+            <div class="rounded p-2 card dashboardtopcard">
+                <div class="card-body">
+                    <div class="p-2 mb-1">
+                        <label for="progressbar1" class="card-title font-size-sm fw-semibold">Total </label>
+                        <div class="progress" role="progressbar" aria-label="Example with label" id="progressbar1"
+                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" style="width: 25%">25%</div>
+                        </div>
+                    </div>
+                    <div class="p-2 mb-1">
+                        <label for="progressbar1" class="card-title font-size-sm fw-semibold">Employee on leave</label>
+                        <div class="progress" role="progressbar" aria-label="Example with label" id="progressbar1"
+                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-info" style="width: 5%">5%</div>
+                        </div>
+                    </div>
+                    <div class="p-2 mb-1">
+                        <label for="progressbar1" class="card-title font-size-sm fw-semibold">Employee payroll compeleted</label>
+                        <div class="progress" role="progressbar" aria-label="Example with label" id="progressbar1"
+                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-warning" style="width: 50%">50%</div>
+                        </div>
+                    </div>
+                    <div class="p-2 mb-1">
+                        <label for="progressbar1" class="card-title font-size-sm fw-semibold">Total Profit</label>
+                        <div class="progress" role="progressbar" aria-label="Example with label" id="progressbar1"
+                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-success" style="width: 45%">45%</div>
+                        </div>
+                    </div>
+                    <div class="p-2 mb-1">
+                        <label for="progressbar1" class="card-title font-size-sm fw-semibold">Total Profit</label>
+                        <div class="progress" role="progressbar" aria-label="Example with label" id="progressbar1"
+                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-danger" style="width: 85%">85%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-8 p-2 overflow-hidden mh-25">
+            <div class="admintable rounded
+            card ">
+                <div class="card-body">
+                    <h6 class="p-2 mb-0 pb-0">Employee Information</h6>
+                    <div class="table-responsive p-2 ">
+                        <table class="table">
+                            <thead class="">
+                                <tr class="">
+                                    <th scope="col" class="">Emp Id</th>
+                                    <th scope="col" class="">Emp Name</th>
+                                    <th scope="col" class="">Email id</th>
+                                    <th scope="col" class="">Department</th>
+                                    <th scope="col" class="">Designation</th>
+                                    <th scope="col" class="">Doj</th>
+                                    <th scope="col" class="">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="">
+                                {% for employee in emp_data %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">{{ employee.emp_id }}
+                                    </td>
+                                    <td>{{ employee.first_name }}</td>
+                                    <td class="text-lowercase">{{ employee.email }}</td>
+                                    <td>{{ employee.department }}</td>
+                                    <td>{{ employee.designation }}</td>
+                                    <td>{{ employee.doj }}</td>
+                                    <td>
+                                        {% if employee.status == "Active" %}
+                                        <div class="form-check ">
+                                            <label class="form-check-label">{{employee.status}}</label>
+                                        </div>
+                                        {% else %}
+                                        <div class="form-check ">
+                                            <a href="{% url 'payroll:add_payroll' employee.pk %}"
+                                                class="btn-primary btn-sm">
+                                                <span class="badge text-bg-danger">Payroll Pending</span>
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 p-2">
+            <div class="card dashboardtopcard rounded p-2">
+                <div class="card-body">
+                    <div id="Donut"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6 p-2 overflow-hidden">
+            <div class="admintable rounded card ">
+                <div class="card-body">
+                    <h6 class="p-2 mb-0 pb-0">Employee on leave</h6>
+                    <div class=" table-responsive p-2 ">
+                        <table class="table">
+                            <thead class="">
+                                <tr class="">
+                                    <th scope="col" class="">Leave Id</th>
+                                    <th scope="col" class="">Emp Name</th>
+                                    <th scope="col" class="">Leave Type</th>
+                                    <th scope="col" class="">Start Date</th>
+                                    <th scope="col" class="">End Date</th>
+                                    <th scope="col" class="">Duration</th>
+                                    <th scope="col" class="">Leave Status </th>
+                                </tr>
+                            </thead>
+                            <tbody class="">
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <p class="mb-0">Pending</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 p-2 overflow-hidden">
+            <div class="admintable rounded card">
+                <div class="card-body">
+                    <h6 class="p-2 mb-0 pb-0">Recruitment and Applicant Tracking</h6>
+                    <div class="table-responsive p-2 ">
+                        <table class="table">
+                            <thead>
+                                <tr class="">
+                                    <th scope="col" class="">Designation</th>
+                                    <th scope="col" class="">Candidate Name</th>
+                                    <th scope="col" class="">Status </th>
+                                    <th scope="col" class="">Interview Details</th>
+                                    <th scope="col" class="">Feedback/Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock maincontent%}
+
+
+{% block extrascript %}
+<script src="{% static 'apexcharts-bundle/dist/apexcharts.js' %}"></script>
+<script src="{% static 'js/Plugins/charts/linechart.js' %} "></script>
+<script src="{% static 'js/Plugins/charts/Radialbar.js' %} "></script>
+<script src="{% static 'js/Plugins/charts/livechart.js' %} "></script>
+<script src="{% static 'js/Plugins/charts/donutchart.js' %} "></script>
+
+{% endblock extrascript %}

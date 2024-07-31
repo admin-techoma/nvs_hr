@@ -1,0 +1,142 @@
+{% extends 'component/base.html' %}
+{% load static  %}
+{% block title %}Resignation{% endblock title %}
+{% block extracss %}
+{% load custom_filters %}
+{% endblock extracss %}
+{% block maincontent %}
+            <div class="main-content ">
+                <div class="row flex-wrap">
+                    <div class=" col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
+                        <div class="leavecardstyle bordercolor1">
+                            <h6 class="card-title">Total Resigns applied</h6>
+                            <p class="card-desc">{{employee_resigns|length}}</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
+                        <div class=" leavecardstyle bordercolor2">
+                            <h6 class="card-title">Approved</h6>
+                            <p class="card-desc">{{approveResigns}}</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
+                        <div class="leavecardstyle bordercolor3">
+                            <h6 class="card-title">Rejected Resigns</h6>
+                            <p class="card-desc">{{rejectedResigns}}</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
+                        <div class=" leavecardstyle bordercolor4">
+                            <h6 class="card-title">Pending Resigns</h6>
+                            <p class="card-desc">{{pendingResigns}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-2">
+                    <div class="card-header d-flex justify-content-between border-0">
+                        <div class="text-center d-flex align-items-center">
+                            <h6 class="mb-0 pageTitle"><strong>Resignation Approvals List</strong> </h6>
+                        </div>
+                        {% comment %} <button class="btn btn-dark btn-sm" type="submit" name="download_button">
+                            <i class="bi bi-box-arrow-down"></i> Download
+                        </button>     {% endcomment %}
+                    </div>
+                    <div class="card-body">
+                        <div class="tablewrapper bg-primarylight w-100">
+                            <div class="table-responsive">
+                                <table class="table-responsive overflow-auto" id="resignApprovalTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Emp Id</th>
+                                            <th scope="col">Emp Name</th>
+                                            <th scope="col">Resign Date</th>
+                                            {% comment %} <th scope="col">Last Date 2</th> {% endcomment %}
+                                            <th scope="col">Approved by manager</th>
+                                            <th scope="col" class="text-center">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-none w-100">
+                                        {% for resigns_application in employee_resigns %}
+                                            <tr>  
+                                                <td>
+                                                    <div class="d-flex align-items-center">{{ resigns_application.employee.emp_id }}</div>
+                                                </td>
+                                                <td>{{ resigns_application.employee.first_name }} {{ resigns_application.employee.last_name }}</td>
+                                                <td>{{ resigns_application.resign_date }}</td>
+                                                <td>{{ logged_in_employee }}</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-center "> 
+                                                    <button type="button" class="btn custom-button btn-sm" data-bs-toggle="modal" data-bs-target="#Rmapprovemodal">
+                                                       <span class="bi bi-pencil-square"></span>
+                                                      </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <!-- Modal -->
+    <div class="modal fade" id="responseresignModal" tabindex="-1" aria-labelledby="responseModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="responseModalLabel">Resignation Status updated</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="modalContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="Rmapprovemodal" tabindex="-1" aria-labelledby="RmapprovemodalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="RmapprovemodalLabel">Resignation Approval </h1>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div  class="mb-2">
+                <label class="form-label">Select Last Working Date</label>
+                <input class="form-control form-control-sm"type="date" />
+            </div>
+            <div  class="mb-2">
+                <label class="form-label">Resignation Remark</label>
+                <textarea class="form-control form-control-sm" id="remarks_{{ resigns_application.id }}" rows="1"> {{ resigns_application.resign_reason }}</textarea>
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Resignation Status</label>
+                <input type='hidden' id='resign_id' value='{{ resigns_application.id }}' />
+                <select class="form-select status-select form-select-sm" aria-label="Default select example" id="status_{{ forloop.counter }}">
+                    <option selected>Select</option>
+                    <option value="1"{% if resigns_application.resign_status == 1 %} selected{% endif %}>Approved</option>
+                    <option value="2"{% if resigns_application.resign_status == 2 %} selected{% endif %}>Pending</option>
+                    <option value="3"{% if resigns_application.resign_status == 3 %} selected{% endif %}>Rejected</option>
+                </select>
+            </div>
+        <div>
+            {% if resigns_application.resign_status == 1 %}
+                                                    Approved
+                                                {% elif resigns_application.resign_status == 2 %}
+                                                    Pending
+                                                {% elif resigns_application.resign_status == 3 %}
+                                                    Rejected
+                                                {% endif %}</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn custom-button btn-sm">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{%endblock maincontent%}
+{% block extrascript %}
+    {% endblock extrascript %}

@@ -1,0 +1,202 @@
+{% extends 'component/base.html' %} 
+{% load static  %}
+{% block title %}Track Interviews Report{% endblock title %}
+{% block extracss %}
+{% endblock extracss %}
+{% block maincontent %}
+<div class="main-content">
+<div class="card">
+    <div class="card-header border-0">
+        <div class="d-flex justify-content-between">
+            <div class="text-center d-flex align-items-center">
+                <h6 class="mb-0 pageTitle"><strong>Interviews Report</strong></h6>
+            </div>
+            <!-- <div class="col-12 col-md-3 d-flex justify-content-end align-items-center">
+                <button class="btn btn-dark btn-sm" type="submit" name="download_button">
+                    <i class="bi bi-box-arrow-down"></i> Download
+                </button>
+            </div> -->
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="d-flex justify-content-between flex-wrap mb-1 p-2">
+            <div class="col-12 d-flex justify-content-end align-items-center">
+                <div class="col-12 col-md-4 d-flex py-2 ">
+                    <input type="date" id="min" class="form-control form-control-sm me-2" value="{{ date|date:'d-m-Y' }}"
+                        name="min">
+                    <input type="date" id="max" class="form-control form-control-sm " value="{{ date|date:'d-m-Y' }}"
+                        name="max">
+                </div>
+            </div>
+        </div>
+        <div class="row w-100 overflow-hidden">
+            <div class="table-responsive overflow-auto">
+                <table class="" id="allInterviewTrackerTable">
+                    <thead class="bg-none">
+                        <tr class="headings">
+                            <th style="min-width: 100px;" scope="col">Candidate Name</th>
+                            <th style="min-width: 100px;" scope="col">Phone Number</th>
+                            <th style="min-width: 100px;" scope="col">Email</th>
+                            <th style="min-width: 100px;" scope="col">Department</th>
+                            <th style="min-width: 100px;" scope="col">Designation</th>
+                            <th style="min-width: 100px;" scope="col">Interview Mode</th>
+                            <th style="min-width: 100px;" scope="col">Interview Round</th>
+                            <th style="min-width: 100px;" scope="col">Interview Date</th>
+                            <th style="min-width: 100px;" scope="col">Interview Time</th>
+                            <th style="min-width: 100px;" scope="col">Interview Round Remarks</th>
+                            <th style="min-width: 100px;" scope="col">Interview Round status</th>    
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                           
+                            <td scope="col"></td>
+                            <td scope="col"></td>
+                            <td scope="col"></td>
+                            <td scope="col"></td>
+                            <td scope="col"></td>
+                            <td scope="col"></td>
+                            <td scope="col"></td>
+                            <td scope="col"></td>
+                            <td scope="col"></td>
+                            <td scope="col"></td>
+                            <td scope="col"></td>
+                            </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{%endblock maincontent%}
+{% block extrascript %}
+<script>
+    $.fn.dataTable.render.moment = function (from, to, locale) {
+        // Argument shifting
+        if (arguments.length === 1) {
+            locale = 'en';
+            to = from;
+            from = 'YYYY-MM-DD';
+        } else if (arguments.length === 2) {
+            locale = 'en';
+        }
+        return function (d, type, row) {
+            if (!d) {
+                return type === 'sort' || type === 'type' ? 0 : d;
+            }
+            var m = window.moment(d, from, locale, true);
+            // Order and type get a number value from Moment, everything else
+            // sees the rendered value
+            return m.format(type === 'sort' || type === 'type' ? 'x' : to);
+        };
+    };
+    $(document).ready(function () {
+        $('#allInterviewTrackerTable tfoot td').each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" class="form-control form-control-sm border-0" placeholder="' + title + '" />');
+        });
+        var table = $('#allInterviewTrackerTable').DataTable({
+            dom: 'lfrt<"ip"iB>p',
+            responsive: true,
+            searching: true,
+            paging: true,
+            fixedHeader: {
+                header: true,
+                footer: true
+            },
+            scrollX: true,
+            scrollY: window.innerHeight - (.6 * window.innerHeight),
+            stateSave: true,
+            processing: true,
+            buttons: [{
+                    extend: 'copy',
+                    className: 'btn custom-button-two btn-sm mb-2', // Add your custom class for styling
+                    text: '<i class="bi bi-files"></i> Copy', // You can also customize the button text and add icons
+                },
+                {
+                    extend: 'excel',
+                    className: 'btn custom-button-two btn-sm mb-2',
+                    text: '<i class="bi bi-file-excel"></i> Excel',
+                }, 
+            ],
+            ajax: {
+                url: "{% url 'report:track_interviewsdatareport' %}",
+                type: "GET",
+                // Additional AJAX options if needed
+                data: function (dt) {
+                    dt.from = $('#min').val();
+                    dt.to = $('#max').val();
+                }
+            },
+            columns: [
+                {
+                    data: "candidate_id__name"
+                },
+                {
+                    data: "candidate_id__phone_number"
+                },
+                {
+                    data: "candidate_id__email", class:"text-lowercase"
+                },
+                {
+                    data: "candidate_id__department__name"
+                },
+                {
+                    data: "candidate_id__designation__name"
+                },
+                {
+                    data: "interviewMode"
+                },
+                {
+                    data: "interviewRound"
+                },
+                {
+                    data: "interviewDate"
+                },
+                {
+                    data: "interviewTime"
+                },
+                {
+                    data: "interviewround_remarks"
+                },
+                {
+                    data: "interviewround_status",
+                    render: function (data, type, row) {
+                        switch (data) {
+                            case 1:
+                                return 'Approved';
+                            case 2:
+                                return 'Pending';
+                            case 3:
+                                return 'Rejected';
+                            default:
+                                return '';
+                        }
+                    }
+                }
+            ],
+            createdRow: function (row, data, dataIndex) {
+                // Add class to each td element in the row
+                $('td', row).addClass('text-nowrap');
+            },
+        });
+    
+        // Apply the filtering on input change
+        table.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on('keyup change clear', function () {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+        $('#min, #max').on('change', function () {
+            table.ajax.reload();
+            table.draw();
+        });
+    });
+</script>
+{% endblock extrascript %}

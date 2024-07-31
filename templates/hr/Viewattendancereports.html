@@ -1,0 +1,126 @@
+{% extends 'component/base.html' %}
+{% load static  %}
+{% block title %}attendance Report< {% endblock title %}
+{% block extracss %}
+{% endblock extracss %}
+{% block maincontent %}
+            <!-- main content starts -->
+            <div class="main-content">
+                <form method="post" action="{% url 'hr:view_attendance' %}" class="h-100">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <div class="col-md-3 mb-2 mb-md-0 ">
+                            <div class="card dashboardtopcard h-100  ">
+                               
+                                <div class="card-body border-bottom-0">
+                                    <p class="card-title text-center mb-0">Active employees </p>                               
+                                    <h5 class="text-center">{{active_employee_count}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-2 mb-md-0">
+                            <div class="card dashboardtopcard h-100  ">
+                                <div class="card-body border-bottom-0">
+                                    <p class="card-title text-center mb-0">Employees on leave today</p>                                
+                                    <h5 class="text-center primary-color">{{employees_on_leave_today}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-2 mb-md-0">
+                        </div>
+                        <div class="col-md-3 mb-2 mb-md-0 d-flex justify-content-end align-items-end">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between border-0">
+                            <div class="text-center d-flex align-items-center">
+                                <h6 class="mb-0 pageTitle"><strong>Manage Attendence List</strong></h6>
+                            </div>
+                            {% comment %} <button class="btn btn-dark btn-sm" type="submit" name="download_button">
+                                <i class="bi bi-box-arrow-down"></i> Download
+                            </button>     {% endcomment %}
+                        </div>
+                        <div class="card-body">
+                            <div class="tablewrapper">
+                                <div class="table-responsive">
+                                    <table class="table DataTable " id="attendanceReport">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-center">#</th>
+                                                <th scope="col" class="text-center">Employee ID</th>
+                                                <th scope="col" class="text-center">Employee Name</th>
+                                                <th scope="col" class="text-center">Dept.</th>
+                                                <th scope="col" class="text-center">Designation</th>
+                                                <th scope="col" class="text-center">Status</th>
+                                                <th scope="col" class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for employee in employee_data %}
+                                            <tr>
+                                                <td scope="col" class="text-center">{{forloop.counter}}</td>
+                                                <td>{{employee.emp_id}}</td>
+                                                <td>{{employee.name}}</td>
+                                                <td>{{employee.department}}</td>
+                                                <td>{{employee.designation}}</td>
+                                                <td>{{employee.status}}</td>
+                                                <td> 
+                                                    <div class="d-flex justify-content-center">
+                                                    
+                                                    <a href="/hr/attendance-report/{{employee.emp_id}}/"
+                                                        class="btn btn-sm btn-success"
+                                                        data-employee-id="{{ employee.emp_id }}"><i
+                                                            class="bi bi-pencil-square"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                         {% for employee in employee_data %}
+                                            {% for attendance in attendance_data %}
+                                            {% if attendance.employee == employee %}
+                                            <tr>
+                                                <th scope="col" class="text-center">{{forloop.counter}}</th>
+                                                <td class="text-center">{{ employee.emp_id }}</td>
+                                                <td class="text-center">{{ employee.name }}</td>
+                                                <td class="text-center">{{ employee.department }}</td>
+                                                <td class="text-center">{{ employee.designation }}</td>
+                                                <td class="text-center">
+                                                    {% if attendance.is_full_day %}
+                                                    Full Day
+                                                    {% elif attendance.is_half_day %}
+                                                    Half Day
+                                                    {% elif attendance.is_absent %}
+                                                    Absent
+                                                    {% elif attendance.is_on_leave %}
+                                                    On Leave
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-center" id="clockedDate">{{ attendance.date }}</td>
+                                                <td class="text-center" id="clock-in-{{ attendance.id }}">{{
+                                                    attendance.clock_in|date:"g:i A" }}</td>
+                                                <td class="text-center" id="clock-out-{{ attendance.id }}">{{
+                                                    attendance.clock_out|date:"g:i A" }}</td>
+                                                <td class="text-center">{{ employee.status }}</td>
+                                                <td class="text-center">
+                                                    <button class="btn btn-sm btn-success edit-btn"
+                                                        data-employee-id="{{ employee.emp_id }}"
+                                                        data-attendance-id="{{ attendance.id }}"><i
+                                                            class="bi bi-pencil-square"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                            {% endfor %} 
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {%endblock maincontent%}
+            {% block extrascript %}
+    {% comment %} <script src="{% static 'admin/js/hr/attendanceReportPage.js' %}"></script> {% endcomment %}
+    {% endblock extrascript %}

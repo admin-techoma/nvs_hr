@@ -1,0 +1,50 @@
+
+.loader-container {
+  position: fixed; // Changed to fixed to cover the entire viewport
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px); // Blur effect
+  z-index: 1000; // Ensure it is above other content
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+  div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 4rem;
+    height: 4rem;
+    margin: 0.5rem;
+    border: 0.5rem solid $color-white; // Use the primary color variable
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: $color-white transparent transparent transparent; // Use the primary color variable
+    &:nth-child(1) {
+      animation-delay: -0.45s;
+    }
+    &:nth-child(2) {
+      animation-delay: -0.3s;
+    }
+    &:nth-child(3) {
+      animation-delay: -0.15s;
+    }
+  }
+}
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,190 @@
+{% extends 'component/base.html' %}
+
+{% load static %}
+
+{% block title %}Onboarding Process{% endblock title %}
+
+{% block extracss %}
+{% endblock extracss %}
+
+{% block maincontent %}
+<div class="main-content ">
+    <div class="card">
+        <div class="card-header border-0">
+            <div class="d-flex justify-content-between">
+                <div class="text-center d-flex align-items-center">
+                    <h6 class="mb-0 pageTitle"><strong>Onbaording List</strong></h6>
+                </div>
+                {% comment %} <div class="col-12 col-md-3 d-flex justify-content-end align-items-center">
+                    <button class="btn btn-dark btn-sm" type="submit" name="download_button">
+                        <i class="bi bi-box-arrow-down"></i> Download
+                    </button>
+                </div> {% endcomment %}
+            </div>
+        </div>
+        <div class="card-body">  
+    <form method="post" action="{% url 'hr:onboarding_list' %}">
+        {% csrf_token %}
+        {% for message in messages %}
+        {% if message.tags == 'success' %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+        {% else %}
+        <label for="" class="form-label mb-0 text-left text-danger">{{ message }}</label>
+        {% endif %}
+        {% endfor %}
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+            {{ error }}
+            {% endfor %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+       
+        <div class="row overflow-hidden ">
+            <div class="table-responsive overflow-auto ">
+                <table class="table-responsive overflow-auto DataTable" id="allOnbordingTable">
+                    <thead class="bg-none">
+                        <tr class="bg-none">
+                            
+                            <th>Candidate Name</th>
+                            <th>Phone Number</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Designation</th>
+                            <th>Select Date</th>
+                            <th>Status</th>
+
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-none">
+                        {% for onboardCandidates in onboardinglist %}
+                        <tr>
+                            
+
+                            <td>{{ onboardCandidates.name }}</td>
+                            <td>{{ onboardCandidates.phone_number }}</td>
+                            <td class="text-lowercase">{{ onboardCandidates.email }}</td>
+                            <td>{{ onboardCandidates.department }}</td>
+                            <td>{{ onboardCandidates.designation }}</td>
+                            <td>{{ onboardCandidates.interviewFeedback_date|date:"d/m/Y" }}</td>
+                            <td>
+                                {% for candidate_id, status_dict in onboarding_status.items %}
+                                {% if onboardCandidates.candidate_id == candidate_id %}
+                                {% if not status_dict.onboarding_exists %}
+                                <span class="badge text-bg-danger">Upload Documents</span>
+                                {% elif status_dict.employee_exists %}
+                                <a href="/hr/onboarding-process/{{onboardCandidates.candidate_id}}"
+                                    class="badge text-bg-warning edit-resume">
+                                    Pending Documents
+                                </a>
+                                <!-- Display the list of available documents here -->
+                                <ul>
+                                    {% if onboardCandidates.c_psimg %}
+                                    <li><a href="{{ onboardCandidates.c_psimg.url }}" target="_blank">PS Image
+                                            Document</a></li>
+                                    {% endif %}
+                                    {% if onboardCandidates.c_adhar %}
+                                    <li><a href="{{ onboardCandidates.c_adhar.url }}" target="_blank">Adhar Document</a>
+                                    </li>
+                                    {% endif %}
+                                    {% if onboardCandidates.c_pan %}
+                                    <li><a href="{{ onboardCandidates.c_pan.url }}" target="_blank">Pan Document</a>
+                                    </li>
+                                    {% endif %}
+                                    {% if onboardCandidates.c_bankDetails %}
+                                    <li><a href="{{ onboardCandidates.c_bankDetails.url }}" target="_blank">Bank Details
+                                            Document</a></li>
+                                    {% endif %}
+                                    <!-- Add more document links as needed -->
+                                </ul>
+                                {% else %}
+                                {% if not onboardCandidates.c_psimg and onboardCandidates.c_adhar and onboardCandidates.c_pan and onboardCandidates.c_bankDetails %}
+                                not available
+                                {% else %}
+                                <a href="{% url 'hr:add_employee' onboardCandidates.candidate_id %}"
+                                    class="btn btn-success edit-status text-nowrap  text-end btn-sm"
+                                    data-candidate-id="{{onboardCandidates.candidate_id}}" data-status="{{status}}">
+                                    Create Employee
+                                </a>
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    {% for candidate_id, status_dict in onboarding_status.items %}
+                                    {% if onboardCandidates.candidate_id == candidate_id %}
+                                    {% if not status_dict.onboarding_exists %}
+                                    <a href="/hr/onboarding-process/{{onboardCandidates.candidate_id}}"
+                                        class="btn btn-danger btn-sm me-2">
+                                        <i class="bi bi-upload"></i>
+                                    </a>
+                                    {% elif status_dict.employee_exists %}
+                                    <a href="/hr/onboarding-process/{{onboardCandidates.candidate_id}}"
+                                        class="badge text-bg-warning edit-resume me-2">
+                                        already employee</a>
+                                    <!-- Display the list of available documents here -->
+                                    {% else %}
+                                    <a href="/hr/view_documents/{{onboardCandidates.candidate_id}}"
+                                        class="btn btn-sm btn-success me-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    {% endif %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    </form>
+</div>
+</div>
+</div>
+
+{%endblock maincontent%}
+{% block extrascript %}
+<script>
+    $(document).ready(function () {
+        $('#allOnbordingTable').DataTable({
+            responsive: true,
+            searching: true,
+            paging: true,
+            fixedHeader: true,
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const activateSwitches = document.querySelectorAll('.activate-switch');
+
+            activateSwitches.forEach(function (switchElement) {
+                switchElement.addEventListener('change', function () {
+                    const empId = switchElement.dataset.empId;
+
+                    // Use AJAX to check if the employee has an active payroll
+                    fetch(`/check_payroll_status/${empId}/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.hasActivePayroll) {
+                                // If the employee has an active payroll, allow the status change
+                                switchElement.checked = true;  // Mark the switch as checked
+                            } else {
+                                // If the employee doesn't have an active payroll, show an alert
+                                alert('First activate payroll for this employee.');
+                                switchElement.checked = false;  // Mark the switch as unchecked
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            });
+        });
+    });
+</script>
+{% endblock extrascript %}

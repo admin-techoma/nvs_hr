@@ -1,0 +1,292 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="icon" type="image/x-icon" href="../../static/admin/img/PeoplPulselogo.png" />
+        <link rel="stylesheet" href="../../static/admin/scss/style.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    </head>
+
+    <body>
+        <div class="main-wrapper">
+            <input class="form-check-input" type="checkbox" value="" id="sideslide">
+            <aside class="sidebar">
+
+            </aside>
+            <main>
+                <header class="top-header d-flex justify-content-between px-3">
+                    <div class="headertitle d-flex align-items-center">
+                        <div class="sliderbtn me-3"><label for="sideslide" class="bi bi-list fs-5"></label></div>
+                        <h4 class="mb-0 fs-6">Weekoff</h4>
+                    </div>
+                    <div class="headerprofilewrapper d-flex p-2 align-items-center">
+                        <button type="button" class="btn custom-button">Clock In</button>
+                        <div class="dropdown ms-2 d-none d-md-flex">
+                            <button class="custom-notification btn outline-none dropdown-toggle border-0 border-color-none"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="bi bi-bell"></span>
+                            </button>
+                            <ul class="dropdown-menu notificationdropdown border ">
+                                <li><a class="dropdown-item" href="#">
+                                        <div class="d-flex dropdown-content-wrapper">
+                                            <div class="img-wrapper">
+                                                <img src="../../static/admin/img/sidebaricon/User add.svg"
+                                                    class="notification-img" alt="img">
+                                            </div>
+                                            <div class="notification-detail">
+                                                <h6 class="notification-title">Attention </h6>
+                                                <p class="notification-text">Your attendance sheet has been updated
+                                                    .</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li><a class="dropdown-item" href="#">
+                                        <div class="d-flex dropdown-content-wrapper">
+                                            <div class="img-wrapper">
+                                                <img src="../../static/admin/img/sidebaricon/User add.svg"
+                                                    class="notification-img" alt="">
+                                            </div>
+                                            <div class="notification-detail">
+                                                <h6 class="notification-title">Attention </h6>
+                                                <p class="notification-text">Your attendance sheet has been updated
+                                                    Check for more Details .</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li><a class="dropdown-item" href="#">
+                                        <div class="d-flex dropdown-content-wrapper">
+                                            <div class="img-wrapper">
+                                                <img src="../../static/admin/img/sidebaricon/User add.svg"
+                                                    class="notification-img" alt="">
+                                            </div>
+                                            <div class="notification-detail">
+                                                <h6 class="notification-title">Attention </h6>
+                                                <p class="notification-text">Your attendance sheet has been updated.<br>
+                                                    Check for more Details .</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="dropdown ">
+                            <button class="btn profile-button outline-none dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="../../static/admin/img/sidebaricon/Interview.svg" class="header-profile-img"
+                                    alt="">
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><span class="bi bi-person-check mr-3 fs-5"></span>
+                                        <span class="ms-2"> My Profile </span></a></li>
+                                <li><a class="dropdown-item" href="#"><span class="bi bi-nut mr-3 fs-5"></span> <span
+                                            class="ms-2"> Settings </span></a></li>
+                                <li><a class="dropdown-item" href="#"><span class="bi bi-power mr-3 fs-5"></span> <span
+                                            class="ms-2">Login/Logout </span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </header>
+                <div class="main-content justify-content-center p-3 ">
+                    <div class="d-flex align-items-start">
+                        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+                            aria-orientation="vertical">
+                            <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
+                                data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
+                                aria-selected="true">Home</button>
+                            <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill"
+                                data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile"
+                                aria-selected="false">Profile</button>
+                            <button class="nav-link" id="v-pills-disabled-tab" data-bs-toggle="pill"
+                                data-bs-target="#v-pills-disabled" type="button" role="tab" aria-controls="v-pills-disabled"
+                                aria-selected="false" disabled>Disabled</button>
+                            <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill"
+                                data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages"
+                                aria-selected="false">Messages</button>
+                            <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill"
+                                data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings"
+                                aria-selected="false">Settings</button>
+                        </div>
+                        <div class="tab-content w-100" id="v-pills-tabContent">
+                            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                                aria-labelledby="v-pills-home-tab" tabindex="0">
+                                <div class="col-12 ">
+                                    <div class="d-flex justify-content-between w-100">
+                                        <h6>Weekoff</h6>
+                                        <div class="btn-wrapper mb-2">
+                                            <button class="btn custom-button btn-sm" id="editweekoff"> edit</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="table-responsive text-center">
+                                            <table id="weekTable" class="table weekTable weekTable-edit table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Mon</th>
+                                                        <th>Tue</th>
+                                                        <th>Wed</th>
+                                                        <th>Thu</th>
+                                                        <th>Fri</th>
+                                                        <th>Sat</th>
+                                                        <th>Sun</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="weekTableBody">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class=" d-flex">
+                                            <div class="d-flex align-items-center">
+                                                <div class=" green p-2">
+                                                    <div class="day-switch p-2"></div>
+                                                </div>
+                                                <div>Working day</div>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <div class=" red p-2">
+                                                    <div class="day-switch p-2"></div>
+                                                </div>
+                                                <div>Weekoff</div>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <div class=" yellow p-2">
+                                                    <div class="day-switch p-2"></div>
+                                                </div>
+                                                <div>Half Day</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                                aria-labelledby="v-pills-profile-tab" tabindex="0">
+                                <div class="col-12 ">
+                                    <div class="d-flex justify-content-between w-100">
+                                        <h6>Weekoff</h6>
+                                        <div class="btn-wrapper mb-2">
+                                            <button class="btn custom-button btn-sm" id="editweekoff"> edit</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="table-responsive text-center">
+                                            <table id="weekTable" class="table weekTable weekTable-edit table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Mon</th>
+                                                        <th>Tue</th>
+                                                        <th>Wed</th>
+                                                        <th>Thu</th>
+                                                        <th>Fri</th>
+                                                        <th>Sat</th>
+                                                        <th>Sun</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="weekTableBody">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class=" d-flex">
+                                            <div class="d-flex align-items-center">
+                                                <div class=" green p-2">
+                                                    <div class="day-switch p-2"></div>
+                                                </div>
+                                                <div>Working day</div>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <div class=" red p-2">
+                                                    <div class="day-switch p-2"></div>
+                                                </div>
+                                                <div>Weekoff</div>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <div class=" yellow p-2">
+                                                    <div class="day-switch p-2"></div>
+                                                </div>
+                                                <div>Half Day</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="v-pills-disabled" role="tabpanel"
+                                aria-labelledby="v-pills-disabled-tab" tabindex="0">...</div>
+                            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
+                                aria-labelledby="v-pills-messages-tab" tabindex="0">...</div>
+                            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
+                                aria-labelledby="v-pills-settings-tab" tabindex="0">...</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"></script>
+        <script>
+            const weeksData = [
+                { week: 1, days: [2, 1, 1, 1, 1, 1, 1] }, // Example data for week 1
+                { week: 2, days: [2, 1, 1, 1, 1, 1, 1] }, // Example data for week 2
+                { week: 3, days: [2, 1, 1, 1, 1, 1, 1] }, // Example data for week 3
+                { week: 4, days: [2, 1, 1, 1, 1, 1, 1] }, // Example data for week 4
+                { week: 5, days: [2, 1, 1, 1, 1, 1, 1] }, // Example data for week 5
+                // Add more weeks as needed
+            ];
+          
+            const colorsData = {
+                1: 'green',  // Color for state 1
+                2: 'red',  // Color for state 2
+                3: 'yellow', // Color for state 3
+            };
+            // Function to generate the HTML table based on data
+            function generateWeekTable() {
+                const tableBody = document.getElementById('weekTableBody');
+                tableBody.innerHTML = ''; // Clear existing table body
+                weeksData.forEach(weekData => {
+                    const row = document.createElement('tr');
+                    weekData.days.forEach(dayState => {
+                        const cell = document.createElement('td');
+                        cell.className = `day ${colorsData[dayState]}`;
+                        cell.dataset.state = dayState;
+                        cell.dataset.savedState = dayState;
+                        const div = document.createElement('div');
+                        div.className = 'day-switch';
+                        cell.appendChild(div); // Add div inside td     
+                        cell.onclick = function () {
+                            changeState(this);
+                            console.log([weeksData]);
+                        };
+                        row.appendChild(cell);
+                    });
+                    tableBody.appendChild(row);
+                });
+
+            }
+            // Function to handle click event and change state
+            function changeState(cell) {
+                const currentState = parseInt(cell.dataset.state);
+                const newState = currentState === 3 ? 1 : currentState + 1; // Toggle between 1, 2, 3
+                cell.dataset.state = newState;
+                cell.className = `day ${colorsData[newState]}`;
+                console.log([newState]);             
+            }
+            // Call the function to generate the table when the page loads
+            window.onload = function () {
+                generateWeekTable();
+               
+            };
+        </script>
+    </body>
+    </html>

@@ -1,0 +1,1312 @@
+{% extends 'component/base.html' %}
+{% load static  %}
+{% block title %}View Documents{% endblock title %}
+{% block extracss %}
+{% endblock extracss %}
+{% block maincontent %}
+<div class="main-content">
+    <div class="card">
+        <div class="card-body">
+    {% for message in messages %}
+    {% if message.tags == 'success' %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% else %}
+    <label for="exampleInputEmail1" class="form-label mb-0 text-left text-danger">{{ message }}</label>
+    {% endif %}
+    {% endfor %}
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+        {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+        {{ error }}
+        {% endfor %}
+        {% endfor %}
+    </div>
+    {% endif %}
+        <div class="row w-100 mb-md-3">
+            {% for onboarding_document in onboarding_documents %}
+     
+            <div class="mt-2 border-bottom pb-2 mb-2">
+                <h5>
+                    Documents of <strong>{{onboarding_document.candidate_id.name}}</strong>
+                </h5>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-6 mb-2 d-flex justify-content-between">
+
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">Photo</h6>
+                    </div>
+                    
+
+
+                    <div class="">
+                        {% if onboarding_document.c_psimg %}
+                        <a href="{{ onboarding_document.c_psimg.url }}" target="_blank"
+                            class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
+                           
+                             <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal" data-target="#updateimg" id="updatenewimg">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            
+                        {% else %}
+                        <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal" data-target="#updateimg" id="updatenewimg">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                        
+                        {% endif %}
+                    </div>
+
+                </div>
+                
+                <div class="col-12 col-md-6 mb-2 d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">Resume</h6>
+                    </div>
+                    <div class="">
+                        <div class="">
+                           {% if onboarding_document.candidate_id.resume %} 
+                            <a href="{{ onboarding_document.candidate_id.resume.url}}" target="_blank"
+                                class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a></a>
+                                <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal" data-target="#updateresume" id="updatenewresume">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                         {% else %} 
+                         <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal" data-target="#updateresume" id="updatenewresume">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                        
+                           {% endif %} 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-2 d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">Aadhar Card</h6>
+                    </div>
+                    <div>
+                        {% if onboarding_document.c_adhar %}
+                        <a href="{{ onboarding_document.c_adhar.url }}" target="_blank"
+                            class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
+                            <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal" data-target="#updateaadhaar" id="updatenewaadhaar">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        {% else %}
+                        <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal" data-target="#updateaadhaar" id="updatenewaadhaar">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                       
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-2 d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">Pan Card</h6>
+                    </div>
+                    <div>
+                        {% if onboarding_document.c_pan %}
+                        <a href="{{ onboarding_document.c_pan.url }}" target="_blank"
+                            class="btn btn-sm  custom-button"><i class="bi bi-eye btn-sm"></i></a>
+                            <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal" data-target="#updatepan" id="updatenewpan">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        {% else %}
+                        <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal" data-target="#updatepan" id="updatenewpan">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                       
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-2 d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">Cancel Cheque</h6>
+                    </div>
+                    <div>
+                        {% if onboarding_document.c_bankDetails %}
+                        <a href="{{ onboarding_document.c_bankDetails.url }}" target="_blank"
+                            class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a></a>
+                            <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal" data-target="#updatebankdetails" id="updatenewbankdetails">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        {% else %}
+                        <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal" data-target="#updatebankdetails" id="updatenewbankdetails">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                        
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-2 d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">Last 3 Month Bank statement</h6>
+                    </div>
+                    <div>
+                        {% if onboarding_document.c_bankStatement %}
+                        <a href="{{ onboarding_document.c_bankStatement.url }}" target="_blank"
+                            class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a></a>
+                            <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal" data-target="#updatebankstatement" id="updatenewbankstatement">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        {% else %}
+                        <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal" data-target="#updatebankstatement" id="updatenewbankstatement">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                       
+
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-2 d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">Last 3 Month Salary Slip</h6>
+                    </div>
+                    <div>
+                        {% if onboarding_document.c_salarySlips %}
+                        <a href="{{ onboarding_document.c_salarySlips.url }}" target="_blank"
+                            class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a></a>
+                            <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal" data-target="#updatesalaryslips" id="updatenewsalaryslips">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        {% else %}
+                        <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal" data-target="#updatesalaryslips" id="updatenewsalaryslips">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-2 d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">Experience Letter</h6>
+                    </div>
+                    <div>
+                        {% if onboarding_document.c_expLetter %}
+                        <a href="{{ onboarding_document.c_expLetter.url }}" target="_blank"
+                            class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a></a>
+                            <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal" data-target="#updateexpletter" id="updatenewexpletter">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        {% else %}
+                        <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal" data-target="#updateexpletter" id="updatenewexpletter">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                      
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-2 d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">Previous Company Joining Letter</h6>
+                    </div>
+                    <div>
+                        {% if onboarding_document.c_previousJoiningLetter %}
+                        <a href="{{ onboarding_document.c_previousJoiningLetter.url }}" target="_blank"
+                            class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a></a>
+                            <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal" data-target="#updatepreviousjoiningletter" id="updatenewpreviousjoiningletter">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        {% else %}
+                        <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal" data-target="#updatepreviousjoiningletter" id="updatenewpreviousjoiningletter">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                        
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-2 d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">Bachelor Degree</h6>
+                    </div>
+                    <div>
+                        {% if onboarding_document.c_degree %}
+                        <a href="{{ onboarding_document.c_degree.url }}" target="_blank"
+                            class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
+                            <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal" data-target="#updatec_degree" id="updatenewc_degree">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        {% else %}
+                        <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal" data-target="#updatec_degree" id="updatenewc_degree">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                       
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-2 d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">Master Degree</h6>
+                    </div>
+                    <div>
+                        {% if onboarding_document.c_masters %}
+                        <a href="{{ onboarding_document.c_masters.url }}" target="_blank"
+                            class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
+                            <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal" data-target="#updatemasters" id="updatenewmasters">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        {% else %}
+                        <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal" data-target="#updatemasters" id="updatenewmasters">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-2 d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">HSC Marksheet</h6>
+                    </div>
+                    <div>
+                        {% if onboarding_document.c_HSC %}
+                        <a href="{{ onboarding_document.c_HSC.url }}" target="_blank"
+                            class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
+                            <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal" data-target="#updatehsc" id="updatenewhsc">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        {% else %}
+                        <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal" data-target="#updatehsc" id="updatenewhsc">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                 
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-2 d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">SSC Marksheet</h6>
+                    </div>
+                    <div>
+                        {% if onboarding_document.c_SSC %}
+                        <a href="{{ onboarding_document.c_SSC.url }}" target="_blank"
+                            class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
+                            <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal" data-target="#updatessc" id="updatenewssc">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        {% else %}
+                        <button type="button" class=" btn btn-danger btn-sm me-2" data-toggle="modal" data-target="#updatessc" id="updatenewssc">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                      
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-2 d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">Other Documents</h6>
+                    </div>
+                    <div>
+                        {% if onboarding_document.c_otherCertificate %}
+                        <a href="{{ onboarding_document.c_otherCertificate.url }}" target="_blank"
+                            class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a></a>
+                            <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal" data-target="#updateothercertificate" id="updatenewothercertificate">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        {% else %}
+                        <button type="button" class=" btn btn-danger btn-sm me-2" data-toggle="modal" data-target="#updateothercertificate" id="updatenewothercertificate">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                       
+                        {% endif %}
+                    </div>
+
+                </div>
+                
+                {% endfor %}
+            </div>
+
+        </div>
+</div>
+</div>
+</div>
+<!-- Modal for uploading a new image -->
+<div class="modal fade" id="updateimg" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+                {% for onboarding_document in onboarding_documents %}
+    <!-- Your HTML code for each onboarding document -->
+    <form id="updatepsimg" action="{% url 'hr:updateimg' onboarding_document.pk %}" method="post" enctype="multipart/form-data">
+        <!-- Your form fields -->
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPsimgModalLabel">Upload c_psimg</h5>
+                    <!-- <button type="button" class="btn-close text-white btn-close-white" data-dismiss="modal" aria-label="Close">  -->
+                        <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </button>
+                </div>
+
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Choose File</label>
+                        <input type="file" name="c_psimg" id="" class="form-control-file form-control-sm">
+                        <input type="hidden" id="candidateId" value="{{ onboarding_document.pk }}">
+                        <input type="hidden" id="newResumeId" value="{{resume.candidate_id}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close"
+                                            data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn custom-button">Upload</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Modal for uploading a new aadhar -->
+<div class="modal fade" id="updateaadhaar" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+                {% for onboarding_document in onboarding_documents %}
+    <!-- Your HTML code for each onboarding document -->
+    <form id="updatepsaadhaar" action="{% url 'hr:updateaadhar' onboarding_document.pk %}" method="post" enctype="multipart/form-data">
+        <!-- Your form fields -->
+    
+                {% csrf_token %}
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPsimgModalLabel">Upload Aadhaar</h5>
+                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Choose File</label>
+                        <input type="file" name="c_adhar" id="" class="form-control-file form-control-sm">
+                        <input type="hidden" id="candidateId" value="{{ onboarding_document.pk }}">
+                        <input type="hidden" id="newResumeId" value="{{resume.candidate_id}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close"
+                                            data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn custom-button">Upload</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Modal for uploading a new PAN -->
+<div class="modal fade" id="updatepan" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+                {% for onboarding_document in onboarding_documents %}
+    <!-- Your HTML code for each onboarding document -->
+    <form id="updatepspan" action="{% url 'hr:updatepan' onboarding_document.pk %}" method="post" enctype="multipart/form-data">
+        <!-- Your form fields -->
+    
+                {% csrf_token %}
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPspanModalLabel">Upload PAN</h5>
+                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Choose File</label>
+                        <input type="file" name="c_pan" id="" class="form-control-file form-control-sm">
+                        <input type="hidden" id="candidateId" value="{{ onboarding_document.pk }}">
+                        <input type="hidden" id="newpanId" value="{{resume.candidate_id}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close"
+                                            data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn custom-button">Upload</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Modal for uploading a new bank details -->
+<div class="modal fade" id="updatebankdetails" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+                {% for onboarding_document in onboarding_documents %}
+    <!-- Your HTML code for each onboarding document -->
+    <form id="updatepsbankdetails" action="{% url 'hr:updatebankdetails' onboarding_document.pk %}" method="post" enctype="multipart/form-data">
+        <!-- Your form fields -->
+    
+                {% csrf_token %}
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPsimgModalLabel">Upload Cancel Chaque</h5>
+                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Choose File</label>
+                        <input type="file" name="c_bankDetails" id="" class="form-control-file form-control-sm">
+                        <input type="hidden" id="candidateId" value="{{ onboarding_document.pk }}">
+                        <input type="hidden" id="newResumeId" value="{{resume.candidate_id}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close"
+                                            data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn custom-button">Upload</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Modal for uploading a new bank statement  -->
+<div class="modal fade" id="updatebankstatement" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+                {% for onboarding_document in onboarding_documents %}
+    <!-- Your HTML code for each onboarding document -->
+    <form id="updatepsbankstatement" action="{% url 'hr:updatebankstatement' onboarding_document.pk %}" method="post" enctype="multipart/form-data">
+        <!-- Your form fields -->
+    
+                {% csrf_token %}
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPsimgModalLabel">Upload Bank Statement</h5>
+                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Choose File</label>
+                        <input type="file" name="c_bankStatement" id="" class="form-control-file form-control-sm">
+                        <input type="hidden" id="candidateId" value="{{ onboarding_document.pk }}">
+                        <input type="hidden" id="newResumeId" value="{{resume.candidate_id}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close"
+                                            data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn custom-button">Upload</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Modal for uploading a new Salary Slips  -->
+<div class="modal fade" id="updatesalaryslips" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+                {% for onboarding_document in onboarding_documents %}
+    <!-- Your HTML code for each onboarding document -->
+    <form id="updatepssalaryslips" action="{% url 'hr:updatesalaryslips' onboarding_document.pk %}" method="post" enctype="multipart/form-data">
+        <!-- Your form fields -->
+    
+                {% csrf_token %}
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPsimgModalLabel">Upload Salary Slips</h5>
+                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Choose File</label>
+                        <input type="file" name="c_salarySlips" id="" class="form-control-file form-control-sm">
+                        <input type="hidden" id="candidateId" value="{{ onboarding_document.pk }}">
+                        <input type="hidden" id="newResumeId" value="{{resume.candidate_id}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close"
+                                            data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn custom-button">Upload</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Modal for uploading a new Exp Letter -->
+<div class="modal fade" id="updateexpletter" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+                {% for onboarding_document in onboarding_documents %}
+    <!-- Your HTML code for each onboarding document -->
+    <form id="updatepsexpletter" action="{% url 'hr:updateexpletter' onboarding_document.pk %}" method="post" enctype="multipart/form-data">
+        <!-- Your form fields -->
+    
+                {% csrf_token %}
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPsimgModalLabel">Upload Experiance Letter</h5>
+                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Choose File</label>
+                        <input type="file" name="c_expLetter" id="" class="form-control-file form-control-sm">
+                        <input type="hidden" id="candidateId" value="{{ onboarding_document.pk }}">
+                        <input type="hidden" id="newResumeId" value="{{resume.candidate_id}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close"
+                                            data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn custom-button">Upload</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Modal for uploading a new Previous Joining Letter -->
+<div class="modal fade" id="updatepreviousjoiningletter" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+                {% for onboarding_document in onboarding_documents %}
+    <!-- Your HTML code for each onboarding document -->
+    <form id="updatepspreviousjoiningletter" action="{% url 'hr:updatepreviousjoiningletter' onboarding_document.pk %}" method="post" enctype="multipart/form-data">
+        <!-- Your form fields -->
+    
+                {% csrf_token %}
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPsimgModalLabel">Upload Previos Joining Letter</h5>
+                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Choose File</label>
+                        <input type="file" name="c_previousJoiningLetter" id="" class="form-control-file form-control-sm">
+                        <input type="hidden" id="candidateId" value="{{ onboarding_document.pk }}">
+                        <input type="hidden" id="newResumeId" value="{{resume.candidate_id}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close"
+                                            data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn custom-button">Upload</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Modal for uploading a new c_degree -->
+<div class="modal fade" id="updatec_degree" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+                {% for onboarding_document in onboarding_documents %}
+    <!-- Your HTML code for each onboarding document -->
+    <form id="updatepsc_degree" action="{% url 'hr:updatec_degree' onboarding_document.pk %}" method="post" enctype="multipart/form-data">
+        <!-- Your form fields -->
+    
+                {% csrf_token %}
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPsimgModalLabel">Upload Bachelor Degree</h5>
+                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Choose File</label>
+                        <input type="file" name="c_degree" id="" class="form-control-file form-control-sm">
+                        <input type="hidden" id="candidateId" value="{{ onboarding_document.pk }}">
+                        <input type="hidden" id="newResumeId" value="{{resume.candidate_id}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close"
+                                            data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn custom-button">Upload</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Modal for uploading a Master -->
+<div class="modal fade" id="updatemasters" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+                {% for onboarding_document in onboarding_documents %}
+    <!-- Your HTML code for each onboarding document -->
+    <form id="updatepsmasters" action="{% url 'hr:updatemasters' onboarding_document.pk %}" method="post" enctype="multipart/form-data">
+        <!-- Your form fields -->
+    
+                {% csrf_token %}
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPsimgModalLabel">Upload Master Degree</h5>
+                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Choose File</label>
+                        <input type="file" name="c_masters" id="" class="form-control-file form-control-sm">
+                        <input type="hidden" id="candidateId" value="{{ onboarding_document.pk }}">
+                        <input type="hidden" id="newResumeId" value="{{resume.candidate_id}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close"
+                                            data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn custom-button">Upload</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Modal for uploading a HSC -->
+<div class="modal fade" id="updatehsc" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+                {% for onboarding_document in onboarding_documents %}
+    <!-- Your HTML code for each onboarding document -->
+    <form id="updatepshsc" action="{% url 'hr:updatehsc' onboarding_document.pk %}" method="post" enctype="multipart/form-data">
+        <!-- Your form fields -->
+    
+                {% csrf_token %}
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPsimgModalLabel">Upload HSC Marksheet</h5>
+                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Choose File</label>
+                        <input type="file" name="c_HSC" id="" class="form-control-file form-control-sm">
+                        <input type="hidden" id="candidateId" value="{{ onboarding_document.pk }}">
+                        <input type="hidden" id="newResumeId" value="{{resume.candidate_id}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close"
+                                            data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn custom-button">Upload</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Modal for uploading a ssc -->
+<div class="modal fade" id="updatessc" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+                {% for onboarding_document in onboarding_documents %}
+    <!-- Your HTML code for each onboarding document -->
+    <form id="updatepsssc" action="{% url 'hr:updatessc' onboarding_document.pk %}" method="post" enctype="multipart/form-data">
+        <!-- Your form fields -->
+    
+                {% csrf_token %}
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPsimgModalLabel">Upload SSC Marksheet</h5>
+                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Choose File</label>
+                        <input type="file" name="c_SSC" id="" class="form-control-file form-control-sm">
+                        <input type="hidden" id="candidateId" value="{{ onboarding_document.pk }}">
+                        <input type="hidden" id="newResumeId" value="{{resume.candidate_id}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close"
+                                            data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn custom-button">Upload</button>
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Modal for uploading a othercertificate -->
+<div class="modal fade" id="updateothercertificate" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+                {% for onboarding_document in onboarding_documents %}
+    <!-- Your HTML code for each onboarding document -->
+    <form id="updatepsothercertificate" action="{% url 'hr:updateothercertificate' onboarding_document.pk %}" method="post" enctype="multipart/form-data">
+        <!-- Your form fields -->
+    
+                {% csrf_token %}
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPsimgModalLabel">Upload Other Certificates</h5>
+                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Choose File</label>
+                        <input type="file" name="c_otherCertificate" id="" class="form-control-file form-control-sm">
+                        <input type="hidden" id="candidateId" value="{{ onboarding_document.pk }}">
+                        <input type="hidden" id="newResumeId" value="{{resume.candidate_id}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close"
+                                            data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn custom-button">Upload</button>
+                </div>
+            </form>
+            {% endfor %}
+          
+        </div>
+    </div>
+</div>
+
+<!-- Modal for uploading a resume -->
+<div class="modal fade" id="updateresume" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+                {% for onboarding_document in onboarding_documents %}
+    <!-- Your HTML code for each onboarding document -->
+    <form id="updatepsresume" action="{% url 'hr:updateresume' onboarding_document.pk %}" method="post" enctype="multipart/form-data">
+        <!-- Your form fields -->
+    
+                {% csrf_token %}
+                
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPsimgModalLabel">Upload Resume</h5>
+                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Choose File</label>
+                        <input type="file" name="resume" id="" class="form-control-file form-control-sm">
+                        <input type="hidden" id="candidateId" value="{{ onboarding_document.pk }}">
+                        <input type="hidden" id="newResumeId" value="{{resume.candidate_id}}" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close"
+                                            data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn custom-button">Upload</button>
+                </div>
+            </form>
+            {% endfor %}
+          
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Success Message -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success!</h5>
+                <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Success message content goes here -->
+                <p> Documents Update Successfully.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{%endblock maincontent%}
+{% block extrascript %}
+<script>
+    $('#updatenewimg').click(function () {
+        $('#updateimg').modal('show');
+    });
+    
+    $('.close').click(function () {
+        $('.modal').modal('hide');
+    });
+   $('#updatepsimg').submit(function(event) {
+    event.preventDefault(); // Prevent default form submission
+    var formData = new FormData(this);
+    $.ajax({
+        url: $(this).attr('action'),
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+
+            
+            
+                 $('#successModal').modal('show');
+
+                 setTimeout(function() {
+                    location.reload(); // Reload the page
+                }, 2000); // 2000 milliseconds = 2 seconds
+            
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            // Handle error message or any other action
+        }
+    });
+});
+// Update Aadhaar Card
+$('#updatenewaadhaar').click(function () {
+    $('#updateaadhaar').modal('show');
+});
+
+$('.close').click(function () {
+    $('.modal').modal('hide');
+});
+$('#updatepsaadhaar').submit(function(event) {
+event.preventDefault(); // Prevent default form submission
+var formData = new FormData(this);
+$.ajax({
+    url: $(this).attr('action'),
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+
+        
+        
+             $('#successModal').modal('show');
+
+             setTimeout(function() {
+                location.reload(); // Reload the page
+            }, 2000); // 2000 milliseconds = 2 seconds
+        
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error message or any other action
+    }
+});
+});
+
+// Update PAN Card
+$('#updatenewpan').click(function () {
+    $('#updatepan').modal('show');
+});
+
+$('.close').click(function () {
+    $('.modal').modal('hide');
+});
+$('#updatepspan').submit(function(event) {
+event.preventDefault(); // Prevent default form submission
+var formData = new FormData(this);
+$.ajax({
+    url: $(this).attr('action'),
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+
+        
+        
+             $('#successModal').modal('show');
+
+             setTimeout(function() {
+                location.reload(); // Reload the page
+            }, 2000); // 2000 milliseconds = 2 seconds
+        
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error message or any other action
+    }
+});
+});
+
+
+// Update Bank Details
+$('#updatenewbankdetails').click(function () {
+    $('#updatebankdetails').modal('show');
+});
+
+$('.close').click(function () {
+    $('.modal').modal('hide');
+});
+$('#updatepsbankdetails').submit(function(event) {
+event.preventDefault(); // Prevent default form submission
+var formData = new FormData(this);
+$.ajax({
+    url: $(this).attr('action'),
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+
+        
+        
+             $('#successModal').modal('show');
+
+             setTimeout(function() {
+                location.reload(); // Reload the page
+            }, 2000); // 2000 milliseconds = 2 seconds
+        
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error message or any other action
+    }
+});
+});
+// Update bankstatement
+$('#updatenewbankstatement').click(function () {
+    $('#updatebankstatement').modal('show');
+});
+
+$('.close').click(function () {
+    $('.modal').modal('hide');
+});
+$('#updatepsbankstatement').submit(function(event) {
+event.preventDefault(); // Prevent default form submission
+var formData = new FormData(this);
+$.ajax({
+    url: $(this).attr('action'),
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+
+        
+        
+             $('#successModal').modal('show');
+
+             setTimeout(function() {
+                location.reload(); // Reload the page
+            }, 2000); // 2000 milliseconds = 2 seconds
+        
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error message or any other action
+    }
+});
+});
+// Update salaryslips
+$('#updatenewsalaryslips').click(function () {
+    $('#updatesalaryslips').modal('show');
+});
+
+$('.close').click(function () {
+    $('.modal').modal('hide');
+});
+$('#updatepssalaryslips').submit(function(event) {
+event.preventDefault(); // Prevent default form submission
+var formData = new FormData(this);
+$.ajax({
+    url: $(this).attr('action'),
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+
+        
+        
+             $('#successModal').modal('show');
+
+             setTimeout(function() {
+                location.reload(); // Reload the page
+            }, 2000); // 2000 milliseconds = 2 seconds
+        
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error message or any other action
+    }
+});
+});
+// Update expletter
+$('#updatenewexpletter').click(function () {
+    $('#updateexpletter').modal('show');
+});
+
+$('.close').click(function () {
+    $('.modal').modal('hide');
+});
+$('#updatepsexpletter').submit(function(event) {
+event.preventDefault(); // Prevent default form submission
+var formData = new FormData(this);
+$.ajax({
+    url: $(this).attr('action'),
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+
+        
+        
+             $('#successModal').modal('show');
+
+             setTimeout(function() {
+                location.reload(); // Reload the page
+            }, 2000); // 2000 milliseconds = 2 seconds
+        
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error message or any other action
+    }
+});
+});
+// Update previousjoiningletter
+$('#updatenewpreviousjoiningletter').click(function () {
+    $('#updatepreviousjoiningletter').modal('show');
+});
+
+$('.close').click(function () {
+    $('.modal').modal('hide');
+});
+$('#updatepspreviousjoiningletter').submit(function(event) {
+event.preventDefault(); // Prevent default form submission
+var formData = new FormData(this);
+$.ajax({
+    url: $(this).attr('action'),
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+
+        
+        
+             $('#successModal').modal('show');
+
+             setTimeout(function() {
+                location.reload(); // Reload the page
+            }, 2000); // 2000 milliseconds = 2 seconds
+        
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error message or any other action
+    }
+});
+});
+// Update c_degree
+$('#updatenewc_degree').click(function () {
+    $('#updatec_degree').modal('show');
+});
+
+$('.close').click(function () {
+    $('.modal').modal('hide');
+});
+$('#updatepsc_degree').submit(function(event) {
+event.preventDefault(); // Prevent default form submission
+var formData = new FormData(this);
+$.ajax({
+    url: $(this).attr('action'),
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+
+        
+        
+             $('#successModal').modal('show');
+
+             setTimeout(function() {
+                location.reload(); // Reload the page
+            }, 2000); // 2000 milliseconds = 2 seconds
+        
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error message or any other action
+    }
+});
+});
+// Update masters
+$('#updatenewmasters').click(function () {
+    $('#updatemasters').modal('show');
+});
+
+$('.close').click(function () {
+    $('.modal').modal('hide');
+});
+$('#updatepsmasters').submit(function(event) {
+event.preventDefault(); // Prevent default form submission
+var formData = new FormData(this);
+$.ajax({
+    url: $(this).attr('action'),
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+
+        
+        
+             $('#successModal').modal('show');
+
+             setTimeout(function() {
+                location.reload(); // Reload the page
+            }, 2000); // 2000 milliseconds = 2 seconds
+        
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error message or any other action
+    }
+});
+});
+// Update hsc
+$('#updatenewhsc').click(function () {
+    $('#updatehsc').modal('show');
+});
+
+$('.close').click(function () {
+    $('.modal').modal('hide');
+});
+$('#updatepshsc').submit(function(event) {
+event.preventDefault(); // Prevent default form submission
+var formData = new FormData(this);
+$.ajax({
+    url: $(this).attr('action'),
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+
+        
+        
+             $('#successModal').modal('show');
+
+             setTimeout(function() {
+                location.reload(); // Reload the page
+            }, 2000); // 2000 milliseconds = 2 seconds
+        
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error message or any other action
+    }
+});
+});
+// Update ssc
+$('#updatenewssc').click(function () {
+    $('#updatessc').modal('show');
+});
+
+$('.close').click(function () {
+    $('.modal').modal('hide');
+});
+$('#updatepsssc').submit(function(event) {
+event.preventDefault(); // Prevent default form submission
+var formData = new FormData(this);
+$.ajax({
+    url: $(this).attr('action'),
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+
+        
+        
+             $('#successModal').modal('show');
+
+             setTimeout(function() {
+                location.reload(); // Reload the page
+            }, 2000); // 2000 milliseconds = 2 seconds
+        
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error message or any other action
+    }
+});
+});
+// Update othercertificate
+$('#updatenewothercertificate').click(function () {
+    $('#updateothercertificate').modal('show');
+});
+
+$('.close').click(function () {
+    $('.modal').modal('hide');
+});
+$('#updatepsothercertificate').submit(function(event) {
+event.preventDefault(); // Prevent default form submission
+var formData = new FormData(this);
+$.ajax({
+    url: $(this).attr('action'),
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+
+        
+        
+             $('#successModal').modal('show');
+
+             setTimeout(function() {
+                location.reload(); // Reload the page
+            }, 2000); // 2000 milliseconds = 2 seconds
+        
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error message or any other action
+    }
+});
+});
+
+
+// Update resume
+$('#updatenewresume').click(function () {
+    $('#updateresume').modal('show');
+});
+
+$('.close').click(function () {
+    $('.modal').modal('hide');
+});
+$('#updatepsresume').submit(function(event) {
+event.preventDefault(); // Prevent default form submission
+var formData = new FormData(this);
+$.ajax({
+    url: $(this).attr('action'),
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+
+        
+        
+             $('#successModal').modal('show');
+
+             setTimeout(function() {
+                location.reload(); // Reload the page
+            }, 2000); // 2000 milliseconds = 2 seconds
+        
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error message or any other action
+    }
+});
+});
+
+
+</script>
+
+
+
+{% endblock extrascript %}

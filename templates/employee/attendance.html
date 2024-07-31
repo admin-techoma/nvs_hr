@@ -1,0 +1,400 @@
+{% extends 'component/base.html' %}
+
+{% load static %}
+
+{% block title %}attendance{% endblock title %}
+
+{% block extracss %}
+{% load custom_filters %}
+{% endblock extracss %}
+
+{% block maincontent %}
+
+<div class="main-content">
+    <!-- top attendance -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div class="d-flex col-12 col-md-4 ">
+            <!-- <h5 class="me-3 mb-0">attendance for {{ user.username }} </h5> -->
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-7 overflow-hidden">
+                <!-- calender start-->
+                <div class="calendar-wrapper box-shadow-md">
+                    <div class="calendar-header">
+                        <p class="current-date"></p>
+                        <div class="icons">
+                            <span id="prev" class="material-symbols-rounded">chevron_left</span>
+                            <span id="next" class="material-symbols-rounded">chevron_right</span>
+                        </div>
+                    </div>
+                    <div class="calendar">
+                        <ul class="weeks">
+                            <li>Sun</li>
+                            <li>Mon</li>
+                            <li>Tue</li>
+                            <li>Wed</li>
+                            <li>Thu</li>
+                            <li>Fri</li>
+                            <li>Sat</li>
+                        </ul>
+                        <ul class="days"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-5 d-flex justify-content-center align-items-center flex-column">
+                <div class="w-100 mb-3 d-flex justify-content-end">
+                    <button type="button" class="btn custom-button me-2" data-bs-toggle="modal" data-bs-target="#Leavemodal" id="applyForLeave">
+                        Apply For Leave
+                    </button>
+                </div>
+                <div class="w-100 d-flex flex-wrap align-items-center justify-content-center">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-6 mb-3 mb-md-1 p-1">
+                        <div
+                            class="card d-flex justify-content-center align-items-center Leave-Balance border-left-maroon ">
+                            <div class="card-header bg-transparent border-0 ">
+                                <Strong>Leave Balance</Strong>
+                            </div>
+                            <div class="card-body p-0 border-0">
+                                <p class="border-none"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-6 mb-3 mb-md-1 p-1">
+                        <div class="card weekoffcard d-flex justify-content-center align-items-center border-left-gray  ">
+                            <div class="card-header bg-transparent border-0 ">
+                                <Strong>WeekOff</Strong>
+                            </div>
+                            <div class="card-body p-0 border-0">
+                                <p class="border-none">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-6 mb-3 mb-md-1 p-1">
+                        <div class="card presentcard d-flex justify-content-center align-items-center border-left-green">
+                            <div class="card-header bg-transparent border-0 ">
+                                <Strong>Present</Strong>
+                            </div>
+                            <div class="card-body p-0 border-0">
+                                <p class="border-none"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-6 mb-3 mb-md-1 p-1 ">
+                        <div class="card absentcard d-flex justify-content-center align-items-center border-left-red">
+                            <div class="card-header bg-transparent border-0 ">
+                                <Strong>Absent</Strong>
+                            </div>
+                            <div class="card-body p-0 border-0">
+                                <p class="border-none" ></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-6 mb-3 mb-md-1 p-1">
+                        <div class="card halfdaycard d-flex justify-content-center align-items-center border-left-yellow ">
+                            <div class="card-header bg-transparent border-0 "><Strong>Half Day
+                                </Strong></div>
+                            <div class="card-body p-0 border-0">
+                                <p class="border-none"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-6 mb-3 mb-md-1 p-1">
+                        <div class="card paidcard d-flex justify-content-center align-items-center border-left-orange">
+                            <div class="card-header bg-transparent border-0 "><Strong>Paid Leave
+                                </Strong></div>
+                            <div class="card-body p-0 border-0">
+                                <p class="border-none"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                        <div class="tablewrapper ">
+                            <h5>Leave Status</h5>
+                            <div class="table-responsive">
+                                <table class="table overflow-auto" id="leaveDataTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">From date</th>
+                                            <th scope="col">To date</th>
+                                            <th scope="col">Total leave days</th>
+                                            <th scope="col">Leave Status</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for leave in leavedata %}
+                                        <tr>
+                                            <td>{{forloop.counter }}</td>
+                                            <td>{{leave.leave_from_date}}</td>
+                                            <td>{{leave.leave_to_date}}</td>
+                                            <td>{{ leave|calculate_paid_leave_days }} Days</td>
+                                            <td>{% if leave.leave_status == 1 %}
+                                                Approved
+                                                {% elif leave.leave_status == 2 %}
+                                                Pending
+                                                {% elif leave.leave_status == 3 %}
+                                                Rejected
+                                                {% comment %} {% else %} {% endcomment %}
+                                                {% endif %}
+                                            </td>
+                                            <td class="p-0">{% if leave.leave_status == 2 %}
+                                                <div class="d-flex">
+                                                    <a href="#" class="btn btn-danger delete-button btn-sm" data-bs-toggle="modal"
+                                                        data-bs-target="#popupfordelete" data-leave-id="{{ leave.id }}"
+                                                        id="anchorDeletebutton">
+                                                        <i class="bi bi-trash"></i>
+                                                    </a>
+                                                </div>
+                                                {% else %}
+                                                No action Needed.
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6"></div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                        <div class="tablewrapper ">
+                            <h5>Regularlization Status</h5>
+                            <div class="table-responsive">
+                                <table class="dataTable no-footer" id="RegularizationDataTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="sorting sorting_asc" tabindex="0"
+                                                aria-controls="RegularizationDataTable" rowspan="1" colspan="1"
+                                                aria-sort="ascending" aria-label="#: activate to sort column descending"
+                                                style="width: 0px;">#</th>
+                                                <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Employee Name: activate to sort column ascending" style="width: 0px;">
+                                                Date</th>
+                                            <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                                rowspan="1" colspan="1" aria-label="ClockIn Time: activate to sort column ascending"
+                                                style="width: 0px;">ClockIn Time</th>
+                                            <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                                rowspan="1" colspan="1" aria-label="ClockOut Time: activate to sort column ascending"
+                                                style="width: 0px;">ClockOut Time</th>
+                                            <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                                rowspan="1" colspan="1" aria-label=": activate to sort column ascending"
+                                                style="width: 0px;">Remarks</th>
+                                            <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                                rowspan="1" colspan="1" aria-label=": activate to sort column ascending"
+                                                style="width: 0px;">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for regularization in employee_regularization %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ regularization.date }}</td>
+                                            <td>{{ regularization.requested_clock_in }}</td>
+                                            <td>{{ regularization.requested_clock_out }}</td>
+                                            <td>
+                                                <textarea class="form-control form-control-sm" name="remarks" rows="1" disabled>{{ regularization.remarks|default:''}}</textarea>
+                                            </td>
+                                            <td>
+                                                {% if regularization.regularization_approved %}
+                                                    success
+                                                {% else %}
+                                                    pending
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- leave modal 2 -->
+<div class="modal fade" id="Leavemodal" tabindex="-1" aria-labelledby="LeavemodalLabel" data-bs-backdrop="static"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="LeavemodalLabel">Apply for leave</h1>
+                <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="leaveForm" method="POST" onsubmit="applyLeave()">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="mb-3">
+                                <label for="leavedateFrom" class="form-label mb-0">Select date from</label>
+                                <input type="date" class="form-control" id="leavedateFrom" name="leavedateFrom">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="mb-3">
+                                <label for="selectTimeFrom" class="form-label mb-0">Select half</label>
+                                <select class="form-select" aria-label="Default select example" id="selectTimeFrom" name="selectTimeFrom" required>
+                                    <option value="" selected disabled>Select Option</option>
+                                    <option value="1">First Half</option>
+                                    <option value="2">Second Half</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="mb-3">
+                                <label for="leavedateTo" class="form-label mb-0">Select date To</label>
+                                <input type="date" class="form-control" id="leavedateTo" name="leavedateTo">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="mb-3">
+                                <label for="selectTimeTo" class="form-label mb-0">Select half</label>
+                                <select class="form-select" aria-label="Default select example" id="selectTimeTo" name="selectTimeTo" required>
+                                    <option value="" selected disabled>Select Option</option>
+                                    <option value="1">First Half</option>
+                                    <option value="2">Second Half</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="selectLeaveType" class="form-label mb-0">Leave Type</label>
+                                <select class="form-select" aria-label="Default select example" id="selectLeaveType" name="selectLeaveType" required>
+                                    <option value="" selected disabled>Select Option</option>
+                                    <option value="Paid Leave">Privilege Leave</option>
+                                    <option value="Casual Leave">Casual Leave</option>
+                                    <option value="Sick Leave">Sick Leave</option>
+                                    <option value="Maternity Leave">Maternity Leave</option>
+                                    <option value="Paternity Leave">Paternity Leave</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="leaveDescription" class="form-label mb-0">Leave Reason</label>
+                                <textarea class="form-control" id="leaveDescription" rows="3" name="leaveDescription" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="leaveStatus"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn custom-button btn-sm" id="submitLeaveAttendance">Save changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="messageModal" class="modal fade" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
+    data-bs-zoom="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="attendancemodalLabel">Leave</h1>
+                <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 1 -->
+<div class="modal fade" id="regularlizationmodal" tabindex="-1" aria-labelledby="regularlizationmodalLabel"
+    aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="regularlizationLabel">Regularization</h1>
+               <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="attendanceRegForm">
+                    <div class="mb-3">
+                        <label for="dateselected" class="form-label mb-0">Date Selected</label>
+                        <input type="text" class="form-control form-control-sm" id="modalDateSelected" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="AddClockinTime" class="form-label mb-0">Add Clock In Time</label>
+                        <input type="time" class="form-control form-control-sm" id="AddClockinTime">
+                    </div>
+                    <div class="mb-3">
+                        <label for="AddClockOutTime" class="form-label mb-0">Add Clock Out Time</label>
+                        <input type="time" class="form-control form-control-sm" id="AddClockOutTime">
+                    </div>
+
+                    <label for="reason" class="form-label mb-0">Reason:</label>
+                    <textarea id="reason" class="form-control form-control-sm" name="reason" rows="4" cols="50"
+                        required></textarea><br>
+                    <div id="regStatus"></div>
+                    <button type="submit" class="btn btn-sm custom-button reloadbtn">Submit Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal for Success Message -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success!</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Success message content goes here -->
+                <p> Documents Update Successfully.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="popupfordelete" tabindex="-1" aria-labelledby="popupfordeleteModalLabel"
+    data-bs-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="popupfordeleteModalLabel">Delete Leave</h1>
+                <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Are you sure you want to cancel Your Leave?</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn custom-button btn-sm" id="confirmDelete">Confirm</button>
+                <input type="hidden" id="confirmDeletehidden" />
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="employee_id_hidden" value="{{employee.emp_id}}" />
+{%endblock maincontent%}
+{% block extrascript %}
+
+
+{% endblock extrascript %}

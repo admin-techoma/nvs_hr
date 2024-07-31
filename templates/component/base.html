@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    {% block title %}
+    {% endblock title %}
+  </title>
+  <link rel="stylesheet" href="{% static 'admin/scss/style.css' %}">
+  <link rel="icon" type="image/x-icon" href="{% static  'admin/img/PeoplPulselogo.png' %}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.3.5/jquery.timepicker.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+  <link rel="stylesheet" href="{% static 'js/Theme/bootstrap-5.3.3-dist/css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script>
+    (function() {
+      function calculateSettingAsThemeString() {
+        const localStorageTheme = localStorage.getItem("theme");
+        const systemSettingDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (localStorageTheme !== null) {
+          return localStorageTheme;
+        }
+        return systemSettingDark ? "dark" : "light";
+      }
+      const theme = calculateSettingAsThemeString();
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  {% block extracss %}
+  {% endblock extracss %}
+</head>
+<body>
+  <div id="mainWrapper" class="main-wrapper">
+    {% block sidebar %}
+    {% include 'component/sidebar.html' %}
+    {% endblock sidebar %}
+    <main>
+      {% block header %}
+      {% include 'component/header.html' %}
+      {% endblock header %}
+      {% block maincontent %}
+      {% endblock maincontent %}
+    </main>
+    <div id="loaderContainer" class="loader-container" style="display: none;">
+      <div class="lds-ring">
+          <div></div><div></div><div></div><div></div>
+      </div>
+  </div>
+  </div>
+<!-- Modal for uploading a new image -->
+<div class="modal fade" id="updateprofileimg" tabindex="-1" role="dialog" aria-labelledby="uploadResumeModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form id="updatepssidebarimg" action="" method="post"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadPsimgModalLabel">xx Upload New Profile Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="psimgFile">Choose File</label>
+                    <input type="file" name="c_psimg" id="psimgFile" class="form-control-file form-control-sm">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn custom-button btn-sm">Upload</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+<!-- Modal for Success Message -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="successModalLabel">Success!</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Documents updated successfully.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+</div>
+</div>
+</div>
+  <!-- jQuery -->
+<script src="{% static 'js/Vendor/jquery/jquery.min.js'%}"> </script>
+  <!-- Popper.js (for Bootstrap) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <!-- Bootstrap -->
+<script src="{%static 'js/Theme/bootstrap-5.3.3-dist/js/bootstrap.min.js' %}"></script>
+  <!-- Select2 -->
+<script src="{% static 'js/Vendor/select2/select2.full.js'%}"></script>
+  <!-- Moment.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <!-- jQuery Timepicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.3.5/jquery.timepicker.min.js"></script>
+  <!-- jsPDF -->
+{% comment %} <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script> {% endcomment %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<!-- DataTables and Buttons extensions -->
+<script src="{% static 'dataTables/DataTables-1.12.1/js/dataTables.dataTables.js' %}"></script>
+<script src="{% static 'dataTables/DataTables-1.12.1/js/jquery.dataTables.js'%}"></script>
+<!-- Custom and vendor scripts -->
+<script src="{% static 'js/Theme/layouts/header.js' %}"></script>
+<script src="{% static 'js/Custom/Components/attendanceCalender.js' %}"></script>
+<script src="{% static 'js/Custom/Pages/employee/employee.js' %}"></script>
+<script src="{% static 'js/Custom/Pages/employee/attendance.js' %}"></script>
+<script src="{% static 'js/Custom/Pages/employee/leaveapproval.js' %}"></script>
+<script src="{% static 'js/Custom/Pages/employee/resignapproval.js' %}"></script>
+<script src="{% static 'js/Vendor/jquery/jquery.js' %}"></script>
+<script src="{% static 'js/Vendor/select2/select2.full.js' %}"></script>
+<script src="{% static 'js/Vendor/xregexp/xregexp.js' %}"></script>
+<script src="{% static 'js/Custom/Pages/hr/attendanceReportPage.js' %}"></script>
+<script src="{% static 'js/Custom/Pages/hr/resumeList.js' %}"></script>
+<script src="{% static 'js/Custom/Pages/hr/interviewList.js' %}"></script>
+<script src="{% static 'js/Custom/Pages/hr/interviewTracker.js' %}"></script>
+<script src="{% static 'js/Custom/Pages/hr/onboardingList.js' %}"></script>
+<script src="{% static 'js/Custom/Pages/hr/resumeList.js' %}"></script>
+<script src="{% static 'js/Custom/Pages/hr/resumeUpload.js' %}"></script>
+<script src="{% static 'js/Utils/jquery.init.js' %}"></script>
+<script src="{% static 'js/Utils/actions.js' %}"></script>
+<script src="{% static 'js/Utils/autocomplete.js' %}"></script>
+<script src="{% static 'js/Utils/cancel.js' %}"></script>
+<script src="{% static 'js/Utils/collapse.js' %}"></script>
+<script src="{% static 'js/Utils/core.js' %}"></script>
+<script src="{% static 'js/Utils/filters.js' %}"></script>
+<script src="{% static 'js/Utils/inlines.js' %}"></script>
+<script src="{% static 'js/Utils/popup_response.js'%}"></script>
+<script src="{% static 'js/Utils/urlify.js' %}"></script>
+{% comment %} <script src="{% static 'js/Utils/change_form.js' %}"></script> {% endcomment %}
+{% comment %} <script src="{% static 'js/Theme/theme.js' %}" ></script> {% endcomment %}
+<script src="{% static 'js/Theme/darklighttheme.js' %}"></script>  
+<script src="https://cdn.datatables.net/buttons/2.1.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.1.1/js/buttons.print.min.js"></script> 
+ <script src="{% static 'dataTables/Buttons-2.2.3/js/buttons.dataTables.js' %}"></script>
+ <script>
+  document.querySelectorAll('.load-button').forEach(button => {
+    button.addEventListener('click', function() {
+        const loaderContainer = document.getElementById('loaderContainer');
+
+        // Display the loader container
+        loaderContainer.style.display = 'flex';
+
+        // Simulate a loading process (e.g., fetching data)
+        setTimeout(function() {
+            // Hide the loader after the simulated loading process is complete
+            loaderContainer.style.display = 'none';
+        }, 3000); // Change this to the actual loading time or remove the setTimeout
+    });
+
+});
+</script>
+{% block extrascript %}  
+{% endblock extrascript %}
+</body>
+</html>
+

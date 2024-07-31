@@ -1,0 +1,53 @@
+<form class="d-flex flex-wrap" method="post" enctype="multipart/form-data" id="uploadResumeForm" action="{% url 'hr:upload_resume'%}">
+    {% csrf_token %}
+    <div class=" col-6 p-2 mb-1">
+        <label for="exampleFormControlInput1" class="form-label mb-0">Candidate Name</label>
+        {{form.name}}
+    </div>
+    <div class="col-6 p-2 mb-1">
+        <label for="exampleFormControlInput1" class="form-label mb-0">Email Id</label>
+        {{form.email}}
+    </div>
+    <div class="col-6 p-2 mb-1">
+        <label for="exampleFormControlInput1" class="form-label mb-0">Mobile No</label>
+        {{form.phone_number}}
+    </div>
+    <div class="col-6 p-2 mb-1">
+        <label for="exampleFormControlInput1" class="form-label mb-0">Upload file</label>
+        {{form.resume}}
+    </div>
+    <div class="col-6 p-2 mb-1">
+        <label for="exampleFormControlInput1" class="form-label mb-0">Remarks</label>
+        {{form.remarks}}
+    </div>
+
+    <div id="candidateStatus"></div>
+    <div class="col-12 p-2 mb-1">
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+            <button class="btn custom-button btn-sm" type="submit" id="submitResume">Upload</button>
+        </div>
+    </div>
+</form>
+    {% if error_message %}
+    <div class="alert alert-danger" role="alert" id="errorModal" style="display: none;">
+        {% for message in error_message %}
+            {{ message }}
+        {% endfor %}
+        <button type="button" class="close" id="closeErrorAlert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert" id="errorModal" style="display: none;">
+        {% for message in form.errors %}
+            {{ message }}
+        {% endfor %}
+        <button type="button" class="close" id="closeErrorAlert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+
+    

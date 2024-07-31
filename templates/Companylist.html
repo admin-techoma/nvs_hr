@@ -1,0 +1,99 @@
+{% extends 'component/base.html' %}
+{% load static  %}
+{% block title %}Company{% endblock title %}
+{% block extracss %}
+{% endblock extracss %}
+{% block maincontent %}
+            <div class="main-content">
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+                {% else %}
+                <label for="exampleInputEmail1" class="form-label mb-0 text-left text-danger">{{ message }}</label>
+                {% endif %}
+                {% endfor %}
+                {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                    {{ error }}
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <form method="post" action="{% url 'hr:view_company' %}">   
+                    {% csrf_token %}
+                    <!-- <div class="d-flex justify-content-between flex-wrap mb-1 p-2">
+                        {% comment %} <div class="w-50 mb-1">
+                        </div> {% endcomment %}
+                        <div class="col-12  d-flex justify-content-end align-items-center flex-wrap">     
+                        </div>
+                    </div> -->
+                    <div class="w-100">
+                         <div class="card">
+                            <div class="card-header border-0">
+                                <div class="d-flex justify-content-between">
+                                    <div class="text-center d-flex align-items-center">
+                                        <h6 class="mb-0 pageTitle"><strong>Company List</strong></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="card-body"> 
+                            <div class="table-responsive overflow-auto ">
+                                <table class="DataTable" id="allCompanysTablelist">
+                                    <thead class="bg-none">
+                                        <tr class="bg-none">
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Company Name</th>
+                                            <th scope="col">Phone_no</th>
+                                            <th scope="col">Email_id</th>
+                                            <th scope="col">website</th>
+                                            <th scope="col">logo</th>
+                                            <th scope="col">status</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-none">
+                                        {% for company in company_data %}
+                                        <tr onclick="window.location='{% url 'hr:company_profile' company.pk %}'" class="row-select">
+                                            <td class="text-nowrap">{{ company.id }}</td>
+                                            <td ><div class="d-flex align-items-center">{{ company.name }}</td>
+                                            <td class="text-nowrap">{{ company.phone_no|default:'' }}</td>
+                                            <td class="text-lowercase text-nowrap">{{ company.email_id |default:''}}</td>
+                                            <td class="text-lowercase text-nowrap" >{{ company.website|default:'' }}</td>
+                                            <td class="text-nowrap" >{{ company.logo|default:'' }}</td>
+                                            <td class="text-nowrap" >{{ company.status|default:'' }}</td>
+                                            <td>
+                                                {% if company.status == "Active" %}
+                                                <div class="d-flex">
+                                                    <a class="btn btn-sm custom-button me-2 "
+                                                        href="{% url 'hr:company_profile' company.pk %}"><i
+                                                            class="bi bi-eye"></i></a>
+                                                </div>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>    
+                        </div>
+                    </div>
+                </form>
+            </div>
+{%endblock maincontent%}
+{% block extrascript %}
+    <script>
+        $(document).ready(function () {
+            $('#allCompanysTablelist').DataTable({
+                responsive: true,
+                searching: true,
+                paging: true,
+                fixedHeader: true,
+            });   
+        });
+    </script>
+    {% endblock extrascript %}

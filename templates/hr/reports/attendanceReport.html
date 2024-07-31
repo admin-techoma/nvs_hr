@@ -1,0 +1,223 @@
+{% extends 'component/base.html' %}
+{% load static  %}
+{% block title %}Attendance Report{% endblock title %}
+{% block extracss %}
+{% endblock extracss %}
+{% block maincontent %}
+            <div class="main-content  ">
+                <div class="card ">
+                    <div class="card-header border-0">
+                        <div class="d-flex justify-content-between">
+                            <div class="text-center d-flex align-items-center">
+                                <h6 class="mb-0 pageTitle"><strong>Attendance Report</strong></h6>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="card-body   ">
+                        <form method="get" action="{% url 'hr:view_employee' %}" class="h-100">
+                            {% csrf_token %}
+                            {% for message in messages %}
+                            {% if message.tags == 'success' %}
+                            <div class="alert alert-success" role="alert">
+                                {{ message }}
+                            </div>
+                            {% else %}
+                            <label for="exampleInputEmail1" class="form-label mb-0 text-left text-danger">{{ message }}</label>
+                            {% endif %}
+                            {% endfor %}
+                            {% if form.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                {{ error }}
+                                {% endfor %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="d-flex justify-content-between flex-wrap mb-0 p-0">
+                                <div class="col-12 d-flex justify-content-end align-items-center">
+                                     <!-- Add these two date input fields inside the form  -->
+                                    <div class="col-12 col-md-4 d-flex py-1 ">
+                                        <input type="date" id="min" class="form-control form-control-sm me-2"
+                                            value="{{ date|date:'d-m-Y' }}" name="min">
+                                        <input type="date" id="max" class="form-control form-control-sm "
+                                            value="{{ date|date:'d-m-Y' }}" name="max">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row  overflow-hidden mt-0">
+                                <div class="table-responsive overflow-auto ">
+                                    <table class="" id="allattendanceTable">
+                                        <thead class="bg-none">
+                                            <tr class="headings">
+                                                <th scope="col">Emp Id</th>
+                                                <th scope="col">Emp Name</th>
+                                                <th scope="col">date</th>
+                                                <th scope="col">clock in</th>
+                                                <th scope="col">clock out</th>
+                                                <th scope="col">full day</th>
+                                                <th scope="col">half day</th>
+                                                <th scope="col">absent</th>
+                                                <th scope="col">on leave</th>
+                                            </tr>
+                                        </thead>                                   
+                                            <tfoot>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>            
+{%endblock maincontent%}
+{% block extrascript %}
+   <script>
+        $.fn.dataTable.render.moment = function (from, to, locale){
+            // Argument shifting
+            if (arguments.length === 1) {
+                locale = 'en';
+                to = from;
+                from = 'YYYY-MM-DD';
+            } else if (arguments.length === 2) {
+                locale = 'en';
+            }
+            return function (d, type, row) {
+                if (!d) {
+                    return type === 'sort' || type === 'type' ? 0 : d;
+                }
+                var m = window.moment(d, from, locale, true);
+                // Order and type get a number value from Moment, everything else
+                // sees the rendered value
+                return m.format(type === 'sort' || type === 'type' ? 'x' : to);
+            };
+        };
+        $(document).ready(function () {
+            $('#allattendanceTable tfoot td').each(function () {
+                var title = $(this).text();
+                $(this).html('<input type="text" class="form-control form-control-sm border-0" placeholder="' + title + '" />');
+            });
+            var table = $('#allattendanceTable').DataTable({
+                dom: 'lfrt<"ip"iB>p',
+                responsive: true,
+                searching: true,
+                paging: true,
+                fixedHeader: {
+                    header: true,
+                    footer: true
+                },
+             dom: 'Bfrtip', // Show only the buttons
+                stateSave: true,
+                processing: true,
+                buttons: [
+                    {
+                        extend: 'copy',
+                        className: 'btn custom-button-two btn-sm mb-2', // Add your custom class for styling
+                        text: '<i class="bi bi-files"></i> Copy', // You can also customize the button text and add icons
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'btn custom-button-two btn-sm mb-2',
+                        text: '<i class="bi bi-file-excel"></i> Excel',
+                    },
+                ],
+                ajax: {
+                    url: "{% url 'report:attendancedata' %}",
+                    type: "GET",
+
+                    data: function (dt) {
+                        dt.from = $('#min').val();
+                        dt.to = $('#max').val();
+                    }
+                },
+                columns: [{
+                    data: "employee__emp_id"
+                }, {
+                    data: "employee__name"
+                },{
+                    data: "date"
+                }, {
+                    data: "clock_in"
+                }, {
+                    data: "clock_out"
+                }, {
+                    data: "is_full_day",
+                    render: function (data, type, row) {
+                        return data
+                            ? '<i class="bi bi-check-circle-fill text-success" "></i>'
+                            : '<i class="bi bi-x-circle-fill text-danger""></i>';
+                    }
+                },
+                {
+                    data: "is_half_day",
+                    render: function (data, type, row) {
+                        return data
+                            ? '<i class="bi bi-check-circle-fill text-success" "></i>'
+                            : '<i class="bi bi-x-circle-fill text-danger""></i>';
+                    }
+                },
+                {
+                    data: "is_absent",
+                    render: function (data, type, row) {
+                        return data
+                            ? '<i class="bi bi-check-circle-fill text-success" "></i>'
+                            : '<i class="bi bi-x-circle-fill text-danger""></i>';
+                    }
+                },
+                {
+                    data: "is_on_leave",
+                    render: function (data, type, row) {
+                        return data
+                            ? '<i class="bi bi-check-circle-fill text-success" "></i>'
+                            : '<i class="bi bi-x-circle-fill text-danger""></i>';
+                    }
+                }],
+                deferRender: true,
+                scrollX: true,
+                scrollY: window.innerHeight - (.6 * window.innerHeight),
+                initComplete: function () {
+                    // Apply the search
+                    this.api().columns().every(function () {
+                        var that = this;
+                        $('input', this.footer()).on('keyup change clear', function () {
+                            if (that.search() !== this.value) {
+                                that.search(this.value).draw();
+                            }
+                        });
+                    });
+                }
+            });
+            $('.dataTables_filter input[type="search"]').addClass('form-control form-control-sm');
+            // $('#selectAllCheckbox').on('change', function () {
+            //     var checked = $(this).prop('checked');
+            //     $('input[type="checkbox"]', table.rows().nodes()).prop('checked', checked);
+            // });
+            // $('#selectAllCheckboxFooter').on('change', function () {
+            //     var checked = $(this).prop('checked');
+            //     $('input[type="checkbox"]', table.rows().nodes()).prop('checked', checked);
+            // });
+            // Change row background color on click
+            $('#allattendanceTable tbody').on('click', 'tr', function () {
+                // Remove the 'selected' class from all rows except the clicked one
+                table.rows().nodes().to$().removeClass('selected');
+                // Toggle the 'selected' class on the clicked row
+                $(this).toggleClass('selected');
+            });
+            $('#min, #max').on('change', function () {
+                table.ajax.reload();
+                table.draw();
+            });
+        });
+    </script>
+    {% endblock extrascript %}

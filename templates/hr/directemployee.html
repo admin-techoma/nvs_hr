@@ -1,0 +1,817 @@
+{% extends 'component/base.html' %}
+{% load static %}
+{% block title %}Direct Employee{% endblock title %}
+{% block extracss %}
+{% endblock extracss %}
+{% block maincontent %}
+<div class="main-content">
+    {% for message in messages %}
+    {% if message.tags == 'success' %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% else %}
+    <label for="exampleInputEmail1" class="form-label mb-0 text-left text-danger">{{ message
+        }}</label>
+    {% endif %}
+    {% endfor %}
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+        {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+        {{ error }}
+        {% endfor %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="card ">
+        <div class="card-body">
+            <form method="POST" action="" class="">
+                {% csrf_token %}
+                <div class="row d-flex flex-wrap">
+                    <div class="mb-3 col-12 col-md-4 col-xl-3 d-flex flex-wrap">
+                        <div class="d-flex justify-content-center mb-1 w-100">
+                            <figure class="employeeprofilewrapper  justify-content-center align-items-center">
+                                {% comment %} <img src="/media/{{documents.c_psimg.url}}"
+                                    class="employeeprofile img-fluid" alt="profile Pic" /> {% endcomment %}
+                                {% if documents and documents.c_psimg %}
+                                <img src="{{documents.c_psimg.url}}" alt="img" class="employeeprofile img-fluid"
+                                    alt="profile Pic">
+                                {% else %}
+                                <img src="{% static 'admin/img/avtar.jpg' %}" alt="profile Pic"
+                                    class="employeeprofile img-fluid">
+                                {% endif %}
+                            </figure>
+                        </div>
+                        <div class="mb-3 w-100">
+                            <label for="createemployeename" class="form-label mb-0 mb-0">Full Name(as per aadharcard)</label>
+                            <input type="text" class="form-control form-control-sm" id="createemployeename" name="name"
+                                value="" required>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-9 d-flex flex-wrap p-0">
+                        <div class="mb-3 col-12 col-md-6 col-xl-4 px-2">
+                            <label for="createemployeefirstname" class="form-label mb-0 mb-0">Employee First Name</label>
+                            <input type="text" class="form-control form-control-sm" id="createemployeefirstname"
+                                name="first_name">
+                        </div>
+    
+                        <div class="mb-3 col-12 col-md-6 col-xl-4 px-2">
+                            <label for="createemployeeMiddlename" class="form-label mb-0 mb-0">Employee Middle Name</label>
+                            <input type="text" class="form-control form-control-sm" id="createemployeeMiddlename"
+                                name="middle_name" value="">
+                        </div>
+                        <div class="mb-3 col-12 col-md-6 col-xl-4 px-2">
+                            <label for="createemployeelastname" class="form-label mb-0  mb-0">Employee Last Name</label>
+                            <input type="text" class="form-control form-control-sm" id="createemployeelastname"
+                                name="last_name" value="">
+                        </div>
+                        <div class="mb-3 col-12 col-md-6 col-xl-4 px-2">
+                            <label for="createemployeedateofbirth" class="form-label mb-0 mb-0">Date of
+                                Birth</label>
+                            <input type="date" class="form-control form-control-sm" id="createemployeedateofbirth"
+                                name="dob" placeholder="YYYY-MM-DD" required oninput="validateDOB()" data-min-age="18">
+                            <div id="dobError" class="text-danger"></div>
+                            <div id="currentAge"></div>
+                        </div>
+                        <div class="mb-3 col-12 col-md-6 col-xl-4 px-2">
+                            <label for="gender" class="form-label mb-0 mb-0">Gender</label>
+                            <select id="gender" class="form-control form-control-sm" name="gender" required>
+                                <option value="" selected>Select Gender</option>
+                                {% for gender in gender %}
+                                <option value="{{ gender.id }}">{{ gender.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div> 
+                        <div class="col-12 col-md-4 mb-3 px-2">
+                            <label class="form-label mb-0">Marital Status</label>
+                            <select  class="form-control form-control-sm" name="married_status"
+                                id="married_status">
+                                <option value="Unmarried" {% if emp_data.married_status == 'Unmarried' %}selected{% endif %}>Unmarried</option>
+                                <option value="Married" {% if emp_data.married_status == 'Married' %}selected{% endif %}>Married</option>
+                            </select>
+                        </div> 
+                        <div class="mb-3 col-12 col-md-6 col-xl-4 px-2">
+                            <label class="form-label mb-0 mb-0" for="tppremium">Aadhar Card Number</label>
+                            <input type="text" class="form-control form-control-sm" name="aadhaarcard_no" autocomplete="off"
+                                maxlength="12" id="aadhaarcard_no" pattern="[0-9]{12}"
+                                title="Invalid Aadhar Card Number entered. Please enter a 12-digit decimal number."
+                                required />
+                        </div>
+                        <div class="mb-3 col-12 col-md-6 col-xl-4 px-2">
+                            <label class="form-label mb-0 mb-0" for="odpremium">PAN Number</label>
+                            <input type="tel" class="form-control form-control-sm" name="pancard_no" autocomplete="off"
+                                maxlength="10" id="con_pancard_no" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
+                                title="Invalid PAN Number entered. eg.ABCTY1234D" required
+                                oninput="this.value = this.value.toUpperCase()" value="" />
+                            {% comment %} <input autocomplete="off" type="text" id="pancard_no" class="form-control"
+                                name="pancard_no" value="" required> {% endcomment %}
+                        </div>
+                        <div class="mb-3 col-12 col-md-6 col-xl-4 px-2">
+                            <label>Blood Group</label>
+                            <select  class="form-control form-control-sm" name="blood_group"
+                                id="blood_group">
+                                <option value="Not Update" {% if emp_data.blood_group == 'Not Update' %} selected {%endif%}>Not Update</option>
+                                <option value="A+" {% if emp_data.blood_group == 'A+' %}selected{% endif %}>A+
+                                </option>
+                                <option value="B+" {% if emp_data.blood_group == 'B+' %}selected{% endif %}>B+
+                                </option>
+                                <option value="AB+" {% if emp_data.blood_group == 'AB+' %}selected{% endif %}>AB+
+                                </option>
+                                <option value="O+" {% if emp_data.blood_group == 'O+' %}selected{% endif %}>O+
+                                </option>
+                                <option value="A-" {% if emp_data.blood_group == 'A-' %}selected{% endif %}>A-
+                                </option>
+                                <option value="B-" {% if emp_data.blood_group == 'B-' %}selected{% endif %}>B-
+                                </option>
+                                <option value="AB-" {% if emp_data.blood_group == 'AB-' %}selected{% endif %}>AB-
+                                </option>
+                                <option value="O-" {% if emp_data.blood_group == 'O-' %}selected{% endif %}>O-
+                                </option>
+                                <!-- Add options for other blood groups as needed -->
+                            </select>
+                        </div>
+                        <div class="mb-3 col-12 col-md-6 col-xl-4 px-2">
+                            <label for="email" class="form-label mb-0 mb-0">Email id</label>
+                            <input type="email" class="form-control form-control-sm" id="email" name="email" value="{{ candidate.email }}"  required>
+                            <span id="email-error" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3 col-12 col-md-6 col-xl-4 px-2">
+                            <label for="createemployeecontactno" class="form-label mb-0 mb-0">Phone Number :</label>
+                            <input autocomplete="off" type="tel"  class="form-control form-control-sm" value="{{candidate.phone_number}}" name="contact_no" id="createemployeecontactno" autocomplete="off" pattern="[0-9]{10}" maxlength="10" minlength="10" required>
+                            <span id="contact_no-error" class="text-danger"></span> 
+                        </div>
+                     
+                        <div class="mb-3 col-12 col-md-4 col-xl-3 px-2 ">
+                            <label for="createemployeecontactno" class="form-label mb-0 mb-0">Alternative Contact No :</label>
+                            <input autocomplete="off" type="tel"  class="form-control form-control-sm" value="" name="other_contact_no" id="createemployeeothercontactno" autocomplete="off" pattern="[0-9]{10}" maxlength="10" minlength="10" required>
+                          
+                        </div>
+                         
+                                         
+                    </div>
+                    </div>
+                    <div class="row d-flex flex-wrap">
+
+                    <div class="mb-3 col-12 col-md-4 col-xl-3" hidden>
+                        <label for="id" class="form-label mb-0 mb-0">Employee Code</label>
+                        <input autocomplete="off" type="text" id="id" class="form-control form-control-sm" name="emp_id"
+                            value="{{ emp_id }}" />
+                    </div>
+                    <input type="hidden" class="form-control" id="createemployeefullname" name="full_name"
+                        value="{{ candidate.name}}">
+                   
+
+                    {% for message in messages %}
+                    <h6 class="text-danger"> {{message}} </h6>
+                    {% endfor %}
+                    {% comment %} <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeeofficeemailid" class="form-label mb-0 mb-0">Employee Office Email
+                            id</label>
+                        <input type="email" class="form-control form-control-sm" id="createemployeeofficeemailid"
+                            name="office_email" value="">
+                    </div> {% endcomment %}
+                   
+                    <div class="col-md-12">
+                        <h5>Permenant Address</h5>
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeeaddress1" class="form-label mb-0 mb-0">Employee Address 1</label>
+                        <input type="text" class="form-control form-control-sm" id="paddress" name="address" value=""
+                            required>
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeecity" class="form-label mb-0 mb-0">Employee City</label>
+                        <input type="text" class="form-control form-control-sm" id="pcity" name="city" value=""
+                            required>
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeestate" class="form-label mb-0 mb-0">Employee State</label>
+                        <input type="text" class="form-control form-control-sm" id="pstate" name="state" value=""
+                            required>
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeecountry" class="form-label mb-0 mb-0">Employee Country</label>
+                        <input type="text" class="form-control form-control-sm" id="pcountry" name="country" value=""
+                            required>
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeepincode" class="form-label mb-0 mb-0">Employee Pincode</label>
+
+                        <input autocomplete="off" type="tel" step="0" class="form-control form-control-sm" id="ppincode"
+                        pattern="[0-9]{6}" title="Please enter exactly 6 digits." minlength="6" maxlength="6" name="pin_code" required>
+                    </div>
+                    <div class="col-md-12">
+                        <h5>correspondence Address</h5>
+                        <div class="mb-3 col-12 col-md-4 col-xl-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="sameasabove">
+                                <label class="form-check-label" for="sameasabove">
+                                    Same as Above
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeePremenetaddress" class="form-label mb-0 mb-0">Employee Permenent
+                            Address
+                        </label>
+                        <input type="text" class="form-control form-control-sm" id="caddress" name="c_address" value=""
+                            required>
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeecity" class="form-label mb-0 mb-0">Employee City</label>
+                        <input type="text" class="form-control form-control-sm" id="ccity" name="c_city" value=""
+                            required>
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeestate" class="form-label mb-0 mb-0">Employee State</label>
+                        <input type="text" class="form-control form-control-sm" id="cstate" name="c_state" value=""
+                            required>
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeecountry" class="form-label mb-0 mb-0">Employee Country</label>
+                        <input type="text" class="form-control form-control-sm" id="ccountry" name="c_country" value=""
+                            required>
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeepincode" class="form-label mb-0 mb-0">Employee Pincode</label>
+                        <input autocomplete="off" type="tel" step="0" class="form-control form-control-sm" id="cpincode"
+                            pattern="[0-9]{6}" minlength="6" maxlength="6" name="c_pin_code" required>
+
+                    </div>
+                    <div class="col-md-12">
+                        <h5>Employee details</h5>
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeedateofjoin" class="form-label mb-0 mb-0">Employee Date of
+                            Joining</label>
+                        <input type="date" class="form-control form-control-sm" id="createdirectemployeedateofjoin" name="doj"
+                            placeholder="YYYY-MM-DD" required>
+                    </div>
+                    {% comment %} <div id="totalLeaveDaysContainer" class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="totalLeaveDays" class="form-label mb-0 mb-0">Total Available Leave Days</label>
+                        <input type="text" class="form-control form-control-sm" id="totalLeaveDays"
+                            name="totalLeaveDays" readonly>
+                    </div> {% endcomment %}
+
+                    <div class="mb-3 col-12 col-md-3">
+                        <label for="company_branch" class="form-label mb-0 mb-0">Work Location</label>
+                        <select id="company_branch" class="form-control form-control-sm" name="company_branch">
+                            {% comment %} <option selected>Select Work Location</option> {% endcomment %}
+
+                            {% for i in company_branch %}
+                            <option value="{{ i.id}}">{{ i.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeeUANNumber" class="form-label mb-0 mb-0">UAN Number</label>
+                        <input type="number" class="form-control form-control-sm" id="createemployeeUANNumber" name="uanno" value="0" >
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeePfnumber" class="form-label mb-0 mb-0">PF Number</label>
+                        <input type="text" class="form-control form-control-sm" id="createemployeePfnumber" name="pfno" value="">
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="pf_joining_date" class="form-label mb-0 mb-0">PF Joining Date</label>
+                        <input type="date" class="form-control form-control-sm" id="pf_joining_date" name="pf_joining_date" placeholder="YYYY-MM-DD">
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="createemployeeesicnumber" class="form-label mb-0 mb-0">ESIC Number</label>
+                        <input type="text" class="form-control form-control-sm" id="createemployeeesicnumber" name="esicno" value="" >
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label for="esic_joining_date" class="form-label mb-0 mb-0">ESIC Joining Date</label>
+                        <input type="date" class="form-control form-control-sm" id="esic_joining_date" name="esic_joining_date" placeholder="YYYY-MM-DD">
+                    </div> 
+                  
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label class="form-label" for="odpremium">Bank Account Number</label>
+                        <input type="tel" class="form-control form-control-sm" id="account_no" name="account_no" pattern="[0-9]{10,20}" maxlength="20"  title="Please enter a 20-digit decimal number." required />
+                                      
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label class="form-label" for="tppremium">Bank Name</label>
+                        <input autocomplete="off" type="text" id="bank_name" class="form-control form-control-sm"
+                            name="bank_name" value="" required>
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+
+                        <label class="form-label mb-0 mb-0" for="tppremium">IFSC Code</label> <input autocomplete="off" type="text" id="ifsc_code" class="form-control form-control-sm" name="ifsc_code" value="" maxlength="11" pattern="[A-Z]{4}0[A-Z0-9]{6}" oninput="this.value = this.value.toUpperCase()" required>
+                        <span class="text-danger" id="ifsc_code-error"></span>
+                    </div>
+                    <div class="mb-3 col-12 col-md-4 col-xl-3">
+                        <label class="form-label" for="tppremium">Bank Branch</label>
+                        <input autocomplete="off" type="text" id="branch" class="form-control form-control-sm"
+                            name="branch" value="" required>
+                    </div>
+                    <div class="row w-100">
+                        <div class="col-12 mb-2 border-bottom">
+                            <h5>Emergency Contact Details</h5>
+                        </div>
+                        <div class="col-12 col-md-3 mb-3">
+                            <label class="form-label mb-0">Name</label>
+                            <input  type="Text" class="form-control form-control-sm" placeholder="" id="ECDName" name="emergency_contactname" value="" required>
+                        </div>
+                        <div class="col-12 col-md-3 mb-3">
+                            <label class="form-label mb-0">Mobile No</label>
+                            <input autocomplete="off" type="tel"  class="form-control form-control-sm" value="{{candidate.emergency_contactnumber}}" name="emergency_contactnumber" id="emergency_contactnumber" autocomplete="off" pattern="[0-9]{10}" maxlength="10" minlength="10" required>
+                        </div>
+                        <div class="col-12 col-md-3 mb-3">
+                        <label class="form-label mb-0">Relation as </label>
+                          
+                        <select  class="form-control form-control-sm"  aria-label="Default select example" name="emergency_relationas" required
+                        id="emergency_relationas">
+                        <option value="Not Update" {% if emp_data.blood_group == 'Not Update' %} selected {%endif%}>Select Relation with Employee</option>
+                        <option value="Father" {% if emp_data.blood_group == 'Father' %}selected{% endif %}>Father
+                        </option>
+                        <option value="Mother" {% if emp_data.blood_group == 'Mother' %}selected{% endif %}>Mother
+                        </option>
+                        <option value="Spouse" {% if emp_data.blood_group == 'Spouse' %}selected{% endif %}>Spouse
+                        </option>
+                        <option value="Son" {% if emp_data.blood_group == 'Son' %}selected{% endif %}>Son
+                        </option>
+                        <option value="Daughter" {% if emp_data.blood_group == 'Daughter' %}selected{% endif %}>Daughter
+                        </option>
+                        <option value="Other" {% if emp_data.blood_group == 'Other' %}selected{% endif %}>Other
+                        </option>
+                       
+                        <!-- Add options for other blood groups as needed -->
+                    </select>
+                        </div>
+                        
+                    <div class="col-md-12">
+                        <h5>Work details</h5>
+                    </div>
+                    <div>
+
+                        <!-- Button trigger modal -->
+                        <button id="" type="button" class="btn custom-button btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#addDept">
+                            Add Department
+                        </button>
+                        <button type="button" class="btn custom-button btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#addDesig">
+                            Add Designation
+                        </button>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="addDept" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Department</h1>
+                                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3" hidden>
+                                        <label for="exampleInputEmail1" class="form-label">Department
+                                            Id</label>
+                                        <input type="text" class="form-control form-control-sm" id="DeptId">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="newdepartment" class="form-label">Add
+                                            Department</label>
+                                        <input type="text" id="newdepartment" class="form-control form-control-sm"
+                                            name="newdepartment">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" id="closebtn" class="btn closebtn custom-button btn-sm"
+                                        aria-label="Close">
+                                        <span aria-hidden="true" data-dismiss="modal">Save and Close</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="addDesig" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Designation</h1>
+                                    <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="adddepartmentname" class="form-label">Department</label>
+                                        <select class="form-select form-select-sm" id="adddepartment" name="department">
+                                            {% for department_all in department_all %}
+                                            <option value="{{ department_all.name }}">{{ department_all.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="adddesignation" class="form-label">Designation</label>
+                                        <input type="text" class="form-control form-control-sm" id="adddesignation"
+                                            name="adddesignation">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" id="modalbutton" class="btn modalbutton custom-button btn-sm"
+                                        aria-label="Close">
+
+                                        <span aria-hidden="true" data-dismiss="modal">Save and Close</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-12 col-md-3">
+                        <label for="departmentoptions" class="form-label">Department</label>
+                        <select id="departmentoptions" class="form-control form-control-sm" name="department" required>
+                            <option value="" selected>Select Department</option>
+                            {% for department_all in department_all %}
+                            <option value="{{ department_all.id }}">{{ department_all.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3 col-12 col-md-3">
+                        <label for="designationoptions" class="form-label">Designation</label>
+                        <select id="designationoptions" class="form-control form-control-sm" name="designation"
+                            required>
+                            <option value="" selected>Select Designation</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3 col-12 col-md-3">
+                        <label for="position" class="form-label">Position</label>
+                        <select id="position" class="form-control form-control-sm" name="position" required>
+                            <option value="" selected>Select Position</option>
+                            {% for position in position %}
+                            <option value="{{ position.id }}">{{ position.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3 col-12 col-md-3">
+                        <label for="reporting_to" class="form-label">Reporting Manager</label>
+
+                        <select id="reporting_to" class="form-select form-select-sm" aria-label="Default select example"
+                            name="reporting_to">
+                            <option value="" selected>Select Reporting Manager</option>
+                            {% for employee in reporting_managers %}
+                            <option value="{{ employee.reporting_to}}">
+                                {{employee.reporting_to}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3 col-12 col-md-3">
+                        <div class="">
+                            <h5> User Roles and Permissions</h5>
+                        </div>
+
+                        <div class="d-flex flex-wrap">
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" id="interview_take"
+                                    name="interview_take" value="true" {% if interview_take %}checked{% endif %}>
+                                <label class="form-check-label" for="interview_take">
+                                    Can Take Interview ?
+                                </label>
+                            </div>
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" id="technical_round"
+                                    name="technical_round" value="true" {% if technical_round %}checked{% endif %}>
+                                <label class="form-check-label" for="technical_round">
+                                    Can Take Technical round ?
+                                </label>
+                            </div>
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" id="telephonic_round"
+                                    name="telephonic_round" value="true" {% if telephonic_round %}checked{% endif %}>
+                                <label class="form-check-label" for="telephonic_round">
+                                    Can Take Telephonic round ?
+                                </label>
+                            </div>
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" id="round_two" name="round_two"
+                                    value="true" {% if round_two %}checked{% endif %}>
+                                <label class="form-check-label" for="round_two">
+                                    Can Take Round two ?
+                                </label>
+                            </div>
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" id="round_three" name="round_three"
+                                    value="true" {% if round_three %}checked{% endif %}>
+                                <label class="form-check-label" for="round_three">
+                                    Can Take Round three ?
+                                </label>
+                            </div>
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" id="final_round" name="final_round"
+                                    value="true" {% if final_round %}checked{% endif %}>
+                                <label class="form-check-label" for="final_round">
+                                    Can Take Final round ?
+                                </label>
+                            </div>
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" id="hr_round" name="hr_round"
+                                    value="true" {% if hr_round %}checked{% endif %}>
+                                <label class="form-check-label" for="hr_round">
+                                    Can Take Hr round ?
+                                </label>
+                            </div>
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" id="reporting_take"
+                                    name="reporting_take" value="true" {% if reporting_take %}checked{% endif %}>
+                                <label class="form-check-label" for="reporting_take">
+                                    Is Reporting Head ?
+                                </label>
+                            </div>
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="checkbox" id="esic_apply" name="esic_apply"
+                                    value="true" {% if esic_apply %}checked{% endif %}>
+                                <label class="form-check-label" for="esic_apply">
+                                    Is ESIC Apply ?
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="mb-3 col-12 col-md-3">
+                    <button type="submit" class="btn btn-sm custom-button">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{%endblock maincontent%}
+
+{% block extrascript %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        splitFullNameOnLoad();
+    });
+
+    function splitFullNameOnLoad() {
+        var fullNameInput = document.getElementById('createemployeefullname');
+        var firstNameInput = document.getElementById('createemployeefirstname');
+        var lastNameInput = document.getElementById('createemployeelastname');
+
+        var fullName = fullNameInput.value.trim();
+        var spaceIndex = fullName.indexOf(' ');
+
+        if (spaceIndex !== -1) {
+            var firstName = fullName.substring(0, spaceIndex);
+            var lastName = fullName.substring(spaceIndex + 1);
+            firstNameInput.value = firstName;
+            lastNameInput.value = lastName;
+        } else {
+            firstNameInput.value = fullName;
+            lastNameInput.value = '';
+        }
+    }
+</script>
+<script>
+    function validateDOB() {
+        var dobInput = document.getElementById("createemployeedateofbirth");
+        var dob = new Date(dobInput.value);
+        var currentDate = new Date();
+        var minAge = parseInt(dobInput.getAttribute("data-min-age"));
+
+        var dobError = document.getElementById("dobError");
+        var currentAgeDisplay = document.getElementById("currentAge");
+
+        if (dob > currentDate) {
+            dobError.textContent = "Please select a valid date of birth.";
+            currentAgeDisplay.textContent = "";
+        } else {
+            dobError.textContent = "";
+
+            var age = currentDate.getFullYear() - dob.getFullYear();
+            if (currentDate.getMonth() < dob.getMonth() || (currentDate.getMonth() === dob.getMonth() && currentDate.getDate() < dob.getDate())) {
+                age--;
+            }
+
+            if (age < minAge) {
+                dobError.textContent = "Employee must be at least " + minAge + " years old.";
+                currentAgeDisplay.textContent = "";
+            } else {
+                currentAgeDisplay.textContent = "Current Age: " + age + " years old";
+            }
+        }
+    }
+</script>
+<script>
+    // Get today's date
+    var today = new Date();
+    
+    // Convert today's date to ISO format (YYYY-MM-DD) for comparison with input date
+    var todayISO = today.toISOString().split('T')[0];
+    
+    // Get the input element
+    var dojInput = document.getElementById("createemployeedateofjoin");
+    
+    // Set the minimum selectable date to today's date
+    dojInput.min = todayISO;
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Assuming that the closebtn is inside a modal with the ID addDept
+        $('#closebtn').click(function () {
+            $('#addDept').modal('hide');
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        // Assuming that the closebtn is inside a modal with the ID addDept
+        $('#modalbutton').click(function () {
+            $('#addDesig').modal('hide');
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        // Handle checkbox change event
+        $('#sameasabove').change(function () {
+            if ($(this).prop('checked')) {
+                // Copy values from permanent address to correspondence address
+                $('#caddress').val($('#paddress').val());
+                $('#ccity').val($('#pcity').val());
+                $('#cstate').val($('#pstate').val());
+                $('#ccountry').val($('#pcountry').val());
+                $('#cpincode').val($('#ppincode').val());
+
+            } else {
+                // Clear values in correspondence address
+                $('#caddress').val('');
+                $('#ccity').val('');
+                $('#cstate').val('');
+                $('#ccountry').val('');
+                $('#cpincode').val('');
+            }
+        });
+    });
+</script>
+<script>
+    // Fetch designation based on department_id
+    $("#departmentoptions").change(function () {
+        var id = $(this).val();
+
+        $.ajax({
+            url: "{% url 'hr:ajax_load_designation' %}",
+            data: {
+                'department': id
+            },
+            success: function (data) {
+                var designationSelect = $("#designationoptions");
+                designationSelect.empty();  // Clear existing options
+
+                var designations = data.designations;
+                for (var i = 0; i < designations.length; i++) {
+                    designationSelect.append(
+                        $("<option>").attr('value', designations[i].id).text(designations[i].name)
+                    );
+                }
+            }
+        });
+    });
+
+
+    $(document).ready(function () {
+        // Load reporting managers based on selected department
+        $('#departmentoptions').change(function () {
+            var department_id = $(this).val();
+            var reportingSelect = $('#reporting_to');
+
+            $.ajax({
+                url: "{% url 'hr:ajax_load_reporting_managers' %}",
+                data: {
+                    'department_id': department_id
+                },
+                success: function (data) {
+                    var reportingManagers = data.reporting_managers;
+                    reportingSelect.empty();  // Clear existing options
+                    reportingSelect.append('<option value="" selected>Select Reporting Manager</option>');
+
+                    for (var i = 0; i < reportingManagers.length; i++) {
+                        reportingSelect.append(
+                            $("<option>").attr('value', reportingManagers[i].emp_id).text(reportingManagers[i].name)
+                        );
+                    }
+                }
+            });
+        });
+
+
+    });
+</script>
+<script>
+    $(".closebtn").click(function (ev) {
+        var newdepartmentno = $('#newdepartmentno').val();
+        var newdepartment = $('#newdepartment').val();
+
+        $.ajax({
+            url: "{% url 'hr:ajax_newdepartment' %}",
+            data: {
+                'newdepartmentno': newdepartmentno,
+                'newdepartment': newdepartment,
+            },
+            success: function (response) {
+                if (!response.valid) {
+                    alert("You cannot create a department with the same name");
+                    $('#newdepartment').val("").focus();
+                } else {
+                    // Update the select options with the new department
+                    $('#departmentoptions').append(`<option value="${response.newdepartment}" selected>
+                        ${response.newdepartment}
+                    </option>`);
+                    // Optionally, you can select the new option
+                    $('#adddepartment').append(`<option value="${response.newdepartment}" selected>
+                        ${response.newdepartment}
+                    </option>`);
+                    // Close the modal or perform other actions
+                    $('#addDept').modal('hide');
+                }
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+    });
+</script>
+<script>
+    $("#modalbutton").click(function (ev) {
+        debugger
+        var adddesignationno = $('#adddesignationno').val();
+        var adddepartmentname = $('#adddepartment').val();
+        var adddesignation = $('#adddesignation').val();
+
+        $.ajax({
+            url: "{% url 'hr:ajax_adddesignation' %}",
+            data: {
+                'adddesignationno': adddesignationno,
+                'adddepartmentname': adddepartmentname,
+                'adddesignation': adddesignation,
+            },
+
+            success: function (response) {
+                // if not valid user, alert the user
+                if (!response["valid"]) {
+                    alert("You cannot create a Designation with the same name");
+
+                    var adddesignation = $("#adddesignation");
+                    adddesignation.val("");
+                    adddesignation.focus();
+                }
+
+                $('#departmentname option[value="' + response.adddepartmentname + '"]').attr('selected',
+                    'selected');
+
+                $('#designationoptions').append(`<option value="${response.adddesignationno}" selected>${response.adddesignation}</option>`);
+
+                // Close the modal or perform other actions
+                $('#addDesig').modal('hide');
+            },
+
+            error: function (response) {
+                console.log(response);
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        checkEmailExists(); // Initial check on page load
+
+        $('#email').on('input', function () {
+            checkEmailExists(); // Check on email input
+        });
+
+        function checkEmailExists() {
+            var email = $('#email').val();
+            var candidateEmail = '{{ candidate.email }}';
+
+            // Check if the entered email is different from the candidate's email
+            if (email !== candidateEmail) {
+                $.ajax({
+                    type: 'GET',
+                    url: "{% url 'hr:check_email_exists' %}",
+                    data: { 'email': email },
+                    success: function (response) {
+                        if (response.exists) {
+                            $('#email-error').text('Email already exists.');
+                            // Optionally, you can disable the form submission or handle it accordingly.
+                        } else {
+                            $('#email-error').text('');
+                        }
+                    }
+                });
+            } else {
+                $('#email-error').text('');
+            }
+        }
+    });
+</script>
+{% endblock extrascript %}

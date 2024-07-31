@@ -1,0 +1,11 @@
+.modal {
+    overflow: hidden;
+    .modal-header {
+        background: $primarycolorlighter;
+    }
+    .modal-body {
+        max-height: 31.25em;
+        height: 100%;
+        overflow-y: auto;
+    }
+}

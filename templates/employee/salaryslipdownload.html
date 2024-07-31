@@ -1,0 +1,417 @@
+{% extends 'component/base.html' %}
+
+{% load static  %}
+
+{% block title %}Payroll{% endblock title %}
+
+{% block extracss %}
+{% endblock extracss %}
+
+{% block maincontent %}
+{% comment %} <body>
+    {% block content %}
+    <div class="main-wrapper">
+        {% if logged_in_department|lower == 'hr' %}
+        {% include 'component/sidebar.html' %}
+        {% elif logged_in_department|lower == 'Admin' %}
+        {% include 'component/sidebar.html' %}
+        {% else %}
+        {% include 'component/sidebar.html' %}
+        {% endif %}
+        <main>
+            {% include 'component/header.html' %} {% endcomment %}
+            <div class="main-content">
+                <!-- ... your existing code ... -->
+                <div class=" d-flex justify-content-start align-items-center w-100 salarysliptable ">
+                <form id="payrollInfoForm" method="POST" class="w-100" action="{% url 'hr:update_payroll_info' emp_data.emp_id %}"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="p-1 p-md-1">
+                        <div class="row p-2">
+                            <div class="col-12 col-md-4 d-flex align-items-center mb-2">
+                                <label class="form-label mb-0  w-50 mb-0">Payroll id</label>
+                                <input type="text" class="form-control form-control-sm border-1" disabled
+                                    placeholder="Payroll id" id="" value="{{ payroll_data.payroll_id }}" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex  align-items-center mb-2">
+                                <label class="form-label mb-0 w-50 mb-0"> Emp id</label>
+                                <input type="text" class="form-control form-control-sm border-1" disabled
+                                    placeholder="emp_id" id="" value="{{emp_data.emp_id}}" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex  align-items-center mb-2">
+                                <label class="form-label mb-0 w-50 mb-0">Name</label>
+                                <input type="text" class="form-control form-control-sm border-1" disabled
+                                    placeholder="first_name" id="" name="name" value="{{emp_data.name}}" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex  align-items-center mb-2">
+                                <label class="form-label mb-0 w-50 mb-0"> Email</label>
+                                <input type="email" class="form-control form-control-sm border-1" disabled
+                                    placeholder="first_name" id="" value="{{emp_data.email}}" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex align-items-center mb-2">
+                                <label class="form-label mb-0 w-50 mb-0">Department</label>
+                                <input type="text" class="form-control form-control-sm" disabled placeholder="B" id=""
+                                    value="{{emp_data.department}}" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex align-items-center mb-2">
+                                <label class="form-label mb-0 w-50 mb-0">Designation</label>
+                                <input type="text" class="form-control form-control-sm" disabled
+                                    value="{{emp_data.designation}}" id="" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex align-items-center mb-2">
+                                <label class="form-label mb-0 w-50 mb-0">Branch location</label>
+                                <input type="text" class="form-control form-control-sm" disabled placeholder="Vadodara"
+                                    id="" value="{{emp_data.company_branch}}" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex align-items-center mb-2">
+                                <label class="form-label mb-0 w-50 mb-0">Joining Date </label>
+                                <input type="date" class="form-control form-control-sm " id="" name="doj" disabled
+                                    value="{{emp_data.doj|date:'Y-m-d'}}" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex align-items-center">
+                                <label class="form-label mb-0 w-50 mb-0">Pancard</label>
+                                <input type="text" class="form-control form-control-sm" id="" name="pancard_number" disabled
+                                    value="{{emp_data.pancard_no}}" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex  align-items-center mb-2">
+                                <label class="form-label mb-0 w-50"> Office Email</label>
+                                <input type="email" class="form-control form-control-sm border-1 "
+                                    placeholder="Office Email" id="office_email" name="office_email"
+                                    value="{{emp_data.office_email }}" disabled required />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex align-items-center">
+                                <label class="form-label mb-0 w-50 mb-0">Applicable from</label>
+                                <input type="date" class="form-control form-control-sm" id="applicable_from"
+                                    name="applicable_from" value="{{payroll_data.applicable_from|date:'Y-m-d'}}" disabled />
+                            </div>
+                        </div>
+                        <div class="row p-2 d-flex">
+                            <div class="col-12 col-md-6 overflow-hidden">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive salpayrolltable-wrapper">
+                                            <table id="salparolltab1" class="table table-sm ">
+                                                <thead class="border-bottom-0">
+                                                    <tr>
+                                                        <th scope="col" class="px-3">Income Head</th>
+                                                        <th scope="col" class="text-end">Monthly Amount </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="">
+                                                    <tr>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <label class="form-label mb-0 px-3"> CTC</label>
+                                                            </div>
+                                                        </td>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <input type="text"
+                                                                    class="form-control form-control-sm border-0 text-primary text-end"
+                                                                    id="ctcInput" placeholder="0" name="ctc"
+                                                                    value="{{payroll_data.ctc }}" oninput="calculateSalary()"
+                                                                    disabled />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <label class="form-label mb-0 px-3">Basic</label>
+                                                            </div>
+                                                        </td>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <input type="text" class="form-control form-control-sm border-0 text-end "
+                                                                    id="basicAmount" placeholder="0" name="basic" disabled
+                                                                    readonly />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <label class="form-label mb-0 px-3">HRA</label>
+                                                            </div>
+                                                        </td>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <input type="text" class="form-control form-control-sm border-0 text-end"
+                                                                    id="hraAmount" placeholder="0" name="hra" disabled readonly />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <label class="form-label mb-0 px-3">Conviction Allowance</label>
+                                                            </div>
+                                                        </td>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <input type="text" class="form-control form-control-sm border-0 text-end"
+                                                                    id="ca" placeholder="0" name="ca" disabled readonly>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <label class="form-label mb-0 px-3">Special Allowance</label>
+                                                            </div>
+                                                        </td>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <input type="text" class="form-control form-control-sm border-0 text-end"
+                                                                    id="sa" placeholder="0" name="sa" disabled readonly />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="">
+                                                                <label class="form-label mb-0 px-3">Gross Amount</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="">
+                                                                <input type="text"
+                                                                    class="form-control form-control-sm border-0 readonly text-danger text-end"
+                                                                    id="grossAmount" placeholder="0" name="gross_salary" disabled
+                                                                    readonly />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>                             
+                            </div>
+                            <div class="col-12 col-md-6 overflow-hidden">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive salpayrolltable-wrapper">
+                                            <table id="salparolltab2" class="table table-sm ">
+                                                <thead class="border-bottom-0">
+                                                    <tr>
+                                                        <th scope="col" class="px-3">Deduction Head</th>
+                                                        <th scope="col" class="text-end">Employer's Contributions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="">
+                                                    <tr>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <label class="form-label mb-0 px-3">Employer PF</label>
+                                                            </div>
+                                                        </td>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <input type="text" class="form-control form-control-sm border-0 text-end"
+                                                                    id="employerPF" placeholder="0" name="employer_pf" disabled
+                                                                    readonly />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <label class="form-label mb-0 px-3">Employer ESIC</label>
+                                                            </div>
+                                                        </td>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <input type="text" class="form-control form-control-sm border-0 text-end"
+                                                                    id="employerESIC" placeholder="0" name="employer_esic" disabled
+                                                                    readonly />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <label class="form-label mb-0 px-3">P.T</label>
+                                                            </div>
+                                                        </td>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <input type="text" class="form-control form-control-sm border-0 text-end"
+                                                                    id="professionalTax" placeholder="0" name="pt" disabled
+                                                                    readonly />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <label class="form-label mb-0 px-3">Employee PF</label>
+                                                            </div>
+                                                            </th>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <input type="text" class="form-control form-control-sm border-0 text-end"
+                                                                    id="employeePF" placeholder="0" name="employee_pf" disabled
+                                                                    readonly />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <label class="form-label mb-0 px-3">Employee ESIC</label>
+                                                            </div>
+                                                            </th>
+                                                        <td scope="col">
+                                                            <div class="">
+                                                                <input type="text" class="form-control form-control-sm border-0 text-end"
+                                                                    id="employeeESIC" placeholder="0" name="employee_esic" disabled
+                                                                    readonly />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex justify-content-between mb-2 flex-wrap ">
+                        <div class="d-flex justify-content-center align-items-center p-2">
+                            <label for="newCTC" class="form-label mb-0 text-nowrap me-2 mb-0">Monthly CTC:</label>
+                            <input type="text" class="form-control form-control-sm" id="newCTC" name="monthly_ctc"
+                                placeholder="0" disabled />
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center p-2">
+                            <label for="newCTC" class="form-label mb-0 text-nowrap me-2 mb-0">Yearly CTC:</label>
+                            <input type="text" class="form-control form-control-sm" id="yearlyCTC" name="yearlyctc"
+                                placeholder="0" disabled />
+                        </div>
+                        <div class="d-flex  justify-content-center align-items-center p-2 mb-2">
+                            <label for="" class="form-label mb-0  text-nowrap me-2 mb-0">Total
+                                Deduction</label>
+                            <input type="text" class="form-control form-control-sm" id="totaldeduction" placeholder="0"
+                                name="total_deduction" disabled>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center p-2 mb-2">
+                            <label for="netPay" class="form-label mb-0 text-nowrap me-2 mb-0">Net Pay:</label>
+                            <input type="text" class="form-control form-control-sm" id="netPay" placeholder="0"
+                                name="net_salary" disabled />
+                        </div>
+                    </div>
+                    <div class="row w-100 d-flex mb-3 mt-2">
+                        <div class="col-12 d-flex justify-content-between mb-2 ">
+                            <div class="d-flex  justify-content-center align-items-center p-2 mb-2">
+                                <label for="" class="form-label mb-0 text-nowrap me-2 mb-0">Payment Mode</label>
+                                <input type="text" class="form-control form-control-sm" id="paymentmode" placeholder="paymentmode"
+                                name="paymentmode" value="{{payroll_data.paymentmode }}" disabled />
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="d-flex justify-content-start align-items-center w-100 salarysliptable">
+                    <div class="table-responsive w-100 p-3">
+                        <div>
+                            <h5 class="me-3 mb-0">All Monthly Salary Slips</h5>
+                        </div>
+                        <div class="mb-3 col-6 col-md-3">
+                            <label class="form-label mb-0" for="selectedMonth">Select Month:</label>
+                            <select class="form-select form-select-sm" id="selectedMonth" name="selectedMonth">
+                                {% for salary in all_monthly_salaries %}
+                                <option value="{{ salary.id }}">{{ salary.month }} {{ salary.year }}</option>
+                                {% endfor %}
+                            </select>
+                            <button class="btn custom-button m-2" onclick="downloadSelectedSalarySlip()">Download</button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+{%endblock maincontent%}
+{% block extrascript %}
+    <script>
+        function downloadSelectedMonth() {
+            var selectedMonthYear = $('#monthYearSelect').val();
+            window.location.href = `/employee/download_pdf/${selectedMonthYear}/`;
+        }
+    </script>
+    <script>
+        function downloadSelectedSalarySlip() {
+            var selectedSalaryId = document.getElementById("selectedMonth").value;
+            if (selectedSalaryId) {
+                var downloadUrl = "{% url 'employee:download_pdf' salary_id=0 %}".replace('0', selectedSalaryId);
+                window.open(downloadUrl, '_blank');
+            } else {
+                alert("Please select a month to download.");
+            }
+        }
+    </script>
+    <script>
+        function calculateSalary() {
+            // Get CTC input value
+            var ctcAmount = parseFloat(document.getElementById('ctcInput').value);
+            // Calculate Basic Amount (60% of CTC)
+            var basicAmount = 0.6 * ctcAmount;
+            // Calculate HRA Amount (30% of Basic)
+            var hraAmount = 0.3 * basicAmount;
+            var y = ctcAmount - 1.0325 * basicAmount - 1.0325 * hraAmount;
+            var x1 = (y - 1800) / 1.0325;
+            var newCTC = 0.0325 * (basicAmount + hraAmount + x1) + basicAmount + hraAmount + x1 + 1800;
+            var x2 = (y - 0.12 * basicAmount) / 1.1525;
+            var employerPF = basicAmount + x2;
+            var x3 = 0.12 * (basicAmount + x2) - 1800;
+            if (employerPF < 15000) {
+                employerPF = 0.12 * employerPF;
+            } else {
+                employerPF = 1800;
+            }
+            // Calculate employerESIC as 3.25% of basicAmount + hraAmount + x2
+            var employerESIC = (basicAmount + hraAmount + x2) > 21000 ? 0 : 0.0325 * (basicAmount + hraAmount + x2);
+            // Calculate Other Amount
+            var otherAmount;
+            if (employerESIC === 0) {
+                otherAmount = 0.0325 * (basicAmount + hraAmount + x1) + x1;
+                newCTC = 0.0325 * (basicAmount + hraAmount + x2) + basicAmount + hraAmount + x2 + employerPF + x3;
+            } else {
+                otherAmount = x2;
+            }
+            var sa = 0;
+            var grossAmount = basicAmount + hraAmount + otherAmount;
+            var employeePF = employerPF; // You need to define this variable
+            var employeeESIC = (basicAmount + hraAmount + x2) > 21000 ? 0 : 0.0075 * (basicAmount + hraAmount + x2);
+            // Display results
+            document.getElementById('basicAmount').value = Math.ceil(basicAmount).toFixed(2);
+            document.getElementById('hraAmount').value = Math.ceil(hraAmount).toFixed(2);
+            document.getElementById('ca').value = Math.ceil(otherAmount).toFixed(2);
+            document.getElementById('sa').value = Math.ceil(sa).toFixed(2);
+            document.getElementById('grossAmount').value = Math.ceil(grossAmount).toFixed(2);
+            document.getElementById('employeePF').value = Math.ceil(employeePF).toFixed(2);
+            document.getElementById('employerPF').value = Math.ceil(employerPF).toFixed(2);
+            document.getElementById('employeeESIC').value = Math.ceil(employeeESIC).toFixed(2); // Display employerESIC
+            document.getElementById('employerESIC').value = Math.ceil(employerESIC).toFixed(2); // Display employerESIC
+            document.getElementById('newCTC').value = Math.ceil(newCTC).toFixed(2);
+            // You need to define the following variables
+            // var professionalTax = 0;
+            if (grossAmount > 12000) {
+                var professionalTax = 200;
+            } else {
+                var professionalTax = 0;
+            }
+            var netPay = newCTC - employeeESIC - employeePF - professionalTax;
+            var totaldeduction = employeeESIC + employeePF + professionalTax;
+            var yearlyCTC = newCTC * 12;
+            document.getElementById('professionalTax').value = Math.ceil(professionalTax).toFixed(2);
+            document.getElementById('netPay').value = Math.ceil(netPay).toFixed(2);
+            document.getElementById('totaldeduction').value = Math.ceil(totaldeduction).toFixed(2);
+            document.getElementById('yearlyCTC').value = Math.ceil(yearlyCTC).toFixed(2);
+        }
+        // Call calculateSalary initially to handle default input
+        calculateSalary();
+    </script>
+    {% endblock extrascript %}

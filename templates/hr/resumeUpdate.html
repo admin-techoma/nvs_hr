@@ -1,0 +1,43 @@
+<form class="d-flex flex-wrap" method="post" action="{% url 'hr:edit_resume' resume.candidate_id %}" enctype="multipart/form-data">
+    {% csrf_token %}  
+    <div class=" col-6 p-2 mb-1">
+        <label for="id_name" class="form-label mb-0 mb-0">Candidate Name</label>
+        {{form.name}}
+    </div>
+    <div class=" col-6 p-2 mb-1">
+        <label for="id_phone_number" class="form-label mb-0 mb-0">Mobile Number</label>
+        {{ form.phone_number }}
+    </div>
+    <div class=" col-6 p-2 mb-1">
+        <label for="id_email" class="form-label mb-0 mb-0">Email</label>
+        {{ form.email }}
+    </div>
+    <div class=" col-6 p-2 mb-1">
+        <label for="id_remarks" class="form-label mb-0 mb-0">Remarks</label>
+        {{ form.remarks }}
+    </div>
+    
+    <div class=" col-6 p-2 mb-1">
+        <label for="resumeFile" class="form-label mb-0 mb-0">Choose File</label>
+        <input type="file" name="resume" id="resumeFile" class="form-control-file form-control-sm">
+    </div>
+    
+    <div class=" col-6 p-2 mb-1">
+        <label for="id_status" class="form-label mb-0 mb-0">Resume Status</label>
+        {{form.status}}
+    </div>
+    <div class="col-12">
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+            <button class="btn custom-button btn-sm" type="submit" >Save</button>
+        </div>
+    </div>
+</form>
+
+{% if form.errors %}
+<ul>
+    {% for error in form.errors %}
+        <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}

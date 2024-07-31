@@ -1,0 +1,413 @@
+{% extends 'component/base.html' %}
+{% load static  %}
+{% block title %}Employees Report{% endblock title %}
+{% block extracss %}
+{% endblock extracss %}
+{% block maincontent %}
+            <div class="main-content">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <div class="d-flex justify-content-between">
+                            <div class="text-center d-flex align-items-center">
+                                <h6 class="mb-0 pageTitle"><strong>Employee Report</strong></h6>
+                            </div>
+                            <!-- <div class="col-12 col-md-3 d-flex justify-content-end align-items-center">
+                                <button class="btn btn-dark btn-sm" type="submit" name="download_button">
+                                    <i class="bi bi-box-arrow-down"></i> Download
+                                </button>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="get" action="{% url 'hr:view_employee' %}">
+                            {% csrf_token %}
+                            {% for message in messages %}
+                            {% if message.tags == 'success' %}
+                            <div class="alert alert-success" role="alert">
+                                {{ message }}
+                            </div>
+                            {% else %}
+                            <label for="exampleInputEmail1" class="form-label mb-0 text-left text-danger">{{ message }}</label>
+                            {% endif %}
+                            {% endfor %}
+                            {% if form.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                {{ error }}
+                                {% endfor %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="d-flex justify-content-between flex-wrap mb-1 p-2">
+                              
+                                <div class="col-12 d-flex justify-content-end align-items-center">
+                           
+                                    <div class="col-12 col-md-4 d-flex py-2 ">
+                                        <input type="date" id="min" class="form-control form-control-sm me-2"
+                                            value="{{ date|date:'d-m-Y' }}" name="min">
+                                        <input type="date" id="max" class="form-control form-control-sm "
+                                            value="{{ date|date:'d-m-Y' }}" name="max">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row w-100 overflow-hidden">
+                                <div class="table-responsive overflow-auto ">
+                                    <table class="" id="allEmployeesTable">
+                                        <thead class="bg-none">
+                                            <tr class="headings">
+                                                <th style="min-width: 150px;" scope="col">Emp Id</th>
+                                                <th style="min-width: 150px;" scope="col">Candidate Id</th>
+                                                <th style="min-width: 150px;" scope="col">first name</th>
+                                                <th style="min-width: 100px;" scope="col">middle name</th>
+                                                <th style="min-width: 100px;" scope="col">last name</th>
+                                                <th style="min-width: 100px;" scope="col">Full Name</th>
+                                                <th style="min-width: 100px;" scope="col">gender</th>
+                                                <th style="min-width: 100px;" scope="col">address</th>
+                                                <th style="min-width: 100px;" scope="col">state</th>
+                                                <th style="min-width: 100px;" scope="col">city</th>
+                                                <th style="min-width: 100px;" scope="col">country</th>
+                                                <th style="min-width: 100px;" scope="col">pincode</th>
+                                                <th style="min-width: 100px;" scope="col">c address</th>
+                                                <th style="min-width: 100px;" scope="col">c state</th>
+                                                <th style="min-width: 100px;" scope="col">c city</th>
+                                                <th style="min-width: 100px;" scope="col">c country</th>
+                                                <th style="min-width: 100px;" scope="col">c pin code</th>
+                                                <th style="min-width: 100px;" scope="col">email</th>
+                                                <th style="min-width: 100px;" scope="col">office email</th>
+                                                <th style="min-width: 100px;" scope="col">work office</th>
+                                                <th style="min-width: 100px;" scope="col">contact no</th>
+                                                <th style="min-width: 100px;" scope="col">other contact no</th>
+                                                <th style="min-width: 100px;" scope="col">Dob</th>
+                                                <th style="min-width: 100px;" scope="col">Doj</th>
+                                                <th style="min-width: 100px;" scope="col">doe</th>
+                                                <th style="min-width: 100px;" scope="col">pfno</th>
+                                                <th style="min-width: 100px;" scope="col">pf joining date</th>
+                                                <th style="min-width: 100px;" scope="col">pf exit date</th>
+                                                <th style="min-width: 100px;" scope="col">uanno</th>
+                                                <th style="min-width: 100px;" scope="col">esicno</th>
+                                                <th style="min-width: 100px;" scope="col">esic joining date</th>
+                                                <th style="min-width: 100px;" scope="col">esic exit date</th>
+                                                <th style="min-width: 100px;" scope="col">pancard no</th>
+                                                <th style="min-width: 100px;" scope="col">aadharcard no</th>
+                                                <th style="min-width: 100px;" scope="col">account no</th>
+                                                <th style="min-width: 100px;" scope="col">bank name</th>
+                                                <th style="min-width: 100px;" scope="col">ifsc code</th>
+                                                <th style="min-width: 100px;" scope="col">branch</th>
+                                                <th style="min-width: 100px;" scope="col">department</th>
+                                                <th style="min-width: 100px;" scope="col">designation</th>
+                                                <th style="min-width: 100px;" scope="col">reporting to</th>
+                                                <th style="min-width: 100px;" scope="col">documents status</th>
+                                                <th style="min-width: 100px;" scope="col">status</th>
+                                                <th style="min-width: 100px;" scope="col">interview take</th>
+                                                <th style="min-width: 100px;" scope="col">reporting take</th>
+                                                <th style="min-width: 100px;" scope="col">position</th>
+                                                <th style="min-width: 100px;" scope="col">married status</th>
+                                                <th style="min-width: 100px;" scope="col">blood group</th>
+                                                <th style="min-width: 100px;" scope="col">linkedin profile</th>
+                                                <th style="min-width: 100px;" scope="col">instagram profile</th>
+                                                <th style="min-width: 100px;" scope="col">facebook profile</th>
+                                                <th style="min-width: 100px;" scope="col">esic apply</th>
+                                                <th style="min-width: 100px;" scope="col">pf apply</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tfoot>
+                                            <tr class="headings">
+                                              
+                                                <td style="min-width: 150px;" scope="col"></td>
+                                                <td style="min-width: 150px;" scope="col"></td>
+                                                <td style="min-width: 150px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                                <td style="min-width: 100px;" scope="col"></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+{%endblock maincontent%}
+{% block extrascript %}
+<!-- Include your other script tags before this section --><!-- Include your other script tags before this section -->
+    <script>
+        $.fn.dataTable.render.moment = function (from, to, locale) {
+            // Argument shifting
+            if (arguments.length === 1) {
+                locale = 'en';
+                to = from;
+                from = 'YYYY-MM-DD';
+            } else if (arguments.length === 2) {
+                locale = 'en';
+            }
+            return function (d, type, row) {
+                if (!d) {
+                    return type === 'sort' || type === 'type' ? 0 : d;
+                }
+                var m = window.moment(d, from, locale, true);
+                // Order and type get a number value from Moment, everything else
+                // sees the rendered value
+                return m.format(type === 'sort' || type === 'type' ? 'x' : to);
+            };
+        };
+        $(document).ready(function () {
+            $('#allEmployeesTable tfoot td').each(function () {
+                var title = $(this).text();
+                $(this).html('<input type="text" class="form-control form-control-sm border-0" placeholder="' + title + '" />');
+            });
+            var table = $('#allEmployeesTable').DataTable({
+                dom: 'lfrt<"ip"iB>p',
+                responsive: true,
+                searching: true,
+                paging: true,
+                fixedHeader: {
+                    header: true,
+                    footer: true
+                },
+                stateSave: true,
+                processing: true,
+                buttons: [
+                    {
+                        extend: 'copy',
+                        className: 'btn custom-button-two btn-sm mb-2', // Add your custom class for styling
+                        text: '<i class="bi bi-files"></i> Copy', // You can also customize the button text and add icons
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'btn custom-button-two btn-sm mb-2',
+                        text: '<i class="bi bi-file-excel"></i> Excel',
+                    },
+                    // {
+                    //     extend: 'pdf',
+                    //     className: 'btn custom-button-two btn-sm mb-2',
+                    //     text: '<i class="bi bi-file-pdf"></i> PDF',
+                    // },
+                    // {
+                    //     extend: 'print',
+                    //     className: 'btn custom-button-two btn-sm mb-2',
+                    //     text: '<i class="bi bi-printer"></i> Print',
+                    // },
+                ],
+                ajax: {
+                    url: "{% url 'report:employeedata' %}",
+                    type: "GET",
+                    // Additional AJAX options if needed
+                    data: function(dt) {
+                        dt.from = $('#min').val();
+                        dt.to = $('#max').val();
+                    }
+                },
+                columns: [
+                    {
+                        data: "emp_id"
+                    }, {
+                        data: "candidate_id"
+                    }, {
+                        data: "first_name"
+                    }, {
+                        data: "middle_name"
+                    }, {
+                        data: "last_name"
+                    }, {
+                        data: "name"
+                    }, {
+                        data: "gender__name"
+                    }, {
+                        data: "address"
+                    }, {
+                        data: "state"
+                    }, {
+                        data: "city"
+                    }, {
+                        data: "country"
+                    }, {
+                        data: "pin_code"
+                    }, {
+                        data: "c_address"
+                    }, {
+                        data: "c_state"
+                    }, {
+                        data: "c_city"
+                    }, {
+                        data: "c_country"
+                    }, {
+                        data: "c_pin_code"
+                    }, {
+                        data: "email"
+                    }, {
+                        data: "office_email"  , class:"text-lowercase"
+                    }, {
+                        data: "company_branch__name"
+                    }, {
+                        data: "contact_no"
+                    }, {
+                        data: "other_contact_no"
+                    }, {
+                        data: "dob"
+                    }, {
+                        data: "doj"
+                    }, {
+                        data: "doe"
+                    }, {
+                        data: "pfno"
+                    }, {
+                        data: "pf_joining_date"
+                    }, {
+                        data: "pf_exit_date"
+                    }, {
+                        data: "uanno"
+                    }, {
+                        data: "esicno"
+                    }, {
+                        data: "esic_joining_date"
+                    }, {
+                        data: "esic_exit_date"
+                    }, {
+                        data: "pancard_no"
+                    }, {
+                        data: "aadhaarcard_no"
+                    }, {
+                        data: "account_no"
+                    }, {
+                        data: "bank_name"
+                    }, {
+                        data: "ifsc_code"
+                    }, {
+                        data: "branch"
+                    }, {
+                        data: "department__name"
+                    }, {
+                        data: "designation__name"
+                    }, {
+                        data: "reporting_to__name"
+                    }, {
+                        data: "documents_id",
+                        render: function (data, type, row) {
+                            if (data && data.c_HSC) {
+                                return 'Complete';
+                            } else {
+                                return 'Pending';
+                            }
+                        }
+                    }, {
+                        data: "status"
+                    }, {
+                        data: "interview_take",
+                        render: function (data, type, row) {
+                            return data
+                                ? '<i class="bi bi-check-circle-fill text-success" "></i>'
+                                : '<i class="bi bi-x-circle-fill text-danger""></i>';
+                        }
+                    }, {
+                        data: "reporting_take",
+                        render: function (data, type, row) {
+                            return data
+                                ? '<i class="bi bi-check-circle-fill text-success" "></i>'
+                                : '<i class="bi bi-x-circle-fill text-danger""></i>';
+                        }
+                    }, {
+                        data: "position__name"
+                    }, {
+                        data: "married_status"
+                    }, {
+                        data: "blood_group"
+                    }, {
+                        data: "linkedin_profile"
+                    }, {
+                        data: "instagram_profile"
+                    }, {
+                        data: "facebook_profile"
+                    }, {
+                        data: "esic_apply",
+                        render: function (data, type, row) {
+                            return data
+                                ? '<i class="bi bi-check-circle-fill text-success" "></i>'
+                                : '<i class="bi bi-x-circle-fill text-danger""></i>';
+                        }
+                    }, {
+                        data: "pf_apply",
+                        render: function (data, type, row) {
+                            return data
+                                ? '<i class="bi bi-check-circle-fill text-success" "></i>'
+                                : '<i class="bi bi-x-circle-fill text-danger""></i>';
+                        }
+                    }],
+                    scrollX: true,
+                    scrollY: window.innerHeight - (.6 * window.innerHeight),
+
+                createdRow: function (row, data, dataIndex) {
+                    // Add class to each td element in the row
+                    $('td', row).addClass('text-nowrap');
+                },
+            });
+           
+       
+          
+            // Apply the filtering on input change
+            table.columns().every(function () {
+                var that = this;
+                $('input', this.footer()).on('keyup change clear', function () {
+                    if (that.search() !== this.value) {
+                        that
+                            .search(this.value)
+                            .draw();
+                    }
+                });
+            });
+            $('#min, #max').on('change', function () {
+                table.ajax.reload();
+                table.draw();
+            });
+        });
+    </script>
+    {% endblock extrascript %}

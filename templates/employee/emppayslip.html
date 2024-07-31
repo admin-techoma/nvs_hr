@@ -1,0 +1,304 @@
+<!-- pdf_template.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Salary Slip</title>
+    <!-- Include your CSS styles and other head elements here -->
+  </head>
+  <body>
+    <!-- Your HTML content here -->
+    <!-- <div style="display: flex; justify-content: space-between   ; " >
+      <h1>{{ salary.month }} Salary Slip</h1>
+    <p>Employee ID: {{ salary.emp_id }}</p>
+</div>
+    <p>CTC: {{ salary.monthly_ctc }}</p>
+    <p>Basic: {{ salary.monthly_basic }}</p>
+    <p>HRA: {{ salary.monthly_hra }}</p>
+    <p>CA: {{ salary.monthly_ca }}</p>
+    <p>SA: {{ salary.monthly_sa }}</p>
+    <p>PF: {{ salary.monthly_employeepf }}</p>
+    <p>ESIC: {{ salary.monthly_employeeesic }}</p>
+    <p>Gross Salary: {{ salary.monthly_gross_salary }}</p>
+    <p>Professional Tax: {{ salary.monthly_professionalTax }}</p>
+    <p>Total Deduction: {{ salary.monthly_total_deductions }}</p>
+    <p>Monthly Net Pay: {{ salary.monthly_netpay }}</p> -->
+    <!-- Include other details as needed -->
+    <div >
+        <div style="display: flex; justify-content: space-between;">
+       <div>
+            <figure style="padding: 0; margin: 0;">
+            <img src="../../static/admin/img/NIBPL_Logo.png" style="width: 120px;" alt="" srcset="">
+        </figure>
+       
+    </div>
+        <div style="width: 50%;">
+            <div>
+                <div>
+                    {% for company in companies %}
+                    <h5 style="margin: 0; margin-bottom: 10px; text-align: end;">{{ company.name }}</h5>
+                 
+                </div>
+                <p style="font-size:12px; text-align: end;">
+                    {{company.reg_address}},
+                    {{company.reg_city}},
+                    {{company.reg_state}},
+                    {{company.reg_country}},
+                    {{company.reg_pin_code}}.</p>
+                <p style="font-size:12px; text-align: end;">{{company.email_id}}</p>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+        <div>
+            <div style="display: flex; justify-content: center; ">
+                <h5 style="border-bottom: 1px solid #dee2e6;">Payslip for the Month of {{ salary.month }}</h5>
+            </div>
+            <div style="display: flex; margin-bottom: 10px;" >
+                <div  style="width: 50%;">
+                     <div style="display: flex; align-items: center; font-size:14px;">
+                        <p style="margin: 0;">Payslip No :</p>
+                        <h6 style="display: flex; align-items: center; font-size:14px; margin: 0; margin-left: 10px;">{{salary.id}}</h6>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6"style="width: 50%; display: flex; justify-content: flex-end;"  >
+                    <div style="display:flex; justify-content: flex-end; align-items: center;  font-size:14px; width: 100%; ">
+                        <p  style="margin: 0;">Payslip Date :</p>
+                        <h6 style="display: flex; align-items: center;  font-size:14px; margin: 0; margin-left: 10px; ">
+                            <date style="font-size:14   px;">{{ salary.month }}</date>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 100%;">
+                <h5 style="width: 100%; margin: 0;">Employee Details</h5>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0;  padding:SS0; border: 1px solid #dee2e6;">  
+                <div style="width: 50%; padding:0 5px; "> 
+                    <table style="padding:0 10px;">
+                        <tbody>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Emp No  </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> {{salary.emp_id}}</span> </p></td></tr>
+
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">D.O.J </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> {{emp_id.doj}}</span> </p></td></tr>
+
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Department </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> {{salary.department}}</span> </p></td></tr>
+
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Designation </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.designation}}</span> </p></td></tr>
+
+                        </tbody>
+                    </table>                                  
+                </div>
+                <div style="width: 50%; padding: 0 5px; "> 
+                    <table>
+                        <tbody>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Name </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.name}}</span> </p></td></tr>
+
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Work Location </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> {{salary.company_branch}}</span> </p></td></tr>
+
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">PF Number </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.pfno}}</span> </p></td></tr>
+
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">UAN Number </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.uanno}}</span> </p></td></tr>
+
+                        </tbody>
+                    </table> 
+                </div>
+            </div>
+            <div style="width: 100%;">
+                <h5 style="width: 100%; margin: 0; margin-top: 5px; margin-bottom: 5px;">Working Details</h5>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0;  padding: 0; border: 1px solid #dee2e6;">  
+                <div style="width: 50%; padding-right: 10px; "> 
+                    <table style="padding: 0 10px;">
+                        <tbody>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Present  </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> 21.00 </span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">On Duty </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> 0.00 </span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Weekly Off </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> 0.00 </span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Holidays </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0.00</span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Extra Day </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0.00</span> </p></td></tr>
+                        </tbody>
+                    </table>   
+                </div>
+                <div style="width: 50%; padding-right: 10px; "> 
+                    <table style="padding: 0 10px;" >
+                        <tbody>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Unpaid  </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0.00</span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Absent </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0.00</span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Compen. off </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0.00</span> </p></td></tr>
+                            <tr><td></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Paid Days </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0.00</span> </p></td></tr>
+                        </tbody>
+                    </table> 
+                </div>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; ; margin-top: 5px;  padding: 0;"  >
+                <div style="width: 50%;">
+                    <div  style="padding: 0 0 5px 0;">
+                    <div style="padding: 10px; border: 1px solid #dee2e6;">
+                        <table style="width: 100%; ">
+                            <thead>
+                                <tr>
+                                    <th style="font-weight: 500; text-align: start;">Earning</th>
+                                    <th style="font-weight: 500; text-align: end;">Amount</th>
+                                    <th style="font-weight: 500; text-align: end;">Payable</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                    <td scope="col" style="margin: 0; font-size:14px; font-weight: 500; ">Basic</td>
+                                    <td scope="col" style="margin: 0; font-size:14px; font-weight: 500; text-align: end;  " >{{ salary.monthly_basic }}</th>
+                                        <td scope="col" style="margin: 0; font-size:14px; font-weight: 500; text-align: end;  " >{{ salary.monthly_basic }}</th>
+                              </tr>
+                              <tr >
+                                <td scope="row" style="margin: 0; font-size:14px; font-weight: 500; ">HRA</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500; ">{{ salary.monthly_hra }}</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500; ">{{ salary.monthly_hra }}</td>
+                              </tr>
+                              <tr>
+                                <td scope="row" style="margin: 0; font-size:14px; font-weight: 500;  " >C.A</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  ">{{ salary.monthly_ca }}</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  ">{{ salary.monthly_ca }}</td>
+                              </tr>
+                              <tr>
+                                <td scope="row" style="margin: 0; font-size:14px; font-weight: 500;  " >S.A</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  ">{{ salary.monthly_sa }}</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  ">{{ salary.monthly_sa }}</td>
+                              </tr>
+                              <tr>
+                                <td scope="row" style="margin: 0; font-size:14px; font-weight: 500;  " >Others</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500; ">800</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500; ">800</td>
+                              </tr>
+                              
+                            </tbody>
+                            
+                        </table>
+                       
+                    </div>
+                </div>
+                </div>
+                <div style="width: 50%;">
+                    <div style="padding:0 0 0 5px;" >
+                    <div style="padding: 10px; border: 1px solid #dee2e6;">
+                        <table class="table" style="width: 100%; padding: 0 5px;">
+                            <thead>
+                                <tr>
+                                    <th style="font-weight: 500; text-align: start;">Deduction</th>
+                                    <th style="font-weight: 500; text-align: end;">Amount</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="col" style="margin: 0; font-size:14px; font-weight: 500; ">Provident Fund</th>
+                                    <td scope="col" style="text-align:end; margin: 0; font-size:14px; font-weight: 500; ">{{ salary.monthly_employeepf }}</th>
+                                </tr>
+                            <tr>
+                                    <th scope="row" style="margin: 0; font-size:14px; font-weight: 500; " >Professional Tax</th>
+                                    <td style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  " >900</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="margin: 0; font-size:14px; font-weight: 500; " >ESIC</th>
+                                    <td style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  " >1235</td>
+                                </tr>
+                                
+                                <tr>
+                                    <th scope="row" style="margin: 0; font-size:14px; font-weight: 500; " >TDS</th>
+                                    <td style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  " >800</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="margin: 0; font-size:14px; font-weight: 500; " >Other</th>
+                                    <td style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  " >800</td>
+                                </tr> 
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; ; margin-top: 5px; border: 1px solid #dee2e6; padding: 10px;" >
+                <div style="width: 50%;">
+                    <table style="width: 100%;  margin-top: 5px;">
+                        <tbody>
+                            <tr>
+                                <td scope="row" style="margin: 0; font-size:14px; font-weight: 500;" >Gross Total
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;">1234567</td>
+                            </tr>
+                            <tr >
+                                <td scope="row" style="margin: 0; font-size:14px; font-weight: 500; " >Monthly CTC</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;">1800</td>
+                              </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="width: 50%;">
+                    <table style="width: 100%;  padding: 5px; margin-top: 5px;">
+                        <tbody>
+                            <tr >
+                                <td scope="row" style="margin: 0; font-size:14px; font-weight: 500;" >Total Deductions
+                                <td style="text-align:end; margin: 0; font-size:14px; font-weight: 500; ">1234567</td>
+                              </tr>                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; ; margin-top: 5px; border: 1px solid #dee2e6; padding: 10px;" >
+                <div style="width: 50%;">
+                    <table style="width: 100%; padding: 5px; margin-top: 5px; ">
+                        <tbody>
+                            <tr>
+                                <td scope="row" style="margin: 0; font-size:14px; font-weight: 500; " >Payment Mode</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  ">Bank Transfer</td>
+                              </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="width: 50%;">
+                    <table style="width: 100%; padding: 5px; margin-top: 5px;">
+                        <tbody>
+                            <tr>
+                                <td scope="row" style="margin: 0; font-size:14px; font-weight: 500;">Gross Earning</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;">25000</td>
+                              </tr>
+                              <tr >
+                                <td scope="row" style="margin: 0; font-size:14px; font-weight: 500;">Less Deduction</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;">200</td>
+                              </tr>
+
+                              <tr >
+                                <td scope="row" style="margin: 0; font-size:14px; font-weight: 500;">Net Salary Payable</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;">24800</td>
+                              </tr>
+                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+                <div class="row" style="width: 100%; display: flex; justify-content: space-between; margin-top: 20px; border: 1px solid #dee2e6; ">
+                <div style="width: 33.33333%; padding: 5px;">
+                    <p style="font-size: 14px;">Prepared by</p>
+                </div>
+                <div style="width: 33.33333%; padding: 5px;">
+                    <p style="font-size: 14px;">Sanctioned By</p>
+                </div>
+                <div style="width: 33.3333%; padding: 5px;">
+                    <h6 style="padding:  0; margin:  0; text-align: end; width: 100%;">
+                        Trishla Shah
+                    </h6>
+                    <p style="width: 100%; text-align: end; font-size: 14px; padding: 0; margin-bottom: 0;">Authorised Signatory </p>
+                </div>
+                </div>              
+                <div>
+                    {% comment %} <a href="{% url 'payroll:downloard_salary' pk=salary.pk %}">Download PDF2</a> {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+  </body>
+</html>
+

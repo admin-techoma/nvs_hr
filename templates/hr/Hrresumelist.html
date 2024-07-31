@@ -1,0 +1,179 @@
+{% extends 'component/base.html' %}
+{% load static  %}
+{% block title %}Recruitments {% endblock title %}
+{% block extracss %}
+{% endblock extracss %}
+{% block maincontent %}
+<div class="main-content ">
+    <div class="card">
+        <div class="card-header border-0">
+            <div class="d-flex justify-content-between">
+                <div class="text-center d-flex align-items-center">
+                    <h6 class="mb-0 pageTitle"><strong>Candidate List</strong></h6>
+                </div>
+                <button type="button" class="btn custom-button btn-sm" type="button" 
+                id="uploadResumeModalbutton" data-bs-toggle="modal" data-bs-target="#uploadResumeModal">Add Candidate</button>
+            </div>
+        </div>
+        <div class="card-body">
+              <div class="tablewrapper">
+                <div class="table-responsive">
+                    <table class="table table-responsive" id="resumeListTable">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sr no</th>
+                                <th scope="col">Candidate Name</th>
+                                <th scope="col">Mobile No.</th>
+                                <th scope="col">Email ID</th>
+                                <th scope="col">Resume Status</th>
+                                <th scope="col">Resume Remarks</th>
+                                <th scope="col">Created Date</th>
+                                <th scope="col">Interview Status</th>
+                                <th scope="col">Resume</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if resumelist %}
+                            {% for resume in resumelist %}
+                            <tr class="resume-row">
+                                <td>{{ forloop.counter }}</td>
+                                <td class="text-nowrap">{{ resume.name }}</td>
+                                <td class="text-nowrap">{{ resume.phone_number }}</td>
+                                <td class="text-lowercase text-nowrap">{{ resume.email }}</td>
+                                <td>
+                                    {% if resume.status == "Shortlisted" %}
+                                    <span class="badge text-bg-success">{{resume.status}} </span>
+                                    {% elif resume.status == "Pending" %}
+                                    <span class="badge text-bg-warning">{{resume.status}} </span>
+                                    {% else %}
+                                    <span class="badge text-bg-danger" href=""> {{resume.status}} </span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ resume.remarks }}</td>
+                                <td>{{ resume.created_at|date:"d/m/Y" }}</td>
+                                <td>
+                                    {% if resume.interviewFeedback == "Selected" %}
+                                    <span class="badge text-bg-success"> {{resume.interviewFeedback }}</span>
+                                    {% elif resume.interviewFeedback == "IsEmployeeNow" %}
+                                    <span class="badge text-bg-secondary lh-base"> {{resume.interviewFeedback }}</span>
+                                    {% elif resume.interviewFeedback == "Pending" %}
+                                    <span class="badge text-bg-warning"> {{resume.interviewFeedback }}</span>
+                                    {% else %}
+                                    <span class="badge text-bg-danger" href=""> {{resume.interviewFeedback }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ resume.resume.url }}" target="_blank" class="btn custom-button btn-sm me-2">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                                {% if resume.candidate_id not in employees %}
+                                <td class="text-nowrap" style="min-width: 200px; width: 200px;">
+                                    <div class="d-flex">
+                                        
+                                        <button id="resumeEdit{{resume.candidate_id}}" href="" class="btn btn-success edit-resume btn-sm me-2">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                        {% if resume.status == "Shortlisted" %}
+                                        <a class="btn btn-primary btn-sm"
+                                            href="{% url 'hr:scheduleInterview' candidate_id=resume.candidate_id %}">
+                                            <img src="{% static 'admin/img/interview.png' %}" class="icon-small img-fluid"
+                                                style="height: 20px;width: 20px;">
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                            
+                            
+                            {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center">No results.</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</div>
+<!-- Modal to upload Resume-->
+<div class="modal fade" id="uploadResumeModal" tabindex="-1" aria-labelledby="uploadResumeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="uploadResumeModalLabel">Upload resume</h1>
+                <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal to edit candidate detais -->
+<div id="editModal" class="modal fade" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
+    data-bs-zoom="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Details</h5>
+                <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Danger Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    Please check resume format; it should be doc, docx, or pdf.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal for Success Message -->
+<div class="modal fade" id="candidatesuccessModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success!</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Success message content goes here -->
+                <p> Candidate Add Successfully.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock maincontent%}
+
+{% block extrascript %}
+
+{% endblock extrascript %}

@@ -1,0 +1,494 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../static/admin/img/PeoplPulselogo.png"/>
+    <title>Salary Slip</title>
+   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .salary-slip {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .employee-details {
+            margin-bottom: 20px;
+        }
+
+        .salary-details table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .salary-details th,
+        .salary-details td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .salary-details td {
+            font-size: 14px;
+        }
+        .salary-details th {
+            background-color: #f2f2f2;
+        }
+        .salary-details .row {
+            --bs-gutter-x: 1.5rem;
+            --bs-gutter-y: 0;
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: calc(-1 * var(--bs-gutter-y));
+            margin-right: calc(-.5 * var(--bs-gutter-x));
+            margin-left: calc(-.5 * var(--bs-gutter-x));
+        }
+
+        @media (max-width:767px) {
+            .salary-details .col-12 {
+                width: 100%;
+            }
+        }
+
+        @media (min-width:768px) {
+            .salary-details .col-md-6 {
+                width: 50%;
+            }
+        }
+
+        /* my */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100vh;
+            width: 100%;
+            font-family: "Roboto", sans-serif;
+        }
+
+        .p-4 {
+            padding: 1.5rem !important;
+        }
+
+        .bg-white {
+            opacity: 1;
+            background-color: rgba(255, 255, 25 1) !important;
+        }
+
+        .border-bottom {
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .shadow {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            ;
+        }
+
+        .d-flex {
+            display: flex !important;
+        }
+
+        .justify-content-center {
+            justify-content: center !important;
+        }
+
+        .align-items-center {
+            align-items: center !important;
+        }
+
+        .align-items-start {
+            align-items: flex-start !important;
+        }
+
+        .align-items-end {
+            align-items: flex-end !important;
+        }
+
+        .justify-content-end {
+            justify-content: flex-end !important;
+        }
+        p {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+        .fw-medium {
+            font-weight: 500 !important;
+        }
+        .fw-semibold {
+            font-weight: 600 !important;
+        }
+        .text-end {
+            text-align: right !important;
+        }
+        .font-size-sm {
+            font-size: 0.75em;
+        }
+        .text-wrap {
+            white-space: normal !important;
+        }
+        .row {
+            --bs-gutter-x: 1.5rem;
+            --bs-gutter-y: 0;
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+        .w-100 {
+            width: 100%;
+        }
+        .h1,
+        .h2,
+        .h3,
+        .h4,
+        .h5,
+        .h6,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            line-height: 1.2;
+            color: #212529;
+            font-family: "Poppins", sans-serif;
+        }
+        .h5,
+        h5 {
+            font-size: 1.25rem;
+        }
+        .h6,
+        h6 {
+            font-size: 1rem;
+        }
+        .mb-3 {
+            margin-bottom: 1rem !important;
+        }
+        .p-2 {
+            padding: 0.5rem !important;
+        }
+        .m-0 {
+            margin: 0 !important;
+        }
+        .mb-1 {
+            margin-bottom: 0.25rem !important;
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem !important;
+        }
+
+        .flex-column {
+            flex-direction: column;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            caption-side: bottom;
+            border-collapse: collapse;
+        }
+
+        .table {
+            --bs-table-color-type: initial;
+            --bs-table-bg-type: initial;
+            --bs-table-color-state: initial;
+            --bs-table-bg-state: initial;
+
+            width: 100%;
+            margin-bottom: 1rem;
+            vertical-align: top;
+            border-color: #d5d9dd;
+        }
+
+        tbody,
+        td,
+        tfoot,
+        th,
+        thead,
+        tr {
+            border-color: inherit;
+            border-style: solid;
+            border-width: 0;
+        }
+
+        table tr {
+            text-wrap: nowrap;
+        }
+
+        th {
+            text-align: inherit;
+            text-align: -webkit-match-parent;
+        }
+
+        th {
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+        }
+
+        .table>:not(caption)>*>* {
+            padding: 0.5rem 0.5rem;
+            color: initial;
+            background-color: #fff;
+            border-bottom-width: 1px;
+            box-shadow: inset 0 0 0 9999px var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)));
+        }
+
+
+        @media (min-width: 768px) {
+            .col-md-6 {
+                flex: 0 0 auto;
+                width: 50%;
+            }
+
+            .align-items-md-end {
+                align-items: flex-end !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="salary-slip">
+        <h1>Salary Slip</h1>
+
+        <div class="employee-details">
+            <p>Employee ID: {{ monthly_salary_instance.emp_id.emp_id }}</p>
+            <p>Employee Name: {{ monthly_salary_instance.emp_id.name }}</p>
+            <p>Payslip Date: {{ monthly_salary_instance.month |date:"F Y" }}</p>
+            <!-- Add more employee details as needed -->
+        </div>
+
+        <div class="salary-details">
+           <h2>Salary Details</h2>
+            <div class="col-md-6">
+
+            </div>
+            <div class="row">
+            <div class="col-12 col-md-6">
+                <table>
+                    <tr>
+                        <th>Component</th>
+                        <th>Amount</th>
+                    </tr>
+                    <tr>
+                        <td>CTC</td>
+                        <td>{{ monthly_salary_instance.monthly_ctc }}</td>
+                    </tr>
+                    <tr>
+                        <td>Basic</td>
+                        <td>{{ monthly_salary_instance.monthly_basic }}</td>
+                    </tr>
+                    <tr>
+                        <td>HRA</td>
+                        <td>{{ monthly_salary_instance.monthly_hra }}</td>
+                    </tr>
+                    <tr>
+                        <td>CA</td>
+                        <td>{{ monthly_salary_instance.monthly_ca }}</td>
+                    </tr>
+                    <tr>
+                        <td>SA</td>
+                        <td>{{ monthly_salary_instance.monthly_sa }}</td>
+                    </tr>
+
+
+
+                    <td>Gross Salary</td>
+                    <td>{{ monthly_salary_instance.monthly_gross_salary }}</td>
+                    </tr>
+
+                     Add other salary components here 
+                 </table>
+            </div>
+            <div class="col-12 col-md-6">
+                <table>
+                    <tr>
+                        <th>Component</th>
+                        <th>Amount</th>
+                    </tr>
+                    <tr>
+                        <td>PF</td>
+                        <td>{{ monthly_salary_instance.monthly_employeepf }}</td>
+                    </tr>
+                    <tr>
+                        <td>ESIC</td>
+                        <td>{{ monthly_salary_instance.monthly_employeeesic }}</td>
+                    </tr>
+                    <tr>
+                        <tr>
+                            <td>Professional Tax</td>
+                            <td> {{ monthly_salary_instance.monthly_professionalTax }}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Deduction</td>
+                            <td>{{ monthly_salary_instance.monthly_total_deductions }}</td>
+                        </tr>
+                        <tr>
+                            <td>Net Pay</td>
+                            <td>{{ monthly_salary_instance.monthly_netpay }}</td>
+                        </tr>
+
+                Add other salary components here 
+                </table>
+            </div>
+        </div> 
+            <div class="payslipwrapper p-4 w-100  ">
+                <div class="p-2 bg-white shadow ">
+                    <div class="col-12 d-flex justify-content-center ">
+                        <h5 class="border-bottom border-dark">Payslip for the Month of June 2023</h5>
+                    </div>
+                    <div class="row p-2 d-flex mb-3 border-bottom">
+                        <div class="col-12 col-md-6 ">
+                            <div class="payslipnowrapper">
+                                <p class="m-0 mb-1">Payslip No</p>
+                                <h6>741852963</h6>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div
+                                class="payslipdatenowrapper d-flex justify-content-end align-items-start align-items-md-end flex-column">
+                                <p class="m-0 mb-1">Payslip Date</p>
+                                <h6>
+                                    <date>Jul/03/2023</date>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-2">
+                        <div class="col-12 col-md-6">
+                            <div class="companydetails">
+                                <h6 class="fw-semibold">Navinchandra Insurance Broking Pvt. Ltd </h6>
+                            </div>
+                            <div class="col-12 col-md-4 ">
+                                <p class="text-wrap mb-2 font-size-sm">130-131, Samnavay Saptarshi, Manjalpur,
+                                    Vadodara-390009</p>
+                                <p class="text-wrap mb-2 font-size-sm fw-medium">info@techoma.io</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6  d-flex flex-column justify-content-end align-items-end">
+                            <div class="companydetails col-12 col-md-4 text-end">
+                                <p class="mb-1">Payment To</p>
+                                <h6 class="fw-semibold">Vishal Patel</h6>
+                            </div>
+                            <div
+                                class="col-12 col-md-6 col-md-lg-4 d-flex justify-content-end align-items-start align-items-md-end flex-column ">
+                                <p class="text-wrap mb-2 font-size-sm text-end">130-131, Samnavay Saptarshi, Manjalpur,
+                                    Vadodara-390009</p>
+                                <p class="text-wrap mb-2 font-size-sm fw-medium text-wrap">vishalpatel@techoma.io</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-2">
+                        <div class="col-12 col-md-6 p-2">
+                            <h6 class="fw-semibold">Earnings</h6>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="col">Basic</th>
+                                            <td scope="col" class="text-end">18000</th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">HRA</th>
+                                            <td class="text-end">2500</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">DA</th>
+                                            <td class="text-end">500</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Special Allowance</th>
+                                            <td class="text-end">1500</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Bonus</th>
+                                            <td class="text-end">800</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Total Earning</th>
+                                            <td class="text-end">1800</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 p-2">
+                            <h6 class="fw-semibold">Deductions</h6>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="col">Provident Fund</th>
+                                            <td scope="col" class="text-end">1800</th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Professional Tax</th>
+                                            <td class="text-end">250</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">ESI</th>
+                                            <td class="text-end">50</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Home Loan</th>
+                                            <td class="text-end">150</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">TDS</th>
+                                            <td class="text-end">800</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Total Deductions</th>
+                                            <td class="text-end">180</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12">
+                            <h6>
+                                Net Pay <Span>8850.00</Span>
+                            </h6>
+                            <p class="mt-2">Eight Thousand Five Hundred fifty Two Only </p>
+                        </div>
+                        <div class="col-12 col-md-12 d-flex justify-content-end align-items-end flex-column">
+                            <h6>
+                                <Span>Trishla Shah</Span>
+                            </h6>
+                            <p class="mt-2">Authorised Signatory </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div> 
+
+        </div>
+    </div>
+
+</body>
+
+</html>

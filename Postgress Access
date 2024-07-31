@@ -1,0 +1,5 @@
+host Name/address: localhost
+port: 5432
+maintannce DB: peoplepulseDB
+username: peoplepulseuser
+password: peoplepulse@123

@@ -1,0 +1,18 @@
+ul {
+    text-decoration: none;
+    list-style: none;
+    li {
+        text-decoration: none;
+        list-style: none;
+        ::marker {
+            list-style: none;
+        }
+    }
+}
+
+.social-list {
+    display:flex;
+    .social-item {
+        margin-left: 0.625rem;
+    }
+}

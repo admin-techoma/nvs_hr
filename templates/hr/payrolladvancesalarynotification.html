@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../../static/admin/scss/style.css">
+    <link rel="icon" type="image/x-icon" href="../../static/admin/img/PeoplPulselogo.png"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <input class="form-check-input" type="checkbox" value="" id="sideslide">
+        <aside class="sidebar">
+            <div class="d-flex justify-content-center p-2">
+                <figure>
+                    <img class="brandlogo img-fluid" src="../../../static/admin/img/logo.png" alt="Brand logo">
+                </figure>
+                <input class="form-check-input" type="checkbox" value="" id="sideslide">
+            </div>
+            <div class="Userprofilewrapper">
+                <figure class="userprofile">
+                    <img class="userprofilepic" src="" alt="">
+                </figure>
+                <div class="asideusernamewrapper">
+                    <h5 class="text-white title-text">Trishala shah</h5>
+                    <p class="Asideuserdesignation text-white text-center">Head Hr</p>
+                </div>
+            </div>
+            <nav class="d-flex justify-content-center align-items-center sidebar-nav">
+                <ul class="nav flex-column  ">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><img class="nav-icon"
+                                src="../../static/admin/img/sidebaricon/directorylist.svg" alt="img"><span
+                                class="nav-text">Directory</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><img class="nav-icon"
+                                src="../../static/admin/img/sidebaricon/Interview.svg" alt="img">
+                            <span class="nav-text">Interview</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><img class="nav-icon"
+                                src="../../static/admin/img/sidebaricon/User add.svg" alt="img"> <span
+                                class="nav-text">Add
+                                Employee</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><img class="nav-icon"
+                                src="../../static/admin/img/sidebaricon/attendance.svg" alt="img">
+                            <span class="nav-text">attendance</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><img class="nav-icon"
+                                src="../../static/admin/img/sidebaricon/payroll.svg" alt="img"> <span
+                                class="nav-text">Payroll</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><img class="nav-icon"
+                                src="../../static/admin/img/sidebaricon/setting.svg" alt="img"> <span
+                                class="nav-text">Setting</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <main>
+            <header class="top-header d-flex justify-content-between px-md-3">
+                <div class="headertitle d-flex align-items-center">
+                    <div class="sliderbtn me-3"><label for="sideslide" class="bi bi-list fs-5"></label></div>
+                    <h4 class="mb-0 fs-6">Hr Payroll advance request list
+                    </h4>
+                </div>
+                <div class="headerprofilewrapper d-flex p-2 align-items-center">
+                    <button type="button" class="btn custom-button">Clock In</button>
+                    <div class="dropdown ms-2 d-none d-md-flex">
+                        <button class="custom-notification btn outline-none dropdown-toggle border-0 border-color-none"
+                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="bi bi-bell"></span>
+                        </button>
+                        <ul class="dropdown-menu notificationdropdown border ">
+                            <li><a class="dropdown-item" href="#">
+                                    <div class="d-flex dropdown-content-wrapper">
+                                        <div class="img-wrapper">
+                                            <img src="../../static/admin/img/sidebaricon/User add.svg"
+                                                class="notification-img" alt="img">
+                                        </div>
+                                        <div class="notification-detail">
+                                            <h6 class="notification-title">Attention </h6>
+                                            <p class="notification-text">Your attendance sheet has been updated
+                                                .</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li><a class="dropdown-item" href="#">
+                                    <div class="d-flex dropdown-content-wrapper">
+                                        <div class="img-wrapper">
+                                            <img src="../../static/admin/img/sidebaricon/User add.svg"
+                                                class="notification-img" alt="">
+                                        </div>
+                                        <div class="notification-detail">
+                                            <h6 class="notification-title">Attention </h6>
+                                            <p class="notification-text">Your attendance sheet has been updated
+                                                Check for more Details .</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li><a class="dropdown-item" href="#">
+                                    <div class="d-flex dropdown-content-wrapper">
+                                        <div class="img-wrapper">
+                                            <img src="../../static/admin/img/sidebaricon/User add.svg"
+                                                class="notification-img" alt="">
+                                        </div>
+                                        <div class="notification-detail">
+                                            <h6 class="notification-title">Attention </h6>
+                                            <p class="notification-text">Your attendance sheet has been updated.<br>
+                                                Check for more Details .</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dropdown ">
+                        <button class="btn profile-button outline-none dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="../../static/admin/img/sidebaricon/Interview.svg" class="header-profile-img"
+                                alt="">
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#"><span class="bi bi-person-check mr-3 fs-5"></span>
+                                    <span class="ms-2"> My Profile </span></a></li>
+                            <li><a class="dropdown-item" href="#"><span class="bi bi-nut mr-3 fs-5"></span> <span
+                                        class="ms-2"> Settings </span></a></li>
+                            <li><a class="dropdown-item" href="#"><span class="bi bi-power mr-3 fs-5"></span> <span
+                                        class="ms-2">Login/Logout </span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+            <div class="main-content justify-content-center">
+                <div class="p-3">
+                    <div class="tablewrapper bg-primarylight">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"> <input class="form-check-input" type="checkbox" value=""
+                                                id="flexCheckDefault"></th>
+                                        <th scope="col">Employee Name</th>
+                                        <th scope="col">Requested Amount</th>
+                                        <th scope="col">Reason for advance Salary</th>
+                                        <th scope="col">Department</th>
+                                        <th scope="col">Designation</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Comments</th>
+                                        <th scope="col" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"> <input class="form-check-input" type="checkbox" value=""
+                                                id="flexCheckDefault"></th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                        <td>it</td>
+                                        <td>developer</td>
+                                        <td>Pending</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                
+                                                    <a class="preview-link btn btn-sm custom-button" href="#" >
+                                                        <i class="bi bi-eye"></i>
+                                                    </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Button trigger modal -->
+
+        </main>
+        <div class="modal fade" id="Viewadvancesalaryrequest" tabindex="-1"
+            aria-labelledby="ViewadvancesalaryrequestLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header primarybgcolor">
+                        <h1 class="modal-title fs-5 text-white " id="ViewadvancesalaryrequestLabel">Employee Advance
+                            Salary Request
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="w-100 d-flex justify-content-center align-items-center">
+                            <div class="row w-100">
+                                <div class="mb-3 col-12 col-lg-6 px-2">
+                                    <label for="EmployeeId" class="form-label mb-0">Employee Id</label>
+                                    <input type="text" class="form-control" id="EmployeeId" placeholder="1" disabled>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6 px-2">
+                                    <label for="EmployeeName" class="form-label mb-0">Employee Name</label>
+                                    <input type="text" class="form-control" id="EmployeeName" placeholder="Xyz"
+                                        disabled>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6 px-2">
+                                    <label for="EmployeeDept" class="form-label mb-0">Employee Department</label>
+                                    <input type="text" class="form-control" id="EmployeeDept" placeholder="It" disabled>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6 px-2">
+                                    <label for="EmployeeDesignation" class="form-label mb-0">Employee Designation </label>
+                                    <input type="text" class="form-control" id="EmployeeDesignation"
+                                        placeholder="Developer" disabled>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6 px-2">
+                                    <label for="EmployeeAmountRequested" class="form-label mb-0">Employee Amount
+                                        Requested</label>
+                                    <input type="text" class="form-control" id="EmployeeAmountRequested"
+                                        placeholder="15000 Rs">
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6 px-2">
+                                    <label for="EmployeeAmountRequested" class="form-label mb-0">Purpose of Payment</label>
+                                    <textarea class="form-control" id="EmployeeAmountRequested" rows="1"
+                                        placeholder="Reason for early salary" disabled>
+                                    </textarea>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6 px-2">
+                                    <label for="EmployeeAmountRequested" class="form-label mb-0">Status</label>
+                                    <select class="form-select form-select-sm" aria-label="Default select example">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">Approved</option>
+                                        <option value="2">Pending</option>
+                                        <option value="3">Rejected</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6 px-2">
+                                    <label for="EmployeeAmountRequested" class="form-label mb-0">Preview File Uploaded
+                                    </label>
+                                    <p><a class="link-opacity-100" href="#">fileUploaded.pdf</a></p>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6 px-2">
+                                    <label for="EmployeeAmountRequested" class="form-label mb-0">Approved by</label>
+                                    <div class="d-flex">
+                                        <div class="form-check me-2">
+                                            <input class="form-check-input" type="checkbox" value="" id="hrcheckbox"
+                                                checked>
+                                            <label class="form-check-label" for="hrcheckbox">
+                                                HR
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                id="ManagerCheckbox" disabled>
+                                            <label class="form-check-label" for="ManagerCheckbox">
+                                                Manager
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-12 col-lg-6 px-2">
+                                    <label for="Hrcomment" class="form-label mb-0">Comment</label>
+                                    <textarea class="form-control " id="Hrcomment" rows="3"
+                                        placeholder="Reason for early salary">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn custom-button btn-sm">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+{% extends 'component/base.html' %}
+{% load static  %}
+{% block title %}Before Generate Salary Update{% endblock title %}
+{% block extracss %}
+{% endblock extracss %}
+{% block maincontent %}
+<div class="main-content">
+    <div class="card">
+        <form method="post" action="{% url 'payroll:view_generatesalary' %}">
+            {% csrf_token %}
+            {% for message in messages %}
+            {% if message.tags == 'success' %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+            {% else %}
+            <label for="exampleInputEmail1" class="form-label mb-0 text-left text-danger">{{ message
+                }}</label>
+            {% endif %}
+            {% endfor %}
+            {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                {{ error }}
+                {% endfor %}
+                {% endfor %}
+            </div>
+            {% endif %}
+        <div class="card-header d-flex justify-content-between border-0">
+            <div class="text-center d-flex align-items-center">
+                <h6 class="mb-0 pageTitle"><strong>Salary List</strong></h6>
+            </div>
+            <button class="btn btn-dark btn-sm" type="submit" name="download_button">
+                <i class="bi bi-box-arrow-down"></i> Download
+            </button>    
+        </div>
+        <div class="card-body">
+           
+                <div class="row w-100 overflow-hidden mt-3">
+                    <!-- Filters -->
+                    <div class="col-md-3">
+                        <label for="monthFilter">Filter by Month:</label>
+                        <select id="monthFilter" class="form-select">
+                            <option value="">All Months</option>
+                            {% for month in unique_months %}
+                            <option value="{{ month }}">{{ month }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="yearFilter">Filter by Year:</label>
+                        <select id="yearFilter" class="form-select">
+                            <option value="">All Years</option>
+                            {% for year in unique_years %}
+                            <option value="{{ year }}">{{ year }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="table-responsive overflow-auto mt-3">
+                        <table class="table-responsive overflow-auto DataTable" id="allpayrollreportTable">
+                            <thead class="bg-none">
+                                <tr class="bg-none">
+                                    <th scope="col">name</th>
+                                    <th scope="col">month</th>
+                                    <th scope="col">year</th>
+                                    <th scope="col">ctc</th>
+                                    <th scope="col">gross salary</th>
+                                    <th scope="col">netpay</th>
+                                    <th scope="col">status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-none">
+                                {% for all_payroll_applications in all_payroll_applications %}
+                                <tr>
+                                    <td>{{ all_payroll_applications.name}}</td>
+                                    <td>{{ all_payroll_applications.month }}</td>
+                                    <td>{{ all_payroll_applications.year}}</td>
+                                    <td>{{ all_payroll_applications.monthly_ctc}}</td>
+                                    <td>{{ all_payroll_applications.monthly_gross_salary}}</td>
+                                    <td>{{ all_payroll_applications.monthly_netpay}}</td>
+                                    <td>{{ all_payroll_applications.payment_status}}</td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <a class="btn btn-sm custom-button me-1"
+                                                href="{% url 'payroll:view_salary' all_payroll_applications.pk %}"><i
+                                                    class="bi bi-eye"></i></a>
+                                            <a class="btn btn-sm me-1 btn-dark "
+                                                href="{% url 'payroll:download_salary_pdf' all_payroll_applications.pk %}"
+                                                target="_blank"><i class="bi bi-download"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+         
+        </div>
+    </form>
+    </div>
+</div>
+{%endblock maincontent%}
+{% block extrascript %}
+<script>
+    $(document).ready(function () {
+        var table = $('#allpayrollreportTable').DataTable({
+            responsive: true,
+            searching: true,
+            paging: true,
+            fixedHeader: true,
+            
+        });
+
+        // Filter event handlers
+        $('#monthFilter').on('change', function () {
+            table.column(1).search(this.value).draw();
+        });
+
+        $('#yearFilter').on('change', function () {
+            table.column(2).search(this.value).draw();
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const activateSwitches = document.querySelectorAll('.activate-switch');
+            activateSwitches.forEach(function (switchElement) {
+                switchElement.addEventListener('change', function () {
+                    const empId = switchElement.dataset.empId;
+                    fetch(`/check_payroll_status/${empId}/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.hasActivePayroll) {
+                                switchElement.checked = true;
+                            } else {
+                                alert('First activate payroll for this employee.');
+                                switchElement.checked = false;
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            });
+        });
+    });
+</script>
+{% endblock extrascript %}

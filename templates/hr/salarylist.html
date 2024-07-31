@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Salary Management</title>
+    <link rel="icon" type="image/x-icon" href="../../static/admin/img/PeoplPulselogo.png" />
+    <link rel="stylesheet" href="../../static/admin/scss/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+</head>
+<body>
+    {% block content %}
+    <div class="main-wrapper">
+        {% include 'component/sidebar.html' %}
+        <main>
+            {% include 'component/header.html' %}
+            <div class="main-content justify-content-center p-3 ">
+
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+                {% else %}
+                <label for="exampleInputEmail1" class="form-label mb-0 text-left text-danger" >{{ message }}</label>
+                {% endif %}
+                {% endfor %}
+                {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                    {{ error }}
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="d-flex justify-content-between flex-wrap mb-1">
+                    <div class="w-50 mb-1">
+                    </div>
+                </div>
+                <div class="row w-100 overflow-hidden mt-3">
+                    <div class="table-responsive overflow-auto ">
+                        <table class="table-responsive overflow-auto DataTable" id="allSalarysTable">
+                            <thead class="bg-none">
+                                <tr class="bg-none">
+                                    <th scope="col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                All
+                                            </label>
+                                        </div>
+                                    </th>
+                                    <th scope="col">Emp Id</th>
+                                    <th scope="col">Emp Name</th>
+                                    <th scope="col">Ceated On</th>
+                                    <th scope="col">ctc</th>
+                                    <th scope="col">Basic</th>
+                                    <th scope="col">Hra</th>
+                                    <th scope="col">CA</th>
+                                    <th scope="col">PF</th>
+                                    <th scope="col">ESIC</th>
+                                    <th scope="col">Gross Salary</th>
+                                    <th scope="col">Total Deduction</th>
+                                    <th scope="col">Net Salary</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-none">
+                                {% for monthly_salary_instance in monthly_salary_data %}
+                                <tr>
+                                    <td scope="col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>{{ monthly_salary_instance.emp_id.emp_id }}</td>
+                                    <td>{{ monthly_salary_instance.emp_id.name }}</td>
+                                    <td>{{ monthly_salary_instance.salary_createdon|date:"F Y" }}</td>
+                                    <td>{{ monthly_salary_instance.monthly_ctc }}</td>
+                                    <td>{{ monthly_salary_instance.monthly_basic }}</td>
+                                    <td>{{ monthly_salary_instance.monthly_hra }}</td>
+                                    <td>{{ monthly_salary_instance.monthly_ca }}</td>
+                                    <td>{{ monthly_salary_instance.monthly_employeepf }}</td>
+                                    <td>{{ monthly_salary_instance.monthly_employeeesic}}</td>
+                                    <td>{{ monthly_salary_instance.monthly_gross_salary }}</td>
+                                    <td>{{ monthly_salary_instance.monthly_total_deductions }}</td>
+                                    <td>{{ monthly_salary_instance.monthly_netpay }}</td>
+                                    {% comment %} <td>{{ monthly_salary_instance.payment_status }}</td> {% endcomment %}
+                                    <td>
+                                        {% if monthly_salary_instance.payment_status == "Paid" %}
+                                        <label
+                                            class="form-check-label badge text-bg-success">{{monthly_salary_instance.payment_status}}</label>
+                                        {% else %}
+                                        <a href="{% url 'payroll:edit_salary' monthly_salary_instance.pk %}"
+                                            class="badge text-bg-danger">
+                                            {{monthly_salary_instance.payment_status}}</a>
+                                        {% comment %} {% endcomment %}
+                                        {% comment %} </a> {% endcomment %} 
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <a class="btn btn-sm  custom-button me-1"
+                                                href="{% url 'payroll:month_salaryslip' pk=monthly_salary_instance.pk %}"><i
+                                                    class="bi bi-eye"></i></a>
+                                            {% comment %} <a class="btn btn-sm btn-success me-1" href="#"><i
+                                                    class="bi bi-pencil-square"></i></a> {% endcomment %}
+                                            <a class="btn btn-sm btn-success me-1"
+                                                href="{% url 'payroll:create_salary' monthly_salary_instance.pk %}"><i
+                                                    class="bi bi-pencil-square" target="_blank"></i></a>
+                                            <a class="btn btn-sm btn-danger me-1 " href="#"><i
+                                                    class="bi bi-trash"></i></a>
+                                            <a class="btn btn-sm me-1 btn-dark "
+                                                href="{% url 'payroll:download_salary_pdf' pk=monthly_salary_instance.pk %}"
+                                                target="_blank"><i class="bi bi-download"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% include 'component/footer.html' %}
+        </main>
+    </div>
+    {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script> -->
+    <script>
+        $(document).ready(function () {
+            $('#allSalarysTable').DataTable({
+                responsive: true,
+                searching: true,
+                paging: true,
+                fixedHeader: true,
+            });
+            document.addEventListener('DOMContentLoaded', function () {
+                const activateSwitches = document.querySelectorAll('.activate-switch');
+
+                activateSwitches.forEach(function (switchElement) {
+                    switchElement.addEventListener('change', function () {
+                        const empId = switchElement.dataset.empId;
+
+                        // Use AJAX to check if the employee has an active payroll
+                        fetch(`/check_payroll_status/${empId}/`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.hasActivePayroll) {
+                                    // If the employee has an active payroll, allow the status change
+                                    switchElement.checked = true;  // Mark the switch as checked
+                                } else {
+                                    // If the employee doesn't have an active payroll, show an alert
+                                    alert('First activate payroll for this employee.');
+                                    switchElement.checked = false;  // Mark the switch as unchecked
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

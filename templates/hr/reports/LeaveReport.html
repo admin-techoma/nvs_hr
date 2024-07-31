@@ -1,0 +1,267 @@
+{% extends 'component/base.html' %}
+
+{% load static  %}
+
+{% block title %}Leave Report{% endblock title %}
+
+{% block extracss %}
+{% endblock extracss %}
+
+{% block maincontent %}
+            <div class="main-content">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <div class="d-flex justify-content-between">
+                            <div class="text-center d-flex align-items-center">
+                                <h6 class="mb-0 pageTitle"><strong>Leave Report</strong></h6>
+                            </div>
+                            <!-- <div class="col-12 col-md-3 d-flex justify-content-end align-items-center">
+                                <button class="btn btn-dark btn-sm" type="submit" name="download_button">
+                                    <i class="bi bi-box-arrow-down"></i> Download
+                                </button>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="get" action="{% url 'hr:view_employee' %}">
+                            {% csrf_token %}
+                            {% for message in messages %}
+                            {% if message.tags == 'success' %}
+                            <div class="alert alert-success" role="alert">
+                                {{ message }}
+                            </div>
+                            {% else %}
+                            <label for="exampleInputEmail1" class="form-label mb-0 text-left text-danger">{{ message }}</label>
+                            {% endif %}
+                            {% endfor %}
+                            {% if form.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                {{ error }}
+                                {% endfor %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="d-flex justify-content-between flex-wrap mb-1 p-2">
+                         
+                                <div class="col-12 d-flex justify-content-end align-items-center">
+                                  
+                                    <div class="col-12 col-md-4 d-flex py-2 ">
+                                        <input type="date" id="min" class="form-control form-control-sm me-2"
+                                            value="{{ date|date:'d-m-Y' }}" name="min">
+                                        <input type="date" id="max" class="form-control form-control-sm "
+                                            value="{{ date|date:'d-m-Y' }}" name="max">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row w-100 overflow-hidden">
+                                <div class="table-responsive overflow-auto ">
+                                    <table class="w-100" id="allLeaveTable">
+                                        <thead class="bg-none">
+                                            <tr class="headings">
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="selectAllCheckbox">
+                                                        <label class="form-check-label" for="selectAllCheckbox">
+                                                            All
+                                                        </label>
+                                                    </div>
+                                                </th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">Emp Id</th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">leave from date
+                                                </th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">leave from time
+                                                </th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">leave to date</th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">leave to time</th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">leave type</th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">leave reason</th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">leave status</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr class="headings">
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="selectAllCheckbox">
+                                                        <label class="form-check-label" for="selectAllCheckbox">
+                                                            All
+                                                        </label>
+                                                    </div>
+                                                </th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">Emp Id</th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">leave from date
+                                                </th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">leave from time
+                                                </th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">leave to date</th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">leave to time</th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">leave type</th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">leave reason</th>
+                                                <th scope="col" style="min-width: 100px; text-wrap: nowrap;">leave status</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+          
+{%endblock maincontent%}
+
+{% block extrascript %}
+
+    <script>
+        $.fn.dataTable.render.moment = function (from, to, locale) {
+            // Argument shifting
+            if (arguments.length === 1) {
+                locale = 'en';
+                to = from;
+                from = 'YYYY-MM-DD';
+            } else if (arguments.length === 2) {
+                locale = 'en';
+            }
+            return function (d, type, row) {
+                if (!d) {
+                    return type === 'sort' || type === 'type' ? 0 : d;
+                }
+                var m = window.moment(d, from, locale, true);
+                // Order and type get a number value from Moment, everything else
+                // sees the rendered value
+                return m.format(type === 'sort' || type === 'type' ? 'x' : to);
+            };
+        };
+
+        $(document).ready(function () {
+            $('#allLeaveTable tfoot th').each(function () {
+                var title = $(this).text();
+                $(this).html('<input type="text" class="form-control form-control-sm" placeholder="' + title + '" />');
+            });
+            var table = $('#allLeaveTable').DataTable({
+                dom: 'lfrt<"ip"iB>p',
+                responsive: true,
+                searching: true,
+                paging: true,
+                fixedHeader: {
+                    header: true,
+                    footer: true
+                },
+                scrollX: true,
+                scrollY: window.innerHeight - (.6 * window.innerHeight),
+                dom: 'Bfrtip', // Show only the buttons
+                stateSave: true,
+                processing: true,
+                buttons: [
+                    {
+                        extend: 'copy',
+                        className: 'btn custom-button-two btn-sm mb-2', // Add your custom class for styling
+                        text: '<i class="bi bi-files"></i> Copy', // You can also customize the button text and add icons
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'btn custom-button-two btn-sm mb-2',
+                        text: '<i class="bi bi-file-excel"></i> Excel',
+                    },
+                    {
+                        extend: 'pdf',
+                        className: 'btn custom-button-two btn-sm mb-2',
+                        text: '<i class="bi bi-file-pdf"></i> PDF',
+                    },
+                    {
+                        extend: 'print',
+                        className: 'btn custom-button-two btn-sm mb-2',
+                        text: '<i class="bi bi-printer"></i> Print',
+                    },
+                ],
+                ajax: {
+                    url: "{% url 'report:leavedata' %}",
+                    type: "GET",
+
+                    data: function (dt) {
+                        dt.from = $('#min').val();
+                        dt.to = $('#max').val();
+                    }
+                },
+                columns: [{
+                    data: null,
+                    render: function (data, type, row) {
+                        return '<div class="form-check">' +
+                            '<input class="form-check-input" type="checkbox" value="' + row.id + '" id="checkbox_' + row.id + '">' +
+                            '<label class="form-check-label" for="checkbox_' + row.id + '"></label>' +
+                            '</div>';
+                    }
+                }, {
+                    data: "employee__emp_id"
+                }, {
+                    data: "leave_from_date"
+                }, {
+                    data: "leave_from_time"
+                }, {
+                    data: "leave_to_date"
+                }, {
+                    data: "leave_to_time"
+                }, {
+                    data: "leave_type"
+                }, {
+                    data: "leave_reason"
+                }, {
+                    data: "leave_status",
+                    render: function (data, type, row) {
+                        var statusLabels = {
+                            1: 'Approved',
+                            2: 'Pending',
+                            3: 'Rejected'
+                        };
+                        return statusLabels[data];
+                    }
+                }],
+                createdRow: function (row, data, dataIndex) {
+                    // Add class to each td element in the row
+                    $('td', row).addClass('text-nowrap');
+                },
+                deferRender: true,
+                scrollX: true,
+                scrollY: window.innerHeight - (.6 * window.innerHeight),
+                initComplete: function () {
+                    // Apply the search
+                    this.api().columns().every(function () {
+                        var that = this;
+                        $('input', this.footer()).on('keyup change clear', function () {
+                            if (that.search() !== this.value) {
+                                that.search(this.value).draw();
+                            }
+                        });
+                    });
+                }
+            });
+            $('.dataTables_filter input[type="search"]').addClass('form-control form-control-sm');
+            $('#selectAllCheckbox').on('change', function () {
+                var checked = $(this).prop('checked');
+                $('input[type="checkbox"]', table.rows().nodes()).prop('checked', checked);
+            });
+            $('#selectAllCheckboxFooter').on('change', function () {
+                var checked = $(this).prop('checked');
+                $('input[type="checkbox"]', table.rows().nodes()).prop('checked', checked);
+            });
+            // Change row background color on click
+            $('#allLeaveTable tbody').on('click', 'tr', function () {
+                // Remove the 'selected' class from all rows except the clicked one
+                table.rows().nodes().to$().removeClass('selected');
+                // Toggle the 'selected' class on the clicked row
+                $(this).toggleClass('selected');
+            });
+            $('#min, #max').on('change', function () {
+                table.ajax.reload();
+                table.draw();
+            });
+        });
+    </script>
+
+    
+    {% endblock extrascript %}

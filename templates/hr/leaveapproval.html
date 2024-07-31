@@ -1,0 +1,203 @@
+{% extends 'component/base.html' %}
+{% load static %}
+{% block title %}Approvals {% endblock title %}
+{% block extracss %}
+{% load custom_filters %}
+{% endblock extracss %}
+{% block maincontent %}
+<div class="main-content">
+    <div class="row flex-wrap ">
+        <div class=" col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+            <div class="leavecardstyle bordercolor1">
+                <h6 class="card-title">Total leaves applied</h6>
+                <p class="card-desc">{{employee_leaves|length}}</p>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+            <div class=" leavecardstyle bordercolor2">
+                <h6 class="card-title">Approved</h6>
+                <p class="card-desc">{{approveLeaves}}</p>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+            <div class="leavecardstyle bordercolor3">
+                <h6 class="card-title">Rejected Leave</h6>
+                <p class="card-desc">{{rejectedLeaves}}</p>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+            <div class=" leavecardstyle bordercolor4">
+                <h6 class="card-title">Pending Leaves</h6>
+                <p class="card-desc">{{pendingLeaves}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header d-flex justify-content-between border-0">
+            <div class="text-center d-flex align-items-center">
+                <h6 class="mb-0 pageTitle"><strong>Leave Approval List</strong></h6>
+            </div>
+            {% comment %} 
+            <button class="btn btn-dark btn-sm" type="submit" name="download_button">
+                <i class="bi bi-box-arrow-down"></i> Download
+            </button> 
+            {% endcomment %}
+        </div>
+        <div class="card-body">
+            <div class="tablewrapper bg-primarylight w-100 h-50">
+                <div class="table-responsive">
+                    <table class="table overflow-auto" id="leaveApprovalTable">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Emp Id</th>
+                                <th scope="col">Emp Name</th>
+                                <th scope="col">No of Days</th>
+                                <th scope="col">From Date</th>
+                                <th scope="col">To Date</th>
+                                <th scope="col">Type of Leave</th>
+                                <th scope="col">Approved by manager</th>
+                                <th scope="col">Remarks</th>
+                                <th scope="col">Action</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-none">
+                            {% for leave_application in employee_leaves %}
+                            <tr>
+                                <td class="text-nowrap">{{ leave_application.id }}</td>
+                                <td class="text-nowrap">
+                                    <div class="d-flex align-items-center ">{{ leave_application.employee.emp_id }}
+                                    </div>
+                                </td>
+                                <td class="text-nowrap">{{ leave_application.employee.name }}</td>
+                                <td class="text-nowrap">{{ leave_application|calculate_paid_leave_days }}</td>
+                                <td class="text-nowrap">{{ leave_application.leave_from_date }}</td>
+                                <td class="text-nowrap">{{ leave_application.leave_to_date }}</td>
+                                <td class="text-nowrap">{{ leave_application.leave_type }}</td>
+                                <td class="text-nowrap">{{ logged_in_employee }}</td>
+                                <td> <div class="">
+                                        <textarea class="form-control form-control-sm"
+                                            id="remarks_{{ leave_application.id }}"
+                                            rows="1">{{ leave_application.leave_reason }}</textarea>
+                                    </div>
+                                </td>
+                                <td style="min-width: 200px; width: 200px;">
+                                    <input type='hidden' id='leave_id' value='{{ leave_application.id }}' />
+                                   
+                                    <select class="form-select status-select form-select-sm"
+                                        aria-label="Default select example" id="status_{{ forloop.counter }}">
+                                        <option selected>Select</option>
+                                        <option value="1" {% if leave_application.leave_status == 1 %} selected{%endif %} >Approved</option>
+                                        <option value="2" {% if leave_application.leave_status == 2 %} selected{%endif %}>
+                                            Pending</option>
+                                        <option value="3" {% if leave_application.leave_status == 3 %} selected{%endif %}>
+                                            Rejected</option>
+                                    </select>
+                                </td>
+                                <td>{% if leave_application.leave_status == 1 %}
+                                    Approved
+                                    {% elif leave_application.leave_status == 2 %}
+                                    Pending
+                                    {% elif leave_application.leave_status == 3 %}
+                                    Rejected
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-header d-flex justify-content-between border-0">
+            <div class="text-center d-flex align-items-center">
+                <h6 class="mb-0 pageTitle"><strong>Regularlization Approval List</strong></h6>
+            </div>
+            
+        </div>
+        <div class="card-body">
+            <div class="tablewrapper bg-primarylight w-100 h-50">
+                <div class="table-responsive">
+                    <table class="dataTable no-footer" id="RegularizationDataTable">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="sorting sorting_asc" tabindex="0"
+                                    aria-controls="RegularizationDataTable" rowspan="1" colspan="1"
+                                    aria-sort="ascending" aria-label="#: activate to sort column descending"
+                                    style="width: 0px;">#</th>
+                                <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                    rowspan="1" colspan="1"
+                                    aria-label="Employee Name: activate to sort column ascending" style="width: 0px;">
+                                    Employee Name</th>
+                                    <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                    rowspan="1" colspan="1"
+                                    aria-label="Employee Name: activate to sort column ascending" style="width: 0px;">
+                                    Date</th>
+                                <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                    rowspan="1" colspan="1" aria-label="ClockIn Time: activate to sort column ascending"
+                                    style="width: 0px;">ClockIn Time</th>
+                                <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                    rowspan="1" colspan="1" aria-label="ClockOut Time: activate to sort column ascending"
+                                    style="width: 0px;">ClockOut Time</th>
+                                <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                    rowspan="1" colspan="1" aria-label=": activate to sort column ascending"
+                                    style="width: 0px;">Remarks</th>
+                                <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                    rowspan="1" colspan="1" aria-label=": activate to sort column ascending"
+                                    style="width: 0px;">Status</th>
+                          
+                                    
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for regularization in employee_regularization %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ regularization.employee.name }}</td>
+                                <td>{{ regularization.date }}</td>
+                                <td>{{ regularization.requested_clock_in }}</td>
+                                <td>{{ regularization.requested_clock_out }}</td>
+                                <td>
+                                    <textarea class="form-control form-control-sm" name="remarks" rows="1">{{ regularization.remarks|default:''}}</textarea>
+                                </td>
+                                <td>
+                                    <form method="post" action="{% url 'employee:approve_regularization' regularization.id %}">
+                                        {% csrf_token %}
+                                        <select name="action" class="form-select form-select-sm" aria-label="Small select example" onchange="this.form.submit()">
+                                            
+                                            <option selected>Pending</option>
+                                            <option value="approve" {% if regularization.regularization_approved %} selected{% endif %}>Approved</option>
+                                            <option value="reject" {% if not regularization.regularization_approved %} selected{% endif %}>Rejected</option>
+                                        </select>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="responseModal" tabindex="-1" aria-labelledby="responseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="responseModalLabel">Leave Status updated</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modalContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock maincontent%}
+{% block extrascript %}
+{% endblock extrascript %}

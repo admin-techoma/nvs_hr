@@ -1,0 +1,352 @@
+{% extends 'component/base.html' %}
+
+{% load static  %}
+
+{% block title %}Dashboard {% endblock title %}
+
+{% block extracss %}
+{% comment %} <script src="{% static 'admin/js/employee/employee.js' %}"></script> {% endcomment %}
+{% endblock extracss %}
+{% block maincontent %}
+            <div class="main-content">
+                <div class="row">
+                    <div class="col-12 col-md-8 p-2">
+                        <h5>Employee On Leave Request</h5>
+                        <div class="overflow-hidden emptable">
+                            <div class="tablewrapper bg-primarylight w-100">
+                                <div class="table-responsive">
+                                    <table class="table overflow-auto" id="leaveApprovalTable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> Id</th>
+                                                <th scope="col">Emp Id</th>
+                                                <th scope="col">Emp Name</th>
+                                                <th scope="col">From Date</th>
+                                                <th scope="col">To Date</th>
+                                                <th scope="col">Type of Leave</th>
+                                                <th scope="col">Approved by manager</th>
+                                                <th scope="col">Remarks</th>
+                                                <th scope="col">Action</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-none">
+                                            {% for leave_application in employee_leaves %}
+                                            <tr>
+                                                <td class="text-nowrap">{{ leave_application.id }} </td>
+                                                <td class="text-nowrap">
+                                                    <div class="d-flex align-items-center">{{ leave_application.employee.emp_id }}
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">{{ leave_application.employee.name }} </td>
+                                            
+                                                <td class="text-nowrap">{{ leave_application.leave_from_date }} </td>
+                                                <td class="text-nowrap">{{ leave_application.leave_to_date }}</td>
+                                                <td class="text-nowrap">{{ leave_application.leave_type }}</td>
+                                                <td class="text-nowrap">{{ logged_in_employee }}</td>
+                                                <td> <div class=""><textarea class="form-control form-control-sm" id="remarks_{{ leave_application.id }}" rows="1"> {{ leave_application.leave_reason }}</textarea></div></td>
+                                                <td style="min-width: 200px; width: 200px;">
+                                                    <input type='hidden' id='leave_id' value='{{ leave_application.id }}' />
+                                                    <select class="form-select status-select form-select-sm"
+                                                        aria-label="Default select example" id="status_{{ forloop.counter }}">
+                                                        <option selected>Select</option>
+                                                        <option value="1" {% if leave_application.leave_status == 1 %} selected{%endif %}>Approved</option>
+                                                        <option value="2" {% if leave_application.leave_status == 2 %} selected{%endif %}>Pending</option>
+                                                        <option value="3" {% if leave_application.leave_status == 3 %} selected{%endif %}>Rejected</option>
+                                                    </select>
+                                                </td>
+                                                <td>{% if leave_application.leave_status == 1 %}
+                                                    Approved
+                                                    {% elif leave_application.leave_status == 2 %}
+                                                    Pending
+                                                    {% elif leave_application.leave_status == 3 %}
+                                                    Rejected
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="card border-0">
+                            <div class="card-body border-0">
+                                <div class="dashboard-corner-card">
+                                    <div class="overflow-hidden h-50">
+                                        <h6 class="card-top-title">Team Corner</h6>
+                                        <ul class="m-0 p-2">
+                                            <li class="cardlist rounded shadow">
+                                                <figure class="mb-0 card-figure">
+                                                    <img src="../../static/admin/img/alexendar.jpg" class=" card-img"
+                                                        alt="img" />
+                                                </figure>
+                                                <div class="card-details">
+                                                    <span class="card-title-name">Vishal Patel</span><span
+                                                        class="card-descrtion">Frontend Developer</span>
+                                                </div>
+                                            </li>
+                                            <li class="cardlist rounded shadow">
+                                                <figure class="mb-0 card-figure">
+                                                    <img src="../../static/admin/img/avtar.jpg" class=" card-img"
+                                                        alt="img" />
+                                                </figure>
+                                                <div class="card-details">
+                                                    <span class="card-title-name">Venila Kaur</span><span
+                                                        class="card-description">Backend Developer</span>
+                                                </div>
+                                            </li>
+                                            <li class="cardlist rounded shadow">
+                                                <figure class="mb-0 card-figure">
+                                                    <img src="../../static/admin/img/alexendar.jpg" class=" card-img"
+                                                        alt="img" />
+                                                </figure>
+                                                <div class="card-details">
+                                                    <span class="card-title-name">Keyur Makwana</span><span
+                                                        class="card-description">Hr</span>
+                                                </div>
+                                            </li>
+                                            <li class="cardlist rounded shadow">
+                                                <figure class="mb-0 card-figure">
+                                                    <img src="../../static/admin/img/alexendar.jpg" class=" card-img"
+                                                        alt="img" />
+                                                </figure>
+                                                <div class="card-details">
+                                                    <span class="card-title-name">Vishal</span><span
+                                                        class="card-description">01/05/1995</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="emp-table">
+                            <div class=" table-responsive p-2 h-100">
+                                <table class="table">
+                                    <thead class="primarybgcolor">
+                                        <tr class="primarybgcolor">
+                                            <th scope="col" class="primarybgcolor text-white">Emp Id</th>
+                                            <th scope="col" class="primarybgcolor text-white">Emp Name</th>
+                                            <th scope="col" class="primarybgcolor text-white">Email id</th>
+                                            <th scope="col" class="primarybgcolor text-white">Department</th>
+                                            <th scope="col" class="primarybgcolor text-white">Designation</th>
+                                            <th scope="col" class="primarybgcolor text-white">Doj</th>
+                                            <th scope="col" class="primarybgcolor text-white">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                                <p class="mb-0">dummy data</p>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="card border-0">
+                            <div class="card-body border-0">
+                                <div class="dashboard-corner-card">
+                                    <div class="overflow-hidden h-50">
+                                        <h6 class="card-top-title">Employee Active</h6>
+                                        <ul class="m-0 p-2">
+                                            <li class="cardlist rounded shadow">
+                                                <figure class="mb-0 card-figure">
+                                                    <img src="../../static/admin/img/alexendar.jpg" class=" card-img"
+                                                        alt="img" />
+                                                </figure>
+                                                <div class="card-details">
+                                                    <span class="card-title-name">Vishal Patel</span><span
+                                                        class="card-description badge text-bg-danger text-center">Inactive</span>
+                                                </div>
+                                            </li>
+                                            <li class="cardlist rounded shadow">
+                                                <figure class="mb-0 card-figure">
+                                                    <img src="../../static/admin/img/avtar.jpg" class=" card-img"
+                                                        alt="img" />
+                                                </figure>
+                                                <div class="card-details">
+                                                    <span class="card-title-name">Venila Kaur</span>
+                                                    <p class="card-description badge text-bg-success text-center w-100">
+                                                        Active</p>
+                                                </div>
+                                            </li>
+                                            <li class="cardlist rounded shadow">
+                                                <figure class="mb-0 card-figure">
+                                                    <img src="../../static/admin/img/alexendar.jpg" class=" card-img"
+                                                        alt="img" />
+                                                </figure>
+                                                <div class="card-details">
+                                                    <span class="card-title-name">Keyur Makwana</span>
+                                                    <p class="card-description badge text-bg-danger text-center w-100">
+                                                        Inactive</p>
+                                                </div>
+                                            </li>
+                                            <li class="cardlist rounded shadow">
+                                                <figure class="mb-0 card-figure">
+                                                    <img src="../../static/admin/img/alexendar.jpg" class=" card-img"
+                                                        alt="img" />
+                                                </figure>
+                                                <div class="card-details">
+                                                    <span class="card-title-name">Trishala shah</span>
+                                                    <p class="card-description badge text-bg-success text-center w-100">
+                                                        active</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 p-2">
+                        <div class="p-2 mb-1">
+                            <label for="progressbar1" class="font-size-sm fw-semibold">Active Employees</label>
+                            <div class="progress" role="progressbar" aria-label="Example with label" id="progressbar1"
+                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" style="width: 80%">80%</div>
+                            </div>
+                        </div>
+                        <div class="p-2 mb-1">
+                            <label for="progressbar1" class="font-size-sm fw-semibold">In Process Leave</label>
+                            <div class="progress " role="progressbar" aria-label="Example 1px high" id="progressbar1"
+                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar bg-info" style="width: 5%">5%</div>
+                            </div>
+                        </div>
+                        <div class="p-2 mb-1">
+                            <label for="progressbar1" class="font-size-sm fw-semibold">Half Day</label>
+                            <div class="progress" role="progressbar" aria-label="Example with label" id="progressbar1"
+                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar bg-warning" style="width: 50%">50%</div>
+                            </div>
+                        </div>
+                        <div class="p-2 mb-1">
+                            <label for="progressbar1" class="font-size-sm fw-semibold">Total Pending Leave</label>
+                            <div class="progress" role="progressbar" aria-label="Example with label" id="progressbar1"
+                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar bg-danger" style="width: 45%">45%</div>
+                            </div>
+                        </div>
+                        <div class="p-2 mb-1">
+                            <label for="progressbar1" class="font-size-sm fw-semibold">Total Pending Leave</label>
+                            <div class="progress" role="progressbar" aria-label="Example with label" id="progressbar1"
+                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar primarybgcolor" style="width: 75%">75%</div>
+                            </div>
+                        </div>
+                        <div class="p-2 mb-1">
+                            <label for="progressbar1" class="font-size-sm fw-semibold">Total Pending Leave</label>
+                            <div class="progress" role="progressbar" aria-label="Example with label" id="progressbar1"
+                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar bg-success" style="width: 45%">45%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-2">
+                    <div class="col-12 col-md-6 ">
+                        <div id="test121">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-4"></div>
+                    <div class="col-12 col-md-4"></div>
+                </div>
+            </div>
+            <input type="hidden" id="employeeId" value="{{emp_id}}" />
+            {%endblock maincontent%}

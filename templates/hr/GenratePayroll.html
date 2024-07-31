@@ -1,0 +1,571 @@
+{% extends 'component/base.html' %}
+
+{% load static  %}
+
+{% block title %}Create Payroll{% endblock title %}
+
+{% block extracss %}
+{% endblock extracss %}
+
+{% block maincontent %}
+            
+                <div class="main-content">
+                    <div class="px-md-2 h-100 ">
+                        <form action="{% url 'payroll:add_payroll' emp_data.pk %}" method="post">
+                            {% csrf_token %}
+                        <div class="row p-2">
+                            <div class="col-12 col-md-4 d-flex align-items-center mb-2">
+                                <label class="form-label mb-0 mb-0 w-50">Payroll id</label>
+                                <input type="text" class="form-control form-control-sm border-1 " disabled
+                                    placeholder="Payroll id" id="" value="{{ payroll.payroll_id }}" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex  align-items-center mb-2">
+                                <label class="form-label mb-0 mb-0 w-50"> Emp id</label>
+                                <input type="text" class="form-control form-control-sm border-1 " disabled
+                                    placeholder="emp_id" id="" value="{{emp_data.emp_id}}" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex  align-items-center mb-2">
+                                <label class="form-label mb-0 mb-0 w-50">Name</label>
+                                <input type="text" class="form-control form-control-sm border-1 " disabled
+                                    placeholder="first_name" id="" name="name" value="{{emp_data.name}}" />
+                            </div>
+
+                            <div class="col-12 col-md-4 d-flex  align-items-center mb-2">
+                                <label class="form-label mb-0 mb-0 w-50"> Email</label>
+                                <input type="email" class="form-control form-control-sm border-1 "
+                                    placeholder="first_name" name="email" id="" value="{{emp_data.email}}" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex  align-items-center mb-2">
+                                <label class="form-label mb-0 mb-0 w-50"> Office Email</label>
+                                <input type="email" class="form-control form-control-sm border-1 bg-transparent"
+                                    placeholder="Office Email" id="office_email" name="office_email"
+                                    value="{{emp_data.office_email }}" required />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex align-items-center mb-2">
+                                <label class="form-label mb-0 mb-0 w-50">Department</label>
+                                <input type="text" class="form-control form-control-sm " disabled placeholder="B" id=""
+                                    value="{{emp_data.department}}" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex align-items-center mb-2">
+                                <label class="form-label mb-0 mb-0 w-50">Designation</label>
+                                <input type="text" class="form-control form-control-sm  " disabled
+                                    value="{{emp_data.designation}}" id="" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex align-items-center mb-2">
+                                <label class="form-label mb-0 mb-0 w-50">Branch Office</label>
+                                <input type="text" class="form-control form-control-sm " disabled placeholder="Vadodara"
+                                    id="" value="{{emp_data.company_branch}}" />
+                            </div>
+                            <div class="col-12 col-md-4 d-flex align-items-center mb-2">
+                                <label class="form-label mb-0 mb-0 w-50">Joining Date </label>
+                                <input type="date" class="form-control form-control-sm " id="" name="doj" disabled
+                                    value="{{emp_data.doj|date:'Y-m-d'}}" />
+                            </div>
+                        </div>
+                        <div class="row p-2 ">
+
+
+                            <div class="col-12 col-md-4 d-flex align-items-center">
+                                <label class="form-label mb-0 mb-0 w-50">Applicable from</label>
+                                <input type="date" class="form-control form-control-sm" id="" name="applicable_from"
+                                    value="{{payroll.applicable_from|date:'Y-m-d'}}" />
+                            </div>
+                            {% comment %} <div class="col-12 col-md-4 d-flex align-items-center">
+                                <label class="form-label mb-0 mb-0 mb-md-0 text-nowrap me-2">Till date</label>
+                                <input type="date" class="form-control form-control-sm" id=""
+                                    value="{{payroll.till_date|date:'Y-m-d'}}" />
+                            </div> {% endcomment %}
+                            {% comment %} <div class="col-12 col-md-4 d-flex align-items-center">
+                                <label class="form-label mb-0 mb-0 w-md-50">Payroll Status</label>
+                                <select class="form-select" id="status" name="status">
+                                    <option value="{{payroll.status }}" selected> {{payroll.status }}</option>
+                                    <option value="Activate"> Activate </option>
+                                    <option value="Deactivate"> Deactivate </option>
+                                </select>
+                            </div> {% endcomment %}
+                        </div>
+                        <div class="row p-2">
+                            <div class="col-12 col-md-6 overflow-hidden">
+                                <div class="table-responsive salpayrolltable-wrapper">
+                                    <table id="salparolltab1" class="table border table-sm">
+                                        <thead class="border border-bottom-0">
+                                            <tr>
+                                                <th>
+                                                    <div
+                                                        class="form-check d-flex justify-content-center align-items-center">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault">
+                                                    </div>
+                                                </th>
+                                                <th scope="col">Income Head</th>
+                                                <th scope="col">Monthly Amount </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            <tr>
+                                                <td>
+                                                    <div
+                                                        class="form-check d-flex justify-content-center align-items-center">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault">
+                                                    </div>
+                                                </td>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="SalComponent" placeholder="ctc">
+                                                    </div>
+                                                    </th>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="number"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="ctcInput" placeholder="0" name="ctc" required
+                                                            oninput="calculateSalary()" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div
+                                                        class="form-check d-flex justify-content-center align-items-center">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault">
+                                                    </div>
+                                                </td>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="SalComponent" placeholder="Basic" disabled>
+                                                    </div>
+                                                    </th>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="number"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="basicAmount" placeholder="0" name="basic" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div
+                                                        class="form-check d-flex justify-content-center align-items-center">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault">
+                                                    </div>
+                                                </td>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="" placeholder="HRA" disabled>
+                                                    </div>
+                                                    </th>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="number"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="hraAmount" placeholder="0" name="hra" />
+                                                    </div>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div
+                                                        class="form-check d-flex justify-content-center align-items-center">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault">
+                                                    </div>
+                                                </td>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="" placeholder="Conviction Allowance" disabled>
+                                                    </div>
+                                                    </th>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="number"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="ca" placeholder="0" name="ca">
+                                                    </div>
+                                                </td>
+
+
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div
+                                                        class="form-check d-flex justify-content-center align-items-center">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault">
+                                                    </div>
+                                                </td>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="" placeholder="Special Allowance" disabled>
+                                                    </div>
+                                                    </th>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="number"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="sa" placeholder="0" name="sa" />
+                                                    </div>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                    <div class="">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="" placeholder="Gross Amount" name="" disabled>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="">
+                                                        <input type="number"
+                                                            class="form-control form-control-sm border-0 bg-transparent text-danger"
+                                                            id="grossAmount" placeholder="0" name="gross_salary" />
+                                                    </div>
+                                                </td>
+
+
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 overflow-hidden">
+                                <div class="table-responsive salpayrolltable-wrapper">
+                                    <table id="salparolltab2" class="table border table-sm">
+                                        <thead class="border border-bottom-0">
+                                            <tr>
+                                                <th scope="col">
+                                                    <div
+                                                        class="form-check d-flex justify-content-center align-items-center">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault">
+                                                    </div>
+                                                </th>
+                                                <th scope="col">Deduction Head</th>
+                                                <th scope="col">Employer's Contributions</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            <tr>
+                                                <td>
+                                                    <div
+                                                        class="form-check d-flex justify-content-center align-items-center">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault">
+                                                    </div>
+                                                </td>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="" placeholder="Employer PF" disabled>
+                                                    </div>
+                                                </td>
+
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="number"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="employerPF" placeholder="0" name="employer_pf" />
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div
+                                                        class="form-check d-flex justify-content-center align-items-center">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault">
+                                                    </div>
+                                                </td>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="" placeholder="Employer ESIC" disabled>
+                                                    </div>
+                                                    </th>
+
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="number"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="employerESIC" placeholder="0" name="employer_esic" />
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td scope="col">
+                                                    <div
+                                                        class="form-check d-flex justify-content-center align-items-center">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault">
+                                                    </div>
+                                                </td>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="" placeholder="P.T" disabled>
+                                                    </div>
+                                                    </th>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="number"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="professionalTax" placeholder="0" name="pt" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="col">
+                                                    <div
+                                                        class="form-check d-flex justify-content-center align-items-center">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault">
+                                                    </div>
+                                                </td>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="" placeholder="Employee PF" disabled>
+                                                    </div>
+                                                    </th>
+                                                </td>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="number"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="employeePF" placeholder="0" name="employee_pf" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div
+                                                        class="form-check d-flex justify-content-center align-items-center">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault">
+                                                    </div>
+                                                </td>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="" placeholder="Employee ESIC" disabled>
+                                                    </div>
+                                                    </th>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="number"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="employeeESIC" placeholder="0" name="employee_esic" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% comment %} <tr>
+                                                <td>
+                                                    <div
+                                                        class="form-check d-flex justify-content-center align-items-center">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault">
+                                                    </div>
+                                                </td>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="" placeholder="Gratiuity">
+                                                    </div>
+                                                    </th>
+                                                <td scope="col">
+                                                    <div class="">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm border-0 bg-transparent"
+                                                            id="gratiuity" placeholder="0">
+                                                    </div>
+                                                </td>
+                                            </tr> {% endcomment %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-between mb-2 ">
+                                <div class="d-flex justify-content-center align-items-center p-2">
+                                    <label for="newCTC" class="form-label mb-0 text-nowrap me-2 mb-0">Monthly CTC:</label>
+                                    <input type="number" class="form-control form-control-sm" id="newCTC"
+                                        name="monthly_ctc" placeholder="0" />
+                                </div>
+                                <div class="d-flex justify-content-center align-items-center p-2">
+                                    <label for="newCTC" class="form-label mb-0 text-nowrap me-2 mb-0">Yearly CTC:</label>
+                                    <input type="text" class="form-control form-control-sm" id="yearlyCTC"
+                                        name="yearlyctc" placeholder="0" />
+                                </div>
+                                <div class="d-flex  justify-content-center align-items-center p-2 mb-2">
+                                    <label for="" class="form-label mb-0  text-nowrap me-2 mb-0">Total
+                                        Deduction</label>
+                                    <input type="number" class="form-control form-control-sm" id="totaldeduction"
+                                        placeholder="0" name="total_deduction">
+                                </div>
+                                <div class="d-flex justify-content-center align-items-center p-2 mb-2">
+                                    <label for="netPay" class="form-label mb-0 text-nowrap me-2 mb-0">Net Pay:</label>
+                                    <input type="number" class="form-control form-control-sm" id="netPay"
+                                        placeholder="0" name="net_salary" />
+                                </div>
+                            </div>
+                            <div class="row w-100 d-flex mb-3 mt-2">
+                                <div class="col-12 d-flex justify-content-between mb-2 ">
+                                    {% comment %}
+                                    <div class="d-flex  justify-content-center align-items-center p-2">
+                                        <label for="" class="form-label mb-0 text-nowrap me-2 mb-0">Grade</label>
+                                        <select id="grade" class="form-control" name="grade" required>
+                                            <option value="" selected>Select Grade</option>
+                                            {% for grade in grade %}
+                                            <option value="{{ grade.id }}">{{ grade.grade }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div> {% endcomment %}
+                                    <div class="d-flex  justify-content-center align-items-center p-2 mb-2">
+                                        <label for="" class="form-label mb-0 text-nowrap me-2 mb-0">Payment Mode</label>
+                                        <select class="form-select" id="paymentmode" name="paymentmode">
+                                            <option value="{{payroll.paymentmode }}" selected> {{payroll.paymentmode }}
+                                            </option>
+                                            <option value="Bank Transfer"> Bank Transfer </option>
+                                            <option value="Cheque"> Cheque </option>
+                                            <option value="Cash"> Cash </option>
+                                        </select>
+                                    </div>
+                                    {% comment %} <div
+                                        class="d-flex  justify-content-center align-items-center p-2 mb-2">
+                                        <label for="" class="form-label mb-0 text-nowrap me-2 mb-0">Net Pay</label>
+                                        <input type="text" class="form-control form-control-sm" id="grossamount"
+                                            placeholder="30000">
+                                    </div> {% endcomment %}
+
+                                </div>
+                            </div>
+                        </div>
+                            <div class="d-flex justify-content-end mb-3">
+                                <button type="submit" class="btn custom-button btn-sm me-2">Save</button>
+                                <button typse="button" class="btn btn-secondary btn-sm">Cancel</button>
+                            </div>
+                    </form>
+                    </div>
+                
+                </div>
+            
+          
+{%endblock maincontent%}
+
+{% block extrascript %}
+
+
+    <script>
+        function calculateSalary() {
+            // Get CTC input value
+            var ctcAmount = parseFloat(document.getElementById('ctcInput').value);
+
+            // Calculate Basic Amount (60% of CTC)
+            var basicAmount = 0.6 * ctcAmount;
+
+            // Calculate HRA Amount (30% of Basic)
+            var hraAmount = 0.3 * basicAmount;
+
+            var y = ctcAmount - 1.0325 * basicAmount - 1.0325 * hraAmount;
+
+            var x1 = (y - 1800) / 1.0325;
+
+            var newCTC = 0.0325 * (basicAmount + hraAmount + x1) + basicAmount + hraAmount + x1 + 1800;
+
+            var x2 = (y - 0.12 * basicAmount) / 1.1525;
+
+            var employerPF = basicAmount + x2;
+
+            var x3 = 0.12 * (basicAmount + x2) - 1800;
+
+            if (employerPF < 15000) {
+                employerPF = 0.12 * employerPF;
+            } else {
+                employerPF = 1800;
+            }
+
+            // Calculate employerESIC as 3.25% of basicAmount + hraAmount + x2
+            var employerESIC = (basicAmount + hraAmount + x2) > 21000 ? 0 : 0.0325 * (basicAmount + hraAmount + x2);
+
+            // Calculate Other Amount
+            var otherAmount;
+
+            if (employerESIC === 0) {
+                otherAmount = 0.0325 * (basicAmount + hraAmount + x1) + x1;
+                newCTC = 0.0325 * (basicAmount + hraAmount + x2) + basicAmount + hraAmount + x2 + employerPF + x3;
+            } else {
+                otherAmount = x2;
+            }
+            var sa = 0;
+
+            var grossAmount = basicAmount + hraAmount + otherAmount;
+            var employeePF = employerPF; // You need to define this variable
+            var employeeESIC = (basicAmount + hraAmount + x2) > 21000 ? 0 : 0.0075 * (basicAmount + hraAmount + x2);
+
+            // Display results
+            document.getElementById('basicAmount').value = Math.ceil(basicAmount).toFixed(2);
+            document.getElementById('hraAmount').value = Math.ceil(hraAmount).toFixed(2);
+            document.getElementById('ca').value = Math.ceil(otherAmount).toFixed(2);
+            document.getElementById('sa').value = Math.ceil(sa).toFixed(2);
+            document.getElementById('grossAmount').value = Math.ceil(grossAmount).toFixed(2);
+            document.getElementById('employeePF').value = Math.ceil(employeePF).toFixed(2);
+            document.getElementById('employerPF').value = Math.ceil(employerPF).toFixed(2);
+            document.getElementById('employeeESIC').value = Math.ceil(employeeESIC).toFixed(2); // Display employerESIC
+            document.getElementById('employerESIC').value = Math.ceil(employerESIC).toFixed(2); // Display employerESIC
+            document.getElementById('newCTC').value = Math.ceil(newCTC).toFixed(2);
+
+            // You need to define the following variables
+            // var professionalTax = 0;
+
+            if (grossAmount > 12000) {
+                var professionalTax = 200;
+            } else {
+                var professionalTax = 0;
+            }
+
+            var netPay = grossAmount - employeeESIC - employeePF - professionalTax;
+            var totaldeduction = employeeESIC + employeePF + professionalTax;
+            var yearlyCTC = newCTC * 12;
+
+            document.getElementById('professionalTax').value = Math.ceil(professionalTax).toFixed(2);
+            document.getElementById('netPay').value = Math.ceil(netPay).toFixed(2);
+            document.getElementById('totaldeduction').value = Math.ceil(totaldeduction).toFixed(2);
+            document.getElementById('yearlyCTC').value = Math.ceil(yearlyCTC).toFixed(2);
+        }
+
+        // Call calculateSalary initially to handle default input
+        calculateSalary();
+    </script>
+
+    {% endblock extrascript %}

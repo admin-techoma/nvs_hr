@@ -1,0 +1,326 @@
+{% extends 'component/base.html' %}
+
+{% load static  %}
+
+{% block title %}Documents Report {% endblock title %}
+
+{% block extracss %}
+{% endblock extracss %}
+
+{% block maincontent %}
+            <div class="main-content">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <div class="d-flex justify-content-between">
+                            <div class="text-center d-flex align-items-center">
+                                <h6 class="mb-0 pageTitle"><strong>Documents Report </strong></h6>
+                            </div>
+                            <!-- <div class="col-12 col-md-3 d-flex justify-content-end align-items-center">
+                                <button class="btn btn-dark btn-sm" type="submit" name="download_button">
+                                    <i class="bi bi-box-arrow-down"></i> Download
+                                </button>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="get" action="{% url 'hr:view_employee' %}">
+                            {% csrf_token %}
+                            {% for message in messages %}
+                            {% if message.tags == 'success' %}
+                            <div class="alert alert-success" role="alert">
+                                {{ message }}
+                            </div>
+                            {% else %}
+                            <label for="exampleInputEmail1" class="form-label mb-0 text-left text-danger">{{ message }}</label>
+                            {% endif %}
+                            {% endfor %}
+                            {% if form.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                {{ error }}
+                                {% endfor %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="d-flex justify-content-between flex-wrap mb-1 p-2">
+                                <div class="col-12 d-flex justify-content-end align-items-center"> 
+                                    <div class="col-12 col-md-4 d-flex py-2 ">
+                                        <input type="date" id="min" class="form-control form-control-sm me-2"
+                                            value="{{ date|date:'d-m-Y' }}" name="min">
+                                        <input type="date" id="max" class="form-control form-control-sm "
+                                            value="{{ date|date:'d-m-Y' }}" name="max">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row w-100 overflow-hidden">
+                                <div class="table-responsive overflow-auto ">
+                                    <table class="table" id="allDocumentsTable">
+                                        <thead class="bg-none">
+                                            <tr class="headings">
+                                                <th scope="col">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="selectAllCheckbox">
+                                                        <label class="form-check-label" for="selectAllCheckbox">
+                                                            All
+                                                        </label>
+                                                    </div>
+                                                </th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">doc id</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">candidate id</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">c psimg</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">c adhar</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">c pan</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">c bank Details</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">c bank Statement</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">c salarySlips</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">c expLetter</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">c previous Joining Letter</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">c c_degree</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">c masters</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">c HSC</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">c SSC</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">c other Certificate</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">status</th>
+                                                <th style="min-width:100px; text-wrap: nowrap;" scope="col">download</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+              
+            </div>
+{%endblock maincontent%}
+{% block extrascript %}
+    <script>
+        $.fn.dataTable.render.moment = function (from, to, locale) {
+            // Argument shifting
+            if (arguments.length === 1) {
+                locale = 'en';
+                to = from;
+                from = 'YYYY-MM-DD';
+            } else if (arguments.length === 2) {
+                locale = 'en';
+            }
+            return function (d, type, row) {
+                if (!d) {
+                    return type === 'sort' || type === 'type' ? 0 : d;
+                }
+                var m = window.moment(d, from, locale, true);
+                // Order and type get a number value from Moment, everything else
+                // sees the rendered value
+                return m.format(type === 'sort' || type === 'type' ? 'x' : to);
+            };
+        };
+        // Function to generate document links
+        function generateDocumentLink(baseUrl, documentPath, type) {
+            if (type === 'display') {
+                var detailURL = baseUrl + documentPath;
+                return '<a class="view-doc" href="' + detailURL + '" target="_blank">View</a>';
+            }
+            return documentPath;
+        }
+        $(document).ready(function () {           
+            var table = $('#allDocumentsTable').DataTable({
+                dom: 'lfrt<"ip"iB>p',
+                responsive: true,
+                searching: true,
+                paging: true,
+                fixedHeader: {
+                    header: true,
+                    footer: true
+                },
+                stateSave: true,
+                processing: true,
+                buttons: [
+                    {
+                        extend: 'copy',
+                        className: 'btn custom-button-two btn-sm mb-2',
+                        text: '<i class="bi bi-files"></i> Copy',
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'btn custom-button-two btn-sm mb-2',
+                        text: '<i class="bi bi-file-excel"></i> Excel',
+                    },
+                    {
+                        extend: 'pdf',
+                        className: 'btn custom-button-two btn-sm mb-2',
+                        text: '<i class="bi bi-file-pdf"></i> PDF',
+                    },
+                    {
+                        extend: 'print',
+                        className: 'btn custom-button-two btn-sm mb-2',
+                        text: '<i class="bi bi-printer"></i> Print',
+                    },
+                ],
+                ajax: {
+                    url: "{% url 'report:documentdata' %}",
+                    type: "GET",
+                    data: function (dt) {
+                        dt.from = $('#min').val();
+                        dt.to = $('#max').val();
+                    }
+                },
+                columns: [{
+                    data: null,
+                    render: function (data, type, row) {
+                        return '<div class="form-check">' +
+                            '<input class="form-check-input" type="checkbox" value="' + row.id + '" id="checkbox_' + row.id + '">' +
+                            '<label class="form-check-label" for="checkbox_' + row.id + '"></label>' +
+                            '</div>';
+                    }
+                }, {
+                    data: "doc_id"
+                }, {
+                    data: "candidate_id"
+                }, {
+                    data: "c_psimg",
+                    render: function (data, type, row) {
+                        return data ? generateDocumentLink("http://peoplepulse.buybestpolicy.in/media/", data, type) : "Not Available";
+                    }
+                },
+                {
+                    data: "c_adhar",
+                    render: function (data, type, row) {
+                        return data ? generateDocumentLink("http://peoplepulse.buybestpolicy.in/media/", data, type) : "Not Available";
+                    }
+                }, {
+                    data: "c_pan",
+                    render: function (data, type, row) {
+                        return data ? generateDocumentLink("http://peoplepulse.buybestpolicy.in/media/", data, type) : "Not Available";
+                    }
+                }, {
+                    data: "c_bankDetails",
+                    render: function (data, type, row) {
+                        return data ? generateDocumentLink("http://peoplepulse.buybestpolicy.in/media/", data, type) : "Not Available";
+                    }
+                }, {
+                    data: "c_bankStatement",
+                    render: function (data, type, row) {
+                        return data ? generateDocumentLink("http://peoplepulse.buybestpolicy.in/media/", data, type) : "Not Available";
+                    }
+                }, {
+                    data: "c_salarySlips",
+                    render: function (data, type, row) {
+                        return data ? generateDocumentLink("http://peoplepulse.buybestpolicy.in/media/", data, type) : "Not Available";
+                    }
+                }, {
+                    data: "c_expLetter",
+                    render: function (data, type, row) {
+                        return data ? generateDocumentLink("http://peoplepulse.buybestpolicy.in/media/", data, type) : "Not Available";
+                    }
+                }, {
+                    data: "c_previousJoiningLetter",
+                    render: function (data, type, row) {
+                        return data ? generateDocumentLink("http://peoplepulse.buybestpolicy.in/media/", data, type) : "Not Available";
+                    }
+                }, {
+                    data: "c_degree",
+                    render: function (data, type, row) {
+                        return data ? generateDocumentLink("http://peoplepulse.buybestpolicy.in/media/", data, type) : "Not Available";
+                    }
+                }, {
+                    data: "c_masters",
+                    render: function (data, type, row) {
+                        return data ? generateDocumentLink("http://peoplepulse.buybestpolicy.in/media/", data, type) : "Not Available";
+                    }
+                }, {
+                    data: "c_HSC",
+                    render: function (data, type, row) {
+                        return data ? generateDocumentLink("http://peoplepulse.buybestpolicy.in/media/", data, type) : "Not Available";
+                    }
+                }, {
+                    data: "secondary",
+                    render: function (data, type, row) {
+                        return data ? generateDocumentLink("http://peoplepulse.buybestpolicy.in/media/", data, type) : "Not Available";
+                    }
+                }, {
+                    data: "c_otherCertificate",
+                    render: function (data, type, row) {
+                        return data ? generateDocumentLink("http://peoplepulse.buybestpolicy.in/media/", data, type) : "Not Available";
+
+                    }
+                }, {
+                    data: "status",
+                }, {
+                    data: "doc_id",
+                    render: function (data, type, row) {
+                        if (type === 'display') {
+                            var id = row.doc_id;
+                            return '<a href="#" class="edit-button view-doc">Download</a>';
+                        }
+                        return data;
+                    }
+                }],
+                createdRow: function (row, data, dataIndex) {
+                    // Add class to each td element in the row
+                    $('td', row).addClass('text-nowrap');
+                },
+                deferRender: true,
+                 scrollX: true,
+                 scrollY: window.innerHeight - (.6 * window.innerHeight),
+                initComplete: function () {
+                    // Apply the search
+                    this.api().columns().every(function () {
+                        var that = this;
+                        $('input', this.footer()).on('keyup change clear', function () {
+                            if (that.search() !== this.value) {
+                                that.search(this.value).draw();
+                            }
+                        });
+                    });
+                }
+            });
+            $('.dataTables_filter input[type="search"]').addClass('form-control form-control-sm');
+            $('#selectAllCheckbox').on('change', function () {
+                var checked = $(this).prop('checked');
+                $('input[type="checkbox"]', table.rows().nodes()).prop('checked', checked);
+            });
+            $('#selectAllCheckboxFooter').on('change', function () {
+                var checked = $(this).prop('checked');
+                $('input[type="checkbox"]', table.rows().nodes()).prop('checked', checked);
+            });
+            // Change row background color on click
+            $('#allDocumentsTable tbody').on('click', 'tr', function () {
+                // Remove the 'selected' class from all rows except the clicked one
+                table.rows().nodes().to$().removeClass('selected');
+                // Toggle the 'selected' class on the clicked row
+                $(this).toggleClass('selected');
+            });
+            $('#allDocumentsTable').on('click', 'a.edit-button', function (e) {
+                e.preventDefault();
+                var row = $(this).closest('tr');
+                var data = table.row(row).data();
+                var docId = data.doc_id;
+                // Make an AJAX request to download the documents for the selected doc_id
+                $.ajax({
+                    url: `/report/download_documents/?doc_id=${docId}`,
+                    type: "GET",
+                    xhrFields: {
+                        responseType: 'blob' // Set the response type to 'blob'
+                    },
+                    success: function (response) {
+                        // Handle success, e.g., initiate download
+                        var blob = new Blob([response], { type: 'application/zip' });
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = `documents_${docId}.zip`;
+                        link.click();
+                    },
+                    error: function (error) {
+                        console.error('Error downloading documents:', error);
+                    }
+                });
+            });
+            $('#min, #max').on('change', function () {
+                table.ajax.reload();
+                table.draw();
+            });
+        });
+    </script>
+    {% endblock extrascript %}

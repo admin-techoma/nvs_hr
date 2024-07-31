@@ -1,0 +1,307 @@
+{% extends 'component/base.html' %}
+{% load static %}
+{% block title %}
+Dashboard
+{% endblock title %}
+{% block extracss %}
+{% endblock extracss %}
+{% block maincontent %}
+<div class="main-content">
+    <div class="wrapper p-3 w-100">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-3 p-2">
+                <div class="card dashboardtopcard">
+                    <div class="card-body">
+                     
+                        <h5 class="card-title text-center">Total Employees</h5>
+                        <h2 class="text-center card-desc"> {{ emp_active }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 p-2">
+                <div class="card dashboardtopcard">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Clock In Employees</h5>
+                        <h2 class="text-center card-desc"> {{ today_clock_ins_count}}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 p-2">
+                <div class="card dashboardtopcard">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Employee onleave</h5>
+                        <h2 class="text-center card-desc"> {{emp_leave}}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 p-2">
+                <div class="card dashboardtopcard">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Pending Interview</h5>
+                        <h2 class="text-center card-desc"> {{interview_panding}}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-12 col-sm-12 col-md-8 p-2">
+                <div class="w-100 card">
+                    <div class=" p-2">
+                        <nav class="custom-nav-tab mb-1">
+                            <div class="nav nav-tabs " id="nav-tab" role="tablist">
+                                <button class="nav-link active" id="nav-onboard-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-onboard" type="button" role="tab" aria-controls="nav-home"
+                                    aria-selected="true">Yet to OnBoard</button>
+                                <button class="nav-link" id="nav-Resigned-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-Resigned" type="button" role="tab" aria-controls="nav-Resigned"
+                                    aria-selected="false">Resigned</button>
+                            </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-onboard" role="tabpanel"
+                                aria-labelledby="nav-onboard-tab" tabindex="0">
+                                <div class="onboardingtdata">
+                                    <div class="table-responsive overflow-auto ">
+                                        <table class="overflow-auto dataTable DataTable w-100 table-sm"
+                                            id="allOnbordingTable">
+                                            <thead class="bg-none">
+                                                <tr class="bg-none">
+                                                    <th>Name</th>
+                                                    <th>Mobile Number</th>
+                                                    <th>Email-Id</th>
+                                                    <th>Remarks</th>
+                                                    <th>Date</th>
+                                                    <th>Interview Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-none ">
+                                                {% for resume in interviewlist %}
+                                                {% if resume.status == "Shortlisted" %}
+                                                <tr>
+                                                    <td> <span class="text-nowrap" >{{ resume.name }}</span> </td>
+                                                    <td> <span class="text-nowrap" >{{ resume.phone_number }}</span> </td>
+                                                    <td> <span class="text-nowrap text-lowercase" >{{ resume.email }}</span> </td>
+                                                    <td> <span class="text-nowrap" >{{ resume.remarks }}</span> </td>
+                                                    <td> <span class="text-nowrap" >{{resume.created_at|date:"d/m/Y" }}</span> </td>
+                                                    <td>
+                                                        {% if resume.interviewFeedback == "Selected" %}
+                                                        <span class="badge text-bg-success ">{{resume.interviewFeedback}}
+                                                        </span>
+                                                        {% elif resume.interviewFeedback == "Pending" %}
+                                                        <span class="badge text-bg-warning ">{{resume.interviewFeedback}}
+                                                        </span>
+                                                        {% else %}
+                                                        <span class="badge text-bg-secondary " href="">
+                                                            {{resume.interviewFeedback}} </span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex">                                                     
+                                                        <a href="{% url 'hr:scheduleInterview' candidate_id=resume.candidate_id %}"
+                                                            target="_blank" class="btn btn-primary  btn-sm me-1">
+                                                            <img src="{% static 'admin/img/interview.png' %}"
+                                                                alt="Interview Icon" class="icon-small "
+                                                                style="height: 20px;width: 20px;"/>
+                                                        </a>
+                                                        <a href="{{ resume.resume.url }}" target="_blank"
+                                                            class="btn btn-dark btn-sm me-1">
+                                                            <i class="bi bi-download"></i>
+                                                        </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {% endif %}
+                                                {% empty %}
+                                                No resumes found.
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="nav-Resigned" role="tabpanel"
+                                aria-labelledby="nav-Resigned-tab" tabindex="0">
+                                <div class="resigned">
+                                    <div class="table-responsive overflow-auto ">
+                                        <table class="dataTable DataTable w-100 table-sm" id="">
+                                            <thead class="bg-none">
+                                                <tr class="bg-none">
+                                                    <th>Employee Name</th>
+                                                    <th>Resign Date</th>
+                                                    <th>Last Date</th>
+                                                    <th>Reason</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-none ">
+                                                {% for resume in resignlist %}
+                                                <tr>
+                                                    <td> <span class="text-nowrap">{{ resume.employee.name }}</span> </td>
+                                                    <td> <span class="text-nowrap">{{ resume.resign_date|date:"d/m/Y" }}</span> </td>
+                                                    <td> <span class="text-nowrap">{{ resume.last_date|date:"d/m/Y" }}</span> </td>
+                                                    <td> <span class="text-nowrap">{{ resume.resign_reason }}</span> </td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                        {% if resume.resign_status == "Approved" %}
+                                                        <span class="badge text-bg-danger">{{
+                                                            resume.get_resign_status_display }} </span>
+                                                        {% elif resume.resign_status == "Pending" %}
+                                                        <span class="badge text-bg-warning ">{{
+                                                            resume.get_resign_status_display }} </span>
+                                                        {% else %}
+                                                        <span class="badge text-bg-success" href=""> {{ resume.get_resign_status_display }} </span>
+                                                        {% endif %}
+                                                    </div>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 p-2">
+                <div class="card border-0">
+                    <div class="card-body border-0">
+                        <div class="dashboard-corner-card">
+                            <div class="overflow-hidden h-50">
+                                <h6 class="card-top-title">Birthday Corner</h6>
+                                {% if employees %}
+                                <ul class="m-0 p-2">
+                                    {% for employee in employees %}
+                                    <li class="cardlist rounded shadow">
+                                        <!-- <figure class="mb-0 card-figure">
+                                            <img src="{{ employee.documents_id.c_psimg.url }}" class="card-img"
+                                                alt="img" />
+                                        </figure> -->
+                                        <figure class="mb-0 card-figure">
+                                            {% if employee and employee.documents_id.c_psimg.url %}
+                                                <img src="{{employee.documents_id.c_psimg.url}}" alt="img" class="card-img" alt="profile Pic">
+                                            {% else %}
+                                                <img src="{% static 'admin/img/avtar.jpg' %}" alt="profile Pic" class="card-img">
+                                            {% endif %}
+                                        </figure>
+
+                                        <div class="card-details">
+                                            <span class="me-2 card-title-name">{{ employee.first_name }}</span>
+                                            <span class="ms-2 card-description">{{ employee.dob|date:"d/m/Y" }}</span>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% else %}
+                                <ul class="m-0 p-2">
+                                    <li class="cardlist rounded shadow">
+                                        <div class="card-details w-100">
+                                            <h6 class=" card-title-name mb-0 text-center w-100">No one's birthday
+                                                today.</h6>
+                                        </div>
+                                    </li>
+                                </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-8 mt-2 py-3 card">
+                <div class="card-body">                
+                <h6 class="mb-3 "> Employees on leave</h6>
+                <div class="leavestablewrapper">
+                    <div class="table-responsive overflow-auto ">
+                        <table class="table-responsive overflow-auto DataTable w-100 table-sm" id="">
+                            <thead class="bg-none">
+                                <tr class="bg-none">
+                                    <th>Candidate Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Email</th>
+                                    <th>Department</th>
+                                    <th>Designation</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-none ">
+                                {% for employee in onLeaveEmp %}
+                                <tr>
+                                    <td>{{ employee.name }}</td>
+                                    <td>{{ employee.contact_no }}</td>
+                                    <td>{{ employee.email }}</td>
+                                    <td>{{ employee.department }}</td>
+                                    <td>{{ employee.designation }}</td>
+                                    <td>On Leave</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 p-2">
+                <div class="card border-0">
+                    <div class="card-body border-0">
+                        <div class="dashboard-corner-card">
+                            <div class="overflow-hidden h-50">
+                                <h6 class="card-top-title">Work Anniversary Corner</h6>
+                                {% if employeesdoj %}
+                                <ul class="m-0 p-2">
+                                    {% for employee in employeesdoj %}
+                                    <li class="cardlist rounded shadow">
+                                        <figure class="mb-0 card-figure">
+                                            <a href="/">
+                                                {% if employee and employee.documents_id.c_psimg.url %}
+                                                    <img class="card-img" src="{{ employee.documents_id.c_psimg.url }}" alt="Company logo">
+                                                {% else %}
+                                                    <img src="{% static 'admin/img/avtar.jpg' %}" alt="" class="card-img">
+                                                {% endif %}
+                                            </a>                                           
+                                        </figure>
+                                        <div class="card-details">
+                                            <span class="me-2 card-title-name">{{ employee.first_name }}</span>
+                                            <span class="ms-2 card-description">{{ employee.doj|date:"d/m/Y" }}</span>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% else %}
+                                <ul class="m-0 p-2">
+                                    <li class="cardlist rounded shadow">
+                                        <div class="card-details w-100">
+                                            <h6 class=" card-title-name mb-0 text-center w-100">No one's Work
+                                                Anniversary today.</h6>
+                                        </div>
+                                    </li>
+                                </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock maincontent%}
+{% block extrascript %}
+<script src="{% static 'apexcharts-bundle/dist/apexcharts.js' %}"></script>
+<script src="{% static 'js/Plugins/charts/linechart.js' %} "></script>  
+<script src="{% static 'js/Plugins/charts/Radialbar.js' %} "></script>     
+<script src="{% static 'js/Plugins/charts/livechart.js' %} "></script> 
+<script src="{% static 'js/Plugins/charts/donutchart.js' %} "></script> 
+<script>
+    $(document).ready(function () {
+        var currentURL = window.location.href;
+        if (currentURL.includes('')) {
+            // If the URL contains 'hr.resumes/', set the text to 'Resume List'
+            $('.headertitle h4').text('Dashboard');
+        }
+    });
+</script>
+{% endblock extrascript %}

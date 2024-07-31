@@ -1,0 +1,335 @@
+{% extends 'component/base.html' %}
+
+{% load static  %}
+
+{% block title %}Announcement{% endblock title %}
+
+{% block extracss %}
+{% endblock extracss %}
+
+{% block maincontent %}
+<div class="main-content">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between border-0">
+            <div class="text-center d-flex align-items-center">
+                <h6 class="mb-0 pageTitle"><strong>Announcement List</strong></h6>
+            </div>
+            <button type="button" class="btn custom-button btn-sm" data-bs-toggle="modal"
+            data-bs-target="#AddAnnouncementModal">
+            <i class="bi bi-plus-lg"></i> Add Announcement List
+        </button>
+        </div>
+        <div class="card-body">
+        <div class="row ">
+            <div class="table-responsive overflow-auto">
+                <table class="tableoverflow-auto DataTable dataTable w-100" id="allAnnouncementMasterTablelist">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-nowrap fw-medium">Company Master</th>
+                            <th scope="col" class="text-nowrap fw-medium">Name</th>
+                            <th scope="col" class="text-nowrap fw-medium">Created On</th>
+                            <th scope="col" class="text-nowrap fw-medium">Message</th>
+                            <th scope="col" class="text-nowrap fw-medium">File</th>
+                            <th scope="col" class="text-nowrap fw-medium">Status</th>
+                            <th scope="col" class="text-nowrap fw-medium text-center">
+                                <p class="text-center mb-0">Action</p>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for announcement_list in announcementmaster_all %}
+                        <tr>
+                            <td>{{ announcement_list.company }}</td>
+                            <td>{{ announcement_list.name}}</td>
+                            <td>{{ announcement_list.created_on }}</td>
+                            <td>{{ announcement_list.message }}</td>
+                            <td>
+                                {% if announcement_list.file %}
+                                <a href="{{ announcement_list.file.url }}" target="_blank"
+                                    class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
+                                {% else %}
+                                No file available
+                                {% endif %}
+                            </td>
+                            <td>{{ announcement_list.status }}</td>
+                            <td>
+                                <div class="d-flex justify-content-center">
+                                    <button type="button" class="btn custom-button btn-sm me-2 edit-announcement_list"
+                                        data-announcement_list-id="{{ announcement_list.id }}" data-bs-toggle="modal"
+                                        data-bs-target="#Editc_listModal">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger me-2 delete-announcement_list"
+                                        data-announcement_list-id="{{ announcement_list.id }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+    <!--Company Announcement add Modal -->
+    <div class="modal fade" id="AddAnnouncementModal" tabindex="-1" aria-labelledby="AddAnnouncementModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="addannouncement_listForm" action="{% url 'hr:add_announcement_list_details' %}" method="post"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5 primary-color" id="Addannouncement_listModalLabel">Add
+                            Announcement
+                        </h1>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body model-add">
+                        <div class="d-flex flex-wrap w-100">
+                            <div class="col-12 col-md-12">
+                                <div class="mb-2">
+                                    <label for="Addannouncement_Company" class="form-label">Select Company</label>
+                                    <select class="form-select form-select-sm" aria-label="Select announcement_master"
+                                        name="company" id="Addannouncement_Company">
+                                        {% for company in company %}
+                                        <option value="{{ company.id }}">{{ company.name }}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <div class="mb-2">
+                                    <label for="Addannouncement_name" class="form-label">Announcement
+                                        Name</label>
+                                    <input type="text" class="form-control form-control-sm" id="Addannouncement_name"
+                                        name="name" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <div class="mb-2">
+                                    <label for="Addannouncement_created_on" class="form-label">created_on
+                                    </label>
+                                    <input type="date" class="form-control form-control-sm"
+                                        id="Addannouncement_created_on" name="created_on" required>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-12">
+                                <div class="mb-2">
+                                    <label for="Addannouncement_message" class="form-label">message</label>
+                                    <input type="text" class="form-control form-control-sm" id="Addannouncement_message"
+                                        name="message" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <div class="mb-2">
+                                    <label for="Addannouncement_file" class="form-label">File
+                                    </label>
+                                    <input type="file" class="form-control form-control-sm" id="Addannouncement_file"
+                                        name="file" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <div class="mb-2">
+                                    <label for="Addannouncement_status" class="form-label">Status:</label>
+
+                                    <select class="form-control form-control-sm " name="status"
+                                        id="Addannouncement_status">
+                                        <option value="Active" {% if company_data.status == 'Active' %} selected{% endif %}>
+                                            Active
+                                        </option>
+                                        <option value="Deactive" {% if company_data.status == 'Deactive' %} selected{% endif %}>
+                                            Deactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn custom-button btn-sm announcementAddBtn">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Company Announcement edit Modal -->
+    <div class="modal fade" id="Editannouncement_listModal" tabindex="-1"
+        aria-labelledby="Editannouncement_listModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="updateannouncement_listForm" method="post" action="">
+                    {% csrf_token %}
+                    <input type="hidden" id="editannouncement_listId" name="id">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="Editannouncement_listModalLabel">Edit announcement List
+                        </h1>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex flex-wrap w-100">
+                            <div class="col-12 col-md-12">
+                                <div class="mb-2">
+                                    <label for="Editannouncement_listannouncement_master" class="form-label">Company
+                                    </label>
+                                    <select class="form-select form-select-sm"
+                                        id="Editannouncement_listannouncement_master" name="company">
+                                        {% for company in company %}
+                                        <option value="{{ company.id }}">{{ company.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="Editannouncement_listannouncement_name" class="form-label">Company
+                                        announcement</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                        id="Editannouncement_listannouncement_name" name="name" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="Editannouncement_created_on" class="form-label">Created On</label>
+                                    <input type="date" class="form-control form-control-sm"
+                                        id="Editannouncement_created_on" name="created_on" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="Editannouncement_message" class="form-label">Message</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                        id="Editannouncement_message" name="message" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="Editannouncement_file" class="form-label">File</label>
+                                    <input type="file" class="form-control form-control-sm" id="Editannouncement_file"
+                                        name="file" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="Editannouncement_status" class="form-label">Status:</label>
+                                    <select class="form-control form-control-sm " name="status"
+                                        id="Editannouncement_status">
+                                        <option value="Active" {% if company_data.status == 'Active' %}selected {% endif %}>Active</option>
+                                        <option value="Deactive" {% if company_data.status == 'Deactive' %} selected {% endif %}>Deactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn custom-button btn-sm editAnnouncementBtn"
+                            id="save_announcement_list_changes_btn">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{%endblock maincontent%}
+
+{% block extrascript %}
+<script>
+    $(document).ready(function () {
+        // AJAX for adding a new Announcement list
+        $('#addannouncement_listForm').on('submit', function (event) {
+            event.preventDefault();
+            var company = $('#Addannouncement_Company').val(); // Get the selected company ID
+            var name = $('#Addannouncement_name').val();
+            var created_on = $('#Addannouncement_created_on').val();
+            var message = $('#Addannouncement_message').val();
+            var file = $('#Addannouncement_file').val();
+            var status = $('#Addannouncement_status').val();
+            $.ajax({
+                url: "{% url 'hr:add_announcement_list_details' %}",
+                type: "POST",
+                data: {
+                    'company': company,
+                    'name': name,
+                    'created_on': created_on,
+                    'message': message,
+                    'file': file,
+                    'status': status,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    $("#AddAnnouncementModal .modal-body").html(
+                        '<div class="alert alert-success">Announcement uploaded successfully!</div>'
+                    );
+                },
+                error: function (xhr, status, error) {
+                    var errorMessage = xhr.responseJSON.error;
+                    $("#AddAnnouncementModal .modal-body").html(
+                        '<div class="alert alert-danger">' + errorMessage + '</div>');
+                }
+            });
+        });
+        // AJAX for editing a Announcement list
+        $('.edit-announcement_list').on('click', function () {
+            var announcement_list_id = $(this).data('announcement_list-id');
+            $.ajax({
+                url: '/hr/get_announcement_list_details/' + announcement_list_id + '/',
+                type: 'GET',
+                success: function (data) {
+                    $('#editannouncement_listId').val(data.id);
+                    $('#Editannouncement_listannouncement_master').val(data.company_id);
+                    $('#Editannouncement_listannouncement_name').val(data.name);
+                    $('#Editannouncement_created_on').val(data.created_on);
+                    $('#Editannouncement_message').val(data.message);
+                    $('#Editannouncement_file').val(data.file);
+                    $('#Editannouncement_status').val(data.status);
+                    $('#Editannouncement_listModal').modal('show');
+                },
+                error: function () {
+                    alert('Failed to fetch Announcement list details.');
+                }
+            });
+        });
+        // AJAX for updating a Announcement
+        $('#updateannouncement_listForm').on('submit', function (event) {
+            event.preventDefault();
+            var formData = new FormData($(this)[0]);
+            var announcement_list_id = $('#editannouncement_listId').val();
+            $.ajax({
+                type: "POST",
+                url: "{% url 'hr:update_announcement_list_details' 0 %}".replace('0',
+                    announcement_list_id),
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $("#Editannouncement_listModal .modal-body").html(
+                        '<div class="alert alert-success">Announcement list updated successfully!</div>'
+                    );
+                    // {% comment %} window.location.href = '/hr/announcement_list_master/'; {% endcomment %}
+                },
+                error: function (xhr, status, error) {
+                    $("#Editannouncement_listModal .modal-body").html(
+                        '<div class="alert alert-danger">' + xhr.responseJSON.error +
+                        '</div>');
+                }
+            });
+        });
+        $('.delete-announcement_list').on('click', function () {
+            var announcement_list_id = $(this).data('announcement_list-id');
+            if (confirm('Are you sure you want to delete this announcement list?')) {
+                $.ajax({
+                    url: '/hr/delete_announcement_list/' + announcement_list_id + '/',
+                    type: 'POST',
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function (data) {
+                        alert('Announcement list deleted successfully');
+                        location
+                            .reload(); // Reload the page to update the announcement list
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Failed to delete announcement list: ' + xhr.responseJSON
+                            .error);
+                    }
+                });
+            }
+        });
+    });
+</script>
+{% endblock extrascript %}

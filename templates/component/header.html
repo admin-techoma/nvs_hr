@@ -1,0 +1,419 @@
+{% load static %}
+<header class="top-header d-flex justify-content-between align-items-center px-3 ">
+    <div class="headertitle d-flex align-items-center ">
+        <button class="sliderbtn navbar-toggler" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNavbar1" aria-controls="offcanvasNavbar1" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon bi bi-list fs-5 text-center "></span>
+        </button>
+        <div class="logo-wrapper d-none">
+            <figure class="Clientlogowrapper mb-0">
+                <a href="/">
+                    {% if company_logo %}
+                        <img class="Clientlogo img-fluid" src="{{ company_logo }}" alt="Company logo">
+                    {% else %}
+                        <img class="Clientlogo img-fluid" src="/static/admin/img/NIBPL_Logo.png" alt="Brand logo">
+                    {% endif %}
+                </a>
+            </figure>
+        </div>
+        <div class="d-none  d-sm-flex align-items-center">
+            <nav class="w-100" aria-label="breadcrumb"
+                style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
+                aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 align-items-center">
+                    {% comment %} <li class="breadcrumb-item"><a href="/">Home</a></li> {% endcomment %}
+                    <li class="breadcrumb-item active text-nowrap text-center" aria-current="page">
+                        <h4 class="mb-0 fs-6" style="line-height: 1.5;">{{ employee_name }}</h4>
+                    </li>
+                </ol>
+            </nav>    
+        </div>
+    </div>
+    <div class="headerprofilewrapper d-flex align-items-center">
+        {% if clockedin %}
+            <div id="workHours" class="me-2 "></div>
+            <button type="button" class="btn custom-button  btn-sm me-2" id="clockedOut" data-action="clockOut">Clock Out</button>
+            <input type="hidden" id="clockInTime" value="{{ clock_intime|time:'H:i:s' }}">
+        {% else %}
+            <button type="button" class="btn custom-button  btn-sm me-2" id="clockedIn" data-action="clockIn">Clock In</button>
+        {% endif %} 
+        <button id="themeMode" aria-label="dark theme" class="btn btn-sm outline-none border border-0">
+            <svg id="themeIcon" class="darklighticon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M12 3.75A9.75 9.75 0 1021.75 13 9.75 9.75 0 0012 3.75zm0 18.5a8.75 8.75 0 110-17.5 8.75 8.75 0 010 17.5z"/>
+            </svg>
+        </button>
+        <div class="dropdown ms-2 d-none d-md-flex">
+            <button class="custom-notification btn outline-none dropdown-toggle border-0 border-color-none p-2" 
+                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="bi bi-bell"></span>
+            </button>
+            <ul class="dropdown-menu notificationdropdown">
+                <li>
+                    <a class="dropdown-item" href="#">
+                        <div class="d-flex dropdown-content-wrapper">
+                            <div class="img-wrapper">
+                                <img src="/static/admin/img/sidebaricon/User add.svg" class="notification-img"
+                                    alt="img">
+                            </div>
+                            <div class="notification-detail">
+                                <h6 class="notification-title">Attention </h6>
+                                <p class="notification-text">Your attendance sheet has been updated.</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="#">
+                        <div class="d-flex dropdown-content-wrapper">
+                            <div class="img-wrapper">
+                                <img src="/static/admin/img/sidebaricon/User add.svg" class="notification-img" alt="">
+                            </div>
+                            <div class="notification-detail">
+                                <h6 class="notification-title">Attention </h6>
+                                <p class="notification-text">Your attendance sheet has been updated
+                                    Check for more Details .</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="#">
+                        <div class="d-flex dropdown-content-wrapper">
+                            <div class="img-wrapper">
+                                <img src="/static/admin/img/sidebaricon/User add.svg" class="notification-img" alt="">
+                            </div>
+                            <div class="notification-detail">
+                                <h6 class="notification-title">Attention </h6>
+                                <p class="notification-text">Your attendance sheet has been updated.<br>
+                                    Check for more Details .</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown d-flex justify-content-center align-items-center profile-dropdown">
+            <button class="btn profile-button outline-none dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {% if profile_pic and profile_pic.c_psimg %}
+                    <img src="{{ profile_pic.c_psimg.url }}" alt="" class="profile-image border">
+                {% else %}
+                    <img src="{% static 'admin/img/avtar.jpg' %}" alt="" class="profile-image border">
+                {% endif %}
+            </button>
+            <ul class="dropdown-menu profiledropdown">
+                <li class="nav-item"><a class="dropdown-item" href="{% url 'employee:view_profile' %}"><span
+                            class="bi bi-person-check mr-3 fs-5"></span>
+                        <span class="ms-2"> My Profile </span></a>
+                </li>
+                <li><a class="dropdown-item" href="{% url 'employee:password_change' emp_id%}"><span
+                            class="bi bi-nut mr-3 fs-5"></span> <span class="ms-2"> Change Password </span></a>
+                </li>
+                <li><a class="dropdown-item" href="{%url 'accounts:logout'%}"><span
+                            class="bi bi-power mr-3 fs-5"></span> <span class="ms-2">Logout </span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<!-- Modal -->
+<!-- clockin modal -->
+<div class="modal fade" id="ClockinModal" tabindex="-1" aria-labelledby="ClockinModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h1 class="modal-title fs-5 " id="exampleModalLabel ">Are you sure you want to clockIn?</h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6 class="m-0 text-center">"You will clocked in at <span></span>. Welcome to your shift!" </h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-success" id="saveBtnReload" data-bs-dismiss="modal">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- clockout modal -->
+<div class="modal fade" id="ClockoutModal" tabindex="-1" aria-labelledby="ClockoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h1 class="modal-title fs-5 " id="">Are you sure you want to clockOut?</h1>
+                <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you Sure clocked out at <span>6:00pm </span> ? </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-success btn-sm" id="btn-clockOut" data-bs-dismiss="modal">Clockout</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="clock_in_Error" tabindex="-1" aria-labelledby="clock_in_ErrorLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="attendancemodalLabel">Error</h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="offcanvas offcanvas-end nav-bar-effect border-0" tabindex="-1" id="offcanvasNavbar1"
+    aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas-header primarybgcolor">
+        <div class="d-flex justify-content-center p-2">
+            <div class="d-block d-sm-flex d-md-none align-items-center p-2">
+                <figure class="Clientlogowrapper mb-0">
+                    <a href="/">
+                        {% if company_logo %}
+                            <img class="Clientlogo img-fluid" src="{{ company_logo }}" alt="Company logo">
+                        {% else %}
+                            <img class="Clientlogo img-fluid" src="/static/admin/img/NIBPL_Logo.png" alt="Default logo">
+                        {% endif %}
+                    </a>
+                </figure>
+                <input class="form-check-input" type="checkbox" value="" id="sideslide">
+                <h6 class="client-brand-name">{{ company_name }}</h6>
+            </div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body primarybgcolor">
+        {% if department == 'HR' or department == 'Admin' %}
+            <nav class="overflow-hidden">
+                {% with request.resolver_match.url_name as url_name %}
+                <ul class="nav">
+                    <h5 class="text-white">My Access</h5>
+                    <li class="nav-item {% if url_name == 'dash' %}active{% endif %}">
+                        <a class="nav-link d-flex" href="{% url 'employee:dash' %}">
+                            <span class="bi bi-grid nav-icon"></span>
+                            <span class="nav-text">Dashboard</span></a>
+                    </li>
+                    <li class="nav-item {% if url_name == 'attendance' %}active{% endif %}">
+                        <a class="nav-link d-flex " href="{% url 'employee:attendance' %}">
+                            <span class="bi bi-p-square nav-icon"></span>
+                            <span class="nav-text">Attendance</span></a>
+                    </li>
+                    <li class="nav-item {% if url_name == 'view_payroll' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'employee:view_payroll'  %}">
+                            <span class="bi bi-cash-coin nav-icon"></span>
+                            <span class="nav-text"> Payroll</span>
+                        </a>
+                    </li>
+                    <h5 class="text-white">Admin Access</h5>
+                    {% if department == 'Admin' %}
+                    <li class="nav-item {% if url_name == 'admin_dashboard' %}active{% endif %}">
+                        <a class="nav-link d-flex " href="{% url 'hr:admin_dashboard' %}">
+                            <span class="bi bi-grid nav-icon"></span>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    {% elif department == 'HR' %}
+                    <li class="nav-item {% if url_name == 'hr_dashboard' %}active{% endif %}">
+                        <a class="nav-link d-flex" href="{% url 'hr:hr_dashboard' %}">
+                            <span class="bi bi-grid nav-icon"></span>
+                            <span class="nav-text">Dashboard</span></a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item {% if url_name == 'dash' %}active{% endif %}">
+                        <a class="nav-link d-flex" href="{% url 'employee:dash' %}">
+                            <span class="bi bi-grid nav-icon"></span>
+                            <span class="nav-text">Dashboard</span></a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item {% if url_name == 'view_company' %}active{% endif %}">
+                        <a class="nav-link  d-flex " aria-current="page" href="{% url 'hr:view_company' %}">
+                            <span class="bi bi-people nav-icon"></span>
+                            <span class="nav-text">Company</span></a>
+                    </li>
+                    <li class="nav-item {% if url_name == 'resume_list' %}active{% endif %}">
+                        <a class="nav-link  d-flex " aria-current="page" href="{% url 'hr:resume_list' %}">
+                            <span class="bi bi-person-down nav-icon"></span>
+                            <span class="nav-text">Recruitment</span></a>
+                    </li>
+                    <li class="nav-item {% if url_name == 'onboarding_list' %}active{% endif %}">
+                        <a class="nav-link d-flex" href="{% url 'hr:onboarding_list' %}">
+                            <span class="bi bi-person-plus nav-icon"></span>
+                            <span class="nav-text">Onboarding</span></a>
+                    </li>
+                    <li class="nav-item {% if url_name == 'view_employee' %}active{% endif %}">
+                        <a class="nav-link d-flex" href="{% url 'hr:view_employee' %}">
+                            <span class="bi bi-person-bounding-box nav-icon"></span>
+                            <span class="nav-text">
+                                Employee</span></a>
+                    </li>
+                    {% if reporting_take == True %}
+                    <li class="nav-item {% if url_name == 'view_attendance' %}active{% endif %}">
+                        <a class="nav-link d-flex " href="{% url 'hr:view_attendance'  %}">
+                            <span class="bi bi-person-check nav-icon"></span>
+                            <span class="nav-text">Manage attendance</span></a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item {% if url_name == 'view_generatesalary' %}active{% endif %}">
+                        <a class="nav-link d-flex" href="{% url 'payroll:view_generatesalary' %}">
+                            <span class="bi bi-cash-stack nav-icon"></span>
+                            <span class="nav-text">Salary</span></a>
+                    </li>
+                    {% if reporting_take == True %}
+                    <li class="nav-item {% if url_name == 'leaves_lists' %}active{% endif %}">
+                        <a class="nav-link d-flex" href="{% url 'employee:leaves_lists' %}">
+                            <span class="bi bi-bookmark-x nav-icon"></span>
+                            <span class="nav-text">Leave Approvals</span></a>
+                    </li>
+                    {% endif %}
+                    {% if reporting_take == True %}
+                    <li class="nav-item {% if url_name == 'resign_lists' %}active{% endif %}">
+                        <a class="nav-link d-flex" href="{% url 'employee:resign_lists'  %}">
+                            <span class="bi bi-person-slash nav-icon"></span>
+                            <span class="nav-text">Resignation Approvals</span></a>
+                    </li>
+                    {% endif %}
+
+                    <li class="nav-item {% if url_name == 'announcement_list' %}active{% endif %}">
+                        <a class="nav-link d-flex" href="{% url 'hr:announcement_list' %}">
+                            <span class="bi bi-volume-up nav-icon"></span>
+                            <span class="nav-text">Announcement</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex">
+                            <span class="bi bi-journal-plus nav-icon"></span>
+                            <span class="nav-text">Reports</span>
+                        </a>
+                        <ul class="submenu">
+                            <li class="nav-item {% if url_name == 'interviews_report' %}active{% endif %}">
+                                <a class="nav-link d-flex" href="{% url 'report:interviews_report'  %}">
+                                    <span class="bi bi-person-exclamation nav-icon"></span>
+                                    <span class="nav-text">Interview </span></a>
+                            </li>
+                            <li class="nav-item {% if url_name == 'track_interviewsreport' %}active{% endif %}">
+                                <a class="nav-link d-flex" href="{% url 'report:track_interviewsreport'  %}">
+                                    <span class="bi bi-person-exclamation nav-icon"></span>
+                                    <span class="nav-text">Track Interview </span></a>
+                            </li>
+                            <li class="nav-item {% if url_name == 'onboarding_report' %}active{% endif %}">
+                                <a class="nav-link d-flex" href="{% url 'report:onboarding_report'  %}">
+                                    <span class="bi bi-briefcase nav-icon"></span>
+                                    <span class="nav-text">Onboarding </span>
+                                </a>
+                            </li>
+                            <li class="nav-item {% if url_name == 'employee_report' %}active{% endif %}">
+                                <a class="nav-link d-flex" href="{% url 'report:employee_report'  %}">
+                                    <span class="bi bi-person-exclamation nav-icon"></span>
+                                    <span class="nav-text">Employee </span></a>
+                            </li>
+                            {% if reporting_take == True %}
+                            <li class="nav-item  {% if url_name == 'attendance_report' %}active{% endif %}">
+                                <a class="nav-link d-flex" href="{% url 'report:attendance_report'  %}">
+                                    <span class="bi bi-person-check nav-icon"></span>
+                                    <span class="nav-text">Attendance</span></a>
+                            </li>
+                            <li class="nav-item {% if url_name == 'leave_report' %}active{% endif %}">
+                                <a class="nav-link d-flex" href="{% url 'report:leave_report'  %}">
+                                    <span class="bi bi-journal nav-icon"></span>
+                                    <span class="nav-text">Leave</span></a>
+                            </li>
+                            {% endif %}
+                            <li class="nav-item {% if url_name == 'view_payrollreport' %}active{% endif %}">
+                                <a class="nav-link d-flex" href="{% url 'report:view_payrollreport'  %}">
+                                    <span class="bi bi-cash nav-icon"></span>
+                                    <span class="nav-text">Payroll
+                                    </span></a>
+                            </li>
+                            <li class="nav-item {% if url_name == 'salary_report' %}active{% endif %}">
+                                <a class="nav-link d-flex" href="{% url 'report:salary_report'  %}">
+                                    <span class="bi bi-cash nav-icon"></span>
+                                    <span class="nav-text">Salary
+                                    </span></a>
+                            </li>
+                            <li class="nav-item {% if url_name == 'resign_report' %}active{% endif %}">
+                                <a class="nav-link d-flex" href="{% url 'report:resign_report'  %}">
+                                    <span class="bi bi-person-exclamation nav-icon"></span>
+                                    <span class="nav-text">Resignation </span></a>
+                            </li>
+                            <li class="nav-item {% if url_name == 'document_report' %}active{% endif %}">
+                                <a class="nav-link d-flex" href="{% url 'report:document_report'  %}">
+                                    <span class="bi bi-briefcase nav-icon"></span>
+                                    <span class="nav-text">Documents </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>                
+                </ul>
+                {% endwith %}
+            </nav>
+            {% else %}
+            <nav class="overflow-hidden">
+                {% with request.resolver_match.url_name as url_name %}
+                <ul class="nav  ">
+                    <li class="nav-item {% if url_name == 'dash' %}active{% endif %}">
+                        <a class="nav-link " href="{% url 'employee:dash'  %}">
+                            <span class="bi bi-grid nav-icon"></span>
+                            <span class="nav-text">Dashboard</span></a>
+                    </li>
+                    <li class="nav-item {% if url_name == 'attendance' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'employee:attendance'  %}">
+                            <span class="bi bi-p-square nav-icon"></span>
+                            <span class="nav-text">Attendance</span></a>
+                    </li>
+                    <li class="nav-item {% if url_name == 'view_payroll' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'employee:view_payroll'  %}">
+                            <span class="bi bi-cash-coin nav-icon"></span>
+                            <span class="nav-text">Payroll</span>
+                        </a>
+                    </li>
+                    {% if reporting_take == True %}
+                    <li class="nav-item {% if url_name == 'leaves_lists' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'employee:leaves_lists'  %}">
+                            <span class="bi bi-bookmark-x nav-icon"></span>
+                            <span class="nav-text">Leave Approvals</span></a>
+                    </li>
+                    {% endif %}
+                    {% if reporting_take == True %}
+                    <li class="nav-item {% if url_name == 'resign_lists' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'employee:resign_lists'  %}">
+                            <span class="bi bi-bookmark-x nav-icon"></span>
+                            <span class="nav-text">Resignation Approvals</span></a>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% endwith %}
+            </nav>
+            {% endif %}
+    </div>
+    <div class="offcanvas-footer primarybgcolor">
+        <div class="d-flex justify-content-center">
+            <figure class="shadow-lg mb-2 bg-body-tertiary rounded">
+                <a href="/">
+                    <img class="brandlogo img-fluid" src="/static/admin/img/logo.png" alt="Brand logo">
+                </a>
+            </figure>
+        </div>
+    </div>
+</div>
+<input type="hidden" value="{{ user.username }}" id="hiddenSession" />
+
+<script>
+       // Function to reload the page after 1 minute
+function reloadPageAfterOneMinute() {
+    setTimeout(function() {
+        location.reload();
+    }, 1000); // 60,000 milliseconds = 1 minute
+}
+
+// Add event listener to the button
+document.getElementById('saveBtnReload').addEventListener('click', function() {
+    reloadPageAfterOneMinute();
+});
+document.getElementById('btn-clockOut').addEventListener('click', function() {
+    reloadPageAfterOneMinute();
+});
+</script>

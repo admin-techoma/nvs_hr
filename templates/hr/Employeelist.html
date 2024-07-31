@@ -1,0 +1,157 @@
+{% extends 'component/base.html' %}
+{% load static  %}
+{% block title %}Employee{% endblock title %}
+{% block extracss %}
+{% endblock extracss %}
+{% block maincontent %}
+            <div class="main-content">
+                <div class="card">
+                    <div class="card-header border-bottom-0">
+                        <div class="d-flex justify-content-between ">
+                            <div class="text-center d-flex align-items-center">
+                                <h6 class="mb-0 pageTitle"><strong>Employee List</strong></h6>
+                            </div>
+                            <div class=" d-flex justify-content-end align-items-center flex-wrap">
+                                <div class="d-flex justify-content-end  mb-1 ">
+                                    <a type="submit" href="{% url 'hr:direct_employee' %}"
+                                        class="btn btn-success btn-sm edit-status me-2" data-candidate-id="" data-status="">Create Direct
+                                        Employee <i class="bi bi-pencil-square"></i> </a>
+                                </div>
+                                {% comment %} <div class="d-flex justify-content-end mb-1 me-2">
+                                    <button class="btn btn-dark btn-sm" type="submit" name="download_button">Download
+                                        <i class="bi bi-box-arrow-down"> </i>
+                                    </button>
+                                </div> {% endcomment %}
+                                <a class="btn btn-success btn-sm mb-1" type="submit" name="salary_button"
+                                href="{% url 'payroll:month_salary' %}">
+                                <i class="bi bi-box-arrow-down "></i> Month Salary
+                                 </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{% url 'hr:view_employee' %}">
+                            {% csrf_token %}
+                            {% for message in messages %}
+                            {% if message.tags == 'success' %}
+                            <div class="alert alert-success" role="alert">
+                                {{ message }}
+                            </div>
+                            {% else %}
+                            <label for="exampleInputEmail1" class="form-label mb-0 text-left text-danger">{{ message }}</label>
+                            {% endif %}
+                            {% endfor %}
+                            {% if form.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                {{ error }}
+                                {% endfor %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="table-responsive overflow-auto ">
+                                    <table class="DataTable" id="allEmployeesTablelist">
+                                        <thead class="bg-none">
+                                            <tr class="bg-none">
+                                                <th scope="col">Candidate  Id</th>
+                                                <th scope="col">Emp Id</th>
+                                                <th scope="col">Emp Name</th>
+                                                <th scope="col">Email id</th>
+                                                <th scope="col">Department</th>
+                                                <th scope="col">Designation</th>
+                                                <th scope="col">Doj</th>
+                                                <th scope="col">Documents Status</th>
+                                                <th scope="col">Employee Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-none">
+                                            {% for employee in emp_data %}
+                                            <tr onclick="window.location='{% url 'hr:employee_profile' employee.emp_id %}'" class="row-select">
+                                                <td class="text-nowrap">{{ employee.candidate_id.pk }}</td>
+                                                <td >
+                                                    <div class="d-flex align-items-center">{{ employee.emp_id }}
+                                                </td>
+                                                <td class="text-nowrap">{{ employee.name }}</td>
+                                                <td class="text-lowercase text-nowrap">{{ employee.email }}</td>
+                                                <td class="text-nowrap" >{{ employee.department }}</td>
+                                                <td class="text-nowrap" >{{ employee.designation }}</td>
+                                                <td class="text-nowrap" >{{ employee.doj}}</td>
+                                                <td>
+                                                    {% if employee.documents_id %}
+                                                        {% if employee.documents_id.c_adhar and employee.documents_id.c_psimg and employee.documents_id.c_HSC %}
+                                                        <label
+                                                        class="form-check-label badge text-bg-success">Complete</label>    
+                                                        {% else %}
+                                                            <a class="badge text-bg-danger" href="{% url 'hr:employee_profile' employee.emp_id %}">Pending </a>
+                                                        
+                                                            {% endif %}
+                                                    {% else %}
+                                                        <!-- Handle the case when documents_id is None -->
+                                                        <!-- You can display a message or handle it as needed -->
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if employee.status == "Active" %}
+                                                    <label
+                                                        class="form-check-label badge text-bg-success">{{employee.status}}</label>
+                                                    {% elif employee.status == "Full&Final Pending" %}
+                                                    <label
+                                                        class="form-check-label badge text-bg-warning">{{employee.status}}</label>
+                                                    {% else %}
+                                                    <a href="{% url 'hr:employee_profile' employee.emp_id %}" class="  badge text-bg-danger">Payroll Pending
+                                                    </a>
+                                                    {% endif %}
+                                                </td>
+                                            
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+{%endblock maincontent%}
+{% block extrascript %}
+    <script>
+        $(document).ready(function () {
+            $('#allEmployeesTablelist').DataTable({
+                responsive: true,
+                searching: true,
+                paging: true,
+                fixedHeader: true,
+            });
+            document.addEventListener('DOMContentLoaded', function () {
+                const activateSwitches = document.querySelectorAll('.activate-switch');
+                activateSwitches.forEach(function (switchElement) {
+                    switchElement.addEventListener('change', function () {
+                        const empId = switchElement.dataset.empId;
+                        d
+                        // Use AJAX to check if the employee has an active payroll
+                        fetch(`/check_payroll_status/${empId}/`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.hasActivePayroll) {
+                                    // If the employee has an active payroll, allow the status change
+                                    switchElement.checked =
+                                        true; // Mark the switch as checked
+                                } else {
+                                    // If the employee doesn't have an active payroll, show an alert
+                                    alert(
+                                        'First activate payroll for this employee.'
+                                    );
+                                    switchElement.checked =
+                                        false; // Mark the switch as unchecked
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                    });
+                });
+            });
+        });
+    </script>
+    {% endblock extrascript %}

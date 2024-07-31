@@ -1,0 +1,345 @@
+{% extends 'component/base.html' %}
+{% load static  %}
+{% block title %}Salary Report{% endblock title %}
+{% block extracss %}
+{% endblock extracss %}
+{% block maincontent %}
+            <div class="main-content">
+               <div class="card">
+                <div class="card-header border-0">
+                    <div class="d-flex justify-content-between">
+                        <div class="text-center d-flex align-items-center">
+                            <h6 class="mb-0  pageTitle"><strong>Salary Report </strong></h6>
+                        </div>
+                        <!-- <div class="col-12 col-md-3 d-flex justify-content-end align-items-center">
+                            <button class="btn btn-dark btn-sm" type="submit" name="download_button">
+                                <i class="bi bi-box-arrow-down"></i> Download
+                            </button>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="get" action="{% url 'hr:view_employee' %}">
+                        {% csrf_token %}
+                        {% for message in messages %}
+                        {% if message.tags == 'success' %}
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                        </div>
+                        {% else %}
+                        <label for="exampleInputEmail1" class="form-label mb-0 text-left text-danger">{{ message }}</label>
+                        {% endif %}
+                        {% endfor %}
+                        {% if form.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                            {{ error }}
+                            {% endfor %}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <div class="d-flex justify-content-between flex-wrap mb-1 p-2">
+                            <div class="col-12 d-flex justify-content-end align-items-center">
+                                <div class="col-12 col-md-4 d-flex py-2 ">
+                                    <input type="date" id="min" class="form-control form-control-sm me-2"
+                                        value="{{ date|date:'d-m-Y' }}" name="min">
+                                    <input type="date" id="max" class="form-control form-control-sm "
+                                        value="{{ date|date:'d-m-Y' }}" name="max">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100 overflow-hidden">
+                            <div class="table-responsive overflow-auto ">
+                                <table class="table DataTable dataTable" id="allSalaryTable">
+                                    <thead class="bg-none">
+                                        <tr class="headings">
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; ">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="selectAllCheckbox">
+                                                    <label class="form-check-label" for="selectAllCheckbox">All</label>
+                                                </div>
+                                            </th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">payroll id</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">emp id</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">month</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">year</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">salary createdon</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">payment status</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">remarks</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">name</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">fixed ctc</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">fixed basic</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">fixed hra</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">fixed ca</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">fixed sa</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">fixed employee pf</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">fixed employer pf</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">fixed employee esic</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">fixed employer esic</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">fixed gross salary</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">fixed new ctc</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">fixed professionalTax</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">fixed total deducation</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">fixed netpay</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly ctc</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly basic</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly hra</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly ca</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly sa</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly employee pf</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly employer pf</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly employee esic</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly employer esic</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly gross salary</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly new ctc</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly professional Tax</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly total deductions</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly netpay</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly netpayinwords</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly incentive</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly loan other</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly presentdays</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly absentdays</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly halfdays</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly unpaid days</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly paid days</th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap;">monthly weekoff days</th>                                      
+                                        </tr>
+                                    </thead>
+                                    <tfoot class="bg-none">
+                                        <tr class="headings">
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none;">                                       
+                                            </th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>
+                                            <th scope="col" style="min-width:100px; text-wrap:nowrap; background:none; "></th>                                      
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+               </div>
+                
+            </div>
+           
+{%endblock maincontent%}
+
+{% block extrascript %}
+    <script>
+        $.fn.dataTable.render.moment = function (from, to, locale) {
+            // Argument shifting
+            if (arguments.length === 1) {
+                locale = 'en';
+                to = from;
+                from = 'YYYY-MM-DD';
+            } else if (arguments.length === 2) {
+                locale = 'en';
+            }
+
+            return function (d, type, row) {
+                if (!d) {
+                    return type === 'sort' || type === 'type' ? 0 : d;
+                }
+
+                var m = window.moment(d, from, locale, true);
+
+                // Order and type get a number value from Moment, everything else
+                // sees the rendered value
+                return m.format(type === 'sort' || type === 'type' ? 'x' : to);
+            };
+        };
+        $(document).ready(function() {
+    // Add class "text-nowrap" to specific <td> elements within <tbody>
+    $('#allSalaryTable tbody tr td:nth-child(3)').addClass('text-nowrap');
+});
+    $(document).ready(function() {
+        $('#allSalaryTable tfoot th').each(function() {
+            var title = $(this).text();
+            $(this).html('<input type="text" class="form-control form-control-sm" placeholder="' + title + '" />');
+        });
+
+        var table = $('#allSalaryTable').DataTable({
+            dom: 'lfrt<"ip"iB>p',
+            responsive: true,
+            searching: true,
+            paging: true,
+            fixedHeader: {
+                header: true,
+                footer: true
+            },
+            scrollX: true,
+            scrollY: window.innerHeight - (.6 * window.innerHeight),
+            //dom: 'Bfrtip', // Show only the buttons
+            stateSave: true,
+            processing: true,
+            buttons: [
+                {
+                    extend: 'copy',
+                    className: 'btn custom-button-two btn-sm mb-2', // Add your custom class for styling
+                    text: '<i class="bi bi-files"></i> Copy', // You can also customize the button text and add icons
+                },
+                {
+                    extend: 'excel',
+                    className: 'btn custom-button-two btn-sm mb-2',
+                    text: '<i class="bi bi-file-excel"></i> Excel',
+                },
+                {
+                    extend: 'pdf',
+                    className: 'btn custom-button-two btn-sm mb-2',
+                    text: '<i class="bi bi-file-pdf"></i> PDF',
+                },
+                {
+                    extend: 'print',
+                    className: 'btn custom-button-two btn-sm mb-2',
+                    text: '<i class="bi bi-printer"></i> Print',
+                },
+            ],
+            ajax: {
+                url: "{% url 'report:salarydata' %}",
+                type: "GET",
+                data: function(dt) {
+                    dt.from = $('#min').val();
+                    dt.to = $('#max').val();
+                }
+            },
+            columns: [{
+                data: null,
+                render: function (data, type, row) {
+                    return '<div class="form-check">' +
+                        '<input class="form-check-input" type="checkbox" value="' + row.id + '" id="checkbox_' + row.id + '">' +
+                        '<label class="form-check-label" for="checkbox_' + row.id + '"></label>' +
+                        '</div>';
+                }
+            },{ data : "payroll_id"
+            },{ data : "emp_id"
+            },{ data : "month"
+            },{ data : "year"
+            },{ data: "salary_createdon", className: 'text-nowrap'
+        },{ data : "payment_status"
+            },{ data : "remarks"
+            },{ data : "name"
+            },{ data : "fixed_ctc"
+            },{ data : "fixed_basic"
+            },{ data : "fixed_hra"
+            },{ data : "fixed_ca"
+            },{ data : "fixed_sa"
+            },{ data : "fixed_employeepf"
+            },{ data : "fixed_employerpf"
+            },{ data : "fixed_employeeesic"
+            },{ data : "fixed_employeresic"
+            },{ data : "fixed_gross_salary"
+            },{ data : "fixed_newctc"
+            },{ data : "fixed_professionalTax"
+            },{ data : "fixed_total_deducation"
+            },{ data : "fixed_netpay"
+            },{ data : "monthly_ctc"
+            },{ data : "monthly_basic"
+            },{ data : "monthly_hra"
+            },{ data : "monthly_ca"
+            },{ data : "monthly_sa"
+            },{ data : "monthly_employeepf"
+            },{ data : "monthly_employerpf"
+            },{ data : "monthly_employeeesic"
+            },{ data : "monthly_employeresic"
+            },{ data : "monthly_gross_salary"
+            },{ data : "monthly_newctc"
+            },{ data : "monthly_professionalTax"
+            },{ data : "monthly_total_deductions"
+            },{ data : "monthly_netpay"
+            },{ data : "monthly_netpayinwords"
+            },{ data : "monthly_incentive"
+            },{ data : "monthly_loan_other"
+            },{ data : "monthly_presentdays"
+            },{ data : "monthly_absentdays"
+            },{ data : "monthly_halfdays"
+            },{ data : "monthly_unpaiddays"
+            },{ data : "monthly_paiddays"
+            },{ data : "monthly_weekoffdays"
+            }],
+
+            deferRender: true,
+            // scrollX: true,
+            // scrollY: window.innerHeight - 580,
+            initComplete: function() {
+                // Apply the search
+                this.api().columns().every(function() {
+                    var that = this;
+                    $('input', this.header()).on('keyup change clear', function() {
+                        if (that.search() !== this.value) {
+                            that.search(this.value).draw();
+                        }
+                    });
+                });
+            }
+        });
+        $('.dataTables_filter input[type="search"]').addClass('form-control form-control-sm');
+        $('#selectAllCheckbox').on('change', function () {
+            var checked = $(this).prop('checked');
+            $('input[type="checkbox"]', table.rows().nodes()).prop('checked', checked);
+        });
+        
+        $('#selectAllCheckboxFooter').on('change', function () {
+            var checked = $(this).prop('checked');
+            $('input[type="checkbox"]', table.rows().nodes()).prop('checked', checked);
+        });
+        
+        // Change row background color on click
+        $('#allSalaryTable tbody').on('click', 'tr', function () {
+            // Remove the 'selected' class from all rows except the clicked one
+            table.rows().nodes().to$().removeClass('selected');
+    
+            // Toggle the 'selected' class on the clicked row
+            $(this).toggleClass('selected');
+        });
+            $('#min, #max').on('change', function () {
+                table.ajax.reload();
+                table.draw();
+            });
+        });
+    </script>
+    {% endblock extrascript %}

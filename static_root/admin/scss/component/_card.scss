@@ -1,0 +1,172 @@
+.dashboard-card {
+  background: $primarylight;
+  padding: 1.25rem;
+  border-radius: 0.625rem;
+  min-width: 12.5rem;
+  min-height: 12.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  svg {
+    margin-bottom: 0.938rem;
+    path {
+      color: $color-black;
+      fill: $color-black;
+    }
+  }
+  .card-body {
+    height: auto;
+    flex: unset;
+  }
+  &:hover {
+    cursor: pointer;
+    background: $primarycolor;
+
+    svg {
+      margin-bottom: 0.938rem;
+      path {
+        color: $color-white;
+        fill: $color-white;
+      }
+    }
+    .card-title {
+      color: $color-white;
+    }
+  }
+}
+
+.leavecardstyle {
+  padding: 0.625rem;
+  border: 0.063rem solid;
+  border: none;
+  border-left: 0.313rem solid;
+  border-radius: 0.625rem;
+  background: $color-MidnightBlue;
+  .card-title {
+    text-align: center;
+  }
+  .card-desc {
+    text-align: center;
+    margin-top: 0.625rem;
+    margin-bottom: 0rem;
+    font-weight: 500;
+  }
+  @media (max-width: 48rem) {
+    padding: 0.87rem;
+    .card-desc {
+      margin: 0.8rem;
+    }
+  }
+}
+.bordercolor1 {
+  border-left-color: $color-orange;
+}
+.bordercolor2 {
+  border-left-color: $color-green;
+}
+.bordercolor3 {
+  border-left-color: $color-red;
+}
+.bordercolor4 {
+  border-left-color: $color-yellow;
+}
+.dashboard-corner-card {
+  overflow: hidden;
+  margin-bottom: 0.625rem;
+  border: transparent !important;
+  .card-top-title {
+    font-weight: $font-weight-medium;
+    color: $primarycolor;
+  }
+  ul {
+    max-height: 20rem;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    li.cardlist {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+      // border: 0.063rem solid $primarycolorlighter ;
+      // background: $primarycolorlighter;   
+      .card-figure {
+        margin: 0;
+        border-radius: 50%;
+        width: 3.125rem;
+        height: 3.125rem;
+        min-height: 3.125rem;
+        min-width: 3.125rem;
+        max-height: 3.125rem;
+        max-width: 3.125rem;
+        border: none;
+        margin-right: 0.625rem;
+        img {
+          width: 3.125rem;
+          height: 3.125rem;
+          border-radius: 50%;
+          min-height: 3.125rem;
+          min-width: 3.125rem;
+          max-height: 3.125rem;
+          max-width: 3.125rem;         
+        }
+      }
+      .card-details {
+        display: flex;
+        flex-direction: column;
+        .card-title-name {
+          font-weight: $font-weight-medium;
+          margin-bottom: 0.625rem;
+          text-align: start;
+        }
+        .card-description {
+          font-weight: $font-weight-regular;
+          text-align: start;
+        }
+      }
+      &:hover {
+        background: $primarycolorlight;
+        color: $color-white;
+        cursor: pointer;
+      
+      }
+    }
+  }
+}
+.dashboardtopcard {
+  border: 0.063rem solid $primarycolorlighter !important;
+  background: $primarycolorlighter;
+  .card-body {
+    background: $primarycolorlighter;
+    border: 0.063rem solid $primarycolorlighter ;  
+    border-radius: 0.375rem; 
+  }
+}
+.dummycard {
+  background: $primarycolorlighter;
+  background-color: $primarycolorlighter !important;
+}
+
+.card {
+  border-radius: 0.375rem !important;
+  background-color: var(--color-bg-light) !important;
+  border: 1px solid transparent !important;
+  
+  .card-body {
+    color: var(--color-fg);
+    background: transparent;
+    border-radius: 0.375rem !important;
+    border: 0.063rem solid var(--color-bg-light);
+  }
+}
+
+.card {
+  .card-header{
+    .card-title {
+      color: var(--color-fg) !important; 
+    }
+  }
+}

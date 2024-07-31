@@ -1637,18 +1637,6 @@ select:focus {
   box-shadow: none !important;
 }
 
-#allattendanceTable_wrapper .dataTables_filter {
-  display: none !important;
-}
-#allattendanceTable_wrapper .dataTables_info {
-  font-size: 0.75em !important;
-}
-
-.dataTable tfoot input {
-  padding: 0;
-  min-height: unset !important;
-}
-
 .breadcrumb .breadcrumb-item a {
   color: #000;
 }
@@ -2197,6 +2185,11 @@ main .preview-img {
 .overflowscroll {
   height: calc(100vh - 6.25rem);
   overflow-y: auto;
+}
+
+.footer {
+  background: rgba(20, 36, 90, 0.1019607843);
+}/*# sourceMappingURL=style.css.map */verflow-y: auto;
 }
 
 .footer {

@@ -81,24 +81,22 @@
                         enctype="multipart/form-data" class="w-100 d-flex justify-content-center flex-wrap">
                         {% csrf_token %}
                         <div class="row w-100">
-                            <div class="d-flex justify-content-end align-items-center mb-2 w-100">
-                                <button type="button" id="editCompanyInfoBtn"
-                                    class="btn custom-button btn-sm">Edit</button>
-                            </div>
-                            <div class="col-12 mb-3  border-bottom">
+                            <div class="col-12 mb-3  border-bottom d-flex justify-content-between">
                                 <h5>Company Info</h5>
+                                <div class="d-flex justify-content-end align-items-center mb-2">
+                                    <button type="button" id="editCompanyInfoBtn"
+                                        class="btn custom-button btn-sm">Edit</button>
+                                </div>
                             </div>
                             <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                 <label for="CompanyName"
-                                    class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Company
-                                    Name :</label>
+                                    class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Company Name :</label>
                                 <input type="text" class="form-control form-control-sm " id="CompanyName"
                                     placeholder="Company Name" disabled value="{{company_data.name}}" />
                             </div>
                             <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                 <label for="IndustryType"
-                                    class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Industry
-                                    Type :</label>
+                                    class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Industry Type :</label>
                                 <input type="text" class="form-control form-control-sm " id="IndustryType"
                                     placeholder="" disabled value="{{company_data.industries_type|default:''}}"
                                     name="industries_type">
@@ -107,20 +105,16 @@
                                 <label for="CompanyGSTNo"
                                     class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">GST No
                                     :</label>
-                                <input type="text" class="form-control form-control-sm " id="CompanyGSTNo"
-                                    placeholder="" disabled value="{{company_data.gst_no|default:''}}" name="gst_no" minlength="15" maxlength="15" title="Required 15 digits of GST No">
+                                <input type="text" class="form-control form-control-sm " id="CompanyGSTNo" placeholder="" disabled value="{{company_data.gst_no|default:''}}" name="gst_no" minlength="15" maxlength="15" title="Required 15 digits of GST No">
                             </div>
                             <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                 <label for="CompanyTINNo"
-                                    class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">TIN No
-                                    :</label>
+                                    class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">TIN No :</label>
                                 <input type="text" class="form-control form-control-sm" id="CompanyTINNo"
                                     placeholder="" disabled value="{{company_data.tin_no|default:''}}" name="tin_no" minlength="11" maxlength="11" title="Required 11 digits of TIN No">
                             </div>
                             <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
-                                <label for="CompanyCINNo"
-                                    class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">CIN No
-                                    :</label>
+                                <label for="CompanyCINNo" class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">CIN No :</label>
                                 <input type="text" class="form-control form-control-sm" id="CompanyCINNo"
                                     placeholder="" disabled value="{{company_data.cin_no|default:''}}" name="cin_no" minlength="21" maxlength="21" >
                             </div>
@@ -378,9 +372,7 @@
                                         <th scope="col" class="text-nowrap fw-medium">contact No</th>
                                         <th scope="col" class="text-nowrap fw-medium">start Date</th>
                                         <th scope="col" class="text-nowrap fw-medium">status</th>
-                                        <th scope="col" class="text-nowrap fw-medium text-center">
-                                            <p class="text-center mb-0">Action</p>
-                                        </th>
+                                        <th scope="col" class="text-nowrap fw-medium text-center"><p class="text-center mb-0">Action</p></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -388,7 +380,7 @@
                                     <tr>
                                         <td>{{ branch_list.company }}</td>
                                         <td>{{ branch_list.name}}</td>
-                                        <td>{{ branch_list.address }}</td>
+                                        <td style="max-width: 400px; width: 100%;"><div>{{ branch_list.address }}</div></td>
                                         <td>{{ branch_list.city }}</td>
                                         <td>{{ branch_list.state }}</td>
                                         <td>{{ branch_list.country }}</td>

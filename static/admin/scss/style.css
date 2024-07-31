@@ -89,12 +89,12 @@ th {
   font-weight: 500;
 }
 
-input {
-  text-transform: capitalize;
+#username {
+  text-transform: lowercase;
 }
 
 input[type=email] {
-  text-transform: none;
+  text-transform: lowercase;
 }
 
 input[type=date] {
@@ -136,19 +136,19 @@ input[type=date] {
 }
 
 .card.border-left-green {
-  border-left: 0.5rem solid !important;
+  border-left: 0.5em solid !important;
   border-left-color: #adff2f !important;
 }
 .card.border-left-maroon {
-  border-left: 0.5rem solid !important;
+  border-left: 0.5em solid !important;
   border-left-color: #910606 !important;
 }
 .card.border-left-red {
-  border-left: 0.5rem solid !important;
+  border-left: 0.5em solid !important;
   border-left-color: #ff2f2f !important;
 }
 .card.border-left-yellow {
-  border-left: 0.5rem solid !important;
+  border-left: 0.5em solid !important;
   border-left-color: #FFEF5F !important;
   position: relative !important;
 }
@@ -158,20 +158,20 @@ input[type=date] {
   top: 0;
   height: 50%;
   background: orange;
-  left: -0.5rem;
-  width: 0.5rem;
-  border-top-left-radius: 1.25rem;
+  left: -0.5em;
+  width: 0.5em;
+  border-top-left-radius: 1.25em;
 }
 .card.border-left-orange {
-  border-left: 0.5rem solid !important;
+  border-left: 0.5em solid !important;
   border-left-color: orange !important;
 }
 .card.border-left-purple {
-  border-left: 0.5rem solid !important;
+  border-left: 0.5em solid !important;
   border-left-color: #9B59B6 !important;
 }
 .card.border-left-gray {
-  border-left: 0.5rem solid !important;
+  border-left: 0.5em solid !important;
   border-left-color: #808080 !important;
 }
 .card .absentcolor {
@@ -206,11 +206,11 @@ input[type=date] {
 
 ::-webkit-scrollbar {
   width: 0.35em;
-  height: 0.375rem;
+  height: 0.375em;
 }
 
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 0.063rem rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 0.063em rgba(0, 0, 0, 0.3);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -229,13 +229,13 @@ input[type=date] {
   display: flex;
 }
 .notification-img-wrapper img {
-  height: 3.125rem;
-  width: 3.125rem;
+  height: 3.125em;
+  width: 3.125em;
   border-radius: 50%;
-  border: 0.063rem solid #808080;
+  border: 0.063em solid #808080;
 }
 .notification-img-wrapper .notification-detail {
-  margin-left: 0.625rem;
+  margin-left: 0.625em;
 }
 .notification-img-wrapper .notification-detail .notification-title {
   margin-bottom: 0;
@@ -245,9 +245,9 @@ input[type=date] {
 }
 
 .day {
-  border-radius: 20px;
-  width: 50px;
-  height: 50px;
+  border-radius: 1.25em;
+  width: 3.125em;
+  height: 3.125em;
   text-align: center;
   cursor: pointer;
 }
@@ -279,11 +279,11 @@ input[type=date] {
 }
 .national-holiday:hover .festivalname {
   display: block;
-  padding: 10px;
+  padding: 0.625em;
   background: #000;
   border-radius: 0.313em;
   color: #fff;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.15);
   font-size: 0.75em;
 }
 
@@ -330,11 +330,11 @@ body main .top-header {
   background: var(--color-bg-light);
 }
 body .dashboardtopcard {
-  border: 0.063rem solid var(--color-bg-light) !important;
+  border: 0.063em solid var(--color-bg-light) !important;
 }
 body .dashboardtopcard .card-body {
   background: var(--color-bg-light) !important;
-  border: 0.063rem solid var(--color-bg-light) !important;
+  border: 0.063em solid var(--color-bg-light) !important;
   color: #000 !important;
 }
 body .dashboardtopcard .card-body .card-title {
@@ -342,6 +342,15 @@ body .dashboardtopcard .card-body .card-title {
 }
 body .dashboardtopcard .card-body .card-desc {
   color: var(--color-fg) !important;
+  margin-bottom: 0;
+}
+@media (max-width: 1440px) {
+  body .dashboardtopcard .card-body .card-title {
+    font-size: 1em;
+  }
+  body .dashboardtopcard .card-body .card-desc {
+    font-size: 12px;
+  }
 }
 body .dashboard-corner-card .card-top-title {
   color: var(--color-fg);
@@ -351,7 +360,7 @@ body .calendar-wrapper {
   color: var(--color-fg);
 }
 body .calendar-wrapper .calendar-header {
-  padding: 0.625rem;
+  padding: 0.625em;
 }
 body .calendar-wrapper .calendar li {
   color: var(--color-fg);
@@ -362,7 +371,7 @@ body .card-wrapper .card {
 }
 body .salarysliptable {
   color: var(--color-fg);
-  border-radius: 0.36rem;
+  border-radius: 0.36em;
 }
 body .modal {
   border: transparent;
@@ -398,16 +407,16 @@ body .profile-tabs .nav-item .nav-link {
   background: var(--color-bg-light);
   color: var(--color-fg);
   border-color: var(--color-bg-light);
-  padding: 5px;
+  padding: 0.313em;
 }
 body .border-bottom-color {
-  border-bottom: 1px solid;
+  border-bottom: 0.063em solid;
   border-bottom-color: var(--color-border-theme);
 }
 body .cardbg {
   background: var(--color-bg-light);
   color: var(--color-fg);
-  border: 1px solid var(--color-bg-light);
+  border: 0.063em solid var(--color-bg-light);
 }
 body .view-doc {
   color: var(--color-fg) !important;
@@ -421,14 +430,14 @@ body .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
 body .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
   cursor: default;
   color: var(--color-fg) !important;
-  border: 1px solid transparent;
+  border: 0.063em solid transparent;
 }
 body .dataTables_wrapper .dataTables_paginate .paginate_button {
   text-decoration: none !important;
   cursor: pointer;
   color: inherit !important;
-  border: 1px solid transparent;
-  border-radius: 2px;
+  border: 0.063em solid transparent;
+  border-radius: 0.125em;
   background: transparent;
 }
 body .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
@@ -474,7 +483,7 @@ body .weekoffcard {
 body .admindashbox {
   background-color: var(--color-bg-light);
   color: var(--color-fg);
-  border: 1px solid var(--color-bg-light);
+  border: 0.063em solid var(--color-bg-light);
 }
 body .apexcharts-title-text {
   color: var(--color-fg) !important;
@@ -508,17 +517,17 @@ body .nav.nav-tabs {
 body a.edit-button {
   background-color: var(--color-bg-light);
   color: var(--color-fg);
-  border: 1px solid var(--color-bg-light);
+  border: 0.063em solid var(--color-bg-light);
 }
 body #savepayrollInfoBtn,
 body #saveWorkInfoBtn,
 body #savePersonalInfoBtn,
 body #saveTeamInfoBtn {
-  border: 1px solid var(--color-bg-light);
+  border: 0.063em solid var(--color-bg-light);
 }
 body .top-header .headerprofilewrapper .notificationdropdown {
   background-color: var(--color-bg-light);
-  border: 1px solid var(--color-bg-light);
+  border: 0.063em solid var(--color-bg-light);
 }
 body .top-header .headerprofilewrapper .notificationdropdown .notification-detail .notification-title {
   color: var(--color-text);
@@ -534,8 +543,8 @@ body .top-header .headerprofilewrapper .notificationdropdown .dropdown-item:hove
 }
 
 .darklighticon {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.5em;
+  height: 1.5em;
   vertical-align: middle;
 }
 
@@ -552,7 +561,7 @@ body .top-header .headerprofilewrapper .notificationdropdown .dropdown-item:hove
 }
 
 .offcanvas .offcanvas-header .Clientlogowrapper .Clientlogo {
-  max-width: 4rem;
+  max-width: 4em;
 }
 
 /* Container */
@@ -1637,18 +1646,6 @@ select:focus {
   box-shadow: none !important;
 }
 
-#allattendanceTable_wrapper .dataTables_filter {
-  display: none !important;
-}
-#allattendanceTable_wrapper .dataTables_info {
-  font-size: 0.75em !important;
-}
-
-.dataTable tfoot input {
-  padding: 0;
-  min-height: unset !important;
-}
-
 .breadcrumb .breadcrumb-item a {
   color: #000;
 }
@@ -2197,6 +2194,11 @@ main .preview-img {
 .overflowscroll {
   height: calc(100vh - 6.25rem);
   overflow-y: auto;
+}
+
+.footer {
+  background: rgba(20, 36, 90, 0.1019607843);
+}/*# sourceMappingURL=style.css.map */w-y: auto;
 }
 
 .footer {

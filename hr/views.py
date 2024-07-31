@@ -527,7 +527,9 @@ def save_interview_feedback(request, candidate_id):
     return JsonResponse({'success': False, 'message': 'Invalid request method'})
     
 def onboarding_list(request):
-    candidate_resumes = candidateResume.objects.filter(interviewFeedback='Selected')
+    candidate_resumes = candidateResume.objects.filter(
+        interviewFeedback='Selected'
+    ).exclude(candidate_id__in=Employee.objects.values_list('candidate_id', flat=True))
     onboarding_status = {}
 
     for candidate in candidate_resumes:
@@ -554,7 +556,7 @@ def onboarding_list(request):
         request.session.save()
 
         return render(request, 'hr/hronboardinglistview.html', context)
-
+    
 def get_or_create_onboarding_instance(candidate_id):
     try:
         return Onboarding.objects.get(candidate_id_id=candidate_id)

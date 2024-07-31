@@ -22,15 +22,15 @@
                         <thead>
                             <tr>
                                 <th scope="col">Sr no</th>
-                                <th scope="col">Candidate Name</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Mobile No.</th>
                                 <th scope="col">Email ID</th>
-                                <th scope="col">Resume Status</th>
-                                <th scope="col">Resume Remarks</th>
-                                <th scope="col">Created Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Remarks</th>
+                                <th scope="col">Created On</th>
                                 <th scope="col">Interview Status</th>
                                 <th scope="col">Resume</th>
-                                <th scope="col">Action</th>
+                                <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,7 +70,7 @@
                             </td>
                                 {% if resume.candidate_id not in employees %}
                                 <td class="text-nowrap" style="min-width: 200px; width: 200px;">
-                                    <div class="d-flex">
+                                    <div class="d-flex w-100 justify-content-center">
                                         
                                         <button id="resumeEdit{{resume.candidate_id}}" href="" class="btn btn-success edit-resume btn-sm me-2">
                                             <i class="bi bi-pencil-square"></i>
@@ -89,8 +89,6 @@
                                 {% endif %}
                             </tr>
                             {% endfor %}
-                            
-                            
                             {% else %}
                             <tr>
                                 <td colspan="7" class="text-center">No results.</td>
@@ -102,7 +100,6 @@
             </div>
         </div>
     </div>
-   
 </div>
 <!-- Modal to upload Resume-->
 <div class="modal fade" id="uploadResumeModal" tabindex="-1" aria-labelledby="uploadResumeModalLabel"

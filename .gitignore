@@ -22,5 +22,8 @@ __pycache__/
 # Ignore media files
 media/
 
+*.sqlite
+*.db
+
 
 

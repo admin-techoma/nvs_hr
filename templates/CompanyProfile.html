@@ -144,7 +144,7 @@
                                     placeholder="" disabled value="{{company_data.emp_id_series|default:''}}"
                                     name="emp_id_series">
                             </div>
-                            <div class="col-12 col-md-4 d-flex mb-3 align-items-center">
+                            <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                 <label for="CompanyStatus"
                                     class="form-label text-nowrap me-2 mb-md-0 col-12 col-md-5">Status:</label>
                                 <select disabled class="form-control form-control-sm" name="status" id="CompanyStatus">
@@ -158,7 +158,7 @@
                             </div>
                         </div>
                         <div class="row w-100">
-                            <div class="col-12 col-md-4 d-flex mb-3 align-items-start">
+                            <div class="col-12 col-md-4 d-flex mb-3 align-items-start flex-wrap flex-md-nowrap">
                                 <label for="CompanyLogo"
                                     class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Company
                                     Logo:</label>
@@ -190,7 +190,7 @@
                                     class="form-label text-nowrap me-2 mb-md-0 col-12 col-md-5">Phone No :</label>
                                 <input type="tel" disabled class="form-control form-control-sm " name="phone_no"
                                     id="CompanyPhoneno" placeholder="" autocomplete="off" pattern="[0-9]{10}"
-                                    maxlength="10" minlength="10" value="{{company_data.phone_no|default:''}}">
+                                    maxlength="10" minlength="10" value="{{company_data.phone_no|default:''}}" required>
                             </div>
                             <!-- email id -->
                             <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
@@ -198,7 +198,7 @@
                                     class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Email ID
                                     :</label>
                                 <input type="email" class="form-control form-control-sm" id="CompanyEmail"
-                                    placeholder="" disabled value="{{company_data.email_id|default:''}}" name="email_id">
+                                    placeholder="" disabled value="{{company_data.email_id|default:''}}" name="email_id" required>
                             </div>
                             <div class="col-12 mb-3  border-bottom">
                                 <h5>Registered Office</h5>
@@ -283,7 +283,7 @@
                                 <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                     <label for="CCPincode"
                                         class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Pincode:</label>
-                                    <input type="tel" class="form-control form-control-sm" id="CCPincode" step="0" pattern="[0-9]{6}" title="Please enter exactly 6 digits."
+                                    <input type="tel" class="form-control form-control-sm" id="CCPincode"  pattern="[0-9]{6}" title="Please enter exactly 6 digits."
                                         disabled value="{{company_data.corp_pin_code|default:''}}"
                                         name="corp_pin_code">
                                 </div>
@@ -355,7 +355,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body pt-0">
                     <div class="row">  
                         <div class="table-responsive overflow-auto">
                             <table class="table-responsive overflow-auto DataTable w-100" id="allbranchMasterTablelist">
@@ -363,7 +363,7 @@
                                     <tr>
                                         <th scope="col" class="text-nowrap fw-medium">Company Master</th>
                                         <th scope="col" class="text-nowrap fw-medium">Name</th>
-                                        <th scope="col" class="text-nowrap fw-medium">Address</th>
+                                        <th scope="col" class="text-nowrap fw-medium" style="max-width: 400px; width: 100%; white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">Address</th>
                                         <th scope="col" class="text-nowrap fw-medium">city</th>
                                         <th scope="col" class="text-nowrap fw-medium">state</th>
                                         <th scope="col" class="text-nowrap fw-medium">country</th>
@@ -378,9 +378,9 @@
                                 <tbody>
                                     {% for branch_list in company_branch_all %}
                                     <tr>
-                                        <td>{{ branch_list.company }}</td>
+                                        <td  style=" white-space: nowrap; word-wrap: break-word; overflow-wrap: break-word;">{{ branch_list.company }}</td>
                                         <td>{{ branch_list.name}}</td>
-                                        <td style="max-width: 400px; width: 100%;"><div>{{ branch_list.address }}</div></td>
+                                        <td style=" white-space: nowrap; word-wrap: break-word; overflow-wrap: break-word;"><div>{{ branch_list.address }}</div></td>
                                         <td>{{ branch_list.city }}</td>
                                         <td>{{ branch_list.state }}</td>
                                         <td>{{ branch_list.country }}</td>
@@ -435,7 +435,6 @@
                                             <option value="{{ company.id }}">{{ company.name }}</option>
                                             {% endfor %}
                                         </select>
-
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">

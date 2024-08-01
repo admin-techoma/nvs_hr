@@ -225,7 +225,7 @@ class Company(models.Model):
     bank_name               =      models.CharField(max_length=50, null=True, blank=True)
     ifsc_code               =      models.CharField(max_length=50, null=True, blank=True)
     branch                  =      models.CharField(max_length=50, null=True, blank=True) #Bank Branch
-    start_date              =      models.DateField(max_length=10,blank=True,null=True)
+    start_date              =      models.DateField(null=True, blank=True)
     end_date                =      models.DateField(max_length=10,blank=True,null=True)
     status                  =      models.CharField(choices=COMPANY_STATUS, default='Deactive', max_length=100,null=True, blank=True)
     document                =      models.FileField(upload_to='company_document_upload_path', null=True, blank=True)

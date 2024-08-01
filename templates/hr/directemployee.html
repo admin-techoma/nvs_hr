@@ -29,6 +29,9 @@
             <form method="POST" action="" class="">
                 {% csrf_token %}
                 <div class="row d-flex flex-wrap">
+                    <div class="col-md-12 mb-2 border-bottom">
+                        <h5>Create Direct Employee </h5>
+                    </div>
                     <div class="mb-3 col-12 col-md-4 col-xl-3 d-flex flex-wrap">
                         <div class="d-flex justify-content-center mb-1 w-100">
                             <figure class="employeeprofilewrapper  justify-content-center align-items-center">
@@ -55,7 +58,6 @@
                             <input type="text" class="form-control form-control-sm" id="createemployeefirstname"
                                 name="first_name">
                         </div>
-    
                         <div class="mb-3 col-12 col-md-6 col-xl-4 px-2">
                             <label for="createemployeeMiddlename" class="form-label mb-0 mb-0">Employee Middle Name</label>
                             <input type="text" class="form-control form-control-sm" id="createemployeeMiddlename"
@@ -141,18 +143,13 @@
                             <input autocomplete="off" type="tel"  class="form-control form-control-sm" value="{{candidate.phone_number}}" name="contact_no" id="createemployeecontactno" autocomplete="off" pattern="[0-9]{10}" maxlength="10" minlength="10" required>
                             <span id="contact_no-error" class="text-danger"></span> 
                         </div>
-                     
                         <div class="mb-3 col-12 col-md-4 col-xl-3 px-2 ">
                             <label for="createemployeecontactno" class="form-label mb-0 mb-0">Alternative Contact No :</label>
                             <input autocomplete="off" type="tel"  class="form-control form-control-sm" value="" name="other_contact_no" id="createemployeeothercontactno" autocomplete="off" pattern="[0-9]{10}" maxlength="10" minlength="10" required>
-                          
-                        </div>
-                         
-                                         
+                        </div>                
                     </div>
                     </div>
                     <div class="row d-flex flex-wrap">
-
                     <div class="mb-3 col-12 col-md-4 col-xl-3" hidden>
                         <label for="id" class="form-label mb-0 mb-0">Employee Code</label>
                         <input autocomplete="off" type="text" id="id" class="form-control form-control-sm" name="emp_id"
@@ -160,8 +157,6 @@
                     </div>
                     <input type="hidden" class="form-control" id="createemployeefullname" name="full_name"
                         value="{{ candidate.name}}">
-                   
-
                     {% for message in messages %}
                     <h6 class="text-danger"> {{message}} </h6>
                     {% endfor %}
@@ -172,7 +167,7 @@
                             name="office_email" value="">
                     </div> {% endcomment %}
                    
-                    <div class="col-md-12">
+                    <div class="col-md-12 mb-2 border-bottom">
                         <h5>Permenant Address</h5>
                     </div>
                     <div class="mb-3 col-12 col-md-4 col-xl-3">
@@ -197,11 +192,10 @@
                     </div>
                     <div class="mb-3 col-12 col-md-4 col-xl-3">
                         <label for="createemployeepincode" class="form-label mb-0 mb-0">Employee Pincode</label>
-
                         <input autocomplete="off" type="tel" step="0" class="form-control form-control-sm" id="ppincode"
                         pattern="[0-9]{6}" title="Please enter exactly 6 digits." minlength="6" maxlength="6" name="pin_code" required>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12 mb-2 border-bottom">
                         <h5>correspondence Address</h5>
                         <div class="mb-3 col-12 col-md-4 col-xl-3">
                             <div class="form-check">
@@ -238,9 +232,8 @@
                         <label for="createemployeepincode" class="form-label mb-0 mb-0">Employee Pincode</label>
                         <input autocomplete="off" type="tel" step="0" class="form-control form-control-sm" id="cpincode"
                             pattern="[0-9]{6}" minlength="6" maxlength="6" name="c_pin_code" required>
-
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12 mb-2 border-bottom">
                         <h5>Employee details</h5>
                     </div>
                     <div class="mb-3 col-12 col-md-4 col-xl-3">
@@ -265,7 +258,6 @@
                             {% endfor %}
                         </select>
                     </div>
-
                     <div class="mb-3 col-12 col-md-4 col-xl-3">
                         <label for="createemployeeUANNumber" class="form-label mb-0 mb-0">UAN Number</label>
                         <input type="number" class="form-control form-control-sm" id="createemployeeUANNumber" name="uanno" value="0" >
@@ -289,7 +281,7 @@
                   
                     <div class="mb-3 col-12 col-md-4 col-xl-3">
                         <label class="form-label" for="odpremium">Bank Account Number</label>
-                        <input type="tel" class="form-control form-control-sm" id="account_no" name="account_no" pattern="[0-9]{10,20}" maxlength="20"  title="Please enter a 20-digit decimal number." required />
+                        <input type="tel" class="form-control form-control-sm" id="account_no" name="account_no" maxlength="21" minlength="8"  title="Please enter a 21-digit decimal number." required />
                                       
                     </div>
                     <div class="mb-3 col-12 col-md-4 col-xl-3">
@@ -463,12 +455,16 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="mb-3 col-12 col-md-3">
+                    <div class="mb-3 col-12 border-bottom">
                         <div class="">
                             <h5> User Roles and Permissions</h5>
                         </div>
-
+                    </div>
+                        <div class="col-12  mb-2 ">
+                            <h6>Employee details</h6>
+                        </div>
                         <div class="d-flex flex-wrap">
+                            <div class="col-12 col-md-4">
                             <div class="form-check me-3">
                                 <input class="form-check-input" type="checkbox" id="interview_take"
                                     name="interview_take" value="true" {% if interview_take %}checked{% endif %}>
@@ -476,6 +472,8 @@
                                     Can Take Interview ?
                                 </label>
                             </div>
+                            </div>
+                            <div class="col-12 col-md-4">
                             <div class="form-check me-3">
                                 <input class="form-check-input" type="checkbox" id="technical_round"
                                     name="technical_round" value="true" {% if technical_round %}checked{% endif %}>
@@ -483,6 +481,8 @@
                                     Can Take Technical round ?
                                 </label>
                             </div>
+                            </div>
+                        <div class="col-12 col-md-4">
                             <div class="form-check me-3">
                                 <input class="form-check-input" type="checkbox" id="telephonic_round"
                                     name="telephonic_round" value="true" {% if telephonic_round %}checked{% endif %}>
@@ -490,6 +490,7 @@
                                     Can Take Telephonic round ?
                                 </label>
                             </div>
+                        </div><div class="col-12 col-md-4">
                             <div class="form-check me-3">
                                 <input class="form-check-input" type="checkbox" id="round_two" name="round_two"
                                     value="true" {% if round_two %}checked{% endif %}>
@@ -497,6 +498,7 @@
                                     Can Take Round two ?
                                 </label>
                             </div>
+                        </div><div class="col-12 col-md-4">
                             <div class="form-check me-3">
                                 <input class="form-check-input" type="checkbox" id="round_three" name="round_three"
                                     value="true" {% if round_three %}checked{% endif %}>
@@ -504,6 +506,7 @@
                                     Can Take Round three ?
                                 </label>
                             </div>
+                        </div><div class="col-12 col-md-4">
                             <div class="form-check me-3">
                                 <input class="form-check-input" type="checkbox" id="final_round" name="final_round"
                                     value="true" {% if final_round %}checked{% endif %}>
@@ -511,6 +514,7 @@
                                     Can Take Final round ?
                                 </label>
                             </div>
+                        </div><div class="col-12 col-md-4">
                             <div class="form-check me-3">
                                 <input class="form-check-input" type="checkbox" id="hr_round" name="hr_round"
                                     value="true" {% if hr_round %}checked{% endif %}>
@@ -518,6 +522,7 @@
                                     Can Take Hr round ?
                                 </label>
                             </div>
+                        </div><div class="col-12 col-md-4">
                             <div class="form-check me-3">
                                 <input class="form-check-input" type="checkbox" id="reporting_take"
                                     name="reporting_take" value="true" {% if reporting_take %}checked{% endif %}>
@@ -525,6 +530,7 @@
                                     Is Reporting Head ?
                                 </label>
                             </div>
+                        </div><div class="col-12 col-md-4">
                             <div class="form-check me-3">
                                 <input class="form-check-input" type="checkbox" id="esic_apply" name="esic_apply"
                                     value="true" {% if esic_apply %}checked{% endif %}>
@@ -532,11 +538,12 @@
                                     Is ESIC Apply ?
                                 </label>
                             </div>
+                            </div>
                         </div>
                     </div>
 
                 </div>
-                <div class="mb-3 col-12 col-md-3">
+                <div class="mb-3 col-12 col-md-3 mt-3">
                     <button type="submit" class="btn btn-sm custom-button">Create</button>
                 </div>
             </form>
@@ -642,7 +649,6 @@
                 $('#cstate').val($('#pstate').val());
                 $('#ccountry').val($('#pcountry').val());
                 $('#cpincode').val($('#ppincode').val());
-
             } else {
                 // Clear values in correspondence address
                 $('#caddress').val('');

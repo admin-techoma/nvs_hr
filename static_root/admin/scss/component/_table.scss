@@ -67,9 +67,9 @@ table {
 }
 
 .salpayrolltable-wrapper {
-  max-height: 18rem;
+  max-height: 18em;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 0.625em;
   .table {
     tbody {
       tr {
@@ -96,11 +96,11 @@ table {
   }
 
   .admintable {
-    max-height: 22.75rem;
+    max-height: 22.75em;
     height: 100%;
     overflow: hidden;
     .table {
-      padding: 0.125rem;
+      padding: 0.125em;
       tr {
         th {
           font-size: $font-size-xs;
@@ -111,7 +111,7 @@ table {
       }
       tr {
         td {
-          padding: 0.313rem;
+          padding: 0.313em;
           font-size: $font-size-xs;
           font-weight: v.$font-weight-regular;
           background: $bgcolortable;
@@ -127,7 +127,7 @@ table {
   table {
     thead {
       th {
-        border-bottom: 1px solid !important;
+        border-bottom: 0.625em solid !important;
         border-bottom-color: var(--color-border-theme) !important;
         background-color: var(--color-tableheaderbg) !important;
         color: var(--color-fg) !important;
@@ -147,7 +147,7 @@ table {
       }
 
       td {
-        border-bottom: 1px solid !important;
+        border-bottom: 0.625em solid !important;
         border-bottom-color: var(--color-tableheaderbg) !important;
         background-color: var(--color-bg-light) !important;
         color: var(--color-fg) !important;
@@ -158,41 +158,41 @@ table {
   .ip {
     display: flex;
     align-items: center;
-    margin-top: 0.625rem;
+    margin-top: 0.625em;
   }
 
   .emptable {
-    max-height: 18.75rem;
+    max-height: 18.75em;
     height: 100%;
   }
 
   #leaveApprovalTable td:nth-child(9) {
-    width: 15.625rem;
-    max-width: 15.625rem;
+    width: 15.625em;
+    max-width: 15.625em;
   }
 
   #leaveReports {
     th:nth-child(10) {
-      width: 15.625rem !important;
-      max-width: 15.625rem !important;
+      width: 15.625em !important;
+      max-width: 15.625em !important;
       text-wrap: wrap !important;
     }
 
     td:nth-child(10) {
-      width: 15.625rem !important;
-      max-width: 15.625rem !important;
+      width: 15.625em !important;
+      max-width: 15.625em !important;
       text-wrap: wrap !important;
     }
   }
 
   .onboardingtdata {
     .table-responsive {
-      max-height: 18.75rem !important;
+      max-height: 18.75em !important;
       height: 100%;
     }
 
     table {
-      max-height: 18.75rem !important;
+      max-height: 18.75em !important;
       height: 100%;
       overflow: auto;
     }
@@ -200,12 +200,12 @@ table {
 
   .onprobation {
     .table-responsive {
-      max-height: 18.75rem !important;
+      max-height: 18.75em !important;
       height: 100%;
     }
 
     table {
-      max-height: 18.75rem !important;
+      max-height: 18.75em !important;
       height: 100%;
       overflow: auto;
     }
@@ -213,12 +213,12 @@ table {
 
   .onConfirmed {
     .table-responsive {
-      max-height: 18.75rem !important;
+      max-height: 18.75em !important;
       height: 100%;
     }
 
     table {
-      max-height: 18.75rem !important;
+      max-height: 18.75em !important;
       height: 100%;
       overflow: auto;
     }
@@ -226,12 +226,12 @@ table {
 
   .resigned {
     .table-responsive {
-      max-height: 18.75rem !important;
+      max-height: 18.75em !important;
       height: 100%;
     }
 
     table {
-      max-height: 18.75rem !important;
+      max-height: 18.75em !important;
       height: 100%;
       overflow: auto;
     }
@@ -247,7 +247,7 @@ table {
   }
 
   table.dataTable tbody tr.selected>* {
-    box-shadow: inset 0 0 0 624.938rem rgba(20, 36, 90, 1) !important;
+    box-shadow: inset 0 0 0 624.938em rgba(20, 36, 90, 1) !important;
     color: $color-white !important;
 
     a.view-doc {
@@ -260,7 +260,7 @@ table {
   }
 
   .dataTables_filter {
-    margin-bottom: 0.625rem;
+    margin-bottom: 0.625em;
 
     label {
       display: flex;
@@ -280,7 +280,7 @@ table {
   #weekTable {
     thead {
       th {
-        border-bottom: 1px solid !important;
+        border-bottom: 0.063em solid !important;
         border-bottom-color: var(--color-border-theme) !important;
         background-color: var(--color-tableheaderbg) !important;
         color: var(--color-fg) !important;
@@ -301,7 +301,7 @@ table {
       }
 
       td {
-        border-bottom: 1px solid !important;
+        border-bottom: 0.063em solid !important;
         border-bottom-color: var(--color-tableheaderbg) !important;
         background-color: var(--color-bg-light) !important;
         color: var(--color-fg) !important;
@@ -336,4 +336,25 @@ table {
 
 .ip {
   justify-content: space-between;
+}
+
+
+
+@media (max-width:1440px) {
+
+  .dataTable
+  {
+    thead {
+      th {
+        font-weight: $font-weight-medium;
+       font-size: $font-size-normal !important;
+      }
+    }
+    tbody {
+          td {
+        font-size: $font-size-normal !important;
+      }
+    }
+  }
+  
 }

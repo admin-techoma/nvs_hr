@@ -49,7 +49,7 @@ $(document).ready(function () {
     }
 
     $('#clockedOut').on('click', function () {
-
+        if( /iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent) ) {
         $('#ClockoutModal').modal('show');
         $('#ClockoutModal .modal-body span').text(getCurrentTime());
 
@@ -74,7 +74,11 @@ $(document).ready(function () {
                     console.error(error);
                 }
             });
-        });
+        });}else{
+            window.alert("Use Mobile Device only for punch in");
+        }
+        
+
     });
     // $('#clockedIn').on('click', function () {
 
@@ -137,8 +141,10 @@ $(document).ready(function () {
     //         });
     //     });
     // });
+    
     $('#clockedIn').on('click', function () {
-        $('#ClockinModal').modal('show');
+        if( /iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent) ) {
+            $('#ClockinModal').modal('show');
         $('#ClockinModal .modal-body span').text(getCurrentTime());
     
         $('.modal-footer .btn-success').one('click', function () {
@@ -165,8 +171,12 @@ $(document).ready(function () {
                 }
             });
         });
+        }
+        else{
+            window.alert("Use Mobile Device only for punch in");
+        }
+        
     });
-    
 
     setInterval(updateTimer, 1000);
 

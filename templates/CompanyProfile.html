@@ -144,7 +144,7 @@
                                     placeholder="" disabled value="{{company_data.emp_id_series|default:''}}"
                                     name="emp_id_series">
                             </div>
-                            <div class="col-12 col-md-4 d-flex mb-3 align-items-center">
+                            <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                 <label for="CompanyStatus"
                                     class="form-label text-nowrap me-2 mb-md-0 col-12 col-md-5">Status:</label>
                                 <select disabled class="form-control form-control-sm" name="status" id="CompanyStatus">
@@ -158,11 +158,11 @@
                             </div>
                         </div>
                         <div class="row w-100">
-                            <div class="col-12 col-md-4 d-flex mb-3 align-items-start">
+                            <div class="col-12 col-md-4 d-flex mb-3 align-items-start flex-wrap flex-md-nowrap">
                                 <label for="CompanyLogo"
                                     class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Company
                                     Logo:</label>
-                                <input required type="file" disabled name="logo" class="form-control form-control-sm "
+                                <input  type="file" disabled name="logo" class="form-control form-control-sm "
                                     id="CompanyLogo" placeholder="">
                             </div>
                         </div>
@@ -190,7 +190,7 @@
                                     class="form-label text-nowrap me-2 mb-md-0 col-12 col-md-5">Phone No :</label>
                                 <input type="tel" disabled class="form-control form-control-sm " name="phone_no"
                                     id="CompanyPhoneno" placeholder="" autocomplete="off" pattern="[0-9]{10}"
-                                    maxlength="10" minlength="10" value="{{company_data.phone_no|default:''}}">
+                                    maxlength="10" minlength="10" value="{{company_data.phone_no|default:''}}" required>
                             </div>
                             <!-- email id -->
                             <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
@@ -198,7 +198,7 @@
                                     class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Email ID
                                     :</label>
                                 <input type="email" class="form-control form-control-sm" id="CompanyEmail"
-                                    placeholder="" disabled value="{{company_data.email_id|default:''}}" name="email_id">
+                                    placeholder="" disabled value="{{company_data.email_id|default:''}}" name="email_id" required>
                             </div>
                             <div class="col-12 mb-3  border-bottom">
                                 <h5>Registered Office</h5>
@@ -239,7 +239,7 @@
                                 <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                     <label for="CPincode"
                                         class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Pincode:</label>
-                                    <input type="tel" class="form-control form-control-sm" id="CPincode" step="0"
+                                    <input type="tel" class="form-control form-control-sm" id="CPincode"
                                         disabled value="{{company_data.reg_pin_code|default:''}}"  pattern="[0-9]{6}" title="Please enter exactly 6 digits."
                                         name="reg_pin_code">
                                 </div>
@@ -283,7 +283,7 @@
                                 <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                     <label for="CCPincode"
                                         class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Pincode:</label>
-                                    <input type="tel" class="form-control form-control-sm" id="CCPincode" step="0" pattern="[0-9]{6}" title="Please enter exactly 6 digits."
+                                    <input type="tel" class="form-control form-control-sm" id="CCPincode"  pattern="[0-9]{6}" title="Please enter exactly 6 digits."
                                         disabled value="{{company_data.corp_pin_code|default:''}}"
                                         name="corp_pin_code">
                                 </div>
@@ -301,8 +301,8 @@
                                     class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Account No:
                                 </label>
                                 <input type="tel" class="form-control form-control-sm " id="CompanyAccountNo"
-                                  disabled value="{{company_data.account_no|default:''}}"  pattern="[0-9]{10,20}" maxlength="20"  title="Please enter a 20-digit decimal number."
-                                    name="account_no">
+                                  disabled value="{{company_data.account_no|default:''}}"   maxlength="21" minlength="8"  title="Please enter a 21-digit decimal number."
+                                    name="account_no" required>
                             </div>
                             <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                 <label for="CompanyBankName"
@@ -355,7 +355,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body pt-0">
                     <div class="row">  
                         <div class="table-responsive overflow-auto">
                             <table class="table-responsive overflow-auto DataTable w-100" id="allbranchMasterTablelist">
@@ -363,7 +363,7 @@
                                     <tr>
                                         <th scope="col" class="text-nowrap fw-medium">Company Master</th>
                                         <th scope="col" class="text-nowrap fw-medium">Name</th>
-                                        <th scope="col" class="text-nowrap fw-medium">Address</th>
+                                        <th scope="col" class="text-nowrap fw-medium" style="max-width: 400px; width: 100%; white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">Address</th>
                                         <th scope="col" class="text-nowrap fw-medium">city</th>
                                         <th scope="col" class="text-nowrap fw-medium">state</th>
                                         <th scope="col" class="text-nowrap fw-medium">country</th>
@@ -378,9 +378,9 @@
                                 <tbody>
                                     {% for branch_list in company_branch_all %}
                                     <tr>
-                                        <td>{{ branch_list.company }}</td>
+                                        <td  style=" white-space: nowrap; word-wrap: break-word; overflow-wrap: break-word;">{{ branch_list.company }}</td>
                                         <td>{{ branch_list.name}}</td>
-                                        <td style="max-width: 400px; width: 100%;"><div>{{ branch_list.address }}</div></td>
+                                        <td style=" white-space: nowrap; word-wrap: break-word; overflow-wrap: break-word;"><div>{{ branch_list.address }}</div></td>
                                         <td>{{ branch_list.city }}</td>
                                         <td>{{ branch_list.state }}</td>
                                         <td>{{ branch_list.country }}</td>
@@ -400,7 +400,7 @@
                                                 <button class="btn btn-sm btn-danger me-2 delete-branch_list"
                                                     data-branch_list-id="{{ branch_list.id }}">
                                                     <i class="bi bi-trash"></i>
-                                                </button>
+                                                </button> 
                                             </div>
                                         </td>
                                     </tr>
@@ -417,12 +417,10 @@
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="addbranch_listForm" action="{% url 'hr:add_branch_list_details' %}" method="post"
-                        enctype="multipart/form-data">
+                    <form id="addbranch_listForm" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5 primary-color" id="Addbranch_listModalLabel">Add Branch
-                            </h1>
+                            <h1 class="modal-title fs-5 primary-color" id="Addbranch_listModalLabel">Add Branch</h1>
                             <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
@@ -437,74 +435,69 @@
                                             <option value="{{ company.id }}">{{ company.name }}</option>
                                             {% endfor %}
                                         </select>
-
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
-                                        <label for="Addbranchname" class="form-label">Branch
-                                            Name</label>
+                                        <label for="Addbranchname" class="form-label">Branch Name</label>
                                         <input type="text" class="form-control form-control-sm" id="Addbranchname"
                                             name="name" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
-                                        <label for="Addbranchaddress" class="form-label">Address
-                                        </label>
+                                        <label for="Addbranchaddress" class="form-label">Address</label>
                                         <input type="text" class="form-control form-control-sm" id="Addbranchaddress"
-                                            name="address" required>
+                                            name="address" >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addbranchcity" class="form-label">City</label>
                                         <input type="text" class="form-control form-control-sm" id="Addbranchcity"
-                                            name="city" required>
+                                            name="city" >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
-                                        <label for="Addbranchstate" class="form-label">State
-                                        </label>
+                                        <label for="Addbranchstate" class="form-label">State</label>
                                         <input type="text" class="form-control form-control-sm" id="Addbranchstate"
-                                            name="state" required>
+                                            name="state" >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="AAddbranchcountry" class="form-label">Country</label>
                                         <input type="text" class="form-control form-control-sm" id="AAddbranchcountry"
-                                            name="country" required>
+                                            name="country" >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addbranchpin_code" class="form-label">Pin Code</label>
                                         <input type="tel" step="0" class="form-control form-control-sm" id="Addbranchpin_code" pattern="[0-9]{6}" title="Please enter exactly 6 digits."
-                                            name="pin_code" required>
+                                            name="pin_code" >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addbranchemail" class="form-label">Email</label>
                                         <input type="email" class="form-control form-control-sm" id="Addbranchemail"
-                                            name="email" required>
+                                            name="email" >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addbranchcontact_no" class="form-label">Contact No</label>
                                         <input type="tel" class="form-control form-control-sm" id="Addbranchcontact_no"
-                                            name="contact_no" pattern="[0-9]{10}" maxlength="10" minlength="10"
-                                            required>
+                                            name="contact_no" pattern="[0-9]{10}" maxlength="10" minlength="10">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addbranchstart_date" class="form-label">Start Date</label>
                                         <input type="date" class="form-control form-control-sm" id="Addbranchstart_date"
-                                            name="start_date" required>
+                                            name="start_date" >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
@@ -615,11 +608,9 @@
                                         <select class="form-control form-control-sm " name="status"
                                             id="Editbranch_status">
                                             <option value="Active"
-                                                {% if company_data.status == 'Active' %}selected{% endif %}>Active
-                                            </option>
+                                                {% if company_data.status == 'Active' %}selected{% endif %}>Active</option>
                                             <option value="Deactive"
-                                                {% if company_data.status == 'Deactive' %}selected{% endif %}>
-                                                Deactive</option>
+                                                {% if company_data.status == 'Deactive' %}selected{% endif %}>Deactive</option>
                                         </select>
                                     </div>
                                 </div>
@@ -2355,7 +2346,7 @@
                     $('#nav-Overview input').prop('disabled', true);
                     $('#nav-Overview select').prop('disabled', true);
                     $('#saveCompanyInfoBtn').prop('disabled', true);
-                    location.reload(); // Reload the page
+                   
                 },
                 error: function (xhr, status, error) {
                     // Handle errors if any
@@ -2648,10 +2639,10 @@
                         '<div class="alert alert-success">Payroll list updated successfully!</div>'
                         );
                         $("#Editpayroll_listModal .modal-footer .save-payroll-list-changes-btn").hide();
-                        setTimeout(function(){
-                            $("#Editinterviewround_listModal").modal('hide');
-                            location.reload();
-                        }, 2000);
+                        
+                        $("#Editinterviewround_listModal").modal('hide');
+                        location.reload();
+                            
                     // {% comment %} window.location.href = '/hr/branch_list_master/'; {% endcomment %}
                 },
                 error: function (xhr, status, error) {
@@ -2727,7 +2718,7 @@
                 },
                 success: function (data) {
                     $("#AddBranchModal .modal-body").html(
-                        '<div class="alert aler t-success">Branch uploaded successfully!</div>'
+                        '<div class="alert aler t-success">Add New Branch successfully!</div>'
                         );
                 },
                 error: function (xhr, status, error) {
@@ -2776,6 +2767,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    
                     $("#Editbranch_listModal .modal-body").html(
                         '<div class="alert alert-success">Branch list updated successfully!</div>'
                         );

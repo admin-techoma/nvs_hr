@@ -76,15 +76,13 @@
                                 <td class="text-nowrap">{{ leave_application.leave_to_date }}</td>
                                 <td class="text-nowrap">{{ leave_application.leave_type }}</td>
                                 <td class="text-nowrap">{{ logged_in_employee }}</td>
-                                <td> <div class="">
-                                        <textarea class="form-control form-control-sm"
+                                <td> <div class=""><textarea class="form-control form-control-sm"
                                             id="remarks_{{ leave_application.id }}"
                                             rows="1">{{ leave_application.leave_reason }}</textarea>
                                     </div>
                                 </td>
                                 <td style="min-width: 200px; width: 200px;">
                                     <input type='hidden' id='leave_id' value='{{ leave_application.id }}' />
-                                   
                                     <select class="form-select status-select form-select-sm"
                                         aria-label="Default select example" id="status_{{ forloop.counter }}">
                                         <option selected>Select</option>
@@ -116,7 +114,6 @@
             <div class="text-center d-flex align-items-center">
                 <h6 class="mb-0 pageTitle"><strong>Regularlization Approval List</strong></h6>
             </div>
-            
         </div>
         <div class="card-body">
             <div class="tablewrapper bg-primarylight w-100 h-50">
@@ -147,9 +144,7 @@
                                     style="width: 0px;">Remarks</th>
                                 <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
                                     rowspan="1" colspan="1" aria-label=": activate to sort column ascending"
-                                    style="width: 0px;">Status</th>
-                          
-                                    
+                                    style="width: 0px;">Status</th>       
                             </tr>
                         </thead>
                         <tbody>

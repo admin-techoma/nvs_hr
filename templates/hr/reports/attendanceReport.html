@@ -50,19 +50,25 @@
                                     <table class="" id="allattendanceTable">
                                         <thead class="bg-none">
                                             <tr class="headings">
-                                                <th scope="col">Emp Id</th>
-                                                <th scope="col">Emp Name</th>
-                                                <th scope="col">date</th>
-                                                <th scope="col">clock in</th>
-                                                <th scope="col">clock out</th>
-                                                <th scope="col">full day</th>
-                                                <th scope="col">half day</th>
-                                                <th scope="col">absent</th>
-                                                <th scope="col">on leave</th>
+                                                <th scope="col" style="max-width: '200px'!important; width: '200px'!important;">Emp Id</th>
+                                                <th scope="col" style="max-width: '200px'!important; width: '200px'!important; text-align: center;" >Emp Name</th>
+                                                <th scope="col" style="max-width: '200px'!important; width: '200px'!important; text-align: center;">date</th>
+                                                <th scope="col" style="max-width: '200px'!important; width: '200px'!important; text-align: center;">clock in</th>
+                                                <th scope="col" style="max-width: '200px'!important; width: '200px'!important; text-align: center;">latitude</th>
+                                                <th scope="col" style="max-width: '200px'!important; width: '200px'!important; text-align: center;">longitude</th>
+                                                <th scope="col" style="max-width: '200px'!important; width: '200px'!important; text-align: center;">clock out</th>
+                                                <th scope="col" style="max-width: '200px'!important; width: '200px'!important; text-align: center;">worked_hours</th>
+                                                <th scope="col" style="max-width: '200px'!important; width: '200px'!important; text-align: center;">full day</th>
+                                                <th scope="col" style="max-width: '200px'!important; width: '200px'!important; text-align: center;">half day</th>
+                                                <th scope="col" style="max-width: '200px'!important; width: '200px'!important; text-align: center;">absent</th>
+                                                <th scope="col" style="max-width: '200px'!important; width: '200px'!important; text-align: center;">on leave</th>
                                             </tr>
                                         </thead>                                   
                                             <tfoot>
                                                 <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -149,8 +155,14 @@
                     data: "date"
                 }, {
                     data: "clock_in"
-                }, {
+                },{
+                    data:"latitude", defaultContent: "0"
+                },{
+                    data:"longitude", defaultContent: "0"
+                },{
                     data: "clock_out"
+                },{
+                    data:"worked_hours", defaultContent: "0:00"
                 }, {
                     data: "is_full_day",
                     render: function (data, type, row) {

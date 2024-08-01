@@ -395,6 +395,77 @@
 <input type="hidden" id="employee_id_hidden" value="{{employee.emp_id}}" />
 {%endblock maincontent%}
 {% block extrascript %}
+<script>
+    const months = [
+        "January", "February", "March", "April", "May", "June", "July",
+        "August", "September", "October", "November", "December"
+    ];
 
+
+    const applyLeave = () => {
+        const leaveFrom = $('#leavedateFrom').val();
+        const leaveTo = $('#leavedateTo').val();
+        const leaveType = $('#selectLeaveType').val();
+        const leaveReason = $('#leaveDescription').val();
+        const employee = $('#hiddenSession').val();
+        const csrftoken = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
+
+        const translateTime = (value) => {
+            if (value === '1') {
+                return '11:00';
+            } else if (value === '2') {
+                return '18:45';
+            } else {
+                return '';
+            }
+        };
+
+        const formatDate = (date) => {
+            const formattedDate = new Date(date);
+            const day = formattedDate.getDate().toString().padStart(2, '0');
+            const month = (formattedDate.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because January is 0
+            const year = formattedDate.getFullYear();
+            return `${day}/${month}/${year}`;
+        };
+
+        const leaveFromTime = translateTime($('#selectTimeFrom').val());
+        const leaveToTime = translateTime($('#selectTimeTo').val());
+        const formatedleaveFrom = formatDate(leaveFrom); 
+        const formatedleaveTo = formatDate(leaveTo);
+
+        if (new Date(leaveTo) < new Date(leaveFrom) || new Date(leaveFrom) > new Date(leaveTo)) {
+            $('#Leavemodal').modal('hide');
+            $("#messageModal .modal-body").text(`You can't apply leave from date: ${formatedleaveFrom} to date: ${formatedleaveTo}.`);
+            $("#messageModal").modal("show");
+            return; // Stop further execution
+        }
+        // Display status message element
+        const leaveStatus = $('#leaveStatus');
+
+        $.ajax({
+            url: `/employee/apply_leave/${employee}/`,
+            method: 'POST',
+            headers: { 'X-CSRFToken': csrftoken },
+            data: {
+                leave_from: leaveFrom,
+                select_Time_From: leaveFromTime,
+                leave_to: leaveTo,
+                select_Time_To: leaveToTime,
+                leave_type: leaveType,
+                leave_reason: leaveReason,
+            },
+            success: function(response) {
+                alert('Leave Apply successfully.');
+                    // Optionally, you can redirect or perform other actions after submission
+                    // window.location.href = '/success-page'; // Redirect to a success page
+                },
+                error: function(xhr, status, error) {
+                    alert('Error: ' + error);
+                }
+        });
+    };
+
+
+</script>
 
 {% endblock extrascript %}

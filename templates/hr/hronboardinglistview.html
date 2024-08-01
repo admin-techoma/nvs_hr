@@ -50,7 +50,6 @@
                 <table class="table-responsive overflow-auto DataTable" id="allOnbordingTable">
                     <thead class="bg-none">
                         <tr class="bg-none">
-                            
                             <th>Candidate Name</th>
                             <th>Phone Number</th>
                             <th>Email</th>
@@ -58,15 +57,12 @@
                             <th>Designation</th>
                             <th>Select Date</th>
                             <th>Status</th>
-
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody class="bg-none">
                         {% for onboardCandidates in onboardinglist %}
                         <tr>
-                            
-
                             <td>{{ onboardCandidates.name }}</td>
                             <td>{{ onboardCandidates.phone_number }}</td>
                             <td class="text-lowercase">{{ onboardCandidates.email }}</td>
@@ -78,41 +74,24 @@
                                 {% if onboardCandidates.candidate_id == candidate_id %}
                                 {% if not status_dict.onboarding_exists %}
                                 <span class="badge text-bg-danger">Upload Documents</span>
-                                {% elif status_dict.employee_exists %}
-                                <a href="/hr/onboarding-process/{{onboardCandidates.candidate_id}}"
-                                    class="badge text-bg-warning edit-resume">
+                                {% else %}
+                                <a href="/hr/onboarding-process/{{onboardCandidates.candidate_id}}" class="badge text-bg-warning edit-resume">
                                     Pending Documents
                                 </a>
-                                <!-- Display the list of available documents here -->
                                 <ul>
                                     {% if onboardCandidates.c_psimg %}
-                                    <li><a href="{{ onboardCandidates.c_psimg.url }}" target="_blank">PS Image
-                                            Document</a></li>
+                                    <li><a href="{{ onboardCandidates.c_psimg.url }}" target="_blank">PS Image Document</a></li>
                                     {% endif %}
                                     {% if onboardCandidates.c_adhar %}
-                                    <li><a href="{{ onboardCandidates.c_adhar.url }}" target="_blank">Adhar Document</a>
-                                    </li>
+                                    <li><a href="{{ onboardCandidates.c_adhar.url }}" target="_blank">Adhar Document</a></li>
                                     {% endif %}
                                     {% if onboardCandidates.c_pan %}
-                                    <li><a href="{{ onboardCandidates.c_pan.url }}" target="_blank">Pan Document</a>
-                                    </li>
+                                    <li><a href="{{ onboardCandidates.c_pan.url }}" target="_blank">Pan Document</a></li>
                                     {% endif %}
                                     {% if onboardCandidates.c_bankDetails %}
-                                    <li><a href="{{ onboardCandidates.c_bankDetails.url }}" target="_blank">Bank Details
-                                            Document</a></li>
+                                    <li><a href="{{ onboardCandidates.c_bankDetails.url }}" target="_blank">Bank Details Document</a></li>
                                     {% endif %}
-                                    <!-- Add more document links as needed -->
                                 </ul>
-                                {% else %}
-                                {% if not onboardCandidates.c_psimg and onboardCandidates.c_adhar and onboardCandidates.c_pan and onboardCandidates.c_bankDetails %}
-                                not available
-                                {% else %}
-                                <a href="{% url 'hr:add_employee' onboardCandidates.candidate_id %}"
-                                    class="btn btn-success edit-status text-nowrap  text-end btn-sm"
-                                    data-candidate-id="{{onboardCandidates.candidate_id}}" data-status="{{status}}">
-                                    Create Employee
-                                </a>
-                                {% endif %}
                                 {% endif %}
                                 {% endif %}
                                 {% endfor %}
@@ -122,18 +101,11 @@
                                     {% for candidate_id, status_dict in onboarding_status.items %}
                                     {% if onboardCandidates.candidate_id == candidate_id %}
                                     {% if not status_dict.onboarding_exists %}
-                                    <a href="/hr/onboarding-process/{{onboardCandidates.candidate_id}}"
-                                        class="btn btn-danger btn-sm me-2">
+                                    <a href="/hr/onboarding-process/{{onboardCandidates.candidate_id}}" class="btn btn-danger btn-sm me-2">
                                         <i class="bi bi-upload"></i>
                                     </a>
-                                    {% elif status_dict.employee_exists %}
-                                    <a href="/hr/onboarding-process/{{onboardCandidates.candidate_id}}"
-                                        class="badge text-bg-warning edit-resume me-2">
-                                        already employee</a>
-                                    <!-- Display the list of available documents here -->
                                     {% else %}
-                                    <a href="/hr/view_documents/{{onboardCandidates.candidate_id}}"
-                                        class="btn btn-sm btn-success me-2">
+                                    <a href="/hr/view_documents/{{onboardCandidates.candidate_id}}" class="btn btn-sm btn-success me-2">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                     {% endif %}

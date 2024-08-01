@@ -101,7 +101,7 @@ def get_session(request):
             context['clockedin'] = True if attendance.clock_in and not attendance.clock_out else False
         else:
             context['clockedin'] = False
-    print(context)
+   
     return context
 
 
@@ -318,11 +318,7 @@ def update_interview_remarks_view(request):
     if request.method == 'POST':
         candidate_id = request.POST.get('candidate_id')
         remarks = request.POST.get('remarks')
-        
-        # Debugging statements
-        print(f'candidate ID: {candidate_id}')
-        print(f'Remarks: {remarks}')
-        
+     
         # Add logic to update the database
         return JsonResponse({'success': True})  # Return a JSON response indicating success
     else:
@@ -1372,8 +1368,7 @@ def add_employee(request, pk):
         gender_id = request.POST.get("gender")
         selected_gender = Gender.objects.get(pk=gender_id)
 
-        print("********", pfno)
-
+        
         # Create employee instance
         employee_instance = Employee.objects.create(
             candidate_id=candidate, emp_id=emp_id, name=name,
@@ -2166,55 +2161,6 @@ def direct_employee(request, pk=None):
                 emergency_contactnumber=emergency_contactnumber,emergency_relationas=emergency_relationas,
             )
 
-            print('emp_id',emp_id),
-            print('name',name),
-            print('email',email),
-            print('office_email',office_email),
-            print('first_name',first_name),
-            print('middle_name',middle_name),
-            print('last_name',last_name),
-            print('address',address),
-            print('state',state),
-            print('city',city),
-            print('country',country),
-            print('pin_code',pin_code),
-            print('c_address',c_address),
-            print('c_state',c_state),
-            print('c_city',c_city),
-            print('c_country',c_country),
-            print('c_pin_code',c_pin_code),
-            print('contact_no',contact_no),
-            print('dob',dob),
-            print('doj',doj),
-            print('uanno',uanno),
-            print('pfno',pfno),
-            print('esicno',esicno),
-            print('pf_joining_date',pf_joining_date),
-            print('pancard_no',pancard_no),
-            print('aadhaarcard_no',aadhaarcard_no),
-            print('account_no',account_no),
-            print('bank_name',bank_name),
-            print('ifsc_code',ifsc_code),
-            print('branch',branch),
-            print('interview_take',interview_take),
-            print('hr_round',hr_round),
-            print('technical_round',technical_round),
-            print('telephonic_round',telephonic_round),
-            print('round_two',round_two),
-            print('round_three',round_three),
-            print('final_round',final_round),
-            print('reporting_take',reporting_take),
-            print('esic_apply',esic_apply),
-            print('pf_apply',pf_apply),
-            print('emergency_contactname',emergency_contactname),
-            print('emergency_contactnumber',emergency_contactnumber),
-            print('emergency_relationas',emergency_relationas),
-            print('selectdepartment',selectdepartment),
-            print('company_branch',company_branch),
-            print('designation',designation),
-            print('reporting_to_id',reporting_to_id),
-            print('position',position),
-            print('gender',gender),
 
             # Save the incremented doc_id in Employee model
             
@@ -2274,8 +2220,8 @@ def get_department_details(request, department_id):
             'name': department_data.name,
         }
 
-        print ("+++++++id:",department_data.id )
-        print ("+++++++name:",department_data.name)
+    
+        
 
         return JsonResponse(data)
     except Department.DoesNotExist:
@@ -2419,8 +2365,7 @@ def get_position_details(request, position_id):
             'remarks': position_data.remarks,
         }
 
-        print ("+++++++id:",position_data.id )
-        print ("+++++++name:",position_data.name)
+       
 
         return JsonResponse(data)
     except Department.DoesNotExist:
@@ -2608,10 +2553,8 @@ def get_holidaymaster_details(request, holidaymaster_id):
             'remarks': holidaymaster_data.remarks,
         }
 
-        print ("+++++++id:",holidaymaster_data.id )
-        print ("+++++++name:",holidaymaster_data.name)
-        print ("+++++++year:",holidaymaster_data.year)
-        print ("+++++++remarks:",holidaymaster_data.remarks)
+        
+        
 
         return JsonResponse(data)
     except HolidayMaster.DoesNotExist:
@@ -2849,7 +2792,7 @@ from django.core.files.base import ContentFile
 def update_company_info(request, id):
     
     if request.method == 'POST':
-
+        
         phone_no = request.POST.get('phone_no')
         website = request.POST.get('website')
         domain = request.POST.get('domain')
@@ -2865,7 +2808,9 @@ def update_company_info(request, id):
         bank_name = request.POST.get('bank_name')
         ifsc_code = request.POST.get('ifsc_code')
         branch = request.POST.get('branch')
-        start_date = request.POST.get('start_date')
+        start_date_obj = request.POST.get('start_date')
+        start_date = datetime.strptime(start_date_obj, '%d-%m-%Y').strftime('%d-%m-%Y') if start_date_obj else None
+        
         status = request.POST.get('status')
         emp_id_series = request.POST.get('emp_id_series')
         reg_address = request.POST.get('reg_address')
@@ -2878,6 +2823,7 @@ def update_company_info(request, id):
         corp_state = request.POST.get('corp_state')
         corp_country = request.POST.get('corp_country')
         corp_pin_code = request.POST.get('corp_pin_code')
+        
 
         
         company = Company.objects.get(id=id)
@@ -2897,8 +2843,8 @@ def update_company_info(request, id):
         company.bank_name  =  bank_name
         company.ifsc_code  =  ifsc_code
         company.branch  =  branch
-        company.start_date  =  start_date
-        print("Start Date:", company.start_date ) 
+        company.start_date = start_date
+        print("Start Date:", company.start_date)
         company.status  =  status
         company.emp_id_series  =  emp_id_series
         company.reg_address  =  reg_address
@@ -2921,8 +2867,7 @@ def update_company_info(request, id):
             company.logo = request.FILES['logo']
         
         else:
-            pass
-
+            return redirect('hr:company_profile', pk=id)
            
         company.save()
 
@@ -2932,7 +2877,7 @@ def update_company_info(request, id):
     else:
         
         # Handle GET request or other cases
-       pass
+       return redirect('hr:company_profile', pk=id)
 
 
     

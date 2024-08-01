@@ -162,7 +162,11 @@ class Attendance(models.Model):
     employee        =   models.ForeignKey(Employee, on_delete=models.PROTECT)
     date            =   models.DateField(null=True, blank=True)
     clock_in        =   models.TimeField(null=True, blank=True)
+    latitude        =   models.CharField(max_length=50,null=True, blank=True)
+    longitude       =   models.CharField(max_length=50,null=True, blank=True)
     clock_out       =   models.TimeField(null=True, blank=True)
+    worked_hours    =   models.DurationField(blank=True, null=True)
+
     is_full_day     =   models.BooleanField(default=False)
     is_half_day     =   models.BooleanField(default=False)
     is_absent       =   models.BooleanField(default=False)

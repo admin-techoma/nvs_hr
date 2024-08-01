@@ -15,7 +15,7 @@
   
   .weekTable td, .weekTable th {
       font-size: v.$font-size-xs;
-      padding: .3rem;
+      padding: .3em;
       text-align: center;
       width: 12.5%;
   }
@@ -29,8 +29,8 @@
   }
   
   .weekTable div {
-      height: 0.938rem;
-      width: 0.938rem;
+      height: 0.938em;
+      width: 0.938em;
       display: block;
-      margin: 0.188rem auto;
+      margin: 0.188em auto;
   }

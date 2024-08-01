@@ -4,8 +4,8 @@
 .top-header {
   display: flex;
   justify-content: space-between;
-  max-height: 4.063rem;
-  height: 4.063rem;
+  max-height: 4.063em;
+  height: 4.063em;
 
   .headerprofilewrapper {
     display: flex;
@@ -13,7 +13,7 @@
     align-items: center;
 
     .custom-notification {
-      padding: 0.938rem 0.625rem;
+      padding: 0.938em 0.625em;
 
       &:hover {
         cursor: pointer;
@@ -24,7 +24,7 @@
       border: none;
       border-color: transparent;
       i {
-        font-size: 1.875rem;
+        font-size: 1.875em;
       }
       &:after {
         opacity: 0 !important;
@@ -59,38 +59,31 @@
     }
 
     .notificationdropdown {
-      max-width: 19.375rem;
-      width: 19.375rem;
-
+      max-width: 19.375em;
+      width: 19.375em;
       .dropdown-item {
         &:hover {
           background: $primary-darken;
           color: $primarycolor;
         }
-
         .dropdown-content-wrapper {
-          padding: 0.313rem;
-
+          padding: 0.313em;
           .drop-item {
             display: flex;
           }
-
           .img-wrapper {
             border-radius: 50%;
-            margin-right: 0.625rem;
-
+            margin-right: 0.625em;
             .notification-img {
               border-radius: 50%;
-              width: 3.125rem;
-              height: 3.125rem;
-              border: 0.063rem solid;
+              width: 3.125em;
+              height: 3.125em;
+              border: 0.063em solid;
             }
           }
-
           .notification-title {
-            margin-bottom: 0.313rem;
+            margin-bottom: 0.313em;
           }
-
           .notification-text {
             margin-bottom: 0;
             text-wrap: wrap;
@@ -101,11 +94,10 @@
 
     .profile-dropdown {
       .dropdown-menu {
-        max-width: 12.5rem;
-        width: 12.5rem;
+        max-width: 12.5em;
+        width: 12.5em;
         background-color: var(--color-bg-light);
-        top: 11px !important;
-
+        top: 0.688em !important;
         li {
           .dropdown-item {
             font-weight: 500;
@@ -123,29 +115,27 @@
 
   .logo-wrapper {
     display: none;
-    margin-right: 1rem;
-
-    @media (max-width: 64rem) {
+    margin-right: 1em;
+    @media (max-width: 64em) {
       display: flex;
-
       .Clientlogowrapper {
         .Clientlogo {
-          max-width: 3rem;
-          max-height: 3rem;
+          max-width: 3em;
+          max-height: 3em;
         }
       }
     }
   }
 
   .profile-image {
-    width: 1.6rem;
-    height: 1.6rem;
+    width: 1.6em;
+    height: 1.6em;
     border-radius: 50%;
     object-fit: cover;
   }
 }
 
-@media (min-width: 64rem) {
+@media (min-width: 64em) {
   .sliderbtn {
     display: none;
   }
@@ -156,7 +146,7 @@
   }
 }
 
-@media (max-width: 64rem) {
+@media (max-width: 64em) {
   .navbar-toggler-icon {
     line-height: 1.5;
     display: block;

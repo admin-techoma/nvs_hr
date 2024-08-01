@@ -1,7 +1,12 @@
 @use "../base/color" as c;
 @use "../base/variable" as v;
 
+.form-label {
+  font-size: $font-size-normal;
+}
+
 .form-control {
+  font-size: $font-size-normal;
   &:focus {
     border-color: c.$primarycolor !important;
     outline: 0;

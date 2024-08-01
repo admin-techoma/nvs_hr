@@ -2789,10 +2789,9 @@ def company_profile(request, pk):
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 
+
 def update_company_info(request, id):
-    
     if request.method == 'POST':
-        
         phone_no = request.POST.get('phone_no')
         website = request.POST.get('website')
         domain = request.POST.get('domain')
@@ -2808,8 +2807,15 @@ def update_company_info(request, id):
         bank_name = request.POST.get('bank_name')
         ifsc_code = request.POST.get('ifsc_code')
         branch = request.POST.get('branch')
+        
         start_date_obj = request.POST.get('start_date')
-        start_date = datetime.strptime(start_date_obj, '%d-%m-%Y').strftime('%d-%m-%Y') if start_date_obj else None
+        try:
+            # Convert the start_date to YYYY-MM-DD format if it is not None
+            start_date = datetime.strptime(start_date_obj, '%d-%m-%Y').date() if start_date_obj else None
+        except ValueError:
+            # Handle the case where the date format is incorrect
+            messages.error(request, 'Invalid date format. Please use DD-MM-YYYY.')
+            return redirect('hr:company_profile', pk=id)
         
         status = request.POST.get('status')
         emp_id_series = request.POST.get('emp_id_series')
@@ -2824,63 +2830,56 @@ def update_company_info(request, id):
         corp_country = request.POST.get('corp_country')
         corp_pin_code = request.POST.get('corp_pin_code')
         
-
-        
         company = Company.objects.get(id=id)
         
-        company.phone_no  =  phone_no
-        company.website  =  website
-        company.domain  =  domain
-        company.email_id  =  email_id
-        company.industries_type  =  industries_type
+        company.phone_no = phone_no
+        company.website = website
+        company.domain = domain
+        company.email_id = email_id
+        company.industries_type = industries_type
         
-        company.gst_no  =  gst_no
-        company.tin_no  =  tin_no
-        company.cin_no  =  cin_no
-        company.pancard_no  =  pancard_no
-        company.aadhaarcard_no  =  aadhaarcard_no
-        company.account_no  =  account_no
-        company.bank_name  =  bank_name
-        company.ifsc_code  =  ifsc_code
-        company.branch  =  branch
+        company.gst_no = gst_no
+        company.tin_no = tin_no
+        company.cin_no = cin_no
+        company.pancard_no = pancard_no
+        company.aadhaarcard_no = aadhaarcard_no
+        company.account_no = account_no
+        company.bank_name = bank_name
+        company.ifsc_code = ifsc_code
+        company.branch = branch
         company.start_date = start_date
-        print("Start Date:", company.start_date)
-        company.status  =  status
-        company.emp_id_series  =  emp_id_series
-        company.reg_address  =  reg_address
-        company.reg_city  =  reg_city
-        company.reg_state  =  reg_state
-        company.reg_country  =  reg_country
-        company.reg_pin_code  =  reg_pin_code
-        company.corp_address  =  corp_address
-        company.corp_city  =  corp_city
-        company.corp_state  =  corp_state
-        company.corp_country  =  corp_country
-        company.corp_pin_code  =  corp_pin_code
+        company.status = status
+        company.emp_id_series = emp_id_series
+        company.reg_address = reg_address
+        company.reg_city = reg_city
+        company.reg_state = reg_state
+        company.reg_country = reg_country
+        company.reg_pin_code = reg_pin_code
+        company.corp_address = corp_address
+        company.corp_city = corp_city
+        company.corp_state = corp_state
+        company.corp_country = corp_country
+        company.corp_pin_code = corp_pin_code
 
         # Check if a new logo file is uploaded
         if 'logo' in request.FILES:
             # Delete the old logo file if it exists
-            if company.logo:
-                os.remove(company.logo.path)
+            if company.logo and os.path.isfile(company.logo.path):
+                try:
+                    os.remove(company.logo.path)
+                except FileNotFoundError:
+                    print(f"File not found: {company.logo.path}")
+            
             # Assign the new logo file
             company.logo = request.FILES['logo']
-        
         else:
             return redirect('hr:company_profile', pk=id)
-           
         company.save()
 
-        
-        messages.success(request, 'Company  Update successfully.')
+        messages.success(request, 'Company updated successfully.')
         return redirect('hr:company_profile', pk=id)
     else:
-        
-        # Handle GET request or other cases
-       return redirect('hr:company_profile', pk=id)
-
-
-    
+        return redirect('hr:company_profile', pk=id)
 
 def add_payroll_list_details(request):
     if request.method == 'POST': 

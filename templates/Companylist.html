@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
                             </div>
-                        <div class="card-body"> 
+                        <div class="card-body pt-0"> 
                             <div class="table-responsive overflow-auto ">
                                 <table class="DataTable" id="allCompanysTablelist">
                                     <thead class="bg-none">
@@ -62,9 +62,9 @@
                                             <td ><div class="d-flex align-items-center">{{ company.name }}</td>
                                             <td class="text-nowrap">{{ company.phone_no|default:'' }}</td>
                                             <td class="text-lowercase text-nowrap">{{ company.email_id |default:''}}</td>
-                                            <td class="text-lowercase text-nowrap" >{{ company.website|default:'' }}</td>
-                                            <td class="text-nowrap" >{{ company.logo|default:'' }}</td>
-                                            <td class="text-nowrap" >{{ company.status|default:'' }}</td>
+                                            <td class="text-lowercase text-nowrap">{{ company.website|default:''}}</td>
+                                            <td class="text-nowrap">{{ company.logo|default:'' }}</td>
+                                            <td class="text-nowrap">{{ company.status|default:''}}</td>
                                             <td>
                                                 {% if company.status == "Active" %}
                                                 <div class="d-flex">

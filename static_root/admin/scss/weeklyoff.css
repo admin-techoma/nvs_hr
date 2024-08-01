@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap");
+/* Container */
+/* Typography */
+/* Page Spacing */
+/* Fontsize */
+/* Line-Height */
+/* Font-Weight */
+/* font-weight*/
+/* Letter spacing */
+/* border-radius */
+/* 5px*/
+/*6px*/
+/*12px*/
+/* 16px */
+/* 8px */
+/* 50px */
+/* 100% */
+/* z index */
+.full.color-indicator, .full div {
+  background-color: #61FF00;
+}
+
+.half.color-indicator, .half div {
+  background-color: #ffc700;
+}
+
+.off.color-indicator, .off div {
+  background-color: #ff2f2f;
+}
+
+.weekTable td, .weekTable th {
+  font-size: 0.75em;
+  padding: 0.3rem;
+  text-align: center;
+  width: 12.5%;
+}
+
+.weekTable th {
+  border-bottom: 0 !important;
+}
+
+.weekTable tr td.day {
+  cursor: pointer;
+}
+
+.weekTable div {
+  height: 0.938rem;
+  width: 0.938rem;
+  display: block;
+  margin: 0.188rem auto;
+}/*# sourceMappingURL=weeklyoff.css.map */

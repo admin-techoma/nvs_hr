@@ -54,7 +54,10 @@
                                                 <th scope="col">Emp Name</th>
                                                 <th scope="col">date</th>
                                                 <th scope="col">clock in</th>
+                                                <th scope="col">latitude</th>
+                                                <th scope="col">longitude</th>
                                                 <th scope="col">clock out</th>
+                                                <th scope="col">worked_hours</th>
                                                 <th scope="col">full day</th>
                                                 <th scope="col">half day</th>
                                                 <th scope="col">absent</th>
@@ -63,6 +66,9 @@
                                         </thead>                                   
                                             <tfoot>
                                                 <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -150,7 +156,14 @@
                 }, {
                     data: "clock_in"
                 }, {
+                    data:"latitude"
+                    
+                },{
+                    data:"longitude"
+                },{
                     data: "clock_out"
+                },{
+                    data:"worked_hours"
                 }, {
                     data: "is_full_day",
                     render: function (data, type, row) {

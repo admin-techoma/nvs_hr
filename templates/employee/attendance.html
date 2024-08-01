@@ -12,10 +12,11 @@
 
 <div class="main-content">
     <!-- top attendance -->
-    <div class="d-flex justify-content-between align-items-center flex-wrap">
+    <div class="d-flex justify-content-between align-items-center flex-wrap w-100">
         <div class="d-flex col-12 col-md-4 ">
-            <!-- <h5 class="me-3 mb-0">attendance for {{ user.username }} </h5> -->
+            <h5 class="me-3 mb-0">attendance for {{ user.username }} </h5>
         </div>
+        <div class="col-12">
         <div class="row">
             <div class="col-12 col-md-7 overflow-hidden">
                 <!-- calender start-->
@@ -43,12 +44,12 @@
             </div>
             <div class="col-12 col-md-5 d-flex justify-content-center align-items-center flex-column">
                 <div class="w-100 mb-3 d-flex justify-content-end">
-                    <button type="button" class="btn custom-button me-2" data-bs-toggle="modal" data-bs-target="#Leavemodal" id="applyForLeave">
+                    <button type="button" class="btn custom-button  mt-2 mt-md-0" data-bs-toggle="modal" data-bs-target="#Leavemodal" id="applyForLeave">
                         Apply For Leave
                     </button>
                 </div>
                 <div class="w-100 d-flex flex-wrap align-items-center justify-content-center">
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-6 mb-3 mb-md-1 p-1">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 mb-3 mb-md-1 p-1">
                         <div
                             class="card d-flex justify-content-center align-items-center Leave-Balance border-left-maroon ">
                             <div class="card-header bg-transparent border-0 ">
@@ -59,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-6 mb-3 mb-md-1 p-1">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 mb-3 mb-md-1 p-1">
                         <div class="card weekoffcard d-flex justify-content-center align-items-center border-left-gray  ">
                             <div class="card-header bg-transparent border-0 ">
                                 <Strong>WeekOff</Strong>
@@ -69,7 +70,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-6 mb-3 mb-md-1 p-1">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 mb-3 mb-md-1 p-1">
                         <div class="card presentcard d-flex justify-content-center align-items-center border-left-green">
                             <div class="card-header bg-transparent border-0 ">
                                 <Strong>Present</Strong>
@@ -79,7 +80,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-6 mb-3 mb-md-1 p-1 ">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 mb-3 mb-md-1 p-1 ">
                         <div class="card absentcard d-flex justify-content-center align-items-center border-left-red">
                             <div class="card-header bg-transparent border-0 ">
                                 <Strong>Absent</Strong>
@@ -89,7 +90,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-6 mb-3 mb-md-1 p-1">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 mb-3 mb-md-1 p-1">
                         <div class="card halfdaycard d-flex justify-content-center align-items-center border-left-yellow ">
                             <div class="card-header bg-transparent border-0 "><Strong>Half Day
                                 </Strong></div>
@@ -98,7 +99,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-6 mb-3 mb-md-1 p-1">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 mb-3 mb-md-1 p-1">
                         <div class="card paidcard d-flex justify-content-center align-items-center border-left-orange">
                             <div class="card-header bg-transparent border-0 "><Strong>Paid Leave
                                 </Strong></div>
@@ -108,125 +109,125 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                        <div class="tablewrapper ">
-                            <h5>Leave Status</h5>
-                            <div class="table-responsive">
-                                <table class="table overflow-auto" id="leaveDataTable">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">From date</th>
-                                            <th scope="col">To date</th>
-                                            <th scope="col">Total leave days</th>
-                                            <th scope="col">Leave Status</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for leave in leavedata %}
-                                        <tr>
-                                            <td>{{forloop.counter }}</td>
-                                            <td>{{leave.leave_from_date}}</td>
-                                            <td>{{leave.leave_to_date}}</td>
-                                            <td>{{ leave|calculate_paid_leave_days }} Days</td>
-                                            <td>{% if leave.leave_status == 1 %}
-                                                Approved
-                                                {% elif leave.leave_status == 2 %}
-                                                Pending
-                                                {% elif leave.leave_status == 3 %}
-                                                Rejected
-                                                {% comment %} {% else %} {% endcomment %}
-                                                {% endif %}
-                                            </td>
-                                            <td class="p-0">{% if leave.leave_status == 2 %}
-                                                <div class="d-flex">
-                                                    <a href="#" class="btn btn-danger delete-button btn-sm" data-bs-toggle="modal"
-                                                        data-bs-target="#popupfordelete" data-leave-id="{{ leave.id }}"
-                                                        id="anchorDeletebutton">
-                                                        <i class="bi bi-trash"></i>
-                                                    </a>
-                                                </div>
-                                                {% else %}
-                                                No action Needed.
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6"></div>
-            <div class="row mt-3">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                        <div class="tablewrapper ">
-                            <h5>Regularlization Status</h5>
-                            <div class="table-responsive">
-                                <table class="dataTable no-footer" id="RegularizationDataTable">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="sorting sorting_asc" tabindex="0"
-                                                aria-controls="RegularizationDataTable" rowspan="1" colspan="1"
-                                                aria-sort="ascending" aria-label="#: activate to sort column descending"
-                                                style="width: 0px;">#</th>
-                                                <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
-                                                rowspan="1" colspan="1"
-                                                aria-label="Employee Name: activate to sort column ascending" style="width: 0px;">
-                                                Date</th>
-                                            <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
-                                                rowspan="1" colspan="1" aria-label="ClockIn Time: activate to sort column ascending"
-                                                style="width: 0px;">ClockIn Time</th>
-                                            <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
-                                                rowspan="1" colspan="1" aria-label="ClockOut Time: activate to sort column ascending"
-                                                style="width: 0px;">ClockOut Time</th>
-                                            <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
-                                                rowspan="1" colspan="1" aria-label=": activate to sort column ascending"
-                                                style="width: 0px;">Remarks</th>
-                                            <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
-                                                rowspan="1" colspan="1" aria-label=": activate to sort column ascending"
-                                                style="width: 0px;">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for regularization in employee_regularization %}
-                                        <tr>
-                                            <td>{{ forloop.counter }}</td>
-                                            <td>{{ regularization.date }}</td>
-                                            <td>{{ regularization.requested_clock_in }}</td>
-                                            <td>{{ regularization.requested_clock_out }}</td>
-                                            <td>
-                                                <textarea class="form-control form-control-sm" name="remarks" rows="1" disabled>{{ regularization.remarks|default:''}}</textarea>
-                                            </td>
-                                            <td>
-                                                {% if regularization.regularization_approved %}
-                                                    success
-                                                {% else %}
-                                                    pending
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            
+            </div>            
         </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                    <div class="tablewrapper ">
+                        <h5>Leave Status</h5>
+                        <div class="table-responsive">
+                            <table class="table overflow-auto" id="leaveDataTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">From date</th>
+                                        <th scope="col">To date</th>
+                                        <th scope="col">Total leave days</th>
+                                        <th scope="col">Leave Status</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for leave in leavedata %}
+                                    <tr>
+                                        <td>{{forloop.counter }}</td>
+                                        <td>{{leave.leave_from_date}}</td>
+                                        <td>{{leave.leave_to_date}}</td>
+                                        <td>{{ leave|calculate_paid_leave_days }} Days</td>
+                                        <td>{% if leave.leave_status == 1 %}
+                                            Approved
+                                            {% elif leave.leave_status == 2 %}
+                                            Pending
+                                            {% elif leave.leave_status == 3 %}
+                                            Rejected
+                                            {% comment %} {% else %} {% endcomment %}
+                                            {% endif %}
+                                        </td>
+                                        <td class="p-0">{% if leave.leave_status == 2 %}
+                                            <div class="d-flex">
+                                                <a href="#" class="btn btn-danger delete-button btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#popupfordelete" data-leave-id="{{ leave.id }}"
+                                                    id="anchorDeletebutton">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                            {% else %}
+                                            No action Needed.
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+       
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                    <div class="tablewrapper ">
+                        <h5>Regularlization Status</h5>
+                        <div class="table-responsive">
+                            <table class="dataTable no-footer" id="RegularizationDataTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="sorting sorting_asc" tabindex="0"
+                                            aria-controls="RegularizationDataTable" rowspan="1" colspan="1"
+                                            aria-sort="ascending" aria-label="#: activate to sort column descending"
+                                            style="width: 0px;">#</th>
+                                            <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                            rowspan="1" colspan="1"
+                                            aria-label="Employee Name: activate to sort column ascending" style="width: 0px;">
+                                            Date</th>
+                                        <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                            rowspan="1" colspan="1" aria-label="ClockIn Time: activate to sort column ascending"
+                                            style="width: 0px;">ClockIn Time</th>
+                                        <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                            rowspan="1" colspan="1" aria-label="ClockOut Time: activate to sort column ascending"
+                                            style="width: 0px;">ClockOut Time</th>
+                                        <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                            rowspan="1" colspan="1" aria-label=": activate to sort column ascending"
+                                            style="width: 0px;">Remarks</th>
+                                        <th scope="col" class="sorting" tabindex="0" aria-controls="RegularizationDataTable"
+                                            rowspan="1" colspan="1" aria-label=": activate to sort column ascending"
+                                            style="width: 0px;">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for regularization in employee_regularization %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ regularization.date }}</td>
+                                        <td>{{ regularization.requested_clock_in }}</td>
+                                        <td>{{ regularization.requested_clock_out }}</td>
+                                        <td>
+                                            <textarea class="form-control form-control-sm" name="remarks" rows="1" disabled>{{ regularization.remarks|default:''}}</textarea>
+                                        </td>
+                                        <td>
+                                            {% if regularization.regularization_approved %}
+                                                success
+                                            {% else %}
+                                                pending
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 </div>
 

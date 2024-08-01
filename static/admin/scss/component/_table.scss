@@ -346,12 +346,13 @@ table {
   {
     thead {
       th {
+        font-weight: $font-weight-medium;
        font-size: $font-size-normal !important;
       }
     }
     tbody {
           td {
-        font-size: $font-size-small !important;
+        font-size: $font-size-normal !important;
       }
     }
   }

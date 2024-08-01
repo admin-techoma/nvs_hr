@@ -29,12 +29,7 @@ $(document).ready(function () {
                         processData: false,
                         contentType: false,
                         success: function (response) {
-                            $('#candidatesuccessModal').modal('show');
-
-                            setTimeout(function () {
-                                location.reload(); // Reload the page
-                            }, 2000); // 2000 milliseconds = 2 seconds
-            
+                            window.location.href = '/hr/resumes/';
                         },
                         error: function (error) {
                             console.error('Error:', error);
@@ -78,11 +73,8 @@ $(document).ready(function () {
                         processData: false,
                         contentType: false,
                         success: function (data) {
-                            $('#candidatesuccessModal').modal('show');
-
-                            setTimeout(function () {
-                                location.reload(); // Reload the page
-                            }, 2000); // 2000 milliseconds = 2 seconds
+                            $("#uploadResumeModal .modal-body").html('<div class="alert alert-success">Resume uploaded successfully!</div>');
+                            window.location.href = '/hr/resumes/';
                         },
                         error: function (xhr, status, error) {
                             $("#uploadResumeModal .modal-body").html('<div class="alert alert-danger">' + xhr.responseJSON.error + '</div>');

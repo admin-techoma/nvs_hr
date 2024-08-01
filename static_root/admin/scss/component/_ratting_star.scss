@@ -1,11 +1,11 @@
 .rate {
   float: right;
-  height: 2.875rem;
-  padding: 0 0.625rem;
+  height: 2.875em;
+  padding: 0 0.625em;
 
   &:not(:checked) > input {
     position: absolute;
-    top: -624.938rem;
+    top: -624.938em;
     left: 0;
   }
   &:not(:checked) > label {
@@ -14,7 +14,7 @@
     overflow: hidden;
     white-space: nowrap;
     cursor: pointer;
-    font-size: 1.875rem;
+    font-size: 1.875em;
     color: $color-light-gray10;
   }
   &:not(:checked) > label:before {

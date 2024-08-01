@@ -32,9 +32,11 @@
 			if ( ! root ) {
 				root = window;
 			}
+
 			if ( ! $ || ! $.fn.dataTable ) {
 				$ = require('datatables.net')(root, $).$;
 			}
+
 			return factory( $, root, root.document );
 		};
 	}
@@ -45,6 +47,8 @@
 }(function( $, window, document, undefined ) {
 'use strict';
 var DataTable = $.fn.dataTable;
+
+
 /**
  * Responsive is a plug-in for the DataTables library that makes use of
  * DataTables' ability to change the visibility of columns, changing the
@@ -1026,15 +1030,15 @@ $.extend( Responsive.prototype, {
 
 		$( dt.column( col ).header() )
 			.css( 'display', display )
-			// .toggleClass('dtr-hidden', !showHide);
+			.toggleClass('dtr-hidden', !showHide);
 
 		$( dt.column( col ).footer() )
 			.css( 'display', display )
-			// .toggleClass('dtr-hidden', !showHide);
+			.toggleClass('dtr-hidden', !showHide);
 
 		dt.column( col ).nodes().to$()
 			.css( 'display', display )
-			// .toggleClass('dtr-hidden', !showHide);
+			.toggleClass('dtr-hidden', !showHide);
 
 		// If the are child nodes stored, we might need to reinsert them
 		if ( ! $.isEmptyObject( _childNodeStore ) ) {

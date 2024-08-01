@@ -41,31 +41,46 @@ $(document).ready(function () {
         $("#hiddendesignationoptions").val(selectedText);
     });
 
-    $("#editModal form").submit(function (e) {
-        e.preventDefault(); // Prevent the default form submission
-        const formData = new FormData(this);
-
+    function openEditPopup(resumeId) {
+        const currentLocation = window.location.pathname;
+        // Make an AJAX request to fetch the edit form content
         $.ajax({
-            url: `/hr/resumes/edit/${resumeId}/`, // Ensure this URL is correct
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                // Default behavior: close the modal without redirection
-                $('#candidatesuccessModal').modal('show');
+            url: `/hr/resumes/edit/${resumeId}/`,
+            type: 'GET',
+            success: function (htmlContent) {
+                // Load the content into the modal
+                $("#editModal .modal-body").html(htmlContent);
+                $("#editModal").modal("show");
 
-                setTimeout(function () {
-                    location.reload(); // Reload the page
-                }, 10000); // 2000 milliseconds = 2 seconds
-                // window.location.href = '/hr/resumes/';
+                // Attach a submit handler to the form in the modal
+                $("#editModal form").submit(function (e) {
+                    e.preventDefault(); // Prevent the default form submission
+                    const formData = new FormData(this);
+
+                    $.ajax({
+                        url: `/hr/resumes/edit/${resumeId}/`, // Ensure this URL is correct
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            // Default behavior: close the modal without redirection
+                            window.location.href = '/hr/resumes/';
+                        },
+                        error: function (error) {
+                            // Handle any errors, e.g., display an error message
+                            console.error('Error:', error);
+                        }
+                    });
+                });
             },
             error: function (error) {
                 // Handle any errors, e.g., display an error message
                 console.error('Error:', error);
             }
         });
-    });
+    }
+
 
     $('.edit-resume').on('click', function () {
         var resumeId = $(this).attr('id').replace('resumeEdit', '');
@@ -88,25 +103,22 @@ $(document).ready(function () {
     // Handle form submission with AJAX for upload Resume
     $('#uploadResumeForm').submit(function (e) {
         e.preventDefault();
-        var newResumeId = $('#newResumeId').val();
         var formData = new FormData(this);
+
         $.ajax({
             type: 'POST',
-            url: `/hr/upload-new-resume/${newResumeId}/`,
+            url: `{% url 'hr:upload_resume' %}`,
             data: formData,
             processData: false,
             contentType: false,
             success: function (response) {
                 if (response.success) {
                     // Handle success (e.g., close the modal)
-                    // $('#uploadResumeModal').modal('hide');
-                    $('#candidatesuccessModal').modal('show');
-
-                    setTimeout(function () {
-                        location.reload(); // Reload the page
-                    }, 5000); // 2000 milliseconds = 2 seconds
+                    $('#uploadResumeModal').modal('hide');
+                    location.reload();
                 } else {
-                    console.error(response.message);
+                    // Display error message
+                    $('#candidateStatus').html('<div class="alert alert-danger" role="alert">' + response.error + '</div>');
                 }
             },
             error: function (xhr, status, error) {
@@ -215,18 +227,18 @@ $(document).ready(function () {
 });
 
 
-// function alerttimeout() {
-//     // Select all alerts with the class 'alert' that have the data-bs-dismiss attribute to hide alert after 5 sec.
-//     var alerts = $('.alert');
-//     // Loop through the alerts
-//     alerts.each(function () {
-//         // Set a timeout to close each alert after 5 seconds (5000 milliseconds)
-//         var alert = $(this);
-//         setTimeout(function () {
-//             alert.hide();
-//         }, 5000);
-//     });
-// }
+function alerttimeout() {
+    // Select all alerts with the class 'alert' that have the data-bs-dismiss attribute to hide alert after 5 sec.
+    var alerts = $('.alert');
+    // Loop through the alerts
+    alerts.each(function () {
+        // Set a timeout to close each alert after 5 seconds (5000 milliseconds)
+        var alert = $(this);
+        setTimeout(function () {
+            alert.hide();
+        }, 5000);
+    });
+}
 
 function scheduleInterview(candidateId) {
     // Get the URL for the "scheduleInterview" view using the data-url attribute

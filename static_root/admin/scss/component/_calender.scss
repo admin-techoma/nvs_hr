@@ -3,43 +3,43 @@
 .calendar-wrapper{
     width: 100%;
     background: $color-white;
-    border-radius: 0.625rem;
+    border-radius: 0.625em;
   }
   .wrapper .calendar-header{
     display: flex;
     align-items: center;
-    padding: 1.563rem 1.875rem 0.625rem;
+    padding: 1.563em 1.875em 0.625em;
     justify-content: space-between;
   }
   .calendar-header .icons{
     display: flex;
   }
   .calendar-header .icons span{
-    height: 2rem;
-    width: 2rem;
-    margin: 0 0.063rem;
+    height: 2em;
+    width: 2em;
+    margin: 0 0.063em;
     cursor: pointer;
     color: $colorgray53;
     text-align: center;
-    line-height: 2.375rem;
-    font-size: 1.9rem;
+    line-height: 2.375em;
+    font-size: 1.9em;
     user-select: none;
     border-radius: 50%;
   }
   .icons span:last-child{
-    margin-right: -0.625rem;
+    margin-right: -0.625em;
   }
   header .icons span:hover{
     background: $color-whitelight;
   }
   header .current-date{
-    font-size: 1.45rem;
+    font-size: 1.45em;
     font-weight: 500;
   }
   .calendar{
-    padding: 1.25rem;
-    @media (max-width:48rem) {
-      padding: 0.628rem;
+    padding: 1.25em;
+    @media (max-width:48em) {
+      padding: 0.628em;
     }
   }
   .calendar ul{
@@ -51,12 +51,12 @@
 
   }
   .calendar .days{
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.25em;
     padding-left: 0;
-    height: 300px;
-    @media (max-width:48rem)  {
+    height: 18.75em;
+    @media (max-width:48em)  {
       padding-left: 0;
-      height: 340px;
+      height: 21.25em;
     }
   }
   .calendar li{
@@ -64,7 +64,7 @@
     max-width: calc(100% / 7);
     min-width:calc(100% / 7);
     width: 100%;
-    font-size: 1.07rem;
+    font-size: 1.07em;
   }
   .calendar .weeks li{
     font-weight: 500;
@@ -74,9 +74,9 @@
     z-index: 1;
    
     position: relative;
-    margin-top: 0.5rem;
+    margin-top: 0.5em;
     text-align: center;
-    height: 3rem;
+    height: 3em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -98,17 +98,17 @@
     content: "";
     left: 50%;
     top: 50%;
-    height: 2rem;
-    width: 2rem;
-    padding: 1rem;
+    height: 2em;
+    width: 2em;
+    padding: 1em;
     z-index: -1;
-    border-radius: 0.625rem;
+    border-radius: 0.625em;
     transform: translate(-50%, -50%);
     background: $primarydark;
 
-    @media (max-width:48rem) {
-        height: 2.5rem;
-        width: 2.5rem;
+    @media (max-width:48em) {
+        height: 2.5em;
+        width: 2.5em;
     }
   }
   
@@ -157,21 +157,21 @@ li.halfdayapproved::after {
     content: "";
     left: 50%;
     top: 33%;
-    height: 1.2rem;
-    width: 1rem;
-    padding: 1rem;
+    height: 1.2em;
+    width: 1em;
+    padding: 1em;
     z-index: -1;
-    border-radius: 0.625rem 0.625rem 0 0;
+    border-radius: 0.625em 0.625em 0 0;
     transform: translate(-50%, -50%);
     background: $color-translucent-navy-blue;
-  @media (max-width:48rem) {
-      width: 2.5rem;
+  @media (max-width:48em) {
+      width: 2.5em;
   }
 }
 
 .days li.halfdayapproved::after {
   background:$color-orange;
-  padding: 0 1rem 0 1rem;
+  padding: 0 1em 0 1em;
   cursor: pointer;
 }
 .days li.paidleave::before {

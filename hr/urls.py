@@ -90,7 +90,7 @@ urlpatterns = [
     path('company_profile/<int:pk>/', views.company_profile, name='company_profile'),
     path('update_company_info/<str:id>/', views.update_company_info, name='update_company_info'),
     
-     #<----------------- Company Payroll Tabs URL ----------------->
+    #<----------------- Company Payroll Tabs URL ----------------->
     path('add_payroll_list_details/', views.add_payroll_list_details, name='add_payroll_list_details'),
     path('get_payroll_list_details/<int:payroll_list_id>/', views.get_payroll_list_details, name='get_payroll_list_details'),
     path('update_payroll_list_details/<int:payroll_list_id>/', views.update_payroll_list_details, name='update_payroll_list_details'),

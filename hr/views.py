@@ -1,4 +1,5 @@
 from datetime import date, datetime, timedelta ,date
+from decimal import Decimal
 import json
 import fitz
 import os
@@ -2379,16 +2380,10 @@ def update_position_details(request, position_id):
             new_name = request.POST.get('name')
             new_remarks = request.POST.get('remarks')
 
-            # Check if the new name is the same as the existing name
-            if new_name == position_data.name:
-                return JsonResponse({'error': 'Position name remains unchanged'}, status=400)
-
             # Check if the new name already exists
-            try:
-                existing_position = Position.objects.get(name=new_name)
+            if Position.objects.filter(name=new_name).exclude(pk=position_id).exists():
                 return JsonResponse({'error': 'Position name already exists'}, status=400)
-            except ObjectDoesNotExist:
-                # If the new name doesn't exist, update the position
+            else:
                 position_data.name = new_name
                 position_data.remarks = new_remarks
                 position_data.save()
@@ -2409,9 +2404,8 @@ def delete_position(request, position_id):
             return JsonResponse({'error': 'Position not found'}, status=404)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
-    
 
-          
+
 def add_weekoff_details(request):
     if request.method == 'POST':
         try:
@@ -2792,7 +2786,8 @@ from django.core.files.base import ContentFile
 
 def update_company_info(request, id):
     if request.method == 'POST':
-        phone_no = request.POST.get('phone_no')
+        print((request.FILES))
+        phone_no = Decimal(request.POST.get('phone_no'))
         website = request.POST.get('website')
         domain = request.POST.get('domain')
         email_id = request.POST.get('email_id')
@@ -2808,14 +2803,8 @@ def update_company_info(request, id):
         ifsc_code = request.POST.get('ifsc_code')
         branch = request.POST.get('branch')
         
-        start_date_obj = request.POST.get('start_date')
-        try:
-            # Convert the start_date to YYYY-MM-DD format if it is not None
-            start_date = datetime.strptime(start_date_obj, '%d-%m-%Y').date() if start_date_obj else None
-        except ValueError:
-            # Handle the case where the date format is incorrect
-            messages.error(request, 'Invalid date format. Please use DD-MM-YYYY.')
-            return redirect('hr:company_profile', pk=id)
+        start_date = request.POST.get('start_date')
+
         
         status = request.POST.get('status')
         emp_id_series = request.POST.get('emp_id_series')
@@ -2860,6 +2849,7 @@ def update_company_info(request, id):
         company.corp_state = corp_state
         company.corp_country = corp_country
         company.corp_pin_code = corp_pin_code
+        company.save()
 
         # Check if a new logo file is uploaded
         if 'logo' in request.FILES:
@@ -3382,7 +3372,6 @@ def update_announcement_list_details(request, announcement_list_id):
             else:
                 pass
 
-           
             announcement_list.save()
 
             return JsonResponse({'success': 'Announcement list updated successfully!'})

@@ -164,13 +164,13 @@ def upload_resume(request):
             existing_candidate = candidateResume.objects.filter(Q(phone_number=phone_number) | Q(email=email))
             if existing_candidate.exists():
                 error_message = 'Email or Mobile Already Registered With Us.'
-                return JsonResponse({'error': error_message}, status=400)  # Return error response
+                return JsonResponse({'error': error_message}, status=400)
             else:
                 new_resume = form.save()
                 return redirect('hr:resume_list')
         else:
             form_errors = form.errors.as_ul()
-            return JsonResponse({'errors': form_errors}, status=400)  # Return form errors as JSON
+            return JsonResponse({'errors': form_errors}, status=400)
     else:
         form = ResumeUploadForm()
     return render(request, 'hr/resume_upload.html', {'form': form})
@@ -1782,24 +1782,31 @@ def update_permission_info(request, id):
 def check_email_exists(request):
     email = request.GET.get('email', None)
     
+    candidate_exists = candidateResume.objects.filter(email=email).exists()
+    
     if not email:
         return JsonResponse({'error': 'Email parameter is missing'}, status=400)
     
     # Check if email already exists in the Employee model
     exists = Employee.objects.filter(email=email).exists()
     
-    return JsonResponse({'exists': exists})
+    return JsonResponse({'exists': exists,'candidate_exists':candidate_exists})
 
 def check_contact_no_exists(request):
     contact_no = request.GET.get('contact_no', None)
-    
+    phone_number = request.GET.get('phone_number', None)
+
     if not contact_no:
         return JsonResponse({'error': 'Contact No parameter is missing'}, status=400)
     
+    if not phone_number:
+        return JsonResponse({'error': 'Phone No parameter is missing'}, status=400)
+
     # Check if Contact No already exists in the Employee model (or your appropriate model)
     exists = Employee.objects.filter(contact_no=contact_no).exists()
-    
-    return JsonResponse({'exists': exists})
+    phone_number_exists = candidateResume.objects.filter(phone_number=phone_number).exists()
+
+    return JsonResponse({'exists': exists, 'phone_number_exists': phone_number_exists})
 
 
 @register.filter

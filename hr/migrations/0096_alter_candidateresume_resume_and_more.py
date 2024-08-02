@@ -19,12 +19,11 @@ class Migration(migrations.Migration):
             name='start_date',
             field=models.DateField(blank=True, null=True),
         ),
-<<<<<<< HEAD
+
         migrations.AlterField(
             model_name='interview',
             name='interviewround_status',
             field=models.IntegerField(choices=[(1, 'Complete'), (2, 'Pending'), (3, 'Rejected')], default=2),
         ),
-=======
->>>>>>> f7702d5cde0b3a6fffdc1041f8260d8739a7da1c
+
     ]

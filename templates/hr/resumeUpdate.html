@@ -5,12 +5,15 @@
         {{form.name}}
     </div>
     <div class=" col-6 p-2 mb-1">
-        <label for="id_phone_number" class="form-label mb-0 mb-0">Mobile Number</label>
-        {{ form.phone_number }}
-    </div>
-    <div class=" col-6 p-2 mb-1">
         <label for="id_email" class="form-label mb-0 mb-0">Email</label>
         {{ form.email }}
+        <span id="email-error" class="text-danger"></span>
+    </div>
+    <div class=" col-6 p-2 mb-1">
+        <label for="id_phone_number" class="form-label mb-0 mb-0">Mobile Number</label>
+        <input autocomplete="off" type="tel"  class="form-control form-control-sm"  name="phone_number" id="id_phone_number" autocomplete="off" pattern="[0-9]{10}" maxlength="10" minlength="10" required>
+        {% comment %} {{ form.phone_number }} {% endcomment %}
+        <span id="contact_no-error" class="text-danger"></span> 
     </div>
     <div class=" col-6 p-2 mb-1">
         <label for="id_remarks" class="form-label mb-0 mb-0">Remarks</label>
@@ -41,3 +44,66 @@
     {% endfor %}
 </ul>
 {% endif %}
+
+<script>
+    $(document).ready(function() {
+        function checkEmailExists() {
+            var email = $('#id_email').val(); // Adjust the ID based on your form field
+            if (email) {
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "hr:check_email_exists" %}',
+                    data: {'email': email},
+                    success: function(response) {
+                        if (response.candidate_exists) {
+                            $('#email-error').text('Email already exists.');
+                        } else {
+                            $('#email-error').text('');
+                        }
+                    },
+                    error: function() {
+                        $('#email-error').text('Error checking email existence.');
+                    }
+                });
+            } else {
+                $('#email-error').text('');
+            }
+        }
+
+        function checkContactNoExists() {
+            var contact_no = $('#id_phone_number').val(); // Adjust the ID based on your form field
+            if (contact_no) {
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "hr:check_contact_no_exists" %}',
+                    data: {'contact_no': contact_no, 'phone_number': contact_no}, // Include both contact_no and phone_number
+                    success: function(response) {
+                        if (response.contact_no_exists) {
+                            $('#contact_no-error').text('Contact No already exists.');
+                        } else {
+                            $('#contact_no-error').text('');
+                        }
+                        if (response.phone_number_exists) {
+                            $('#contact_no-error').text('Phone number already exists.');
+                        } else {
+                            $('#contact_no-error').text('');
+                        }
+                    },
+                    error: function() {
+                        $('#contact_no-error').text('Error checking contact number existence.');
+                    }
+                });
+            } else {
+                $('#contact_no-error').text('');
+            }
+        }
+
+        $('#id_email').on('change', function() {
+            checkEmailExists();
+        });
+
+        $('#id_phone_number').on('change', function() {
+            checkContactNoExists();
+        });
+    });
+</script>

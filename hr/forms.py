@@ -15,6 +15,11 @@ class ResumeUploadForm(forms.ModelForm):
             'resume': forms.FileInput(attrs={'class': 'form-control form-control-sm'}),
             'remarks': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
         }
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        if len(str(phone_number)) > 10:
+            raise forms.ValidationError("Phone number cannot exceed 10 digits.")
+        return phone_number
 
 class resumeEditForm(forms.ModelForm):
     class Meta:
@@ -27,7 +32,12 @@ class resumeEditForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form-select form-select-sm'}),
             'remarks': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
         }
-
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        if len(str(phone_number)) > 10:
+            raise forms.ValidationError("Phone number cannot exceed 10 digits.")
+        return phone_number
+    
 class InterviewForm(forms.ModelForm):
     class Meta:
         model = Interview

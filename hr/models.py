@@ -78,7 +78,7 @@ class candidateResume(models.Model):
 
 class Interview(models.Model):
     INTERVIEWROUND_STATUS = (
-        (1, 'Select'),
+        (1, 'Complete'),
         (2, 'Pending'),
         (3, 'Rejected'),
         )

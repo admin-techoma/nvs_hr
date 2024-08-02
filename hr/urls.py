@@ -28,6 +28,8 @@ urlpatterns = [
     path('update_interviewround/', views.update_interviewround, name='update_interviewround'),
 
     path('schedule-interview/<int:candidate_id>/', views.schedule_interview, name='scheduleInterview'),
+   
+    path('ajax/load_interviewer/', views.ajax_load_interviewer, name='ajax_load_interviewer'),
 
     #<----------------- Onboarding Datatable ---------------------------------------------------------->
     path('onboardings/', views.onboarding_list, name='onboarding_list'),
@@ -74,7 +76,6 @@ urlpatterns = [
     path('ajax/ajax_adddesignation/', views.ajax_adddesignation, name='ajax_adddesignation'),
     path('ajax/load_designation/', views.load_designation, name='ajax_load_designation'),
     path('ajax_load_reporting_managers/', views.ajax_load_reporting_managers, name='ajax_load_reporting_managers'),
-    path('ajax/load_interviewer/', views.ajax_load_interviewer, name='ajax_load_interviewer'),
     
     
     #<----------------- Attendance --------------------------------------------------------------------->

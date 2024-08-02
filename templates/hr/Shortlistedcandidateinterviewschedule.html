@@ -72,9 +72,9 @@
                                             <button class="btn btn-sm custom-button me-2 edit-interviewround_list"
                                             data-interviewround_list-id="{{ interview.id }}">
                                             <i class="bi bi-pencil-square"></i></button>                                    
-                                            <button class="btn btn-sm btn-danger me-2 delete-interviewround_list" data-interviewround_list-id="{{ interview.id }}">
+                                            {% comment %} <button class="btn btn-sm btn-danger me-2 delete-interviewround_list" data-interviewround_list-id="{{ interview.id }}">
                                                 <i class="bi bi-trash"></i>
-                                            </button>
+                                            </button> {% endcomment %}
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -90,12 +90,14 @@
             <form id="updateinterviewround_listForm" method="post">
                 {% csrf_token %}
                 <input type="hidden" id="editinterviewround_listId" name="interviewround_id">
+                
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="Editinterviewround_listModalLabel">Edit Interview Round</h1>
                     <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="d-flex flex-wrap w-100">
+                        {% comment %} <input type="text" class="form-control form-control-sm" id="edit_candidate_id" name="candidate_id" required> {% endcomment %}
                         <div class="col-12 mb-2">
                             <label for="edit_interview_date" class="form-label">Interview Date</label>
                             <input type="date" class="form-control form-control-sm" id="edit_interview_date" name="interviewDate" required>
@@ -147,7 +149,7 @@
                         <div class="col-12 mb-2">
                             <label for="edit_status" class="form-label">Status</label>
                             <select class="form-select form-select-sm" id="edit_status" name="interviewround_status" required>
-                                <option value="1">Selected</option>
+                                <option value="1">Complete</option>
                                 <option value="2">Pending</option>
                                 <option value="3">Rejected</option>
                             </select>
@@ -211,7 +213,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Schedule Interview</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Schedule Interview </h1>
           <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -231,10 +233,10 @@
                             <label for="candidatePhoneNumber" class="form-label mb-0">Mobile Number</label>
                             <input type="tel" name="candidatePhoneNumber" id="candidatePhoneNumber" value="{{resume.phone_number}}" class="form-control form-control-sm" disabled>
                         </div>
-                        <div class="mb-3 col-12">
+                        {% comment %} <div class="mb-3 col-12">
                             <label for="{{ form.Exp.id_for_label }}" class="form-label mb-0">Years Of Experience</label>
                             <input type="tel" name="Exp" value="0.0" class="form-control form-control-sm"  step="0.1" min="0" max="99" pattern="\d+(\.\d{1})?" required=""  id="id_Exp">
-                        </div>
+                        </div> {% endcomment %}
                         <div class="mb-3 col-12">
                             <label for="departmentoptions" class="form-label mb-0">Department</label>
                             <select id="departmentoptions" class="form-select form-select-sm" name="department" required>
@@ -331,7 +333,7 @@
     });
     
 
-    function loadInterviewers(departmentId, interviewRound, selectedInterviewerName) {
+    function loadInterviewers(departmentId, interviewRound, selectedInterviewer) {
         var interviewerSelect = $("#edit_interviewer");
         $.ajax({
             url: "/hr/ajax/load_interviewer/",
@@ -345,8 +347,9 @@
                     $("<option>").attr('value', '').text('Select Interviewer')
                 );
                 data.interviewers.forEach(function(interviewer) {
-                    var option = $("<option>").attr('value', interviewer.name).text(interviewer.name);
-                    if (interviewer.name === selectedInterviewerName) {
+                    var optionValue = interviewer.emp_id + '~' + interviewer.emp_user__email + '~' + interviewer.first_name;
+                    var option = $("<option>").attr('value', optionValue).text(interviewer.first_name);
+                    if (selectedInterviewer === optionValue) {
                         option.attr('selected', 'selected');
                     }
                     interviewerSelect.append(option);
@@ -354,7 +357,7 @@
             }
         });
     }
- 
+    
     $(document).on('click', '.edit-interviewround_list', function() {
         var interviewround_list_id = $(this).data('interviewround_list-id');
     
@@ -372,7 +375,7 @@
                 data.interviewRoundChoices.forEach(function(choice) {
                     interviewRoundSelect.append($('<option>', { value: choice.value, text: choice.display, selected: choice.value === data.interviewRound }));
                 });
-
+    
                 $('#edit_interview_mode').val(data.interviewMode);
                 $('#edit_remarks').val(data.interviewround_remarks);
                 $('#edit_status').val(data.interviewround_status);
@@ -390,8 +393,6 @@
                 data.designation_choices.forEach(function(choice) {
                     designationSelect.append($('<option>', { value: choice.id, text: choice.name, selected: choice.id === data.designation }));
                 });
-
-           
     
                 // Populate interviewers based on the selected department and interview round
                 loadInterviewers(data.department, data.interviewRound, data.interviewer);
@@ -403,82 +404,22 @@
             }
         });
     });
-
-
-        // AJAX for updating an Interviewround
-        $('#updateinterviewround_listForm').on('submit', function(event) {
-            event.preventDefault();
-            var formData = new FormData($(this)[0]);
-            $.ajax({
-                type: "POST",
-                url: "{% url 'hr:update_interviewround' %}",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    $("#Editinterviewround_listModal .modal-body").html('<div class="alert alert-success">Interview round updated successfully!</div>');
-                    setTimeout(function(){
-                        $("#Editinterviewround_listModal").modal('hide');
-                        location.reload();
-                    }, 2000);
-                },
-                error: function(xhr, status, error) {
-                    $("#Editinterviewround_listModal .modal-body").html('<div class="alert alert-danger">' + xhr.responseJSON.error + '</div>');
-                }
-            });
-        });
-
-
-
-        $("#edit_department").change(function () {
-            var id = $(this).val();
-            var designationSelect = $("#edit_designation");
     
-            $.ajax({
-                url: "/hr/ajax/load_designation/",
-                data: {
-                    'department': id
-                },
-                success: function (data) {
-                    designationSelect.empty();
-                    designationSelect.append(
-                        $("<option>").attr('value', '').text('Select Designation')
-                    );
-                    data.designations.forEach(function(designation) {
-                        designationSelect.append(
-                            $("<option>").attr('value', designation.id).text(designation.name)
-                        );
-                    });
-                }
-            });
-        });
+    $("#edit_interview_round").change(function () {
+        var interviewRound = $(this).val();
+        var departmentId = $("#edit_department").val();
+        loadInterviewers(departmentId, interviewRound, '');
+    });
     
-
-        $("#edit_interview_round").change(function () {
-            var interviewRound = $(this).val();
-            var departmentId = $("#edit_department").val();
-            loadInterviewers(departmentId, interviewRound, '');
-        });
-
-        $("#edit_interview_round").change(function () {
-            var interviewRound = $(this).val();
-            var departmentId = $("#edit_department").val();
-            loadInterviewers(departmentId, interviewRound, '');
-        });
-
-        $('#edit_interview_mode').change(function () {
-            // Get the selected option value
-            var selectedOption = $(this).val();
+    $('#edit_interview_mode').change(function () {
+        var selectedOption = $(this).val();
+        if (selectedOption === 'Online') {
+            $('.interviewmodeLink').show();
+        } else {
+            $('.interviewmodeLink').hide();
+        }
+    });
     
-            // Check if the selected option is 'online'
-            if (selectedOption === 'Online') {
-                // Show the element with the class 'interviewmodeLink'
-                $('.interviewmodeLink').show();
-            } else {
-                // Hide the element with the class 'interviewmodeLink'
-                $('.interviewmodeLink').hide();
-            }
-        });
 
     </script>
 

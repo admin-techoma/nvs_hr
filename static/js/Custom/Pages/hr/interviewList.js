@@ -217,13 +217,13 @@ $(document).ready(function () {
                 var interviewers = data.interviewers; // Ensure the key name matches what's returned by the view
                 for (var i = 0; i < interviewers.length; i++) {
                     interviewerSelect.append(
-                        $("<option>").attr('value', interviewers[i].emp_id+'~'+interviewers[i].email+ '~' + interviewers[i].name).text(interviewers[i].name)
-                   
+                        $("<option>").attr('value', interviewers[i].emp_id + '~' + interviewers[i].emp_user__email + '~' + interviewers[i].first_name).text(interviewers[i].first_name)
                     );
                 }
             }
         });
     });
+    
 });
 
 

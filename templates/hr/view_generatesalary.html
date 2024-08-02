@@ -31,9 +31,15 @@
             <div class="text-center d-flex align-items-center">
                 <h6 class="mb-0 pageTitle"><strong>Salary List</strong></h6>
             </div>
-            <button class="btn btn-dark btn-sm" type="submit" name="download_button">
+            <div class="d-flex ">
+            <!-- <button class="btn btn-dark btn-sm" type="submit" name="download_button">
                 <i class="bi bi-box-arrow-down"></i> Download
-            </button>    
+            </button>     -->
+            <a class="btn btn-success btn-sm mb-1" type="submit" name="salary_button"
+            href="{% url 'payroll:month_salary' %}">
+            <i class="bi bi-box-arrow-down "></i> Month Salary
+             </a>
+            </div>
         </div>
         <div class="card-body">
            

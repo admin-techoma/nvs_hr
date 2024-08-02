@@ -395,7 +395,7 @@
                                                     data-bs-target="#Editbranch_listModal">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-danger me-2 delete-branch_list"
+                                                <button class="btn btn-sm btn-danger me-2 delete-branch_list" 
                                                     data-branch_list-id="{{ branch_list.id }}">
                                                     <i class="bi bi-trash"></i>
                                                 </button> 
@@ -518,7 +518,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-sm"
                                 data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn custom-button btn-sm">Add</button>
+                            <button type="submit" class="btn custom-button btn-sm" id="addBranchButton">Add</button>
                         </div>
                     </form>
                 </div>
@@ -1823,10 +1823,10 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-nowrap fw-medium">Company Master</th>
-                                        <th scope="col" class="text-nowrap fw-medium">Basic</th>
-                                        <th scope="col" class="text-nowrap fw-medium">Hra</th>
-                                        <th scope="col" class="text-nowrap fw-medium">Ca</th>
-                                        <th scope="col" class="text-nowrap fw-medium">Sa</th>
+                                        <th scope="col" class="text-nowrap fw-medium">Basic (%)</th>
+                                        <th scope="col" class="text-nowrap fw-medium">Hra (%)</th>
+                                        <th scope="col" class="text-nowrap fw-medium">Ca (%)</th>
+                                        <th scope="col" class="text-nowrap fw-medium">Sa (%)</th>
                                         <th scope="col" class="text-nowrap fw-medium">Pt</th>
                                         <th scope="col" class="text-nowrap fw-medium">Employer Pf</th>
                                         <th scope="col" class="text-nowrap fw-medium">Employer Esic</th>
@@ -1905,67 +1905,67 @@
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
-                                        <label for="Addpayrollbasic" class="form-label">Basic
+                                        <label for="Addpayrollbasic" class="form-label">Basic (%)
                                             </label>
-                                        <input type="tel" class="form-control form-control-sm" id="Addpayrollbasic"
+                                        <input type="number" class="form-control form-control-sm" id="Addpayrollbasic"
                                             name="basic" minlength="0" maxlength="2" pattern="[0-9]{2}" title="Enter Digits only" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
-                                        <label for="Addpayrollhra" class="form-label">HRA
+                                        <label for="Addpayrollhra" class="form-label">HRA (%)
                                         </label>
-                                        <input type="tel" class="form-control form-control-sm" id="Addpayrollhra"
+                                        <input type="number" class="form-control form-control-sm" id="Addpayrollhra"
                                             name="hra" minlength="0" maxlength="2" pattern="[0-9]{2}" title="Enter Digits only" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
-                                        <label for="Addpayrollca" class="form-label">CA</label>
-                                        <input type="tel" class="form-control form-control-sm" id="Addpayrollca"
+                                        <label for="Addpayrollca" class="form-label">CA (%)</label>
+                                        <input type="number" class="form-control form-control-sm" id="Addpayrollca"
                                             name="ca" pattern="[0-9]{3}" title="Enter Digits only"  required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
-                                        <label for="Addpayrollsa" class="form-label">SA
+                                        <label for="Addpayrollsa" class="form-label">SA (%)
                                         </label>
-                                        <input type="tel" class="form-control form-control-sm" id="Addpayrollsa"
+                                        <input type="number" class="form-control form-control-sm" id="Addpayrollsa"
                                             name="sa" pattern="[0-9]{3}" title="Enter Digits only" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="AAddpayrollpt" class="form-label">PT</label>
-                                        <input type="tel" class="form-control form-control-sm" id="AAddpayrollpt"
+                                        <input type="number" class="form-control form-control-sm" id="AAddpayrollpt"
                                             name="pt" minlength="0" pattern="[0-9]{3}" title="Enter Digits only" maxlength="3" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addpayrollemployer_pf" class="form-label">Employer PF</label>
-                                        <input type="tel" class="form-control form-control-sm" id="Addpayrollemployer_pf"
+                                        <input type="number" class="form-control form-control-sm" id="Addpayrollemployer_pf"
                                             name="employer_pf" minlength="0" maxlength="5" pattern="[0-9]{5}" title="Enter Digits only" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addpayrollemployer_esic" class="form-label">Employer Esic</label>
-                                        <input type="tel" class="form-control form-control-sm" id="Addpayrollemployer_esic"
+                                        <input type="number" class="form-control form-control-sm" id="Addpayrollemployer_esic"
                                             name="employer_esic" minlength="0" maxlength="5" pattern="[0-9]{5}" title="Enter Digits only" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addpayrollemployee_pf" class="form-label">Employee PF</label>
-                                        <input type="tel" class="form-control form-control-sm" id="Addpayrollemployee_pf"
+                                        <input type="number" class="form-control form-control-sm" id="Addpayrollemployee_pf"
                                             name="employee_pf" minlength="0" maxlength="5" pattern="[0-9]{5}" title="Enter Digits only" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addpayrollemployee_esic" class="form-label">Employee Esic</label>
-                                        <input type="tel" class="form-control form-control-sm" id="Addpayrollemployee_esic"
+                                        <input type="number" class="form-control form-control-sm" id="Addpayrollemployee_esic"
                                             name="employee_esic" minlength="0" maxlength="5" pattern="[0-9]{5}" title="Enter Digits only" required>
                                     </div>
                                 </div>            
@@ -2007,28 +2007,28 @@
                                         </select>
                                     </div>
                                     <div class="mb-2">
-                                        <label for="Editpayroll_listpayroll_basic" class="form-label">Baic</label>
+                                        <label for="Editpayroll_listpayroll_basic" class="form-label">Basic (%)</label>
                                         <input type="tel" class="form-control form-control-sm"
                                             id="Editpayroll_listpayroll_basic" minlength="0" maxlength="2" pattern="[0-9]{2}" title="Enter Digits only"  name="basic" required>
                                     </div>
                                     <div class="mb-2">
-                                        <label for="Editpayroll_hra" class="form-label">HRA</label>
+                                        <label for="Editpayroll_hra" class="form-label">HRA (%)</label>
                                         <input type="tel" class="form-control form-control-sm" id="Editpayroll_hra"
                                             name="hra" minlength="0" maxlength="2" pattern="[0-9]{2}" title="Enter Digits only" required>
                                     </div>
                                     <div class="mb-2">
-                                        <label for="Editpayroll_ca" class="form-label">CA</label>
+                                        <label for="Editpayroll_ca" class="form-label">CA (%)</label>
                                         <input type="tel" class="form-control form-control-sm" id="Editpayroll_ca"
                                             name="ca" pattern="[0-9]{2}" title="Enter Digits only" required>
                                     </div>
                                     <div class="mb-2">
-                                        <label for="Editpayroll_sa" class="form-label">SA</label>
+                                        <label for="Editpayroll_sa" class="form-label">SA (%)</label>
                                         <input type="tel" class="form-control form-control-sm" id="Editpayroll_sa"
                                             name="sa" pattern="[0-9]{2}" title="Enter Digits only" required>
                                     </div>
 
                                     <div class="mb-2">
-                                        <label for="Editpayroll_pt" class="form-label">PT</label>
+                                        <label for="Editpayroll_pt" class="form-label">PT   </label>
                                         <input type="tel" class="form-control form-control-sm" id="Editpayroll_pt"
                                             name="pt" minlength="0" maxlength="3" pattern="[0-9]{3}" title="Enter Digits only" required>
                                     </div>
@@ -2680,8 +2680,7 @@
                 }
             });
         });    
-            
-            
+                    
 
         // AJAX for adding a new Branch list
         $('#addbranch_listForm').on('submit', function (event) {
@@ -2714,15 +2713,17 @@
                     'status': status,
                     'csrfmiddlewaretoken': '{{ csrf_token }}'
                 },
-                success: function (data) {
-                    $("#AddBranchModal .modal-body").html(
-                        '<div class="alert aler t-success">Add New Branch successfully!</div>'
-                        );
-                },
+                    success: function (data) {
+                        $("#AddBranchModal .modal-body").html(
+                            '<div class="alert aler t-success">Add New Branch successfully!</div>'
+                            );
+                            $("#addBranchButton").hide();
+                    },
                 error: function (xhr, status, error) {
                     var errorMessage = xhr.responseJSON.error;
                     $("#AddBranchModal .modal-body").html(
                         '<div class="alert alert-danger">' + errorMessage + '</div>');
+                        $("#addBranchButton").hide();
                 }
             });
         });
@@ -2785,152 +2786,7 @@
                 }
             });
         });
-        // Delete Branch 
-        $(document).ready(function () {
-            // AJAX for deleting a Branch list
-            $('.delete-branch_list').on('click', function () {
-                var branch_list_id = $(this).data('branch_list-id');
-                if (confirm('Are you sure you want to delete this branch?')) {
-                    $.ajax({
-                        url: '/hr/delete_branch_list/' + branch_list_id + '/',
-                        type: 'POST',
-                        data: {
-                            'csrfmiddlewaretoken': '{{ csrf_token }}'
-                        },
-                        success: function (data) {
-                            $("#AddDesignationModal .modal-body").html(
-                                '<div class="alert alert-success">Designation uploaded successfully!</div>'
-                                );
-                            alert('Branch deleted successfully');
-                            location
-                        .reload(); // Reload the page to update the branch list
-                        },
-                        error: function (xhr, status, error) {
-                            alert('Failed to delete branch: ' + xhr.responseJSON
-                                .error);
-                        }
-                    });
-                }
-            });
-        });
-
-     /* // AJAX for adding a new Bank list
-        $('#addbank_listForm').on('submit', function (event) {
-            event.preventDefault();
-            var company = $('#AddBankCompany').val(); // Get the selected company ID
-            var bank_name = $('#AddBank_bank_name').val();
-            var ifsc_code = $('#AddBank_ifsc_code').val();
-            var branch = $('#AddBank_branch').val();
-            var account_no = $('#AddBank_account_no').val();
-            var remarks = $('#AddBank_remarks').val();
-            var status = $('#AddBank_status').val();
-            $.ajax({
-                url: "{% url 'hr:add_bank_list_details' %}",
-                type: "POST",
-                data: {
-                    'company': company,
-                    'bank_name': bank_name,
-                    'ifsc_code': ifsc_code,
-                    'branch': branch,
-                    'account_no': account_no,
-                    'remarks': remarks,
-                    'status': status,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}'
-                },
-                success: function (data) {
-                    $("#AddBankModal .modal-body").html(
-                        '<div class="alert alert-success">Bank uploaded successfully!</div>'
-                        );
-                },
-                error: function (xhr, status, error) {
-                    var errorMessage = xhr.responseJSON.error;
-                    $("#AddBankModal .modal-body").html('<div class="alert alert-danger">' +
-                        errorMessage + '</div>');
-                }
-            });
-        });
-
-        // AJAX for editing a Bank list
-        $('.edit-bank_list').on('click', function () {
-            var bank_list_id = $(this).data('bank_list-id');
-            $.ajax({
-                url: '/hr/get_bank_list_details/' + bank_list_id + '/',
-                type: 'GET',
-                success: function (data) {
-                    $('#editbank_listId').val(data.id);
-                    $('#Editbank_listbank_master').val(data.company_id);
-                    $('#Editbank_listbank_name').val(data.bank_name);
-                    $('#Editbank_listifsc_code').val(data.ifsc_code);
-                    $('#Editbank_listbranch').val(data.branch);
-                    $('#Editbank_listaccount_no').val(data.account_no);
-                    $('#Editbank_listremarks').val(data.remarks);
-                    $('#Editbank_status').val(data.status);
-                    $('#Editbank_listModal').modal('show');
-                },
-                error: function () {
-                    alert('Failed to fetch Bank list details.');
-                }
-            });
-        });
-
-        //Delete Bank Details of Company
-        $(document).ready(function () {
-            // AJAX for deleting a Bank list
-            $('.delete-bank_list').on('click', function () {
-                var bank_list_id = $(this).data('bank_list-id');
-                if (confirm('Are you sure you want to delete this bank?')) {
-                    $.ajax({
-                        url: '/hr/delete_bank_list/' + bank_list_id + '/',
-                        type: 'POST',
-                        data: {
-                            'csrfmiddlewaretoken': '{{ csrf_token }}'
-                        },
-                        success: function (data) {
-                            alert('Bank deleted successfully');
-                            location
-                        .reload(); // Reload the page to update the bank list
-                        },
-                        error: function (xhr, status, error) {
-                            alert('Failed to delete bank: ' + xhr.responseJSON
-                                .error);
-                        }
-                    });
-                }
-            });
-        });
-
-        // AJAX for updating a bank list
-        $('#updatebank_listForm').on('submit', function (event) {
-            event.preventDefault();
-            var formData = new FormData($(this)[0]);
-            var bank_list_id = $('#editbank_listId').val();
-            $.ajax({
-                type: "POST",
-                url: "{% url 'hr:update_bank_list_details' 0 %}".replace('0', bank_list_id),
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    $("#Editbank_listModal .modal-body").html(
-                        '<div class="alert alert-success">Bank list updated successfully!</div>'
-                        );
-                        $("#Editbank_listModal .modal-footer #save_bank_list_changes_btn").hide();
-                        setTimeout(function(){
-                            $("#Editbank_listModal").modal('hide');
-                            location.reload();
-                        }, 2000);
-
-                        
-                    // {% comment %} window.location.href = '/hr/bank_list_master/'; {% endcomment %}
-                },
-                error: function (xhr, status, error) {
-                    $("#Editbank_listModal .modal-body").html(
-                        '<div class="alert alert-danger">' + xhr.responseJSON.error +
-                        '</div>');
-                }
-            });
-        });
-        */
+       
 
         // AJAX for adding a new department
         $('#adddepartmentmasterForm').on('submit', function (event) {
@@ -2961,6 +2817,7 @@
                     $("#AddDepartmentModal .modal-body").html(
                         '<div class="alert alert-danger">' + xhr.responseJSON.error +
                         '</div>');
+                        $("#AddDepartmentModal .modal-footer .addDeptBtn").hide();
                 }
             });
         });
@@ -2974,6 +2831,7 @@
                     $('#updateDepartmentId').val(data.id);
                     $('#EditDepartmentName').val(data.name);
                     $('#DepartmenteditModal').modal('show');
+
                 },
                 error: function (xhr, status, error) {
                     alert("Error retrieving department data");
@@ -2996,7 +2854,7 @@
                     $("#DepartmenteditModal .modal-body").html(
                         '<div class="alert alert-success">' + data.success + '</div>');
 
-                        $("#DepartmenteditModal .modal-footer .addDeptBtn").hide();
+                        $("#DepartmenteditModal .modal-footer ").hide();
 
                         setTimeout(function(){
                             $("#DepartmenteditModal").modal('hide');
@@ -3011,6 +2869,11 @@
                     } else {
                         $('#EditDepartmentName').focus();
                     }
+                    $("#DepartmenteditModal .modal-footer #save_department_changes_btn").hide();
+                    setTimeout(function(){
+                            $("#DepartmenteditModal").modal('hide');
+                            location.reload();
+                        }, 2000);
                 }
             });
         });
@@ -3142,7 +3005,6 @@
                 });
             }
         });
-
 
         // AJAX for adding a new position
         $('#addpositionmasterForm').on('submit', function (event) {
@@ -3344,7 +3206,7 @@
             });
         });
     });
-
+   });
     // AJAX for deleting a weekoff
     $('.delete-weekoff').on('click', function () {
         var weekoff_id = $(this).data('weekoff-id');
@@ -3383,22 +3245,21 @@
                 },
                 success: function (data) {
                     $("#AddholidaymasterModal .modal-body").html(
-                        '<div class="alert alert-success">Holiday master uploaded successfully!</div>'
-                        );
-
+                        '<div class="alert alert-success">Holiday master uploaded successfully!</div>');
                         $("#AddholidaymasterModal .modal-footer .add-holiday-btn").hide();
-
                         setTimeout(function(){
                             $("#AddholidaymasterModal").modal('hide');
                             location.reload();
                         }, 2000);
-
-
                 },
                 error: function (xhr, status, error) {
                     $("#AddholidaymasterModal .modal-body").html(
                         '<div class="alert alert-danger">' + xhr.responseJSON.error +
                         '</div>');
+                        setTimeout(function(){
+                            $("#AddholidaymasterModal").modal('hide');
+                            location.reload();
+                        }, 2000);
                 }
             });
         });
@@ -3454,40 +3315,44 @@
                         $("#holidaymastereditModal .modal-body").html(
                             '<div class="alert alert-danger">' + xhr.responseJSON
                             .error + '</div>');
+                            $("#holidaymastereditModal .modal-footer .edit-holiday-save-btn").hide();
+                            setTimeout(function(){
+                            $("#holidaymastereditModal").modal('hide');
+                            location.reload();
+                        }, 2000);
                     } else {
                         $('#EditholidaymasterName').focus();
                     }
-                    $("#holidaymastereditModal .modal-footer .edit-holiday-save-btn").hide();
+                
+                   
                 }
             });
         });
 
         $(document).ready(function () {
-            // Existing AJAX code for adding and editing holidaymaster...
+    // Existing AJAX code for adding and editing holidaymaster...
 
-            // AJAX for deleting a holidaymaster
-            $('.delete-holidaymaster').on('click', function () {
-                var holidaymaster_id = $(this).data('holidaymaster-id');
-                if (confirm('Are you sure you want to delete this holiday master?')) {
-                    $.ajax({
-                        url: '/hr/delete_holidaymaster/' + holidaymaster_id + '/',
-                        type: 'POST',
-                        data: {
-                            'csrfmiddlewaretoken': '{{ csrf_token }}'
-                        },
-                        success: function (data) {
-                            alert('Holiday master deleted successfully');
-                            location
-                        .reload(); // Reload the page to update the holiday master list
-                        },
-                        error: function (xhr, status, error) {
-                            alert('Failed to delete holiday master: ' + xhr
-                                .responseJSON.error);
-                        }
-                    });
+    // AJAX for deleting a holidaymaster
+    $('.delete-holidaymaster').on('click', function () {
+        var holidaymaster_id = $(this).data('holidaymaster-id');
+        if (confirm('Are you sure you want to delete this holiday master?')) {
+            $.ajax({
+                url: '/hr/delete_holidaymaster/' + holidaymaster_id + '/',
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    alert('Holiday master deleted successfully');
+                    location.reload(); // Reload the page to update the holiday master list
+                },
+                error: function (xhr, status, error) {
+                    alert('Failed to delete holiday master: ' + xhr.responseJSON.error);
                 }
             });
-        });
+        }
+    });
+});
 
         // AJAX for adding a new holiday list
         $('#addholiday_listForm').on('submit', function (event) {
@@ -3597,7 +3462,6 @@
                 });
             }
         });
-  
         // AJAX for adding a new Announcement list
         $('#addannouncement_listForm').on('submit', function (event) {
             event.preventDefault();
@@ -3688,7 +3552,6 @@
                 }
             });
         });
-
         $('.delete-announcement_list').on('click', function () {
             var announcement_list_id = $(this).data('announcement_list-id');
             if (confirm('Are you sure you want to delete this announcement list?')) {
@@ -3710,7 +3573,6 @@
                 });
             }
         });
-
         // AJAX for adding a new Policy list
         $('#addpolicy_listForm').on('submit', function (event) {
             event.preventDefault();
@@ -3822,6 +3684,6 @@
                 });
             }
         });
-    });
+ 
 </script>
 {% endblock extrascript %}

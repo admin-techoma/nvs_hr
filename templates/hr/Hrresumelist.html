@@ -26,7 +26,7 @@
                                 <th scope="col">Mobile No.</th>
                                 <th scope="col">Email ID</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Remarks</th>
+                                {% comment %} <th scope="col">Remarks</th> {% endcomment %}
                                 <th scope="col">Created On</th>
                                 <th scope="col">Interview Status</th>
                                 <th scope="col">Resume</th>
@@ -37,7 +37,7 @@
                             {% if resumelist %}
                             {% for resume in resumelist %}
                             <tr class="resume-row">
-                                <td>{{ forloop.counter }}</td>
+                                <td style="max-width:30px; width:30px;" >{{ forloop.counter }}</td>
                                 <td class="text-nowrap">{{ resume.name }}</td>
                                 <td class="text-nowrap">{{ resume.phone_number }}</td>
                                 <td class="text-lowercase text-nowrap">{{ resume.email }}</td>
@@ -50,7 +50,7 @@
                                     <span class="badge text-bg-danger" href=""> {{resume.status}} </span>
                                     {% endif %}
                                 </td>
-                                <td>{{ resume.remarks }}</td>
+                                {% comment %} <td>{{ resume.remarks }}</td> {% endcomment %}
                                 <td>{{ resume.created_at|date:"d/m/Y" }}</td>
                                 <td>
                                     {% if resume.interviewFeedback == "Selected" %}

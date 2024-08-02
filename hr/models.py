@@ -88,7 +88,7 @@ class Interview(models.Model):
     designation             =  models.ForeignKey('employee.Designation', verbose_name="Designation", on_delete=models.PROTECT, default=None, null=True)
     interviewMode           =  models.CharField(max_length=20,choices=[('', 'Select')] + [('Online', 'Online'),('Face to Face', 'Face to Face'),])
     interviewer             =  models.CharField(max_length=255)
-    interviewRound          =  models.CharField(max_length=20,choices= [('Telephonic Round', 'Telephonic Round'),('HR Round', 'HR Round'),('Technical Round', 'Technical Round'),('Round Two', 'Round Two'),('Round Three', 'Round Three'),('Final Round', 'Final Round'),])
+    interviewRound          =  models.CharField(max_length=20,choices= [('HR Round', 'HR Round'),('Technical Round', 'Technical Round'),('Managerial Round', 'Managerial Round'),])
     interviewDate           =  models.DateField()
     interviewTime           =  models.TimeField()
     interviewround_remarks  =  models.CharField(max_length=255)

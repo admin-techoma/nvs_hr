@@ -189,6 +189,7 @@ def resume_list(request):
     request.session.save()
     return render(request, 'hr/Hrresumelist.html', context)
 
+
 def get_interviewround_list_id_details(request, id):
     try:
         interview = Interview.objects.get(id=id)
@@ -197,11 +198,12 @@ def get_interviewround_list_id_details(request, id):
 
         response_data = {
             'id': interview.id,
+            # 'candidate_id': interview.candidate_id,
             'interviewDate': interview.interviewDate,
             'interviewTime': interview.interviewTime,
             'interviewRound': interview.interviewRound,
             'interviewMode': interview.interviewMode,
-            'interviewer': interview.interviewer,
+            'interviewer': interview.interviewer,  # Assuming interviewer is stored in the same format
             'interviewround_remarks': interview.interviewround_remarks,
             'interviewround_status': interview.interviewround_status,
             'department': interview.department.id if interview.department else '',
@@ -220,6 +222,7 @@ def update_interviewround(request):
         interview_id = request.POST.get('interviewround_id')
         try:
             interview = Interview.objects.get(id=interview_id)
+            # interview.candidate_id = request.POST.get('candidate_id')
             interview.interviewDate = request.POST.get('interviewDate')
             interview.interviewTime = request.POST.get('interviewTime')
             interview.interviewRound = request.POST.get('interviewRound')
@@ -339,12 +342,12 @@ def schedule_interview(request, candidate_id):
     interviewRound = request.POST.get('interviewRound')
 
     if request.method == 'POST':
-        form = professionalDetailsForm(request.POST, instance=resume)
+        # form = professionalDetailsForm(request.POST, instance=resume)
         interviewFeedbackForm = InterviewSelectionFeedback(request.POST, instance=resume)
         interview_form = InterviewForm(request.POST)
 
-        if form.is_valid() and interview_form.is_valid():
-            form.save()
+        if interview_form.is_valid():
+          
             
             # Save department, designation, and interviewer to the candidateResume instance
             department_id = request.POST.get('department')
@@ -369,6 +372,7 @@ def schedule_interview(request, candidate_id):
 
             # Prepare email context and send emails
             interviwer = request.POST.get('interviewer')
+          
             interviewDate_obj = request.POST.get('interviewDate')
             interviewTime_obj = request.POST.get('interviewTime')
             designationoption = request.POST.get('hiddendesignationoptions')
@@ -419,6 +423,7 @@ def schedule_interview(request, candidate_id):
             if request.headers.get('x-requested-with') == 'XMLHttpRequest':
                 response_data = {
                     'id': interview.id,
+                    # 'candidate_id':interview.candidate_id,
                     'interviewDate': interview.interviewDate.strftime('%Y-%m-%d'),
                     'interviewTime': interview.interviewTime.strftime('%H:%M'),
                     'interviewRound': interview.get_interviewRound_display(),
@@ -431,11 +436,7 @@ def schedule_interview(request, candidate_id):
             messages.success(request, 'Interview has been scheduled successfully.')
             return HttpResponseRedirect(reverse('hr:scheduleInterview', args=[candidate_id]))
         else:
-            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-                return JsonResponse({'errors': form.errors}, status=400)
-            for field, errors in form.errors.items():
-                for error in errors:
-                    messages.error(request, f'{form.fields[field].label}: {error}')
+            
             for field, errors in interview_form.errors.items():
                 for error in errors:
                     if field != '__all__':
@@ -444,12 +445,11 @@ def schedule_interview(request, candidate_id):
                         messages.error(request, f'Interview Form: {error}')
     
     else:
-        form = professionalDetailsForm(instance=resume)
+     
         interviewFeedbackForm = InterviewSelectionFeedback(instance=resume)
     
     context.update({
         'resume': resume,
-        'form': form,
         'InterviewFieldsets': InterviewFieldsets,
         'interviews': interviews,
         'interviewFeedbackForm': interviewFeedbackForm,
@@ -962,15 +962,19 @@ def ajax_load_interviewer(request):
     interview_round = request.GET.get('interview_round')
     department_id = request.GET.get('department_id')
     
+    hr_department = Department.objects.get(name='HR')
+    admin_department = Department.objects.get(name='Admin')
+
     if interview_round == 'HR Round':
-        interviewers = Employee.objects.filter(hr_round=True).values('emp_id', 'name', 'email')
-    elif interview_round == 'Telephonic Round':
-        interviewers = Employee.objects.filter(Q(department_id=department_id) & Q(technical_round=True) | Q(hr_round=True)).values('emp_id', 'name', 'email')
+        interviewers = Employee.objects.filter(department=hr_department).values('emp_id', 'emp_user__email', 'first_name')
     else:
-        interviewers = Employee.objects.filter(department_id=department_id, technical_round=True).values('emp_id', 'name', 'email')
+        interviewers = Employee.objects.filter(
+            Q(department_id=department_id) | 
+            Q(department=hr_department) | 
+            Q(department=admin_department)
+        ).values('emp_id', 'emp_user__email', 'first_name')
 
     return JsonResponse({'interviewers': list(interviewers)})
-
 
 #@method_decorator(cache_control(no_cache=True, must_revalidate=True, no_store=True), name='dispatch')
 @login_required(login_url=reverse_lazy('accounts:login'))

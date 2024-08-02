@@ -2680,7 +2680,8 @@
                 }
             });
         });    
-                    
+            
+            
 
         // AJAX for adding a new Branch list
         $('#addbranch_listForm').on('submit', function (event) {
@@ -2786,7 +2787,34 @@
                 }
             });
         });
-       
+        // Delete Branch 
+        $(document).ready(function () {
+            // AJAX for deleting a Branch list
+            $('.delete-branch_list').on('click', function () {
+                var branch_list_id = $(this).data('branch_list-id');
+                if (confirm('Are you sure you want to delete this branch?')) {
+                    $.ajax({
+                        url: '/hr/delete_branch_list/' + branch_list_id + '/',
+                        type: 'POST',
+                        data: {
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'
+                        },
+                        success: function (data) {
+                            $("#AddDesignationModal .modal-body").html(
+                                '<div class="alert alert-success">Designation uploaded successfully!</div>'
+                                );
+                            alert('Branch deleted successfully');
+                            location
+                        .reload(); // Reload the page to update the branch list
+                        },
+                        error: function (xhr, status, error) {
+                            alert('Failed to delete branch: ' + xhr.responseJSON
+                                .error);
+                        }
+                    });
+                }
+            });
+        });    
 
         // AJAX for adding a new department
         $('#adddepartmentmasterForm').on('submit', function (event) {

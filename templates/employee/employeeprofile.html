@@ -73,7 +73,10 @@
             <button class="nav-link" id="attendance-tab" data-bs-toggle="tab" data-bs-target="#attendance-tab-pane" type="button"
                 role="tab" aria-controls="attendance-tab-pane" aria-selected="false">Attendance</button>
         </li>
-
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="salary-tab" data-bs-toggle="tab" data-bs-target="#salary-tab-pane" type="button"
+                role="tab" aria-controls="salary-tab-pane" aria-selected="false">Salary</button>
+        </li>
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="Personal-tab-pane" role="tabpanel" aria-labelledby="Personal-tab"
@@ -1421,25 +1424,7 @@
                         {% else %}
                         {% endif %}
                     </form>
-                    <div class="d-flex justify-content-start align-items-center w-100 p-4 salarysliptable">
-                        <div class="table-responsive w-100">
-                            <div>
-                                <h5 class="me-3 mb-0">All Monthly Salary Slips</h5>
-                            </div>
-                            <div class="mb-3 col-6 col-md-3">
-                                <label class="form-label mb-0" for="selectedMonth">Select Month:</label>
-                                <select class="form-select form-select-sm" id="selectedMonth" name="selectedMonth">
-                                    {% for salary in all_monthly_salaries %}
-                                    <option value="{{ salary.id }}">{{ salary.month }} {{ salary.year }}</option>
-                                    {% endfor %}
-                                </select>
-                                <button class="btn custom-button m-2"
-                                    onclick="downloadSelectedSalarySlip()">Download</button>
-                                <button class="btn custom-button m-2" onclick="sentMailSelectedSalarySlip()">Send as
-                                    Mail</button>
-                            </div>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
 
@@ -1789,8 +1774,34 @@
         </div>
      </div>
     </div>
-</div>
-</div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="salary-tab-pane" role="tabpanel" aria-labelledby="salary-tab" tabindex="0">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-start align-items-center w-100 p-4 salarysliptable">
+                            <div class="table-responsive w-100">
+                                <div>
+                                    <h5 class="me-3 mb-0">All Monthly Salary Slips</h5>
+                                </div>
+                                <div class="mb-3 col-6 col-md-3">
+                                    <label class="form-label mb-0" for="selectedMonth">Select Month:</label>
+                                    <select class="form-select form-select-sm" id="selectedMonth" name="selectedMonth">
+                                        {% for salary in all_monthly_salaries %}
+                                        <option value="{{ salary.id }}">{{ salary.month }} {{ salary.year }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button class="btn custom-button m-2"
+                                        onclick="downloadSelectedSalarySlip()">Download</button>
+                                    <button class="btn custom-button m-2" onclick="sentMailSelectedSalarySlip()">Send as
+                                        Mail</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
 </div>
 </div>
 

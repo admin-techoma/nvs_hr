@@ -215,7 +215,7 @@
                                     <label for="company_branch" class="form-label mb-0 mb-0">Work Location</label>
                                     <select id="company_branch" class="form-control form-control-sm" name="company_branch" required>
                                         <option value="" selected>Select Company Branch</option>
-                                       {% for i in company_branches %}
+                                        {% for i in company_branches %}
                                             <option value="{{ i.pk}}">{{ i.name }}</option>
                                         {% endfor %} 
                                     </select>
@@ -743,17 +743,17 @@
 </script>
        
          <script>
-            function changeClass(element) {
-                if (element.parentNode.classList.contains('full')) {
-                    element.parentNode.classList.remove('full');
-                    element.parentNode.classList.add('half');
-                } else if (element.parentNode.classList.contains('half')) {
-                    element.parentNode.classList.remove('half');
-                    element.parentNode.classList.add('off');
-                } else if (element.parentNode.classList.contains('off')) {
-                    element.parentNode.classList.remove('off');
-                    element.parentNode.classList.add('full');
-                }
-            }
-        </script>
-         {% endblock extrascript %}
+             function changeClass(element) {
+                 if (element.parentNode.classList.contains('full')) {
+                     element.parentNode.classList.remove('full');
+                     element.parentNode.classList.add('half');
+                 } else if (element.parentNode.classList.contains('half')) {
+                     element.parentNode.classList.remove('half');
+                     element.parentNode.classList.add('off');
+                 } else if (element.parentNode.classList.contains('off')) {
+                     element.parentNode.classList.remove('off');
+                     element.parentNode.classList.add('full');
+                 }
+             } 
+            </script>
+{% endblock extrascript %}

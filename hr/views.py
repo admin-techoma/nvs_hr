@@ -2512,7 +2512,7 @@ def update_holidaymaster_details(request, holidaymaster_id):
             
             # Check if the new name already exists
             try:
-                existing_holidaymaster = Department.objects.get(name=new_name,year=new_year)
+                existing_holidaymaster = HolidayMaster.objects.get(name=new_name,year=new_year)
                 return JsonResponse({'error': 'Holiday name year already exists'}, status=400)
             except ObjectDoesNotExist:
 

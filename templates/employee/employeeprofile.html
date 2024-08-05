@@ -1381,19 +1381,16 @@
                         <div class="row  ">
                             <div class="col-12 col-md-3 d-flex justify-content-center align-items-center p-2">
                                 <label for="newCTC" class="form-label mb-0 text-nowrap me-2 mb-0">Monthly CTC:</label>
-                                <input type="number" class="form-control form-control-sm" id="newCTC" name="monthly_ctc"
-                                 disabled />
+                                <input type="number" class="form-control form-control-sm" id="newCTC" name="monthly_ctc" disabled />
                             </div>
                             <div class="col-12 col-md-3 d-flex justify-content-center align-items-center p-2">
                                 <label for="newCTC" class="form-label mb-0 text-nowrap me-2 mb-0">Yearly CTC:</label>
-                                <input type="text" class="form-control form-control-sm" id="yearlyCTC" name="yearlyctc"
-                                 disabled />
+                                <input type="text" class="form-control form-control-sm" id="yearlyCTC" name="yearlyctc" disabled />
                             </div>
                             <div class="col-12 col-md-3 d-flex  justify-content-center align-items-center p-2 mb-2">
                                 <label for="" class="form-label mb-0  text-nowrap me-2 mb-0">Total
                                     Deduction</label>
-                                <input type="number" class="form-control form-control-sm" id="totaldeduction"
-                                 name="total_deduction" disabled>
+                                <input type="number" class="form-control form-control-sm" id="totaldeduction" name="total_deduction" disabled>
                             </div>
                             <div class="col-12 col-md-3 d-flex justify-content-center align-items-center p-2 mb-2">
                                 <label for="netPay" class="form-label mb-0 text-nowrap me-2 mb-0">Net Pay:</label>
@@ -1424,7 +1421,6 @@
                         {% else %}
                         {% endif %}
                     </form>
-                   
                 </div>
             </div>
 
@@ -1437,7 +1433,6 @@
                         action="{% url 'hr:update_permission_info' emp_data.emp_id %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="">
-                           
                             <div class="row">
                                 <div class="col-12 mb-3  border-bottom d-flex justify-content-between flex-wrap" >
                                     <h5>Permission Details</h5>
@@ -1450,54 +1445,12 @@
                                     {% endif %}
                                 </div>
                                 <div class="col-12 col-md-6 mb-3">
-                                    <div class="col-12 mb-2">
-                                        <input type="checkbox" class="form-check-input" id="interview_take"
-                                            name="interview_take" {% if emp_data.interview_take %}checked{% endif %}
-                                            disabled>
-                                        <label for="interview_take">Can take Interview</label>
-                                    </div>
-                                    <div class="col-12 mb-2">
-                                        <input type="checkbox" class="form-check-input" id="technical_round"
-                                            name="technical_round" {% if emp_data.technical_round %}checked{% endif %}
-                                            disabled>
-                                        <label for="technical_round"> Can Take Technical round ?</label>
-                                    </div>
-                                    <div class="col-12 mb-2">
-                                        <input type="checkbox" class="form-check-input" id="telephonic_round"
-                                            name="telephonic_round" {% if emp_data.telephonic_round %}checked{% endif %}
-                                            disabled>
-                                        <label for="telephonic_round">Can Take Telephonic round ?</label>
-                                    </div>
-                                    <div class="col-12 mb-2">
-                                        <input type="checkbox" class="form-check-input" id="round_two" name="round_two"
-                                            {% if emp_data.round_two %}checked{% endif %} disabled>
-                                        <label for="round_two">Can Take Round two ?</label>
-                                    </div>
-                                    <div class="col-12 mb-2">
-                                        <input type="checkbox" class="form-check-input" id="round_three"
-                                            name="round_three" {% if emp_data.round_three %}checked{% endif %} disabled>
-                                        <label for="round_three">Can Take Round three ?</label>
-                                    </div>
-                                    <div class="col-12 mb-2">
-                                        <input type="checkbox" class="form-check-input" id="final_round"
-                                            name="final_round" {% if emp_data.final_round %}checked{% endif %} disabled>
-                                        <label for="final_round"> Can Take Final round ?</label>
-                                    </div>
-                                    <div class="col-12 mb-2">
-                                        <input type="checkbox" class="form-check-input" id="hr_round" name="hr_round" 
-                                        {% if emp_data.hr_round %}checked{% endif %} disabled>
-                                        <label for="hr_round">Can Take Hr round ?</label>
-                                    </div>
+                                    
                                     <div class="col-12 mb-2">
                                         <input type="checkbox" class="form-check-input" id="reporting_take"
                                             name="reporting_take" {% if emp_data.reporting_take %}checked{% endif %}
                                             disabled>
                                         <label for="reporting_take">Can take Reporting of Employee</label>
-                                    </div>
-                                    <div class="col-12 mb-2">
-                                        <input type="checkbox" class="form-check-input" id="esic_apply"
-                                            name="esic_apply" {% if emp_data.esic_apply %}checked{% endif %} disabled>
-                                        <label for="esic_apply">Is ESIC Apply ?</label>
                                     </div>
                                 </div>
 
@@ -1505,8 +1458,7 @@
                             {% if department == 'HR' or department == 'Admin' %}
                             <div class="d-flex justify-content-start align-items-center mb-3">
                                 <button type="submit" id="savepermissionInfoBtn" class="btn custom-button btn-sm"
-                                    disabled>Save
-                                    Changes
+                                    disabled>Save Changes
                                 </button>
                             </div>
                             {% else %}

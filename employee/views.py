@@ -243,7 +243,7 @@ def attendance(request):
 @login_required(login_url=reverse_lazy('accounts:login'))
 def mark_clockIn(request, emp_id):
     employee = get_object_or_404(Employee, emp_id=emp_id)
-
+    
     if request.method == 'POST':
         current_time = datetime.now()  # Fetches current_time's date in the local timezone
         
@@ -257,7 +257,8 @@ def mark_clockIn(request, emp_id):
         new_entry = Attendance.objects.create(
             employee=employee,
             clock_in=current_time.time(),
-            date=current_time.date()
+            date=current_time.date(),
+            latitude= request.POST.get('latitude') + ", " + request.POST.get('longitude'),
         )
         return JsonResponse({'success': 'Attendance marked as clocked in'})
 
@@ -281,6 +282,7 @@ def mark_clockOut(request, emp_id):
             return JsonResponse({'error': 'You have already clocked out for today'})
 
         existing_entry.clock_out = today.time()
+        existing_entry.longitude= request.POST.get('latitude') + ", " + request.POST.get('longitude')
         existing_entry.save()
 
         return JsonResponse({'success': 'Attendance marked as clocked out'})

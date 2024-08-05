@@ -354,10 +354,10 @@
 
 <script>
        // Function to reload the page after 1 minute
-function reloadPageAfterOneMinute() {
+{% comment %} function reloadPageAfterOneMinute() {
     setTimeout(function() {
         location.reload();
-    }, 1000); // 60,000 milliseconds = 1 minute
+    }, 10000); // 60,000 milliseconds = 1 minute
 }
 
 // Add event listener to the button
@@ -366,5 +366,5 @@ document.getElementById('saveBtnReload').addEventListener('click', function() {
 });
 document.getElementById('btn-clockOut').addEventListener('click', function() {
     reloadPageAfterOneMinute();
-});
+}); {% endcomment %}
 </script>

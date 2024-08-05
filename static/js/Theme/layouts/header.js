@@ -54,26 +54,60 @@ $(document).ready(function () {
         $('#ClockoutModal .modal-body span').text(getCurrentTime());
 
         $('.modal-footer .btn-success').one('click', function () {
-            $.ajax({
-                url: '/employee/mark-clockOut/' + employee + '/',
-                type: 'POST',
-                headers: {
-                    'X-CSRFToken': getCSRFToken()
-                },
-                success: function (response) {
-                    if ('error' in response) {
-                        $('#clock_in_Error .modal-body').text(response.error);
-                        $('#clock_in_Error').modal('show');
-                        return;
-                    }
-                    isClockedIn = false;
-                    $('#workHours').css('display', 'none');
-                    $(this).closest('.modal').modal('hide');
-                },
-                error: function (xhr, status, error) {
-                    console.error(error);
+
+            getLocation()
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition, showError);
+                } else {
+                    alert("Geolocation is not supported by this browser.");
                 }
-            });
+            }
+            function showPosition(position) {
+                $.ajax({
+                    url: '/employee/mark-clockOut/' + employee + '/',
+                    type: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCSRFToken()
+                    },
+                    data: {
+                        'latitude': position.coords.latitude,
+                        'longitude': position.coords.longitude
+                    },
+                    success: function (response) {
+                        if ('error' in response) {
+                            $('#clock_in_Error .modal-body').text(response.error);
+                            $('#clock_in_Error').modal('show');
+                            return;
+                        }
+                        isClockedIn = false;
+                        $('#workHours').css('display', 'none');
+                        $(this).closest('.modal').modal('hide');
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+    
+            function showError(error) {
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        alert("User denied the request for Geolocation.");
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        alert("Location information is unavailable.");
+                        break;
+                    case error.TIMEOUT:
+                        alert("The request to get user location timed out.");
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        alert("An unknown error occurred.");
+                        break;
+                }
+            }
+
         });}else{
             window.alert("Use Mobile Device only for punch in");
         }
@@ -143,34 +177,70 @@ $(document).ready(function () {
     // });
     
     $('#clockedIn').on('click', function () {
-        if( /iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent) ) {
+        if ( /iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent)) {
             $('#ClockinModal').modal('show');
         $('#ClockinModal .modal-body span').text(getCurrentTime());
-    
-        $('.modal-footer .btn-success').one('click', function () {
-            $.ajax({
-                url: '/employee/mark-clockIn/' + employee + '/',
-                type: 'POST',
-                headers: {
-                    'X-CSRFToken': getCSRFToken()
-                },
-                success: function (response) {
-                    console.log(response);
-                    if ('error' in response) {
-                        $('#clock_in_Error .modal-body').text(response.error);
-                        $('#clock_in_Error').modal('show');
-                        return;
-                    }
-                    clockInTime = getCurrentTime();
-                    isClockedIn = true;
-                    $('#workHours').css('display', 'block');
-                    $('#ClockinModal').modal('hide'); // Use the modal ID to ensure the correct modal is hidden
-                },
-                error: function (xhr, status, error) {
-                    console.error(error);
+            
+        $('.modal-footer .btn-success').on('click', function () {
+            getLocation()
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition, showError);
+                } else {
+                    alert("Geolocation is not supported by this browser.");
                 }
-            });
+            }
+    
+            function showPosition(position) {
+                $.ajax({
+                    url: '/employee/mark-clockIn/' + employee + '/',
+                    type: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCSRFToken()
+                    },
+                    data: {
+                        'latitude': position.coords.latitude,
+                        'longitude': position.coords.longitude
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        if ('error' in response) {
+                            $('#clock_in_Error .modal-body').text(response.error);
+                            $('#clock_in_Error').modal('show');
+                            return;
+                        }
+                        clockInTime = getCurrentTime();
+                        isClockedIn = true;
+                        $('#workHours').css('display', 'block');
+                        $('#ClockinModal').modal('hide'); // Use the modal ID to ensure the correct modal is hidden
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+    
+            function showError(error) {
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        alert("User denied the request for Geolocation.");
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        alert("Location information is unavailable.");
+                        break;
+                    case error.TIMEOUT:
+                        alert("The request to get user location timed out.");
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        alert("An unknown error occurred.");
+                        break;
+                }
+            }
+    
         });
+
+
         }
         else{
             window.alert("Use Mobile Device only for punch in");

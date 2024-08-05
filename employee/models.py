@@ -13,7 +13,7 @@ class Department(models.Model):
 
 class Designation(models.Model):
     
-    department  =   models.ForeignKey(Department, verbose_name="department", on_delete=models.PROTECT, related_name='designation', default='Select Designations')
+    department  =   models.ForeignKey(Department, verbose_name="department", on_delete=models.PROTECT, related_name='designation')
     name        =   models.CharField(max_length=255)
     
     def __str__(self):

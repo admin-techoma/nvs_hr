@@ -113,7 +113,7 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'nsv_hr',         
+        'NAME': 'nvs_hr',         
         'USER': 'admin',       
         'PASSWORD': 'P@$$w0rd',    
         'HOST': 'localhost',             

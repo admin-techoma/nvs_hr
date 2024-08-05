@@ -110,16 +110,16 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'peoplepulsedb',         
-#         'USER': 'peoplepulseuser',       
-#         'PASSWORD': 'Peoplepulse123',    
-#         'HOST': 'localhost',             
-#         'PORT': '5433',              
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'nsv_hr',         
+        'USER': 'admin',       
+        'PASSWORD': 'P@$$w0rd',    
+        'HOST': 'localhost',             
+        'PORT': '5433',              
+    }
+}
 
 
 # Password validation

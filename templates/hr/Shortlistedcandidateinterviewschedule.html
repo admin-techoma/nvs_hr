@@ -360,7 +360,7 @@
     
     $(document).on('click', '.edit-interviewround_list', function() {
         var interviewround_list_id = $(this).data('interviewround_list-id');
-    
+        console.log(interviewround_list_id);
         $.ajax({
             url: "{% url 'hr:get_interviewround_list_id_details' 0 %}".replace('0', interviewround_list_id),
             type: "GET",

@@ -361,6 +361,7 @@
     $(document).on('click', '.edit-interviewround_list', function() {
         var interviewround_list_id = $(this).data('interviewround_list-id');
         console.log(interviewround_list_id);
+
         $.ajax({
             url: "{% url 'hr:get_interviewround_list_id_details' 0 %}".replace('0', interviewround_list_id),
             type: "GET",
@@ -401,6 +402,54 @@
             },
             error: function(xhr, status, error) {
                 alert("Error retrieving interview round data");
+            }
+        });
+    });
+
+    // AJAX for updating an Interviewround
+    $('#updateinterviewround_listForm').on('submit', function(event) {
+        event.preventDefault();
+        var formData = new FormData($(this)[0]);
+        $.ajax({
+            type: "POST",
+            url: "{% url 'hr:update_interviewround' %}",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                $("#Editinterviewround_listModal .modal-body").html('<div class="alert alert-success">Interview round updated successfully!</div>');
+                setTimeout(function(){
+                    $("#Editinterviewround_listModal").modal('hide');
+                    location.reload();
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                $("#Editinterviewround_listModal .modal-body").html('<div class="alert alert-danger">' + xhr.responseJSON.error + '</div>');
+            }
+        });
+    });
+
+    
+    
+    $("#edit_department").change(function () {
+        var id = $(this).val();
+        var designationSelect = $("#edit_designation");
+
+        $.ajax({
+            url: "/hr/ajax/load_designation/",
+            data: {
+                'department': id
+            },
+            success: function (data) {
+                designationSelect.empty();
+                designationSelect.append(
+                    $("<option>").attr('value', '').text('Select Designation')
+                );
+                data.designations.forEach(function(designation) {
+                    designationSelect.append(
+                        $("<option>").attr('value', designation.id).text(designation.name)
+                    );
+                });
             }
         });
     });

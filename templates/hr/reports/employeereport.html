@@ -341,14 +341,7 @@
                         }
                     }, {
                         data: "status"
-                    }, {
-                        data: "interview_take",
-                        render: function (data, type, row) {
-                            return data
-                                ? '<i class="bi bi-check-circle-fill text-success" "></i>'
-                                : '<i class="bi bi-x-circle-fill text-danger""></i>';
-                        }
-                    }, {
+                    },  {
                         data: "reporting_take",
                         render: function (data, type, row) {
                             return data
@@ -367,20 +360,6 @@
                         data: "instagram_profile"
                     }, {
                         data: "facebook_profile"
-                    }, {
-                        data: "esic_apply",
-                        render: function (data, type, row) {
-                            return data
-                                ? '<i class="bi bi-check-circle-fill text-success" "></i>'
-                                : '<i class="bi bi-x-circle-fill text-danger""></i>';
-                        }
-                    }, {
-                        data: "pf_apply",
-                        render: function (data, type, row) {
-                            return data
-                                ? '<i class="bi bi-check-circle-fill text-success" "></i>'
-                                : '<i class="bi bi-x-circle-fill text-danger""></i>';
-                        }
                     }],
                     scrollX: true,
                     scrollY: window.innerHeight - (.6 * window.innerHeight),

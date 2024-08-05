@@ -113,11 +113,11 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'peoplepulsedb',         
-#         'USER': 'peoplepulseuser',       
-#         'PASSWORD': 'Peoplepulse123',    
+#         'NAME': 'nvs_hr',         
+#         'USER': 'admin',       
+#         'PASSWORD': 'P@$$w0rd',    
 #         'HOST': 'localhost',             
-#         'PORT': '5433',              
+#         'PORT': '',              
 #     }
 # }
 

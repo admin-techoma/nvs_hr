@@ -126,7 +126,7 @@ def attendancedata(request):
         end_date = datetime.today()
 
     daterange   = [start_date, end_date]
-    queryset = list(Attendance.objects.filter(date__range = daterange).values("employee__emp_id","employee__name","date","clock_in","clock_out","is_full_day","is_half_day","is_absent","is_on_leave",))
+    queryset = list(Attendance.objects.filter(date__range = daterange).values("employee__emp_id","employee__name","date","clock_in","clock_out","is_full_day","is_half_day","is_absent","is_on_leave","latitude","longitude"))
     return JsonResponse({'data':queryset})
 
 

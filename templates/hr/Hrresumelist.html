@@ -25,11 +25,12 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Mobile No.</th>
                                 <th scope="col">Email ID</th>
-                                <th scope="col">Status</th>
+
+                                <th scope="col">Resume</th>
+                                <th scope="col">Resume Status</th>
                                 {% comment %} <th scope="col">Remarks</th> {% endcomment %}
                                 <th scope="col">Created On</th>
                                 <th scope="col">Interview Status</th>
-                                <th scope="col">Resume</th>
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -41,6 +42,11 @@
                                 <td class="text-nowrap">{{ resume.name }}</td>
                                 <td class="text-nowrap">{{ resume.phone_number }}</td>
                                 <td class="text-lowercase text-nowrap">{{ resume.email }}</td>
+                                <td>
+                                    <a href="{{ resume.resume.url }}" target="_blank" class="btn custom-button btn-sm me-2">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
                                 <td>
                                     {% if resume.status == "Shortlisted" %}
                                     <span class="badge text-bg-success">{{resume.status}} </span>
@@ -63,14 +69,10 @@
                                     <span class="badge text-bg-danger" href=""> {{resume.interviewFeedback }}</span>
                                     {% endif %}
                                 </td>
-                                <td>
-                                    <a href="{{ resume.resume.url }}" target="_blank" class="btn custom-button btn-sm me-2">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
+                                
                                 {% if resume.candidate_id not in employees %}
                                 <td class="text-nowrap" style="min-width: 200px; width: 200px;">
-                                    <div class="d-flex w-100 justify-content-center">
+                                    <div class="d-flex w-50 justify-content-center">
                                         
                                         <button id="resumeEdit{{resume.candidate_id}}" href="" class="btn btn-success edit-resume btn-sm me-2">
                                             <i class="bi bi-pencil-square"></i>

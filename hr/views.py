@@ -67,6 +67,7 @@ def get_session(request):
     reporting_take = request.session.get('reporting_take', '')
     session_email = request.session.get('session_email', '')
   
+  
    
     profile_pic = None
     if documents_id:
@@ -1335,16 +1336,9 @@ def add_employee(request, pk):
         bank_name = request.POST.get("bank_name")
         ifsc_code = request.POST.get("ifsc_code")
         branch = request.POST.get("branch")
-        interview_take = request.POST.get("interview_take") == 'true'
-        hr_round = request.POST.get("hr_round") == 'true'
-        technical_round = request.POST.get("technical_round") == 'true'
-        telephonic_round = request.POST.get("telephonic_round") == 'true'
-        round_two = request.POST.get("round_two") == 'true'
-        round_three = request.POST.get("round_three") == 'true'
-        final_round = request.POST.get("final_round") == 'true'
+        
         reporting_take = request.POST.get("reporting_take") == 'true'
-        esic_apply = request.POST.get("esic_apply") == 'true'
-        pf_apply = request.POST.get("pf_apply") == 'true'
+       
 
         reporting_to_id = request.POST.get('reporting_to')
         reporting_to = Employee.objects.get(pk=reporting_to_id) if reporting_to_id else None
@@ -1382,9 +1376,7 @@ def add_employee(request, pk):
             c_address=c_address, c_state=c_state, c_city=c_city, c_country=c_country, c_pin_code=c_pin_code,
             contact_no=contact_no,other_contact_no=other_contact_no, dob=dob, doj=doj, pfno=pfno, esicno=esicno, pf_joining_date=pf_joining_date, esic_joining_date=esic_joining_date,
             uanno=uanno, pancard_no=pancard_no, aadhaarcard_no=aadhaarcard_no, account_no=account_no, bank_name=bank_name, ifsc_code=ifsc_code,
-            branch=branch, esic_apply=esic_apply, pf_apply=pf_apply, interview_take=interview_take, hr_round=hr_round,
-            technical_round=technical_round, telephonic_round=telephonic_round, round_two=round_two, round_three=round_three,
-            final_round=final_round, reporting_take=reporting_take, company_branch=selected_company_branch, department=selectdepartment,
+            branch=branch, reporting_take=reporting_take, company_branch=selected_company_branch, department=selectdepartment,
             designation=designation, reporting_to=reporting_to, documents_id=documents, position=selected_position, gender=selected_gender,
             holiday_master=selectholiday_master,emergency_contactname = emergency_contactname,emergency_contactnumber = emergency_contactnumber,emergency_relationas = emergency_relationas
         )
@@ -1728,46 +1720,6 @@ def update_permission_info(request, id):
     emp_data, created = Employee.objects.get_or_create(emp_id=id)
     
     if request.method == 'POST':
-        if 'interview_take' in request.POST:
-            emp_data.interview_take = True
-        else:
-            emp_data.interview_take = False
-
-        if 'hr_round' in request.POST:
-            emp_data.hr_round = True
-        else:
-            emp_data.hr_round = False
-
-        if 'technical_round' in request.POST:
-            emp_data.technical_round = True
-        else:
-            emp_data.technical_round = False
-
-        if 'telephonic_round' in request.POST:
-            emp_data.telephonic_round = True
-        else:
-            emp_data.telephonic_round = False
-
-        if 'round_two' in request.POST:
-            emp_data.round_two = True
-        else:
-            emp_data.round_two = False
-
-        if 'round_three' in request.POST:
-            emp_data.round_three = True
-        else:
-            emp_data.round_three = False
-
-        if 'final_round' in request.POST:
-            emp_data.final_round = True
-        else:
-            emp_data.final_round = False
-
-                
-        if 'esic_apply' in request.POST:
-            emp_data.esic_apply = True
-        else:
-            emp_data.esic_apply = False
 
         if 'reporting_take' in request.POST:
             emp_data.reporting_take = True
@@ -1799,18 +1751,15 @@ def check_email_exists(request):
 def check_contact_no_exists(request):
     contact_no = request.GET.get('contact_no', None)
     phone_number = request.GET.get('phone_number', None)
-
-    if not contact_no:
-        return JsonResponse({'error': 'Contact No parameter is missing'}, status=400)
+    print("contact_no",contact_no)
+    if contact_no:
+        exists = Employee.objects.filter(contact_no=contact_no).exists()
+        return JsonResponse({'exists': exists})
     
-    if not phone_number:
-        return JsonResponse({'error': 'Phone No parameter is missing'}, status=400)
+    else:
+        phone_number_exists = candidateResume.objects.filter(phone_number=phone_number).exists()
+        return JsonResponse({'phone_number_exists': phone_number_exists})
 
-    # Check if Contact No already exists in the Employee model (or your appropriate model)
-    exists = Employee.objects.filter(contact_no=contact_no).exists()
-    phone_number_exists = candidateResume.objects.filter(phone_number=phone_number).exists()
-
-    return JsonResponse({'exists': exists, 'phone_number_exists': phone_number_exists})
 
 
 @register.filter
@@ -2027,17 +1976,9 @@ def direct_employee(request, pk=None):
         bank_name= request.POST.get("bank_name")
         ifsc_code= request.POST.get("ifsc_code")
         branch= request.POST.get("branch")
-        interview_take = request.POST.get("interview_take") == 'true'
-        hr_round = request.POST.get("hr_round") == 'true'
-        technical_round = request.POST.get("technical_round") == 'true'
-        telephonic_round = request.POST.get("telephonic_round") == 'true'
-        round_two = request.POST.get("round_two") == 'true'
-        round_three = request.POST.get("round_three") == 'true'
-        final_round = request.POST.get("final_round") == 'true'
-
+        
         reporting_take = request.POST.get("reporting_take") == 'true'
-        esic_apply = request.POST.get("esic_apply") == 'true'
-        pf_apply = request.POST.get("pf_apply") == 'true'
+       
         emergency_contactname = request.POST.get("emergency_contactname")
         emergency_contactnumber = request.POST.get("emergency_contactnumber")
         emergency_relationas = request.POST.get("emergency_relationas")
@@ -2102,14 +2043,6 @@ def direct_employee(request, pk=None):
                     bank_name=bank_name, 
                     ifsc_code=ifsc_code, 
                     branch=branch,
-                    esic_apply=esic_apply,
-                    interview_take=interview_take, 
-                    hr_round =hr_round,
-                    technical_round =technical_round,
-                    telephonic_round=telephonic_round,
-                    round_two =round_two,
-                    round_three =round_three,
-                    final_round=final_round,
                     reporting_take=reporting_take,
                     company_branch=company_branch,
                     department=selectdepartment,
@@ -2167,8 +2100,7 @@ def direct_employee(request, pk=None):
                 address=address, state=state, city=city, country=country, pin_code=pin_code,
                 c_address=c_address, c_state=c_state, c_city=c_city, c_country=c_country, c_pin_code=c_pin_code,
                 contact_no=contact_no,other_contact_no=other_contact_no, dob=dob, doj=doj, pfno=pfno,esicno=esicno,pf_joining_date=pf_joining_date,esic_joining_date=esic_joining_date, uanno=uanno, pancard_no=pancard_no,
-                aadhaarcard_no=aadhaarcard_no, account_no=account_no, bank_name=bank_name, ifsc_code=ifsc_code, branch=branch,esic_apply=esic_apply,pf_apply=pf_apply,
-                interview_take=interview_take, hr_round =hr_round, technical_round =technical_round, telephonic_round=telephonic_round, round_two =round_two, round_three =round_three, final_round=final_round,reporting_take=reporting_take,company_branch=company_branch,department=selectdepartment,
+                aadhaarcard_no=aadhaarcard_no, account_no=account_no, bank_name=bank_name, ifsc_code=ifsc_code, branch=branch,reporting_take=reporting_take,company_branch=company_branch,department=selectdepartment,
                 designation=designation,reporting_to=reporting_to,documents_id=onboarding_instance,position=position,gender=gender, emergency_contactname=emergency_contactname,
                 emergency_contactnumber=emergency_contactnumber,emergency_relationas=emergency_relationas,
             )
@@ -2216,9 +2148,9 @@ def add_department_details(request):
             # Department does not exist, create it
             try:
                 Department.objects.create(name=name)
-                return redirect('hr:view_company')
+                return JsonResponse({'success': 'Department Add successfully!'})
             except Exception as e:
-                return JsonResponse({"msg": str(e)}, status=400)
+                return JsonResponse({'error': 'Interview round not found'}, status=404)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
 

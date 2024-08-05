@@ -157,12 +157,18 @@ $(document).ready(function () {
                 if (data.success) {
                     // Display the success message in your HTML template
                     $('.alert-success').remove(); // Remove previous success messages
-                    var successMessage = ' <div class="alert alert-success" role="alert"><div class="row"><div class="col-10 form-group">Candidate status has been changed.</div><div class="col-2 form-group d-flex justify-content-end"><button type="button" class="btn-close close-success" data-bs-dismiss="alert" aria-label="Close"></button></div></div></div>';
+                    var successMessage = ' <div class="alert alert-success" role="alert"><div class="row"><div class="col-10 form-group">Candidate Completed All Interview Rounds Successfully.</div><div class="col-2 form-group d-flex justify-content-end"><button type="button" class="btn-close close-success" data-bs-dismiss="alert" aria-label="Close"></button></div></div></div>';
                     $('html, body').animate({
                         scrollTop: 0
                     }, 'slow');
+                    
                     $('#alert-container').append(successMessage);
-                    alerttimeout()
+                    alerttimeout();
+    
+                    // Redirect to /hr/resumes/ after 2000 milliseconds
+                    setTimeout(function() {
+                        window.location.href = '/hr/resumes/';
+                    }, 2000);
                 } else {
                     // Handle other success conditions or error responses
                     alert(data.message);
@@ -170,7 +176,7 @@ $(document).ready(function () {
             }
         });
     });
-
+    
     $("#departmentoptions").change(function () {
         var id = $(this).val();
         var designationSelect = $("#designationoptions");

@@ -88,6 +88,15 @@ class InterviewSelectionFeedback(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # Set default value for interviewFeedback_date
         self.fields['interviewFeedback_date'] = forms.DateField(initial=timezone.now().date(), widget=forms.DateInput(attrs={'class': 'form-control form-control-sm ', 'type': 'date'}))
+
+        # Filter out the 'IsEmployeeNow' choice from the interviewFeedback field
+        feedback_choices = [
+            ('Pending', 'Pending'),
+            ('Selected', 'Selected'),
+            ('Rejected', 'Rejected'),
+        ]
+        self.fields['interviewFeedback'].choices = feedback_choices
+
     class Meta:
         model = candidateResume
         fields = ['remarks', 'interviewFeedback']
@@ -95,6 +104,7 @@ class InterviewSelectionFeedback(forms.ModelForm):
             'remarks': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
             'interviewFeedback': forms.Select(attrs={'class': 'form-select form-select-sm'}),
         }
+
     
 class OnboardingKYCForm(forms.ModelForm):
     class Meta:

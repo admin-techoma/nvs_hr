@@ -73,11 +73,7 @@
                                 {% for candidate_id, status_dict in onboarding_status.items %}
                                 {% if onboardCandidates.candidate_id == candidate_id %}
                                 {% if not status_dict.onboarding_exists %}
-                                <span class="badge text-bg-danger">Upload Documents</span>
-                                {% else %}
-                                <a href="/hr/onboarding-process/{{onboardCandidates.candidate_id}}" class="badge text-bg-warning edit-resume">
-                                    Pending Documents
-                                </a>
+                               <span class="badge text-bg-warning edit-resume">Pending Documents</span>
                                 <ul>
                                     {% if onboardCandidates.c_psimg %}
                                     <li><a href="{{ onboardCandidates.c_psimg.url }}" target="_blank">PS Image Document</a></li>
@@ -100,15 +96,15 @@
                                 <div class="d-flex">
                                     {% for candidate_id, status_dict in onboarding_status.items %}
                                     {% if onboardCandidates.candidate_id == candidate_id %}
-                                    {% if not status_dict.onboarding_exists %}
+                                    {% comment %} {% if not status_dict.onboarding_exists %} {% endcomment %}
                                     <a href="/hr/onboarding-process/{{onboardCandidates.candidate_id}}" class="btn btn-danger btn-sm me-2">
                                         <i class="bi bi-upload"></i>
                                     </a>
-                                    {% else %}
+                                    {% comment %} {% else %}
                                     <a href="/hr/view_documents/{{onboardCandidates.candidate_id}}" class="btn btn-sm btn-success me-2">
                                         <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                    {% endif %}
+                                    </a> {% endcomment %}
+                                    {% comment %} {% endif %} {% endcomment %}
                                     {% endif %}
                                     {% endfor %}
                                 </div>

@@ -2712,9 +2712,14 @@
                 },
                             success: function (data) {
                                 $("#AddBranchModal .modal-body").html(
-                                    '<div class="alert aler t-success">Add New Branch successfully!</div>'
+                                    '<div class="alert alert-success">Add New Branch successfully!</div>'
                                 );
                             $("#addBranchButton").hide();
+
+                            setTimeout(function () {
+                                $("##AddBranchModal").modal('hide');
+                            location.reload();
+                    }, 2000);
                 },
                             error: function (xhr, status, error) {
                     var errorMessage = xhr.responseJSON.error;

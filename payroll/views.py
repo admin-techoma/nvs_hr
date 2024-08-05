@@ -616,7 +616,7 @@ def month_salary(request):
         return response
     else:
         context = {
-            'payroll_data': payroll_data,
+            'payroll_datas': payroll_data,
             'fiscal_year': fiscal_year,
             'employee_data': employee_data,
             'total_saturdays_and_sundays': total_saturdays_and_sundays,
@@ -642,99 +642,107 @@ def generate_salary(request):
         # import pdb; pdb.set_trace()
         # If salary has not been generated, proceed to generate it
         if not salary_generated:
-            # Access form data using request.POST
+            print("============================")
+            print("                            ")
+            print("                            ")
             print(request.POST)
+            print("============================")
+            print("                            ")
+            print("                            ")
             emp_id_list = request.POST.getlist('emp_id')
-            print(emp_id_list)
+            print('emp_id: ', emp_id_list)
             payroll_id_list = request.POST.getlist('payroll_id')
-            print(payroll_id_list)
+            print('payroll_id: ', payroll_id_list)
             name_list = request.POST.getlist('name')
-            print(name_list)
+            print('name: ', name_list)
             monthly_ctc_list = request.POST.getlist('monthly_ctc')
-            print(monthly_ctc_list)
+            print('monthly_ctc: ', monthly_ctc_list)
             monthly_basic_list = request.POST.getlist('monthly_basic')
-            print(monthly_basic_list)
+            print('monthly_basic: ', monthly_basic_list)
             monthly_hra_list = request.POST.getlist('monthly_hra')
-            print(monthly_hra_list)
+            print('monthly_hra: ', monthly_hra_list)
             monthly_ca_list = request.POST.getlist('monthly_ca')
-            print(monthly_ca_list)
+            print('monthly_ca: ', monthly_ca_list)
             monthly_sa_list = request.POST.getlist('monthly_sa')
-            print(monthly_sa_list)
+            print('monthly_sa: ', monthly_sa_list)
             monthly_employerpf_list =   request.POST.getlist('monthly_employerpf')
-            print(monthly_employerpf_list)
+            print('monthly_employerpf: ', monthly_employerpf_list)
             monthly_employeresic_list = request.POST.getlist('monthly_employeresic')
-            print(monthly_employeresic_list)
+            print('monthly_employeresic: ', monthly_employeresic_list)
             monthly_employeepf_list =   request.POST.getlist('monthly_employeepf')
-            print(monthly_employeepf_list)
+            print('monthly_employeepf: ', monthly_employeepf_list)
             monthly_employeeesic_list = request.POST.getlist('monthly_employeeesic')
-            print(monthly_employeeesic_list)
+            print('monthly_employeeesic: ', monthly_employeeesic_list)
             monthly_professionalTax_list = request.POST.getlist('monthly_professionalTax')
-            print(monthly_professionalTax_list)
+            print('monthly_professionalTax: ', monthly_professionalTax_list)
             monthly_incentive_list = request.POST.getlist('monthly_incentive')
-            print(monthly_incentive_list)
+            print('monthly_incentive: ', monthly_incentive_list)
             monthly_loan_other_list = request.POST.getlist('monthly_loan')
-            print(monthly_loan_other_list)
+            print('monthly_loan: ', monthly_loan_other_list)
             monthly_gross_salary_list= request.POST.getlist('monthly_gross_salary')
-            print(monthly_gross_salary_list)
+            print('monthly_gross_salary: ', monthly_gross_salary_list)
             monthly_newctc_list= request.POST.getlist('monthly_ctc')
-            print(monthly_newctc_list)
+            print('monthly_newctc: ', monthly_newctc_list)
             monthly_total_deductions_list= request.POST.getlist('monthly_total_deductions')
-            print(monthly_total_deductions_list)
+            print('monthly_total_deductions: ', monthly_total_deductions_list)
             monthly_netpay_list= request.POST.getlist('monthly_netpay')
-            print(monthly_netpay_list)
+            print('monthly_netpay: ', monthly_netpay_list)
             fixed_ctc_list= request.POST.getlist('fixed_ctc')
-            print(fixed_ctc_list)
+            print('fixed_ctc: ', fixed_ctc_list)
 
             fixed_basic_list = request.POST.getlist('fixed_basic')
-            print(fixed_basic_list)
+            print('fixed_basic: ', fixed_basic_list)
             fixed_hra_list = request.POST.getlist('fixed_hra')
-            print(fixed_hra_list)
+            print('fixed_hra: ', fixed_hra_list)
             fixed_ca_list = request.POST.getlist('fixed_ca')
-            print(fixed_ca_list)
+            print('fixed_ca: ', fixed_ca_list)
             fixed_sa_list = request.POST.getlist('fixed_sa')
-            print(fixed_sa_list)
+            print('fixed_sa: ', fixed_sa_list)
             fixed_employeepf_list = request.POST.getlist('fixed_employeepf')
-            print(fixed_employeepf_list)
+            print('fixed_employeepf: ', fixed_employeepf_list)
             fixed_employerpf_list = request.POST.getlist('fixed_employerpf')
-            print(fixed_employerpf_list)
+            print('fixed_employerpf: ', fixed_employerpf_list)
             fixed_employeeesic_list = request.POST.getlist('fixed_employeeesic')
-            print(fixed_employeeesic_list)
+            print('fixed_employeeesic: ', fixed_employeeesic_list)
             fixed_employeresic_list = request.POST.getlist('fixed_employeresic')
-            print(fixed_employeresic_list)
+            print('fixed_employeresic: ', fixed_employeresic_list)
             fixed_gross_salary_list = request.POST.getlist('fixed_gross_salary')
-            print(fixed_gross_salary_list)
+            print('fixed_gross_salary: ', fixed_gross_salary_list)
             fixed_newctc_list = request.POST.getlist('fixed_newctc')
-            print(fixed_newctc_list)
+            print('fixed_newctc: ', fixed_newctc_list)
             fixed_professionalTax_list = request.POST.getlist('fixed_professionalTax')
-            print(fixed_professionalTax_list)
+            print('fixed_professionalTax: ', fixed_professionalTax_list)
             fixed_total_deducation_list = request.POST.getlist('fixed_total_deducation')
-            print(fixed_total_deducation_list)
+            print('fixed_total_deducation: ', fixed_total_deducation_list)
             fixed_netpay_list = request.POST.getlist('fixed_netpay')
-            print(fixed_netpay_list)
+            print('fixed_netpay: ', fixed_netpay_list)
             remarks_list = request.POST.getlist('remarks')
-            print(remarks_list)
+            print('remarks: ', remarks_list)
             monthly_presentdays_list =  request.POST.getlist('monthly_presentdays')
-            print(monthly_presentdays_list)
+            print('monthly_presentdays: ', monthly_presentdays_list)
             monthly_absentdays_list= request.POST.getlist('monthly_absentdays')
-            print(monthly_absentdays_list)
+            print('monthly_absentdays: ', monthly_absentdays_list)
             monthly_halfdays_list= request.POST.getlist('monthly_halfdays')
-            print(monthly_halfdays_list)
+            print('monthly_halfdays: ', monthly_halfdays_list)
             monthly_paiddays_list= request.POST.getlist('monthly_paiddays')
-            print(monthly_paiddays_list)
+            print('monthly_paiddays: ', monthly_paiddays_list)
             monthly_weekoffdays_list= request.POST.getlist('monthly_weekoffdays')
-            print(monthly_weekoffdays_list)
-
+            print('monthly_weekoffdays: ', monthly_weekoffdays_list)
+            print("                            ")
+            print("                            ")
+            print("============================")
             # Ensure the lengths of emp_id_list and payroll_id_list are the same
             if len(emp_id_list) == len(payroll_id_list) == len(name_list) == len(fixed_ctc_list) == len(fixed_basic_list)== len(fixed_hra_list)== len(fixed_ca_list)== len(fixed_sa_list)== len(fixed_employeepf_list)== len(fixed_employerpf_list)== len(fixed_employeeesic_list)== len(fixed_employeresic_list)== len(fixed_gross_salary_list)== len(fixed_newctc_list)== len(fixed_professionalTax_list)== len(fixed_total_deducation_list)== len(fixed_netpay_list) == len(monthly_ctc_list) == len(monthly_basic_list) == len(monthly_hra_list) == len(monthly_ca_list) == len(monthly_sa_list) == len(monthly_employerpf_list) == len(monthly_employeresic_list) == len(monthly_employeepf_list) == len(monthly_employeeesic_list) == len(monthly_professionalTax_list) == len(monthly_incentive_list) == len(monthly_loan_other_list) == len(monthly_gross_salary_list) == len(monthly_total_deductions_list) == len(monthly_netpay_list) == len(monthly_newctc_list) ==len(remarks_list) == len(monthly_presentdays_list) == len(monthly_absentdays_list) == len(monthly_halfdays_list) == len(monthly_paiddays_list) == len(monthly_weekoffdays_list) :
                 
                 # Save data to the Month_salary model
                 for emp_id, payroll_id, name ,fixed_ctc,fixed_basic,fixed_hra,fixed_ca,fixed_sa,fixed_employeepf,fixed_employerpf,fixed_employeeesic,fixed_employeresic,fixed_gross_salary,fixed_newctc,fixed_professionalTax,fixed_total_deducation,fixed_netpay,monthly_ctc ,monthly_basic,monthly_hra,monthly_ca,monthly_sa ,monthly_employerpf,monthly_employeresic,monthly_employeepf,monthly_employeeesic,monthly_professionalTax,monthly_incentive,monthly_loan_other,monthly_gross_salary,monthly_total_deductions,monthly_netpay,monthly_newctc,remarks,monthly_presentdays,monthly_absentdays,monthly_halfdays,monthly_paiddays,monthly_weekoffdays in zip(emp_id_list, payroll_id_list, name_list,fixed_ctc_list,fixed_basic_list,fixed_hra_list,fixed_ca_list,fixed_sa_list,fixed_employeepf_list,fixed_employerpf_list,fixed_employeeesic_list,fixed_employeresic_list,fixed_gross_salary_list,fixed_newctc_list,fixed_professionalTax_list,fixed_total_deducation_list,fixed_netpay_list,monthly_ctc_list,monthly_basic_list,monthly_hra_list,monthly_ca_list,monthly_sa_list ,monthly_employerpf_list,monthly_employeresic_list,monthly_employeepf_list,monthly_employeeesic_list,monthly_professionalTax_list,monthly_incentive_list,monthly_loan_other_list,monthly_gross_salary_list,monthly_total_deductions_list,monthly_netpay_list,monthly_newctc_list,remarks_list,monthly_presentdays_list,monthly_absentdays_list,monthly_halfdays_list,monthly_paiddays_list,monthly_weekoffdays_list):
-                    
+                # emp_id_list, payroll_id_list, name_list,fixed_ctc_list,fixed_basic_list,fixed_hra_list,fixed_ca_list,fixed_sa_list,fixed_employeepf_list,fixed_employerpf_list,fixed_employeeesic_list,fixed_employeresic_list,fixed_gross_salary_list,fixed_newctc_list,fixed_professionalTax_list,fixed_total_deducation_list,fixed_netpay_list,monthly_ctc_list,monthly_basic_list,monthly_hra_list,monthly_ca_list,monthly_sa_list ,monthly_employerpf_list,monthly_employeresic_list,monthly_employeepf_list,monthly_employeeesic_list,monthly_professionalTax_list,monthly_incentive_list,monthly_loan_other_list,monthly_gross_salary_list,monthly_total_deductions_list,monthly_netpay_list,monthly_newctc_list,remarks_list,monthly_presentdays_list,monthly_absentdays_list,monthly_halfdays_list,monthly_paiddays_list,monthly_weekoffdays_list)    
                     if not monthly_incentive:
                         monthly_incentive = 0
                     if not monthly_loan_other:
                         monthly_loan_other = 0
-                        
+                    print(monthly_ctc)    
+                    print(monthly_newctc)    
                     month_salary_instance = Monthly_salary(
                         emp_id=Employee.objects.get(emp_id=emp_id),
                         name=name,
@@ -787,7 +795,6 @@ def generate_salary(request):
             else:
                 # Display an error message if lengths don't match
                 messages.error(request, 'Mismatch in emp_id, payroll_id, and name entries.')
-               
                 return redirect('payroll:month_salary')  # Redirect to an error page or another URL
         else:
             # Display error message if salary data already exists for the current month and year

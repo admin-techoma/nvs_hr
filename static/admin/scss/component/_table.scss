@@ -66,10 +66,18 @@ table {
 }
 
 .salpayrolltable-wrapper {
-  max-height: 18em;
+  max-height: 21em;
   height: 100%;
   border-radius: 0.625em;
   .table {
+    thead{
+      tr{
+        border: 0;
+        th{
+          border: 0 !important;
+        }
+      }
+    }
     tbody {
       tr {
         cursor: unset;
@@ -126,7 +134,7 @@ table {
   table {
     thead {
       th {
-        border-bottom: 0.063em solid !important;
+        border-bottom: 0.0063em solid !important;
         border-bottom-color: var(--color-border-theme) !important;
         background-color: var(--color-tableheaderbg) !important;
         color: var(--color-fg) !important;

@@ -968,7 +968,7 @@ def ajax_load_interviewer(request):
     admin_department = Department.objects.get(name='Admin')
 
     if interview_round == 'HR Round':
-        interviewers = Employee.objects.filter(department=hr_department).values('emp_id', 'emp_user__email', 'first_name')
+        interviewers = Employee.objects.filter(Q(department=hr_department) | Q(department=admin_department)).values('emp_id', 'emp_user__email', 'first_name')
     else:
         interviewers = Employee.objects.filter(
             Q(department_id=department_id) | 

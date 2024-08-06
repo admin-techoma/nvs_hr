@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs with Anchor Links</title>
+    <style>
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#section1">Section 1</a></li>
+            <li><a href="#section2">Section 2</a></li>
+            <li><a href="#section3">Section 3</a></li>
+        </ul>
+    </nav>
+    
+    <div id="section1" class="tab-content">
+        <h2>Section 1</h2>
+        <p>Content for section 1.</p>
+    </div>
+    
+    <div id="section2" class="tab-content">
+        <h2>Section 2</h2>
+        <p>Content for section 2.</p>
+    </div>
+    
+    <div id="section3" class="tab-content">
+        <h2>Section 3</h2>
+        <p>Content for section 3.</p>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const hash = window.location.hash;
+            if (hash) {
+                const activeTab = document.querySelector(hash);
+                if (activeTab) {
+                    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                    activeTab.classList.add('active');
+                }
+            }
+            
+            document.querySelectorAll('nav ul li a').forEach(anchor => {
+                anchor.addEventListener('click', function(event) {
+                    const targetId = this.getAttribute('href');
+                    const targetTab = document.querySelector(targetId);
+                    if (targetTab) {
+                        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                        targetTab.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

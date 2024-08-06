@@ -666,6 +666,7 @@ table tbody tr td p {
 
 .salpayrolltable-wrapper {
   border-radius: 0.625em !important;
+  padding: 0.313em;
 }
 .salpayrolltable-wrapper .table {
   border: 1px solid !important;
@@ -677,6 +678,7 @@ table tbody tr td p {
 }
 .salpayrolltable-wrapper .table thead tr {
   border: 0;
+  border-radius: 0.625em !important;
 }
 .salpayrolltable-wrapper .table thead tr th {
   border: 0 !important;

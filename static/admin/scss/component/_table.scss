@@ -67,6 +67,7 @@ table {
 
 .salpayrolltable-wrapper {
   border-radius: 0.625em !important;
+  padding: 0.313em;
  
   .table {
     border: 1px solid !important;
@@ -77,6 +78,7 @@ table {
       border-radius: 0.625em !important;
       tr{
         border: 0;
+        border-radius: 0.625em !important;
 
         th{
           border: 0 !important;

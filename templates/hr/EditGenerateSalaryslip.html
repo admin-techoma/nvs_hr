@@ -10,11 +10,12 @@
 {% block maincontent %}
             <div class="main-content">
                 <div class="card overflow-hidden">
-                    <div class="card-body border overflow-hidden">
+                    <div class="card-body    overflow-hidden">
                     <form id="salaryInfoForm" method="POST" action="{% url 'payroll:edit_salary' payroll_data.id %}" class="">
                         {% csrf_token %}
                         <div class="row d-flex flex-wrap">
-                            <div class="d-flex justify-content-end align-items-center mb-2 w-100">
+                            <div class="d-flex justify-content-between align-items-center mb-2 w-100 ">
+                                <h5 class="mb-0" >Salary</h5>
                                 <button type="button" id="editSalaryInfoBtn"
                                     class="btn custom-button btn-sm">Edit</button>
                             </div>
@@ -86,7 +87,7 @@
                         <div class="row">
                             <div class="col-12 col-md-6 overflow-hidden flex-column p-0">
                                 <div class="d-flex flex-column card">
-                                    <div class="card-body">
+                                    <div class="card-body p-0">
                                     <div class="table-responsive salpayrolltable-wrapper">
                                         <table id="pallsal" class="table table-sm">
                                             <thead class="">
@@ -286,7 +287,7 @@
                             </div>
                             <div class="col-12 col-md-6 overflow-hidden p-0">
                                 <div class="d-flex flex-column justify-content-between card">
-                                    <div class="card-body">
+                                    <div class="card-body p-0">
                                     <div class="table-responsive salpayrolltable-wrapper h-100">
                                         <table id="salparolltab2" class="table table-sm">
                                             <thead class="">
@@ -509,9 +510,9 @@
                                 <div class="d-flex  justify-content-center align-items-center mb-2">
                                     <label for="AmountinWords" class="form-label mb-0 text-nowrap w-50 me-2 mb-0">Amount in
                                         Words :</label>
-                                    <input type="text" class="form-control  form-control-sm bg-transparent  "
+                                    <input type="text" class="form-control  form-control-sm   "
                                         id="monthly_netpayinwords" name="monthly_netpayinwords"
-                                        placeholder="" value="{{payroll_data.monthly_netpayinwords}}" readonly />
+                                       value="{{payroll_data.monthly_netpayinwords}}" readonly />
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">

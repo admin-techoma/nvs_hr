@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="row  overflow-hidden mt-0">
-                                <div class="table-responsive overflow-auto ">
+                                <div class="table-responsive ">
                                     <table class="" id="allattendanceTable">
                                         <thead class="bg-none">
                                             <tr class="headings">
@@ -116,7 +116,7 @@
             });
             var table = $('#allattendanceTable').DataTable({
                 dom: 'lfrt<"ip"iB>p',
-                responsive: true,
+                {% comment %} responsive: true, {% endcomment %}
                 searching: true,
                 paging: true,
                 fixedHeader: {

@@ -35,7 +35,6 @@ table {
         text-transform: capitalize;
         font-size: $font-size-normal !important;
         background: $bgcolortable;
-
         p {
           margin-bottom: 0;
         }
@@ -67,10 +66,18 @@ table {
 }
 
 .salpayrolltable-wrapper {
-  max-height: 18em;
+  max-height: 21em;
   height: 100%;
   border-radius: 0.625em;
   .table {
+    thead{
+      tr{
+        border: 0;
+        th{
+          border: 0 !important;
+        }
+      }
+    }
     tbody {
       tr {
         cursor: unset;
@@ -127,7 +134,7 @@ table {
   table {
     thead {
       th {
-        border-bottom: 0.625em solid !important;
+        border-bottom: 0.0063em solid !important;
         border-bottom-color: var(--color-border-theme) !important;
         background-color: var(--color-tableheaderbg) !important;
         color: var(--color-fg) !important;
@@ -147,7 +154,7 @@ table {
       }
 
       td {
-        border-bottom: 0.625em solid !important;
+        border-bottom: 0.062em solid !important;
         border-bottom-color: var(--color-tableheaderbg) !important;
         background-color: var(--color-bg-light) !important;
         color: var(--color-fg) !important;
@@ -272,9 +279,6 @@ table {
     display: none;
   }
 
-
-
-
   .DataTable,
   .dataTable,
   #weekTable {
@@ -309,7 +313,6 @@ table {
     }
   }
 
-
   #allattendanceTable_wrapper {
     .dataTables_filter {
       display: none !important;
@@ -319,7 +322,7 @@ table {
       font-size: v.$font-size-small !important;
     }
   }
-  
+
   .dataTable {
     tfoot {
       input {
@@ -338,10 +341,7 @@ table {
   justify-content: space-between;
 }
 
-
-
 @media (max-width:1440px) {
-
   .dataTable
   {
     thead {
@@ -355,6 +355,5 @@ table {
         font-size: $font-size-normal !important;
       }
     }
-  }
-  
+  } 
 }

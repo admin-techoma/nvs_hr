@@ -665,9 +665,15 @@ table tbody tr td p {
 }
 
 .salpayrolltable-wrapper {
-  max-height: 18em;
+  max-height: 21em;
   height: 100%;
   border-radius: 0.625em;
+}
+.salpayrolltable-wrapper .table thead tr {
+  border: 0;
+}
+.salpayrolltable-wrapper .table thead tr th {
+  border: 0 !important;
 }
 .salpayrolltable-wrapper .table tbody tr {
   cursor: unset;
@@ -711,7 +717,7 @@ table.dataTable.no-footer {
 .DataTable thead th,
 .dataTable thead th,
 table thead th {
-  border-bottom: 0.625em solid !important;
+  border-bottom: 0.0063em solid !important;
   border-bottom-color: var(--color-border-theme) !important;
   background-color: var(--color-tableheaderbg) !important;
   color: var(--color-fg) !important;
@@ -736,7 +742,7 @@ table tbody tr:hover td {
 .DataTable tbody td,
 .dataTable tbody td,
 table tbody td {
-  border-bottom: 0.625em solid !important;
+  border-bottom: 0.062em solid !important;
   border-bottom-color: var(--color-tableheaderbg) !important;
   background-color: var(--color-bg-light) !important;
   color: var(--color-fg) !important;
@@ -1561,7 +1567,7 @@ ul li ::marker {
   align-items: center;
   -webkit-backdrop-filter: blur(0.313em);
           backdrop-filter: blur(0.313em);
-  z-index: 1000;
+  z-index: 9998;
 }
 
 .lds-ring {
@@ -1569,6 +1575,7 @@ ul li ::marker {
   position: relative;
   width: 5em;
   height: 5em;
+  z-index: 9999;
 }
 .lds-ring div {
   box-sizing: border-box;
@@ -1779,9 +1786,9 @@ select:focus {
 }
 
 .sidebar {
-  flex: 0 0 16.75em;
-  width: 16.75em;
-  max-width: 16.75em;
+  flex: 0 0 14.75em;
+  width: 14.75em;
+  max-width: 14.75em;
   background: #14245A;
   height: 100%;
   overflow: hidden;
@@ -1848,8 +1855,9 @@ select:focus {
   list-style-type: none;
   margin: 0;
   overflow-y: auto;
-  max-height: 100%;
+  height: 100%;
   padding: 0.938em;
+  display: block;
 }
 .sidebar .sidebar-content-wrapper .nav-wrapper nav .nav .nav-item {
   width: 100%;
@@ -1957,21 +1965,25 @@ select:focus {
   .nav-bar-effect h5 {
     margin-left: 0.625em;
   }
-  .nav-bar-effect .nav {
+  .nav-bar-effect nav {
+    height: 100%;
+  }
+  .nav-bar-effect nav .nav {
     padding-left: 0;
     list-style-type: none;
     margin: 0;
     overflow-y: auto;
     max-height: 100%;
-    height: auto;
+    height: 100%;
+    display: block;
   }
-  .nav-bar-effect .nav .nav-item {
+  .nav-bar-effect nav .nav .nav-item {
     width: 100%;
     position: relative;
     border-radius: 0.375em;
     margin-bottom: 0.313em;
   }
-  .nav-bar-effect .nav .nav-item .nav-link {
+  .nav-bar-effect nav .nav .nav-item .nav-link {
     color: #D9D9D9;
     padding: 0.5em 0.625em;
     position: relative;
@@ -1980,10 +1992,10 @@ select:focus {
     z-index: 1;
     font-size: 0.875em;
   }
-  .nav-bar-effect .nav .nav-item .nav-link .nav-text {
+  .nav-bar-effect nav .nav .nav-item .nav-link .nav-text {
     margin-left: 0.625em;
   }
-  .nav-bar-effect .nav .nav-item .nav-link:after {
+  .nav-bar-effect nav .nav .nav-item .nav-link:after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -1993,7 +2005,7 @@ select:focus {
     background-color: #14245A;
     z-index: -2;
   }
-  .nav-bar-effect .nav .nav-item .nav-link:before {
+  .nav-bar-effect nav .nav .nav-item .nav-link:before {
     content: "";
     position: absolute;
     bottom: 0;
@@ -2005,7 +2017,7 @@ select:focus {
     z-index: -1;
     border-radius: 0.375em;
   }
-  .nav-bar-effect .nav .nav-item .submenu {
+  .nav-bar-effect nav .nav .nav-item .submenu {
     display: none;
     position: absolute;
     top: 100%;
@@ -2014,24 +2026,24 @@ select:focus {
     padding-top: 0.625em;
     width: 100%;
   }
-  .nav-bar-effect .nav .nav-item.active > .nav-link {
+  .nav-bar-effect nav .nav .nav-item.active > .nav-link {
     background: #14245A !important;
     color: #14245A;
   }
-  .nav-bar-effect .nav .nav-item.active > .nav-link:before {
+  .nav-bar-effect nav .nav .nav-item.active > .nav-link:before {
     width: 100%;
   }
-  .nav-bar-effect .nav .nav-item.active > .submenu {
+  .nav-bar-effect nav .nav .nav-item.active > .submenu {
     display: block;
   }
-  .nav-bar-effect .nav .nav-item:hover > .nav-link {
+  .nav-bar-effect nav .nav .nav-item:hover > .nav-link {
     background: #14245A !important;
     color: #14245A;
   }
-  .nav-bar-effect .nav .nav-item:hover > .nav-link:before {
+  .nav-bar-effect nav .nav .nav-item:hover > .nav-link:before {
     width: 100%;
   }
-  .nav-bar-effect .nav .nav-item:hover > .submenu {
+  .nav-bar-effect nav .nav .nav-item:hover > .submenu {
     display: block;
   }
 }

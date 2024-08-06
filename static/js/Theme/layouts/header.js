@@ -177,7 +177,8 @@ $(document).ready(function () {
     // });
     
     $('#clockedIn').on('click', function () {
-        if ( /iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent)) {
+        ///iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent)
+        if ( true) {
             $('#ClockinModal').modal('show');
         $('#ClockinModal .modal-body span').text(getCurrentTime());
             

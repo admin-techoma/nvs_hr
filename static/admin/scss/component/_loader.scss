@@ -9,7 +9,7 @@
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(0.313em); // Blur effect
-  z-index: 1000; // Ensure it is above other content
+  z-index: 9998; // Ensure it is above other content
 }
 
 .lds-ring {
@@ -17,6 +17,8 @@
   position: relative;
   width: 5em;
   height: 5em;
+  z-index: 9999;
+
   div {
     box-sizing: border-box;
     display: block;

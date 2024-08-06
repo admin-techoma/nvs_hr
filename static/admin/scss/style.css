@@ -665,8 +665,11 @@ table tbody tr td p {
 }
 
 .salpayrolltable-wrapper {
-  max-height: 21em;
   height: 100%;
+}
+.salpayrolltable-wrapper .table {
+  border: 1px solid;
+  height: auto;
   border-radius: 0.625em;
 }
 .salpayrolltable-wrapper .table thead tr {

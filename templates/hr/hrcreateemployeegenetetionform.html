@@ -245,24 +245,26 @@
                                     <div class="col-md-12  border-bottom mb-2">
                                         <h5>Bank details</h5>
                                     </div>                     
-                                        <div class="mb-3 col-12 col-md-4 col-xl-3">
-                                          <label class="form-label mb-0 mb-0" for="odpremium">Bank Account Number</label>
-                                          <input type="tel" class="form-control form-control-sm" id="account_no" name="account_no"  maxlength="21" minlength="8"  title="Please enter a 21-digit decimal number." required />
-                                      
-                                        </div>
+                                        
+                                        <div  class="mb-3 col-12 col-md-4 col-xl-3">
+                                            <label class="form-label mb-0 mb-0" for="tppremium">IFSC Code</label>
+                                             <input autocomplete="off" type="text" id="ifsc_code"  class="form-control form-control-sm" name="ifsc_code" value="" maxlength="11" pattern="[A-Z]{4}0[A-Z0-9]{6}" oninput="this.value = this.value.toUpperCase()" required>
+                                            <span class="text-danger" id="ifsc_code-error"></span>
+                                          </div>
                                         <div class="mb-3 col-12 col-md-4 col-xl-3">
                                           <label class="form-label mb-0 mb-0" for="tppremium">Bank Name</label>
-                                          <input autocomplete="off" type="text" id="bank_name" class="form-control form-control-sm" name="bank_name" value="" required>
+                                          <input autocomplete="off" type="text" id="bank_name" class="form-control form-control-sm" name="bank_name" value="" readonly required>
                                         </div>
-                                        <div  class="mb-3 col-12 col-md-4 col-xl-3">
-                                          <label class="form-label mb-0 mb-0" for="tppremium">IFSC Code</label> <input autocomplete="off" type="text" id="ifsc_code" class="form-control form-control-sm" name="ifsc_code" value="" maxlength="11" pattern="[A-Z]{4}0[A-Z0-9]{6}" oninput="this.value = this.value.toUpperCase()" required>
-                                          <span class="text-danger" id="ifsc_code-error"></span>
-                                        </div>
+                                        
                                         <div class="mb-3 col-12 col-md-4 col-xl-3">
                                           <label class="form-label mb-0 mb-0" for="tppremium">Bank Branch</label>
-                                          <input autocomplete="off" type="text" id="branch" class="form-control form-control-sm" name="branch" value="" required>
+                                          <input autocomplete="off" type="text" id="branch" class="form-control form-control-sm" name="branch" value="" readonly required>
                                         </div>   
-                                      
+                                        <div class="mb-3 col-12 col-md-4 col-xl-3">
+                                            <label class="form-label mb-0 mb-0" for="odpremium">Bank Account Number</label>
+                                            <input type="tel" class="form-control form-control-sm" id="account_no" name="account_no"  maxlength="21" minlength="8"  title="Please enter a 21-digit decimal number." required />
+                                        
+                                        </div>
                                             <div class="col-12 mb-2 border-bottom">
                                                 <h5>Emergency Contact Details</h5>
                                             </div>

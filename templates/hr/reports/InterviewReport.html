@@ -104,7 +104,7 @@
         function generateDocumentLink(baseUrl, documentPath, type) {
             if (type === 'display') {
                 var detailURL = baseUrl + documentPath;
-                return '<a class="view-doc" href="' + detailURL + '" target="_blank">View</a>';
+                return '<a class="view-doc" href="' + detailURL + '" target="_blank"><i class="bi bi-file-pdf"></i> </a>';
             }
             return documentPath;
         }

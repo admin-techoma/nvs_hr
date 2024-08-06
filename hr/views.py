@@ -611,7 +611,8 @@ def onboarding_process(request, onboarding_id):
         'onboarding_form': onboarding_form,
         'onboarding_AccountDetils_Form': onboarding_AccountDetils_Form,
         'onboarding_id': onboarding_id,
-        'onboarding_EducationDetils_Form': onboarding_EducationDetils_Form
+        'onboarding_EducationDetils_Form': onboarding_EducationDetils_Form,
+        'candidate_resume':candidate_resume,
     }
 
     context.update(get_session(request))  # Call get_session to retrieve the dictionary

@@ -134,7 +134,7 @@ def rmdash(request):
 def request_regularization(request):
     print(request.POST)
     
-    filterdate =  datetime.strptime(request.POST.get('date'), '%d-%m-%Y')
+    filterdate =  datetime.strptime(request.POST.get('dateSelected'), '%d-%m-%Y')
     attendance = get_object_or_404(Attendance, date=filterdate,employee=request.user.emp_user)
     
     if request.method == 'POST':

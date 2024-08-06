@@ -526,6 +526,17 @@ $('body').append('<div id="weekoffDays"></div>');
 //   $('#regularlizationmodal').modal('show');
 // });
 
-$(document).on('click', '.days li.absent , .days li.halfday' , function() {
-     $('#regularlizationmodal').modal('show');
-    });
+// $(document).on('click', '.days li.absent , .days li.halfday' , function() {
+//      $('#regularlizationmodal').modal('show');
+//     });
+
+$(document).on('click', '.days li.absent, .days li.halfday', function() {
+  // Assuming that the date is stored as a data attribute on the li element
+  var selectedDate = $(this).data('date'); // Replace with the actual way to get the date if different
+
+  // Set the selected date to the modal input field
+  $('#modalDateSelected').val(selectedDate);
+
+  // Show the modal
+  $('#regularlizationmodal').modal('show');
+});

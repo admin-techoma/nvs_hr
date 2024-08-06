@@ -247,7 +247,7 @@
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label for="leavedateFrom" class="form-label mb-0">Select date from</label>
-                                <input type="date" class="form-control" id="leavedateFrom" name="leavedateFrom">
+                                <input type="date" class="form-control" id="leavedateFrom" name="leavedateFrom" required>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -326,23 +326,22 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="regularlizationLabel">Regularization</h1>
-               <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+               <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="attendanceRegForm">
                     <div class="mb-3">
                         <label for="dateselected" class="form-label mb-0">Date Selected</label>
-                        <input type="text" class="form-control form-control-sm" id="modalDateSelected" disabled>
+                        <input type="text" class="form-control form-control-sm" id="modalDateSelected" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="AddClockinTime" class="form-label mb-0">Add Clock In Time</label>
-                        <input type="time" class="form-control form-control-sm" id="AddClockinTime">
+                        <input type="time" class="form-control form-control-sm" id="AddClockinTime" required>
                     </div>
                     <div class="mb-3">
                         <label for="AddClockOutTime" class="form-label mb-0">Add Clock Out Time</label>
-                        <input type="time" class="form-control form-control-sm" id="AddClockOutTime">
+                        <input type="time" class="form-control form-control-sm" id="AddClockOutTime" required>
                     </div>
-
                     <label for="reason" class="form-label mb-0">Reason:</label>
                     <textarea id="reason" class="form-control form-control-sm" name="reason" rows="4" cols="50"
                         required></textarea><br>
@@ -353,6 +352,8 @@
         </div>
     </div>
 </div>
+
+
 <!-- Modal for Success Message -->
 <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -422,8 +423,7 @@
         "January", "February", "March", "April", "May", "June", "July",
         "August", "September", "October", "November", "December"
     ];
-
-
+ 
     function applyLeave() {
         const leaveFrom = $('#leavedateFrom').val();
         console.log(leaveForm);
@@ -497,4 +497,63 @@
 
 </script>
 
+<script>
+    $(document).ready(function() {
+        // Handle date selection
+        $(document).on('click', '.days li.absent, .days li.halfday', function() {
+            var selectedDate = $(this).data('date'); // Get the selected date
+            $('#modalDateSelected').val(selectedDate); // Set the selected date in the input field
+            $('#regularlizationmodal').modal('show'); // Show the modal
+        });
+    
+        // Handle form submission
+        $('#attendanceRegForm').submit(function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            // Validate form
+            var isValid = true;
+            $('#attendanceRegForm [required]').each(function() {
+                if ($(this).val() === '') {
+                    isValid = false;
+                    $(this).addClass('is-invalid'); // Add error class
+                } else {
+                    $(this).removeClass('is-invalid'); // Remove error class
+                }
+            });
+    
+            if (isValid) {
+                // Gather form data
+                var formData = {
+                    dateSelected: $('#modalDateSelected').val(),
+                    clockInTime: $('#AddClockinTime').val(),
+                    clockOutTime: $('#AddClockOutTime').val(),
+                    reason: $('#reason').val()
+                };
+
+                const csrftoken = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
+    
+                // Send data via AJAX
+                $.ajax({
+                    url: "{% url 'employee:regularization_request'  %}", // Replace with your backend URL
+                    method: 'POST',
+                    data: formData,
+                    headers: { 'X-CSRFToken': csrftoken },
+                    success: function(response) {
+                        $('#regStatus').text('Request submitted successfully!');
+                        $('#regularlizationmodal').modal('hide');
+                        // Optionally, you can clear the form fields here
+                        $('#attendanceRegForm')[0].reset();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        $('#regStatus').text('Error submitting request. Please try again.');
+                    }
+                });
+            } else {
+                $('#regStatus').text('Please fill in all required fields.');
+            }
+        });
+    });
+
+</script>
+ 
 {% endblock extrascript %}

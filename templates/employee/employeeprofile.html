@@ -408,10 +408,10 @@
                        
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ emp_data.account_no }}</td>
-                                <td>{{ emp_data.bank_name }}</td>
-                                <td>{{ emp_data.ifsc_code }}</td>
-                                <td>{{ emp_data.branch }}</td>
+                                <td>{{ emp_data.account_no|default:'' }}</td>
+                                <td>{{ emp_data.bank_name|default:'' }}</td>
+                                <td>{{ emp_data.ifsc_code|default:'' }}</td>
+                                <td>{{ emp_data.branch|default:'' }}</td>
                                 {% if department == 'HR' or department == 'Admin' %}
                                 <td>
                                     <button class="btn btn-sm custom-button me-2" data-bs-toggle="modal" data-bs-target="#bankdetailsedit"><span class="bi bi-eye"></span></button>
@@ -449,33 +449,33 @@
                                        class="btn custom-button btn-sm">Edit</button>
                                </div>
                                <div class="col-12  mb-3">
-                                   <Label class="form-label mb-0">Account Holder's Name </Label>
-                                   <input type="text" class="form-control form-control-sm "
-                                      value="{{emp_data.name}}" disabled>
-                               </div>
-                               <div class="col-12  mb-3">
-                                   <label class="form-label mb-0">Bank Name</label>
-                                   <input type="text" class="form-control form-control-sm" 
-                                       id="bank_name" name="bank_name"
-                                       value="{{emp_data.bank_name}}" disabled>
-                               </div>
-                               <div class="col-12  mb-3">
-                                   <label class="form-label mb-0">Account Number </label>
-                                   <input type="text" class="form-control form-control-sm"
-                                       id="account_no" name="account_no"
-                                       value="{{emp_data.account_no}}" disabled>
-                               </div>
-                               <div class="col-12  mb-3">
-                                   <label class="form-label mb-0">Branch Name </label>
-                                   <input type="text" class="form-control form-control-sm"
-                                        id="branch" name="branch" value="{{emp_data.branch}}" disabled>
-                               </div>
+                                <Label class="form-label mb-0">Account Holder's Name </Label>
+                                <input type="text" class="form-control form-control-sm "
+                                   value="{{emp_data.name}}" disabled>
+                            </div>
                                <div class="col-12  mb-3">
                                    <label class="form-label mb-0">IFSC Code </label>
                                    <input type="text" class="form-control form-control-sm" 
-                                       id="ifsc_code" name="ifsc_code"
-                                       value="{{emp_data.ifsc_code}}" disabled>
+                                       id="ifsc_code" name="ifsc_code" pattern="[A-Z]{4}0[A-Z0-9]{6}" oninput="this.value = this.value.toUpperCase()"
+                                       value="{{emp_data.ifsc_code|default:''}}" disabled>
                                </div>
+                               <div class="col-12  mb-3">
+                                <label class="form-label mb-0">Bank Name</label>
+                                <input type="text" class="form-control form-control-sm" 
+                                    id="bank_name" name="bank_name" readonly
+                                    value="{{emp_data.bank_name|default:''}}" disabled>
+                            </div>
+                            <div class="col-12  mb-3">
+                                <label class="form-label mb-0">Branch Name </label>
+                                <input type="text" class="form-control form-control-sm" readonly
+                                     id="branch" name="branch" value="{{emp_data.branch|default:''}}" disabled>
+                            </div>
+                            <div class="col-12  mb-3">
+                                <label class="form-label mb-0">Account Number </label>
+                                <input type="text" class="form-control form-control-sm"
+                                    id="account_no" name="account_no"
+                                    value="{{emp_data.account_no|default:''}}" disabled>
+                            </div>
                            </div>     
                        </div>
                    

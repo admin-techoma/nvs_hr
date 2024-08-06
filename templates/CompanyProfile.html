@@ -294,6 +294,34 @@
                             </div>
                         </div>
                         <div class="row w-100">
+                            
+                            
+                            <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
+                                <label for="ifsc_code"
+                                    class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">IFSC
+                                    Code:</label>
+                                <input type="text" class="form-control form-control-sm " id="ifsc_code" maxlength="11" pattern="[A-Z]{4}0[A-Z0-9]{6}" oninput="this.value = this.value.toUpperCase()"
+                                    disabled value="{{company_data.ifsc_code|default:''}}"
+                                    name="ifsc_code">
+                                    <span class="text-danger" id="ifsc_code-error"></span>
+                                   
+                            </div>
+                           
+                            <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
+                                <label for="bank_name"
+                                    class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Bank Name
+                                    :</label>
+                                <input type="text" class="form-control form-control-sm " id="bank_name"
+                                     disabled value="{{company_data.bank_name|default:''}}"
+                                    name="bank_name">
+                            </div>
+                            <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
+                                <label for="branch"
+                                    class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Bank Branch
+                                    :</label>
+                                <input type="text" class="form-control form-control-sm " id="branch"
+                                disabled value="{{company_data.branch|default:''}}" name="branch">
+                            </div>
                             <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                 <label for="CompanyAccountNo"
                                     class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Account No:
@@ -301,29 +329,6 @@
                                 <input type="tel" class="form-control form-control-sm " id="CompanyAccountNo"
                                   disabled value="{{company_data.account_no|default:''}}"   maxlength="21" minlength="8"  title="Please enter a 21-digit decimal number."
                                     name="account_no" required>
-                            </div>
-                            <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
-                                <label for="CompanyBankName"
-                                    class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Bank Name
-                                    :</label>
-                                <input type="text" class="form-control form-control-sm " id="CompanyBankName"
-                                     disabled value="{{company_data.bank_name|default:''}}"
-                                    name="bank_name">
-                            </div>
-                            <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
-                                <label for="CompaanyBankIFSCCode"
-                                    class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">IFSC
-                                    Code:</label>
-                                <input type="text" class="form-control form-control-sm " id="CompaanyBankIFSCCode" maxlength="11" pattern="[A-Z]{4}0[A-Z0-9]{6}" oninput="this.value = this.value.toUpperCase()"
-                                    disabled value="{{company_data.ifsc_code|default:''}}"
-                                    name="ifsc_code">
-                            </div>
-                            <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
-                                <label for="CompanyBankBranch"
-                                    class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Bank Branch
-                                    :</label>
-                                <input type="text" class="form-control form-control-sm " id="CompanyBankBranch"
-                                disabled value="{{company_data.branch|default:''}}" name="branch">
                             </div>
                         </div>
                         <div class="row w-100">

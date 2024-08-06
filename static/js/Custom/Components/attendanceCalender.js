@@ -264,7 +264,6 @@
 //     $('#regularlizationmodal').modal('show');
 //   });
 
-
 $(document).ready(function() {
   const daysTag = $(".days");
   const currentDate = $(".current-date");
@@ -446,44 +445,47 @@ $(document).ready(function() {
       }
     });
 
-    // Add "onleave" class to days with no class up to the current date
-    const today = new Date();
-   
-    $('.days li').each(function() {
-      const dataDate = $(this).data('date');
+   // Add "onleave" class to days with no class up to the current date
+  const today = new Date();
+  $('.days li').each(function() {
+    const dataDate = $(this).data('date');
+    if (dataDate) {
       const [day, month, year] = dataDate.split('-').map(Number);
       const dateObj = new Date(year, month - 1, day);
       if (dateObj <= today && !$(this).hasClass('present') && !$(this).hasClass('halfday') && !$(this).hasClass('absent') && !$(this).hasClass('paidleave') && !$(this).hasClass('weekoff') && !$(this).hasClass('national-holiday')) {
         $(this).addClass('onleave');
       }
-    });
-  };
+    }
+  });
+};
 
-  const updateCalendarWithLeave = (leaveData) => {
-    const calendarStartDate = new Date(currYear, currMonth, 1);
-    leaveData.forEach((leave) => {
-      const leaveDate = new Date(leave.date);
-      if (leave.is_approved) {
-        const dayOffset = Math.floor((leaveDate - calendarStartDate) / (24 * 60 * 60 * 1000));
-        const calendarDay = dayOffset + 1;
-        const selector = `.days li[data-date="${calendarDay}-${currMonth + 1}-${currYear}"]`;
-        const $currentLi = $(selector);
-        $currentLi.removeClass('present halfday halfdayapproved absent');
-        $currentLi.addClass('paidleave onleave');
-      }
-    });
+const updateCalendarWithLeave = (leaveData) => {
+  const calendarStartDate = new Date(currYear, currMonth, 1);
+  leaveData.forEach((leave) => {
+    const leaveDate = new Date(leave.date);
+    if (leave.is_approved) {
+      const dayOffset = Math.floor((leaveDate - calendarStartDate) / (24 * 60 * 60 * 1000));
+      const calendarDay = dayOffset + 1;
+      const selector = `.days li[data-date="${calendarDay}-${currMonth + 1}-${currYear}"]`;
+      const $currentLi = $(selector);
+      $currentLi.removeClass('present halfday halfdayapproved absent');
+      $currentLi.addClass('paidleave onleave');
+    }
+  });
 
-    // Add "onleave" class to days with no class up to the current date
-    const today = new Date();
-    $('.days li').each(function() {
-      const dataDate = $(this).data('date');
+  // Add "onleave" class to days with no class up to the current date
+  const today = new Date();
+  $('.days li').each(function() {
+    const dataDate = $(this).data('date');
+    if (dataDate) {
       const [day, month, year] = dataDate.split('-').map(Number);
       const dateObj = new Date(year, month - 1, day);
       if (dateObj <= today && !$(this).hasClass('present') && !$(this).hasClass('halfday') && !$(this).hasClass('absent') && !$(this).hasClass('paidleave') && !$(this).hasClass('weekoff') && !$(this).hasClass('national-holiday')) {
         $(this).addClass('onleave');
       }
-    });
-  };
+    }
+  });
+};
 
   const updateDataForMonth = (employee_Id, year, month) => {
     $.ajax({
@@ -520,6 +522,10 @@ $(document).ready(function() {
 // Create a container to display the number of weekoff days
 $('body').append('<div id="weekoffDays"></div>');
 
-$(document).on('click', '.days li.absent, .days li.halfday, .days li.onleave', function() {
-  $('#regularlizationmodal').modal('show');
-});
+// $(document).on('click', '.days li.absent, .days li.halfday, .days li.onleave', function() {
+//   $('#regularlizationmodal').modal('show');
+// });
+
+$(document).on('click', '.days li.absent , .days li.halfday' , function() {
+     $('#regularlizationmodal').modal('show');
+    });

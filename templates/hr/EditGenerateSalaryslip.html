@@ -9,8 +9,8 @@
 
 {% block maincontent %}
             <div class="main-content">
-                <div class="card">
-                    <div class="card-body">
+                <div class="card overflow-hidden">
+                    <div class="card-body border overflow-hidden">
                     <form id="salaryInfoForm" method="POST" action="{% url 'payroll:edit_salary' payroll_data.id %}" class="">
                         {% csrf_token %}
                         <div class="row d-flex flex-wrap">
@@ -92,7 +92,7 @@
                                             <thead class="">
                                                 <tr>                                                   
                                                     <th scope="col">Income Head</th>
-                                                    <th scope="col">Amount </th>
+                                                    <th scope="col">Amt </th>
                                                     <th scope="col">Payable </th>
                                                     <!-- <th scope="col">Mode of Payment</th> -->
                                                 </tr>
@@ -285,9 +285,9 @@
                                             <thead class="">
                                                 <tr>
                                                     <th scope="col" class="text-wrap">Deduction Head</th>
-                                                    <th scope="col" class="text-wrap">Amount to deduct Employee</th>
+                                                    <th scope="col" class="text-wrap">Amt deduct Employee</th>
                                                     <th scope="col" class="text-wrap">Payable Employee</th>
-                                                    <th scope="col" class="text-wrap">Amount to deduct Employer</th>
+                                                    <th scope="col" class="text-wrap">Amt deduct Employer</th>
                                                     <th scope="col" class="text-wrap">Payable Employer</th>
                                                 </tr>
                                             </thead>

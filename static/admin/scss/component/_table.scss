@@ -66,13 +66,16 @@ table {
 }
 
 .salpayrolltable-wrapper {
-  // max-height: 18em;
+  max-height: 21em;
   height: 100%;
   border-radius: 0.625em;
   .table {
     thead{
       tr{
         border: 0;
+        th{
+          border: 0 !important;
+        }
       }
     }
     tbody {

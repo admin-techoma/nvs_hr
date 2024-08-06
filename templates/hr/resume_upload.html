@@ -80,12 +80,12 @@
             }
     
             function checkContactNoExists() {
-                var contact_no = $('#id_phone_number').val(); // Adjust the ID based on your form field
-                if (contact_no) {
+                var phone_number_exists = $('#id_phone_number').val(); // Adjust the ID based on your form field
+                if (phone_number_exists) {
                     $.ajax({
                         type: 'GET',
                         url: '{% url "hr:check_contact_no_exists" %}',
-                        data: {'contact_no': contact_no, 'phone_number': contact_no}, // Include both contact_no and phone_number
+                        data: {'phone_number': phone_number_exists}, // Include both contact_no and phone_number
                         success: function(response) {
                             if (response.contact_no_exists) {
                                 $('#contact_no-error').text('Contact No already exists.');

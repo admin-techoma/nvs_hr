@@ -27,7 +27,7 @@ class resumeEditForm(forms.ModelForm):
         fields = ['candidate_id','name', 'phone_number', 'resume','email','status', 'remarks']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
-            'phone_number': forms.NumberInput(attrs={'class': 'form-control form-control-sm'}),
+            'phone_number': forms.NumberInput(attrs={'class': 'form-control form-control-sm','id': 'id_phone_number'}),
             'email': forms.EmailInput(attrs={'class': 'form-control form-control-sm'}),
             'status': forms.Select(attrs={'class': 'form-select form-select-sm'}),
             'remarks': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),

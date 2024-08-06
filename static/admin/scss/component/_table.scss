@@ -66,14 +66,18 @@ table {
 }
 
 .salpayrolltable-wrapper {
-  height: 100%;
+  border-radius: 0.625em !important;
+ 
   .table {
-    border: 1px solid var(--color-bg);
-   height: auto;
-   border-radius: 0.625em;
+    border: 1px solid !important;
+    border-color: var(--color-bg) !important;
+    border-radius: 0.625em !important;
+
     thead{
+      border-radius: 0.625em !important;
       tr{
         border: 0;
+
         th{
           border: 0 !important;
         }
@@ -97,6 +101,12 @@ table {
               background: unset !important;
               // color: unset !important;
             }
+          }
+         
+        }
+        &:last-child {
+          td {
+            border-bottom: 0 !important;
           }
         }
       }

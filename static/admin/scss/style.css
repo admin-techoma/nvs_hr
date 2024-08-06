@@ -665,9 +665,11 @@ table tbody tr td p {
 }
 
 .salpayrolltable-wrapper {
-  max-height: 18em;
   height: 100%;
   border-radius: 0.625em;
+}
+.salpayrolltable-wrapper .table thead tr {
+  border: 0;
 }
 .salpayrolltable-wrapper .table tbody tr {
   cursor: unset;
@@ -711,7 +713,7 @@ table.dataTable.no-footer {
 .DataTable thead th,
 .dataTable thead th,
 table thead th {
-  border-bottom: 0.625em solid !important;
+  border-bottom: 0.0063em solid !important;
   border-bottom-color: var(--color-border-theme) !important;
   background-color: var(--color-tableheaderbg) !important;
   color: var(--color-fg) !important;
@@ -736,7 +738,7 @@ table tbody tr:hover td {
 .DataTable tbody td,
 .dataTable tbody td,
 table tbody td {
-  border-bottom: 0.625em solid !important;
+  border-bottom: 0.062em solid !important;
   border-bottom-color: var(--color-tableheaderbg) !important;
   background-color: var(--color-bg-light) !important;
   color: var(--color-fg) !important;
@@ -1780,9 +1782,9 @@ select:focus {
 }
 
 .sidebar {
-  flex: 0 0 16.75em;
-  width: 16.75em;
-  max-width: 16.75em;
+  flex: 0 0 14.75em;
+  width: 14.75em;
+  max-width: 14.75em;
   background: #14245A;
   height: 100%;
   overflow: hidden;

@@ -230,8 +230,6 @@
     </div>
     </div>
 </div>
-
-<!-- leave modal 2 -->
 <div class="modal fade" id="Leavemodal" tabindex="-1" aria-labelledby="LeavemodalLabel" data-bs-backdrop="static"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -240,7 +238,7 @@
                 <h1 class="modal-title fs-5" id="LeavemodalLabel">Apply for leave</h1>
                 <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="leaveForm" method="POST" onsubmit="applyLeave()">
+            <form id="leaveForm" method="POST" onsubmit="event.preventDefault(); applyLeave();">
                 {% csrf_token %}
                 <div class="modal-body">
                     <div class="row">
@@ -374,7 +372,6 @@
     </div>
 </div>
 
-<!-- Modal -->
 <div class="modal fade" id="popupfordelete" tabindex="-1" aria-labelledby="popupfordeleteModalLabel"
     data-bs-backdrop="static" aria-hidden="true">
     <div class="modal-dialog">
@@ -395,23 +392,22 @@
     </div>
 </div>
 <input type="hidden" id="employee_id_hidden" value="{{employee.emp_id}}" />
-{%endblock maincontent%}
+{% endblock maincontent %}
 {% block extrascript %}
 <script>
     const months = [
-        "January", "February", "March", "April", "May", "June", "July",
-        "August", "September", "October", "November", "December"
+    "January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"
     ];
- 
 
     function applyLeave() {
         const leaveFrom = $('#leavedateFrom').val();
-        console.log(leaveForm);
+        console.log(leaveFrom);
         const leaveTo = $('#leavedateTo').val();
         const leaveType = $('#selectLeaveType').val();
         const leaveReason = $('#leaveDescription').val();
         const employee = $('#hiddenSession').val();
-        const csrftoken = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
+        const csrftoken = $('[name="csrfmiddlewaretoken"]').val(); // Get CSRF token from hidden input field
 
         const translateTime = (value) => {
             if (value === '1') {
@@ -433,44 +429,37 @@
 
         const leaveFromTime = translateTime($('#selectTimeFrom').val());
         const leaveToTime = translateTime($('#selectTimeTo').val());
-        const formatedleaveFrom = formatDate(leaveFrom); 
-        const formatedleaveTo = formatDate(leaveTo);
+        const formattedLeaveFrom = formatDate(leaveFrom); 
+        const formattedLeaveTo = formatDate(leaveTo);
 
-        if (new Date(leaveTo) < new Date(leaveFrom) || new Date(leaveFrom) > new Date(leaveTo)) {
+        if (new Date(leaveTo) < new Date(leaveFrom)) {
             $('#Leavemodal').modal('hide');
-            $("#messageModal .modal-body").text(`You can't apply leave from date: ${formatedleaveFrom} to date: ${formatedleaveTo}.`);
+            $("#messageModal .modal-body").text(`You can't apply leave from date: ${formattedLeaveFrom} to date: ${formattedLeaveTo}.`);
             $("#messageModal").modal("show");
             return; // Stop further execution
         }
-        // Display status message element
-        const leaveStatus = $('#leaveStatus');
-        
+
         $.ajax({
             url: `/employee/apply_leave/${employee}/`,
             method: 'POST',
             headers: { 'X-CSRFToken': csrftoken },
             data: {
-                leave_from: leaveFrom,
-                select_Time_From: leaveFromTime,
-                leave_to: leaveTo,
-                select_Time_To: leaveToTime,
-                leave_type: leaveType,
-                leave_reason: leaveReason,
+                "leave_from": leaveFrom,
+                "select_Time_From": leaveFromTime,
+                "leave_to": leaveTo,
+                "select_Time_To": leaveToTime,
+                "leave_type": leaveType,
+                "leave_reason": leaveReason,
             },
             success: function(response) {
-                alert('Leave Apply successfully.');
-                    // Optionally, you can redirect or perform other actions after submission
-                    // window.location.href = '/success-page'; // Redirect to a success page
-                },
-                error: function(xhr, status, error) {
-                    alert('Error: ' + error);
-                }
+                alert('Leave applied successfully.');
+                // Optionally, you can redirect or perform other actions after submission
+                // window.location.href = '/success-page'; // Redirect to a success page
+            },
+            error: function(xhr, status, error) {
+                alert('Error: ' + error);
+            }
         });
-    };
-
-
+    }
 </script>
-<script>
-  
-</script>   
 {% endblock extrascript %}

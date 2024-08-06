@@ -127,7 +127,7 @@
                               <input type="number" class="form-control form-control-sm" value="{{ employee.total_absent_days }}" name="monthly_absentdays" />
                             </td>
                             <td style="width:110px !important">
-                              <input id="paid_days" type="" class="form-control form-control-sm w-100 border-0" value="{{ employee.total_paid_days }}" name="monthly_paiddays" />
+                              <input id="paid_days" type="" class="form-control form-control-sm w-100 border-0" value="{{ employee.total_paid_days }}" name="monthly_paiddays" onchange="calculateAllCTCs()"/>
                             </td>
                             <td class="d-none" style="width:150px !important">
                               <input id="total_days" type="" class="form-control form-control-sm w-100 border-0" value="{{ total_days_in_month }}" name="total_days_in_month" />
@@ -169,10 +169,10 @@
                               <input type="text" class="form-control form-control-sm w-100" id="grossAmount" name="monthly_gross_salary" readonly />
                             </td>
                             <td style="width:230px !important">
-                              <input type="text" class="form-control form-control-sm border-1 w-100" id="monthly_incentive" name="monthly_incentive" oninput="handleIncentiveChange('{{ payroll_data.emp_id.emp_id }}')" />
+                              <input type="text" class="form-control form-control-sm border-1 w-100" id="monthly_incentive" name="monthly_incentive" onchange="calculateAllCTCs()" />
                             </td>
                             <td style="width:280px !important">
-                              <input type="text" class="form-control form-control-sm border-1 w-100" id="monthly_loan_other" name="monthly_loan" oninput="handleLoanChange('{{ payroll_data.emp_id.emp_id }}')" />
+                              <input type="text" class="form-control form-control-sm border-1 w-100" id="monthly_loan_other" name="monthly_loan" onchange="calculateAllCTCs()" />
                             </td>
                             <td style="width:230px !important">
                               <input type="text" class="form-control form-control-sm w-100 border-0" id="totaldeduction" name="monthly_total_deductions" value="0" readonly />
@@ -293,104 +293,83 @@
   		});
   	});
 
-  function calculateNewCtc() {
-  	var ctc = parseFloat(document.getElementById('fixedctc').value);
-  	var ctcAmount = document.getElementById('ctcInput');
-  	var total_days = parseFloat(document.getElementById('total_days').value);
-  	var paid_days = parseFloat(document.getElementById('paid_days').value);
-  	var newctc = (ctc * paid_days) / total_days;
-  	console.log(newctc);
-  	calculateSalary(newctc);
-  	ctcAmount.value = newctc;
-  }
+  var calculateAllCTCs = function () {
+    var rows = document.querySelectorAll('tr.row-select'); // Select all employee rows
 
-  function calculateSalary(ctcAmountValue) {
-  	var basic_perc = 60.0;
-  	var hra_perc = 30;
-  	var pf_perc = 12;
-  	var pf_fix = 1800;
-  	var employer_esic_perc = 3.25;
-  	var employee_esic_perc = 0.75;
-  	var tolerance = 0.01;
+    rows.forEach(function (row) {
+        var ctc = parseFloat(row.querySelector('[name="fixed_ctc"]').value);
+        var totalDays = parseFloat(row.querySelector('[name="total_days_in_month"]').value);
+        var paidDays = parseFloat(row.querySelector('[name="monthly_paiddays"]').value);
+        var newCTC = (ctc * paidDays) / totalDays;
 
-  	var ctcAmount = document.getElementById('ctcInput');
-  	var basicAmount = document.getElementById('basicAmount');
-  	var hraAmount = document.getElementById('hraAmount');
-  	var ca = document.getElementById('ca');
-  	var sa = document.getElementById('sa');
-  	var grossAmount = document.getElementById('grossAmount');
-  	var employeePF = document.getElementById('employeePF');
-  	var employerPF = document.getElementById('employerPF');
-  	var employeeESIC = document.getElementById('employeeESIC');
-  	var employerESIC = document.getElementById('employerESIC');
-  	var newCTC = document.getElementById('newCTC');
-  	var professionalTax = document.getElementById('professionalTax');
-  	var netPay = document.getElementById('netPay');
-  	var totaldeduction = document.getElementById('totaldeduction');
+        // Update the CTC input field
+        row.querySelector('[id="ctcInput"]').value = newCTC.toFixed(2);
 
-  	ctcAmountValue = parseFloat(ctcAmountValue) || 0;
-  	var basicAmountValue = Math.round((basic_perc * ctcAmountValue) / 100);
-  	var hraAmountValue = Math.round((hra_perc * basicAmountValue) / 100);
-  	var allowances = ctcAmountValue - (basicAmountValue + hraAmountValue);
-  	var finalCTC = 0;
+        calculateSalary(row, newCTC); // Call the salary calculation function
+    });
+};
 
-  	while (Math.abs(finalCTC - ctcAmountValue) > tolerance) {
-  		var grossAmountValue = basicAmountValue + hraAmountValue + allowances;
-  		var employerESICValue = grossAmountValue < 21000 ? 0.0325 * grossAmountValue : 0;
-  		var employerPFValue = (basicAmountValue + allowances > 15000) ? pf_fix : 0.12 * (grossAmountValue - hraAmountValue);
-  		finalCTC = basicAmountValue + hraAmountValue + allowances + employerPFValue + employerESICValue;
+var calculateSalary = function (row, ctcAmountValue) {
+    var basicPerc = 60.0;
+    var hraPerc = 30;
+    var pfPerc = 12;
+    var pfFix = 1800;
+    var employerEsicPerc = 3.25;
+    var employeeEsicPerc = 0.75;
+    var tolerance = 0.01;
 
-  		if (finalCTC < ctcAmountValue) {
-  			allowances += tolerance;
-  		} else {
-  			allowances -= tolerance;
-  		}
-  	}
+    var basicAmountValue = Math.round((basicPerc * ctcAmountValue) / 100);
+    var hraAmountValue = Math.round((hraPerc * basicAmountValue) / 100);
+    var allowances = ctcAmountValue - (basicAmountValue + hraAmountValue);
+    var finalCTC = 0;
 
-  	allowances = Math.round(allowances);
-  	grossAmountValue = Math.round(basicAmountValue + hraAmountValue + allowances);
-  	employerPFValue = Math.round((basicAmountValue + allowances > 15000) ? pf_fix : 0.12 * (grossAmountValue - hraAmountValue));
-  	employerESICValue = Math.round(grossAmountValue < 21000 ? 0.0325 * grossAmountValue : 0);
-  	finalCTC = Math.round(basicAmountValue + hraAmountValue + allowances + employerPFValue + employerESICValue);
-  	var employeePFValue = employerPFValue;
-  	var employeeESICValue = grossAmountValue < 21000 ? Math.round(0.0075 * grossAmountValue) : 0;
-  	var caValue = allowances * 0.6;
-  	var saValue = allowances * 0.4;
+    while (Math.abs(finalCTC - ctcAmountValue) > tolerance) {
+        var grossAmountValue = basicAmountValue + hraAmountValue + allowances;
+        var employerEsicValue = grossAmountValue < 21000 ? 0.0325 * grossAmountValue : 0;
+        var employerPFValue = (basicAmountValue + allowances > 15000) ? pfFix : 0.12 * (grossAmountValue - hraAmountValue);
+        finalCTC = basicAmountValue + hraAmountValue + allowances + employerPFValue + employerEsicValue;
 
-  	basicAmount.value = basicAmountValue.toFixed(2);
-  	hraAmount.value = hraAmountValue.toFixed(2);
-  	ca.value = caValue.toFixed(2);
-  	sa.value = saValue.toFixed(2);
-  	grossAmount.value = grossAmountValue.toFixed(2);
-  	employeePF.value = employeePFValue.toFixed(2);
-  	employerPF.value = employerPFValue.toFixed(2);
-  	employeeESIC.value = employeeESICValue.toFixed(2);
-  	employerESIC.value = employerESICValue.toFixed(2);
-  	newCTC.value = finalCTC.toFixed(2);
+        if (finalCTC < ctcAmountValue) {
+            allowances += tolerance;
+        } else {
+            allowances -= tolerance;
+        }
+    }
 
-  	var professionalTaxValue = grossAmountValue > 12000 ? 200 : 0;
+    allowances = Math.round(allowances);
+    grossAmountValue = Math.round(basicAmountValue + hraAmountValue + allowances);
+    employerPFValue = Math.round((basicAmountValue + allowances > 15000) ? pfFix : 0.12 * (grossAmountValue - hraAmountValue));
+    employerEsicValue = Math.round(grossAmountValue < 21000 ? 0.0325 * grossAmountValue : 0);
+    finalCTC = Math.round(basicAmountValue + hraAmountValue + allowances + employerPFValue + employerEsicValue);
+    var employeePFValue = employerPFValue;
+    var employeeESICValue = grossAmountValue < 21000 ? Math.round(0.0075 * grossAmountValue) : 0;
+    var caValue = allowances * 0.6;
+    var saValue = allowances * 0.4;
 
-  	var incentiveAmount = parseFloat(document.getElementById('monthly_incentive').value) || 0;
-  	// Get the loan input value
-  	var loanAmount = parseFloat(document.getElementById('monthly_loan_other').value) || 0;
-  	var netPayValue = finalCTC - employeeESICValue - employeePFValue - employerESICValue - employerPFValue - professionalTaxValue + incentiveAmount - loanAmount;
-  	var totaldeductionValue = employeeESICValue + employeePFValue + professionalTaxValue + loanAmount;
-  	professionalTax.value = professionalTaxValue.toFixed(2);
-  	netPay.value = netPayValue.toFixed(2);
-  	totaldeduction.value = totaldeductionValue.toFixed(2);
-  }
-  // Call calculateNewCtc initially to handle default input
-  {% for payroll_data in payroll_datas %}
-  calculateNewCtc("{{ payroll_data.emp_id.emp_id }}"); 
-  {% endfor %}
-  // Handle incentive input change
-  $('#monthly_incentive').on('input', function () {
-  	calculateNewCtc();
-  });
+    row.querySelector('[id="basicAmount"]').value = basicAmountValue.toFixed(2);
+    row.querySelector('[id="hraAmount"]').value = hraAmountValue.toFixed(2);
+    row.querySelector('[id="ca"]').value = caValue.toFixed(2);
+    row.querySelector('[id="sa"]').value = saValue.toFixed(2);
+    row.querySelector('[id="grossAmount"]').value = grossAmountValue.toFixed(2);
+    row.querySelector('[id="employeePF"]').value = employeePFValue.toFixed(2);
+    row.querySelector('[id="employerPF"]').value = employerPFValue.toFixed(2);
+    row.querySelector('[id="employeeESIC"]').value = employeeESICValue.toFixed(2);
+    row.querySelector('[id="employerESIC"]').value = employerEsicValue.toFixed(2);
+    row.querySelector('[id="newCTC"]').value = finalCTC.toFixed(2);
 
-  // Handle loan input change
-  $('#monthly_loan_other').on('input', function () {
-  	calculateNewCtc();
-  }); 
+    var professionalTaxValue = grossAmountValue > 12000 ? 200 : 0;
+    var incentiveAmount = parseFloat(row.querySelector('[id="monthly_incentive"]').value) || 0;
+    var loanAmount = parseFloat(row.querySelector('[id="monthly_loan_other"]').value) || 0;
+    var netPayValue = finalCTC - employeeESICValue - employeePFValue - employerEsicValue - employerPFValue - professionalTaxValue + incentiveAmount - loanAmount;
+    var totaldeductionValue = employeeESICValue + employeePFValue + professionalTaxValue + loanAmount;
+
+    row.querySelector('[id="professionalTax"]').value = professionalTaxValue.toFixed(2);
+    row.querySelector('[id="netPay"]').value = netPayValue.toFixed(2);
+    row.querySelector('[id="totaldeduction"]').value = totaldeductionValue.toFixed(2);
+};
+
+// Call the function to calculate all CTCs
+calculateAllCTCs();
+
   </script> 
   {% endblock %}

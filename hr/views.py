@@ -611,7 +611,8 @@ def onboarding_process(request, onboarding_id):
         'onboarding_form': onboarding_form,
         'onboarding_AccountDetils_Form': onboarding_AccountDetils_Form,
         'onboarding_id': onboarding_id,
-        'onboarding_EducationDetils_Form': onboarding_EducationDetils_Form
+        'onboarding_EducationDetils_Form': onboarding_EducationDetils_Form,
+        'candidate_resume':candidate_resume,
     }
 
     context.update(get_session(request))  # Call get_session to retrieve the dictionary
@@ -2512,7 +2513,7 @@ def update_holidaymaster_details(request, holidaymaster_id):
             
             # Check if the new name already exists
             try:
-                existing_holidaymaster = Department.objects.get(name=new_name,year=new_year)
+                existing_holidaymaster = HolidayMaster.objects.get(name=new_name,year=new_year)
                 return JsonResponse({'error': 'Holiday name year already exists'}, status=400)
             except ObjectDoesNotExist:
 

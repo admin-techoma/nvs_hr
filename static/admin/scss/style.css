@@ -665,12 +665,20 @@ table tbody tr td p {
 }
 
 .salpayrolltable-wrapper {
-  max-height: 21em;
-  height: 100%;
-  border-radius: 0.625em;
+  border-radius: 0.625em !important;
+  padding: 0.313em;
+}
+.salpayrolltable-wrapper .table {
+  border: 1px solid !important;
+  border-color: var(--color-bg) !important;
+  border-radius: 0.625em !important;
+}
+.salpayrolltable-wrapper .table thead {
+  border-radius: 0.625em !important;
 }
 .salpayrolltable-wrapper .table thead tr {
   border: 0;
+  border-radius: 0.625em !important;
 }
 .salpayrolltable-wrapper .table thead tr th {
   border: 0 !important;
@@ -687,6 +695,9 @@ table tbody tr td p {
 }
 .salpayrolltable-wrapper .table tbody tr:hover td {
   background: unset !important;
+}
+.salpayrolltable-wrapper .table tbody:last-child td {
+  border-bottom: 0 !important;
 }
 
 .admintable {
@@ -2254,5 +2265,4 @@ main .preview-img {
 
 .footer {
   background: rgba(20, 36, 90, 0.1019607843);
-}/*# sourceMappingURL=style.css.map */gba(20, 36, 90, 0.1019607843);
 }/*# sourceMappingURL=style.css.map */

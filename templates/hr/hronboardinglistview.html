@@ -72,7 +72,7 @@
                             <td>
                                 {% for candidate_id, status_dict in onboarding_status.items %}
                                 {% if onboardCandidates.candidate_id == candidate_id %}
-                                {% if not status_dict.onboarding_exists %}
+                                {% if  status_dict.onboarding_exists %}
                                <span class="badge text-bg-warning edit-resume">Pending Documents</span>
                                 <ul>
                                     {% if onboardCandidates.c_psimg %}

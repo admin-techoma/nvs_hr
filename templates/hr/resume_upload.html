@@ -1,4 +1,4 @@
-<form class="d-flex flex-wrap" method="post" enctype="multipart/form-data" id="uploadResumeForm" action="{% url 'hr:upload_resume'%}">
+<form class="d-flex flex-wrap" method="post" enctype="multipart/form-data" id="uploadResumeForm" >
     {% csrf_token %}
     <div class=" col-6 p-2 mb-1">
         <label for="exampleFormControlInput1" class="form-label mb-0">Candidate Name</label>
@@ -10,8 +10,8 @@
         <span id="email-error" class="text-danger"></span>
     </div>
     <div class="col-6 p-2 mb-1">
-        <label for="id_phone_number" class="form-label mb-0">Mobile No</label>
-        <input autocomplete="off" type="tel"  class="form-control form-control-sm"  name="phone_number" id="id_phone_number" autocomplete="off" pattern="[0-9]{10}" maxlength="10" minlength="10" required>
+        <label for="phone_number" class="form-label mb-0">Mobile No</label>
+        <input autocomplete="off" type="tel"  class="form-control form-control-sm"  name="phone_number" id="phone_number" autocomplete="off" pattern="[0-9]{10}" maxlength="10" minlength="10" required>
         {% comment %} {{form.phone_number}} {% endcomment %}
         <span id="contact_no-error" class="text-danger"></span> 
     </div>
@@ -80,7 +80,7 @@
             }
     
             function checkContactNoExists() {
-                var phone_number_exists = $('#id_phone_number').val(); // Adjust the ID based on your form field
+                var phone_number_exists = $('#phone_number').val(); // Adjust the ID based on your form field
                 if (phone_number_exists) {
                     $.ajax({
                         type: 'GET',
@@ -111,7 +111,7 @@
                 checkEmailExists();
             });
     
-            $('#id_phone_number').on('change', function() {
+            $('#phone_number').on('change', function() {
                 checkContactNoExists();
             });
         });

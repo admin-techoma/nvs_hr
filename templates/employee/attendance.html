@@ -240,7 +240,7 @@
                 <h1 class="modal-title fs-5" id="LeavemodalLabel">Apply for leave</h1>
                 <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="leaveForm" method="POST" onsubmit="applyLeave()">
+            <form id="leaveForm" method="POST" onsubmit="event.preventDefault();applyLeave()">
                 {% csrf_token %}
                 <div class="modal-body">
                     <div class="row">
@@ -374,6 +374,27 @@
     </div>
 </div>
 
+<!-- Modal for Leave Apply Success  Message -->
+<div class="modal fade" id="successleaveModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Leave!</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Success message content goes here -->
+                <p> Leave  Apply  Successfully.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Modal -->
 <div class="modal fade" id="popupfordelete" tabindex="-1" aria-labelledby="popupfordeleteModalLabel"
     data-bs-backdrop="static" aria-hidden="true">
@@ -457,10 +478,16 @@
                 leave_reason: leaveReason,
             },
             success: function(response) {
-                alert('Leave Apply successfully.');
-                    // Optionally, you can redirect or perform other actions after submission
-                    // window.location.href = '/success-page'; // Redirect to a success page
+
+                $('#successleaveModal').modal('show');
+
+                
+                    setTimeout(function(){
+                        $("#successleaveModal").modal('hide');
+                        location.reload();
+                    }, 2000);
                 },
+
                 error: function(xhr, status, error) {
                     alert('Error: ' + error);
                 }

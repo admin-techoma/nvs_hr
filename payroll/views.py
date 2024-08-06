@@ -859,7 +859,7 @@ def view_salary(request , pk):
 def edit_salary(request , id):
 
     if request.method == 'POST':
-
+        print(request.POST)
         monthly_ctc   = request.POST.get('monthly_ctc')
         monthly_basic   = request.POST.get('monthly_basic')
         monthly_hra   = request.POST.get('monthly_hra')

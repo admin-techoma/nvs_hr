@@ -21,13 +21,13 @@
                             <div class="mb-2 col-12 col-md-4 col-xl-3">
                                 <label for="year">Year</label>
                                 <input type="text" id="year" class="form-control form-control-sm" name="year" id="year"
-                                    value="{{payroll_data.year}}" disabled />
+                                    value="{{payroll_data.year}}" readonly />
 
                             </div>
                             <div class="mb-2 col-12 col-md-4 col-xl-3">
                                 <label for="month">Month</label>
                                 <input type="text" id="month" class="form-control form-control-sm" name="month" value="{% now 'F' %}"
-                                disabled />
+                                readonly />
 
                             </div>
                         </div>
@@ -35,38 +35,38 @@
                             <div class="mb-2 col-12 col-md-4 col-xl-3">
                                 <label for="employeename" class="form-label mb-0">Payroll ID</label>
                                 <input type="text" class="form-control form-control-sm "
-                                    id="payrollid" name="payroll_id" value="{{ payroll_data.payroll_id }}" disabled>
+                                    id="payrollid" name="payroll_id" value="{{ payroll_data.payroll_id }}" readonly>
                             </div>
 
                             <div class="mb-2 col-12 col-md-4 col-xl-3">
                                 <label for="employeeId" class="form-label mb-0">Employee Id</label>
                                 <input type="text" class="form-control form-control-sm "
-                                    id="employeeId" name="emp_id" value="{{ payroll_data.emp_id.emp_id }}" disabled>
+                                    id="employeeId" name="emp_id" value="{{ payroll_data.emp_id.emp_id }}" readonly>
                             </div>
                             <div class="mb-2 col-12 col-md-4 col-xl-3">
                                 <label for="employeename" class="form-label mb-0">Employee Name</label>
                                 <input type="text" class="form-control form-control-sm "
-                                    id="employeename" name="name" value="{{payroll_data.emp_id.name}}" disabled>
+                                    id="employeename" name="name" value="{{payroll_data.emp_id.name}}" readonly>
                             </div>
                             <div class="mb-2 col-12 col-md-4 col-xl-3">
                                 <label for="department" class="form-label mb-0 mb-0 w-md-50">Department</label>
-                                <input type="text" class="form-control form-control-sm " disabled
+                                <input type="text" class="form-control form-control-sm " readonly
                                     placeholder="B" id="department" value="{{payroll_data.emp_id.department}}" />
                             </div>
                             <div class="mb-2 col-12 col-md-4 col-xl-3">
                                 <label for="designation" class="form-label mb-0 mb-0 w-md-50">Designation</label>
-                                <input id="designation" type="text" class="form-control form-control-sm " disabled
+                                <input id="designation" type="text" class="form-control form-control-sm " readonly
                                     value="{{payroll_data.emp_id.designation}}" id="" />
 
                             </div>
                             <div class="mb-2 col-12 col-md-4 col-xl-3">
                                 <label for="branch"  class="form-label mb-0 mb-0 w-md-50 me-1 text-nowrap">Branch </label>
-                                <input type="text" class="form-control form-control-sm " disabled
+                                <input type="text" class="form-control form-control-sm " readonly
                                     placeholder="Vadodara" id="branch" value="{{payroll_data.emp_id.company_branch}}" />
                             </div>
                             <div class="mb-2 col-12 col-md-4 col-xl-3 mb-2">
                                 <label for="DateofJoining" class="form-label mb-0 mb-0 w-md-50 me-1 text-nowrap">Date of Joining </label>
-                                <input type="text" class="form-control form-control-sm " disabled
+                                <input type="text" class="form-control form-control-sm " readonly
                                     placeholder="" id="DateofJoining" value="{{payroll_data.emp_id.doj|date:'d-m-Y'}}" />
                             </div>
                             
@@ -76,11 +76,11 @@
                             <h5 class="w-100">Working Details</h5>
                             <div class="col-12 col-md-4 d-flex align-items-center mb-2">
                                 <label class="form-label mb-0 mb-0 mb-md-0 text-nowrap me-2 w-50" for="paid_days">Paid days :</label>
-                                <input type="number" class="form-control form-control-sm " id="paid_days" value={{payroll_data.monthly_paiddays}} name="monthly_paiddays" disabled oninput="calculateNewCtc()" />
+                                <input type="number" class="form-control form-control-sm " id="paid_days" value={{payroll_data.monthly_paiddays}} name="monthly_paiddays" readonly oninput="calculateNewCtc()" />
                             </div>
                             <div class="col-12 col-md-4 d-flex align-items-center mb-2">
                                 <label class="form-label mb-0 mb-0 mb-md-0 text-nowrap me-2 w-50" for="total_days">Total days :</label>
-                                <input type="text" class="form-control form-control-sm" id="total_days" value="{{total_days}}" name="monthly_paiddays" disabled />
+                                <input type="text" class="form-control form-control-sm" id="total_days" value="{{total_days}}" name="monthly_paiddays" readonly />
                             </div>
                         </div>
                         <div class="row">
@@ -103,7 +103,7 @@
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="Basic" placeholder="CTC" disabled>
+                                                                id="Basic" placeholder="CTC" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -111,7 +111,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="fixedctc" name="fixed_ctc" placeholder="0"
-                                                                value="{{payroll_data.fixed_ctc}}" disabled>
+                                                                value="{{payroll_data.fixed_ctc}}" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -119,7 +119,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="ctcInput" name="monthly_ctc" placeholder="0"
-                                                                value="{{ payroll_data.monthly_ctc }}" disabled>
+                                                                value="{{ payroll_data.monthly_ctc }}" readonly>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -128,7 +128,7 @@
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="Basic" placeholder="Basic" disabled>
+                                                                id="Basic" placeholder="Basic" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -136,7 +136,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="" name="fixed_basic" placeholder="0"
-                                                                value="{{ payroll_data.fixed_basic }}" disabled>
+                                                                value="{{ payroll_data.fixed_basic }}" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -144,7 +144,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="basicAmount" name="monthly_basic" placeholder="0"
-                                                                value="{{payroll_data.monthly_basic}}" disabled>
+                                                                value="{{payroll_data.monthly_basic}}" readonly>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -153,7 +153,7 @@
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="" placeholder="HRA" disabled>
+                                                                id="" placeholder="HRA" readonly>
                                                         </div>
                                                         </th>
                                                     <td scope="col">
@@ -161,7 +161,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="" placeholder="0" value="{{ payroll_data.fixed_hra }}" 
-                                                                name="fixed_hra" disabled>
+                                                                name="fixed_hra" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -169,7 +169,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="hraAmount" name="monthly_hra" placeholder="0"
-                                                                value="{{ payroll_data.monthly_hra}}" disabled>
+                                                                value="{{ payroll_data.monthly_hra}}" readonly>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -178,7 +178,7 @@
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="" placeholder="ca" disabled>
+                                                                id="" placeholder="ca" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -186,7 +186,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="" name="fixed_ca" placeholder="0"
-                                                                value="{{payroll_data.fixed_ca}}" disabled>
+                                                                value="{{payroll_data.fixed_ca}}" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -194,7 +194,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="ca" name="monthly_ca" placeholder="0"
-                                                                value="{{ payroll_data.monthly_ca}}" disabled>
+                                                                value="{{ payroll_data.monthly_ca}}" readonly>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -203,7 +203,7 @@
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="" placeholder="sa" disabled>
+                                                                id="" placeholder="sa" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -211,7 +211,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="" name="fixed_sa" placeholder="0"
-                                                                value="{{ payroll_data.fixed_sa}}" disabled>
+                                                                value="{{ payroll_data.fixed_sa}}" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -219,7 +219,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="sa" name="monthly_sa" placeholder="0"
-                                                                value="{{ payroll_data.monthly_sa}}" disabled>
+                                                                value="{{ payroll_data.monthly_sa}}" readonly>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -228,21 +228,21 @@
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="" placeholder="Incentives" disabled>
+                                                                id="" placeholder="Incentives" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="" placeholder="0" value="" disabled>
+                                                                id="" placeholder="0" value="" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="monthly_incentive" name="monthly_incentive" placeholder="0" value="{{payroll_data.monthly_incentive}}" oninput="handleIncentiveChange('{{ payroll_data.emp_id.emp_id }}')" disabled >
+                                                                id="monthly_incentive" name="monthly_incentive" placeholder="0" value="{{payroll_data.monthly_incentive}}" oninput="handleIncentiveChange('{{ payroll_data.emp_id.emp_id }}')" readonly >
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -251,7 +251,7 @@
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="" placeholder="Gross Salary" disabled>
+                                                                id="" placeholder="Gross Salary" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -259,7 +259,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="" placeholder="0" name="fixed_gross_salary"
-                                                                value="{{ payroll_data.fixed_gross_salary }}" disabled>
+                                                                value="{{ payroll_data.fixed_gross_salary }}" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -267,7 +267,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="grossAmount" name="monthly_gross_salary"
-                                                                placeholder="0" value="{{payroll_data.monthly_gross_salary}}" disabled>
+                                                                placeholder="0" value="{{payroll_data.monthly_gross_salary}}" readonly>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -297,7 +297,7 @@
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="" placeholder="P.F" disabled>
+                                                                id="" placeholder="P.F" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -305,7 +305,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="" placeholder="0" name="fixed_employeepf"
-                                                                value="{{ payroll_data.fixed_employeepf }}" disabled>
+                                                                value="{{ payroll_data.fixed_employeepf }}" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -313,7 +313,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm "
                                                                 id="employeePF" placeholder="0"
-                                                                name="monthly_employeepf" value=" {{payroll_data.monthly_employeepf}} " disabled />
+                                                                name="monthly_employeepf" value=" {{payroll_data.monthly_employeepf}} " readonly />
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -321,7 +321,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="" placeholder="0" name="fixed_employerpf"
-                                                                value="{{ payroll_data.fixed_employerpf }}" disabled>
+                                                                value="{{ payroll_data.fixed_employerpf }}" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -329,7 +329,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="employerPF" placeholder="0"
-                                                                name="monthly_employerpf" value="{{payroll_data.monthly_employerpf}}" disabled>
+                                                                name="monthly_employerpf" value="{{payroll_data.monthly_employerpf}}" readonly>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -338,7 +338,7 @@
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="" placeholder="P.T" disabled>
+                                                                id="" placeholder="P.T" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -346,7 +346,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="" placeholder="0" name="fixed_professionalTax"
-                                                                value="{{payroll_data.fixed_professionalTax}}" disabled>
+                                                                value="{{payroll_data.fixed_professionalTax}}" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -354,21 +354,21 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="professionalTax" name="monthly_professionalTax"
-                                                                placeholder="0" value="{{payroll_data.monthly_professionalTax}}" disabled>
+                                                                placeholder="0" value="{{payroll_data.monthly_professionalTax}}" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="" placeholder="0" value="" disabled>
+                                                                id="" placeholder="0" value="" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="" placeholder="0" value="" disabled>
+                                                                id="" placeholder="0" value="" readonly>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -378,7 +378,7 @@
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="" placeholder="E.S.I.C" disabled>
+                                                                id="" placeholder="E.S.I.C" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -386,7 +386,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="" placeholder="0" name="fixed_employeeesic"
-                                                                value="{{payroll_data.fixed_employeeesic}}" disabled>
+                                                                value="{{payroll_data.fixed_employeeesic}}" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -394,7 +394,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="employeeESIC" name="monthly_employeeesic"
-                                                                placeholder="0" value="{{payroll_data.monthly_employeeesic}}" disabled>
+                                                                placeholder="0" value="{{payroll_data.monthly_employeeesic}}" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -402,7 +402,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="" placeholder="0" name="fixed_employeresic"
-                                                                value="{{payroll_data.fixed_employeresic}}" disabled>
+                                                                value="{{payroll_data.fixed_employeresic}}" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
@@ -410,7 +410,7 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
                                                                 id="employerESIC" name="monthly_employeresic"
-                                                                placeholder="0" value="{{payroll_data.monthly_employeresic}}" disabled>
+                                                                placeholder="0" value="{{payroll_data.monthly_employeresic}}" readonly>
                                                         </div>
                                                     </td>
 
@@ -420,34 +420,34 @@
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="" placeholder="OTHERS" disabled>
+                                                                id="" placeholder="OTHERS" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm"
-                                                                id="" placeholder="0" disabled>
+                                                                id="" placeholder="0" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
                                                         <div class="">
                                                             <input type="text"
-                                                                class="form-control form-control-sm" id="monthly_loan_other" name="monthly_loan_other" value="{{payroll_data.monthly_loan_other}}" oninput="handleLoanChange('{{ payroll_data.emp_id.emp_id }}')" disabled>
-                                                        </div>
-                                                    </td>
-                                                    <td scope="col">
-                                                        <div class="">
-                                                            <input type="text"
-                                                                class="form-control form-control-sm  "
-                                                                id="" placeholder="0" disabled>
+                                                                class="form-control form-control-sm" id="monthly_loan_other" name="monthly_loan_other" value="{{payroll_data.monthly_loan_other}}" oninput="handleLoanChange('{{ payroll_data.emp_id.emp_id }}')" readonly>
                                                         </div>
                                                     </td>
                                                     <td scope="col">
                                                         <div class="">
                                                             <input type="text"
                                                                 class="form-control form-control-sm  "
-                                                                id="" placeholder="0" disabled>
+                                                                id="" placeholder="0" readonly>
+                                                        </div>
+                                                    </td>
+                                                    <td scope="col">
+                                                        <div class="">
+                                                            <input type="text"
+                                                                class="form-control form-control-sm  "
+                                                                id="" placeholder="0" readonly>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -463,7 +463,7 @@
                             <div class="col-12 col-md-6 mb-2  d-flex justify-content-center align-items-center">
                                 <label for="newCTC" class="form-label mb-0 text-nowrap me-2 mb-0">Monthly CTC:</label>
                                 <input type="text" class="form-control form-control-sm" id="newCTC" name="monthly_newctc"
-                                    placeholder="0" value="{{payroll_data.monthly_newctc}}" disabled/>
+                                    placeholder="0" value="{{payroll_data.monthly_newctc}}" readonly/>
                             </div>
                             <div
                                 class="col-12 col-md-6 mb-2 d-flex justify-content-between align-items-center flex-wrap ">
@@ -471,20 +471,20 @@
                                     <label for="totaldeduction" class="form-label mb-0 text-nowrap w-50 me-2 mb-0">Total
                                         Deduction :</label>
                                     <input type="text" class="form-control  form-control-sm " id="totaldeduction"
-                                        name="monthly_total_deductions" name="" placeholder="0" value="{{payroll_data.monthly_total_deductions}}" disabled/>
+                                        name="monthly_total_deductions" name="" placeholder="0" value="{{payroll_data.monthly_total_deductions}}" readonly/>
                                 </div>
                                 <div class="d-flex  justify-content-center align-items-center mb-2">
                                     <label for="NetSalaryPayable" class="form-label mb-0 text-nowrap w-50 me-2 mb-0 ">Net
                                         Salary Payable :</label>
                                     <input type="text" class="form-control  form-control-sm " id="netPay"
-                                        name="monthly_netpay" placeholder="0" value="{{payroll_data.monthly_netpay}}" disabled/>
+                                        name="monthly_netpay" placeholder="0" value="{{payroll_data.monthly_netpay}}" readonly/>
                                 </div>
                               
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="d-flex  justify-content-center align-items-center mb-2">
                                     <label for="" class="form-label mb-0 text-nowrap me-2 mb-0">Payment Mode :</label>
-                                    <select class="form-select form-select-sm" id="paymentmode" name="paymentmode" disabled>
+                                    <select class="form-select form-select-sm" id="paymentmode" name="paymentmode" readonly>
                                         <option value="{{payroll_data.paymentmode }}" selected> {{payroll_data.paymentmode}}
                                         </option>
                                       
@@ -499,7 +499,7 @@
                                         Words :</label>
                                     <input type="text" class="form-control  form-control-sm bg-transparent  "
                                         id="monthly_netpayinwords" name="monthly_netpayinwords"
-                                        placeholder="" value="{{payroll_data.monthly_netpayinwords}}" disabled />
+                                        placeholder="" value="{{payroll_data.monthly_netpayinwords}}" readonly />
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -512,7 +512,7 @@
                             <div class="col-12 col-md-6">
                                 <div class="d-flex  justify-content-end align-items-center mb-2">
                                     <button type="submit" id="saveSalaryInfoBtn" class="btn custom-button btn-sm me-2"
-                                    disabled>Save Changes</button>
+                                    readonly>Save Changes</button>
                                     <button type="button" class="btn btn-secondary btn-sm" id="cancelEditBtn">Cancel</button>
                                 </div>
                             </div>
@@ -531,14 +531,14 @@
                         // Select the fields to be toggled
                         const fieldsToToggle = $('#paid_days, #ctcInput, #basicAmount, #hraAmount, #otherAmount, #monthly_sa, #grossAmount, #employeePF, #employerPF, #professionalTax, #employeeESIC, #employerESIC, #newCTC, #totaldeduction, #netPay, #monthly_netpayinwords, #monthly_incentive, #monthly_loan_other');
                         // Check the current state of the first field
-                        const isDisabled = fieldsToToggle.prop('disabled');
-                        // Toggle the disabled property of the fields
-                        fieldsToToggle.prop('disabled', !isDisabled);
+                        const isreadonly = fieldsToToggle.prop('readonly');
+                        // Toggle the readonly property of the fields
+                        fieldsToToggle.prop('readonly', !isreadonly);
                         // Enable the Save Changes button if any fields are enabled, otherwise disable it
-                        if (isDisabled) {
-                            $('#saveSalaryInfoBtn').prop('disabled', false);
+                        if (isreadonly) {
+                            $('#saveSalaryInfoBtn').prop('readonly', false);
                         } else {
-                            $('#saveSalaryInfoBtn').prop('disabled', true);
+                            $('#saveSalaryInfoBtn').prop('readonly', true);
                         }
                     });
                     $('#cancelEditBtn').click(function (event) {
@@ -570,9 +570,9 @@
                                 // Display a success message
                                 alert('Salary updated successfully.');
                                 // Re-disable the input fields after successful submission
-                                $('#salaryInfoForm input').prop('disabled', true);
-                                $('#salaryInfoForm select').prop('disabled', true);
-                                $('#saveSalaryInfoBtn').prop('disabled', true);
+                                $('#salaryInfoForm input').prop('readonly', true);
+                                $('#salaryInfoForm select').prop('readonly', true);
+                                $('#saveSalaryInfoBtn').prop('readonly', true);
                                 location.reload(); // Reload the page
                             },
                             error: function (xhr, status, error) {

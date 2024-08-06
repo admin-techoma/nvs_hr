@@ -238,7 +238,7 @@
                                     <label for="CPincode"
                                         class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Pincode:</label>
                                     <input type="tel" class="form-control form-control-sm" id="CPincode"
-                                        disabled value="{{company_data.reg_pin_code|default:''}}"  pattern="[0-9]{6}" title="Please enter exactly 6 digits." minlength="6" maxlength="6" 
+                                        disabled value="{{company_data.reg_pin_code|default:''}}"  pattern="[0-9]{6}" title="Please enter exactly 6 digits." minlength="6" maxlength="6"
                                         name="reg_pin_code">
                                 </div>
                             </div>
@@ -281,7 +281,7 @@
                                 <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                     <label for="CCPincode"
                                         class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Pincode:</label>
-                                    <input type="tel" class="form-control form-control-sm" id="CCPincode"  pattern="[0-9]{6}" title="Please enter exactly 6 digits." minlength="6" maxlength="6" 
+                                    <input type="tel" class="form-control form-control-sm" id="CCPincode"   pattern="[0-9]{6}" title="Please enter exactly 6 digits." minlength="6" maxlength="6"
                                         disabled value="{{company_data.corp_pin_code|default:''}}"
                                         name="corp_pin_code">
                                 </div>
@@ -480,8 +480,8 @@
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addbranchpin_code" class="form-label">Pin Code</label>
-                                        <input type="tel" step="0" class="form-control form-control-sm" id="Addbranchpin_code" pattern="[0-9]{6}" title="Please enter exactly 6 digits." minlength="6" maxlength="6" 
-                                            name="pin_code" required>
+                                        <input type="tel" step="0" class="form-control form-control-sm" id="Addbranchpin_code" pattern="[0-9]{6}" title="Please enter exactly 6 digits." minlength="6" maxlength="6"
+                                        name="pin_code" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
@@ -1373,7 +1373,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm"
                                     data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn custom-button btn-sm add-weekoff-button" >Add</button>
+                                <button type="submit" class="btn custom-button btn-sm add-weekoff-button load-button" >Add</button>
                             </div>
                         </form>
                     </div>
@@ -1458,7 +1458,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-sm"
                                     data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn custom-button btn-sm edit-weekoff-btn ">Save changes</button>
+                                <button type="submit" class="btn custom-button btn-sm edit-weekoff-btn load-button">Save changes</button>
                             </div>
                         </form>
                     </div>
@@ -2717,29 +2717,18 @@ $(document).ready(function () {
 				'status': status,
 				'csrfmiddlewaretoken': '{{ csrf_token }}'
 			},
-			success: function (data){
-                if (data.success) {
-                    // Display the success message in your HTML template
-                    $('.alert-success').remove(); // Remove previous success messages
-                    var successMessage = ' <div class="alert alert-success" role="alert"><div class="row"><div class="col-10 form-group">Add New Branch successfully!</div><div class="col-2 form-group d-flex justify-content-end"><button type="button" class="btn-close close-success" data-bs-dismiss="alert" aria-label="Close"></button></div></div></div>';
-                    $('html, body').animate({
-                        scrollTop: 0
-                    }, 'slow');
-                    
-                    $('#alert-container').append(successMessage);
-                    alerttimeout();
-    
-                    // Redirect to /hr/resumes/ after 2000 milliseconds
-                    setTimeout(function() {
-                        window.location.href = '/hr/company_profile/';
-                    }, 2000);
-                } else {
-                    // Handle other success conditions or error responses
-                    alert(data.message);
-                }
-            },
-
-
+            success: function (data) {
+				$("#AddBranchModal .modal-body").html(
+					'<div class="alert alert-success">New Branch Add successfully!</div>'
+				);
+				$("#AddBranchModal .modal-footer .addBranchButton").hide();
+				setTimeout(function () {
+					$("#AddBranchModal").modal('hide');
+					location.reload();
+				}, 2000);
+			},
+			
+            
 			error: function (xhr, status, error) {
 				var errorMessage = xhr.responseJSON.error;
 				$("#AddBranchModal .modal-body").html(

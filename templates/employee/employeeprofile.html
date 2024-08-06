@@ -33,7 +33,7 @@
     {% endif %}
     <ul class="profile-tabs nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="Personal-tab" data-bs-toggle="tab" data-bs-target="#Personal-tab-pane"
+            <button class="nav-link active" id="Personal-tab" data-bs-toggle="tab" data-bs-target="#Personal-tab-pane" href="#Personal-tab-pane"
                 type="button" role="tab" aria-controls="Personal-tab-pane" aria-selected="true">Personal</button>
         </li>
         <li class="nav-item" role="presentation">
@@ -351,16 +351,16 @@
                                                 <span class="social-text"></span>
                                             </a>
                                             <input disabled type="Text" class="form-control form-control-sm "
-                                                name="linkedin_profile" value="{{emp_data.linkedin_profile}}">
+                                                name="linkedin_profile" value="{{emp_data.linkedin_profile|default:''}}">
                                         </li>
                                         <li class="social-item">
-                                            <a href="{{emp_data.instagram_profile}}" class="social-link"
+                                            <a href="{{emp_data.instagram_profile|default:''}}" class="social-link"
                                                 target="_blank">
                                                 <span class="social-icon bi bi-facebook fs-4"></span>
                                                 <span class="social-text"></span>
                                             </a>
                                             <input disabled type="Text" class="form-control form-control-sm "
-                                                name="instagram_profile" value="{{emp_data.instagram_profile}}">
+                                                name="instagram_profile" value="{{emp_data.instagram_profile|default:''}}">
                                         </li>
                                         <li class="social-item">
                                             <a href="{{emp_data.facebook_profile}}" class="social-link" target="_blank">
@@ -368,7 +368,7 @@
                                                 <span class="social-text"></span>
                                             </a>
                                             <input disabled type="Text" class="form-control form-control-sm"
-                                                name="facebook_profile" value="{{emp_data.facebook_profile}}">
+                                                name="facebook_profile" value="{{emp_data.facebook_profile|default:''}}">
                                         </li>
                                     </ul>
                                 </div>
@@ -1448,8 +1448,7 @@
                                     
                                     <div class="col-12 mb-2">
                                         <input type="checkbox" class="form-check-input" id="reporting_take"
-                                            name="reporting_take" {% if emp_data.reporting_take %}checked{% endif %}
-                                            disabled>
+                                            name="reporting_take" {% if emp_data.reporting_take %}checked{% endif %} disabled>
                                         <label for="reporting_take">Can take Reporting of Employee</label>
                                     </div>
                                 </div>

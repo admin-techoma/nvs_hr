@@ -448,6 +448,7 @@ $(document).ready(function() {
 
     // Add "onleave" class to days with no class up to the current date
     const today = new Date();
+   
     $('.days li').each(function() {
       const dataDate = $(this).data('date');
       const [day, month, year] = dataDate.split('-').map(Number);

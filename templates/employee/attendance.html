@@ -403,7 +403,7 @@
     ];
 
 
-    const applyLeave = () => {
+    function applyLeave() {
         const leaveFrom = $('#leavedateFrom').val();
         const leaveTo = $('#leavedateTo').val();
         const leaveType = $('#selectLeaveType').val();
@@ -442,7 +442,7 @@
         }
         // Display status message element
         const leaveStatus = $('#leaveStatus');
-
+        
         $.ajax({
             url: `/employee/apply_leave/${employee}/`,
             method: 'POST',

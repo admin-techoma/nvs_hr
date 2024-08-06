@@ -393,7 +393,25 @@
         </div>
     </div>
 </div>
-
+<!-- Modal for Regularization Apply Success  Message -->
+<div class="modal fade" id="successregularisationModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Regularization!</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Success message content goes here -->
+                <p> Regularization  Apply  Successfully.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="popupfordelete" tabindex="-1" aria-labelledby="popupfordeleteModalLabel"
@@ -539,11 +557,18 @@
                     data: formData,
                     headers: { 'X-CSRFToken': csrftoken },
                     success: function(response) {
-                        $('#regStatus').text('Request submitted successfully!');
-                        $('#regularlizationmodal').modal('hide');
-                        // Optionally, you can clear the form fields here
-                        $('#attendanceRegForm')[0].reset();
-                    },
+
+                        $('#successregularisationModal').modal('show');
+        
+                        
+                            setTimeout(function(){
+                                $("#successregularisationModal").modal('hide');
+                                $('#attendanceRegForm')[0].reset();
+                                location.reload();
+                            }, 2000);
+                        },
+                        
+                        
                     error: function(jqXHR, textStatus, errorThrown) {
                         $('#regStatus').text('Error submitting request. Please try again.');
                     }

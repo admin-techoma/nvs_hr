@@ -1,0 +1,62 @@
+@use "../base/color" as c;
+@use "../base/variable" as v;
+
+.form-label {
+  font-size: $font-size-normal;
+}
+
+.form-control {
+  font-size: $font-size-normal;
+  &:focus {
+    border-color: c.$primarycolor !important;
+    outline: 0;
+    box-shadow: 0 0 0 0.25em rgba(20, 36, 90, 0.3) !important;
+  }
+}
+
+.form-control {
+  border: 0.063em solid;
+
+
+  &:focus {
+    background: var(--color-primarybg) !important;
+    color: var(--color-bg) !important;
+    border: 0.063em solid (--color-fg);
+    outline: none;
+    box-shadow: none !important;
+  }
+
+  &:disabled {
+    background-color: #f5f5f5;
+    /* Light gray background for disabled inputs */
+    border: 0.063em solid #ddd;
+    /* Gray border */
+    cursor: not-allowed;
+  }
+
+}
+
+.form-check-input:checked {
+  background-color: c.$primarycolor ;
+  border-color: c.$primarycolor ;
+}
+
+select {
+  &:hover {
+    border-color: #888;
+  }
+
+  option {
+    background-color: c.$color-white;
+    color: #333;
+  }
+
+  &:focus {
+    color: c.$color-black !important;
+    border: 0.063em solid (--color-fg);
+    outline: none;
+    box-shadow: none !important;
+  }
+}
+
+

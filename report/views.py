@@ -103,7 +103,6 @@ def employeedata(request):
                     # ("emp_id","candidate_id","name","doj","department__name","designation__name","documents_id","status",))
     return JsonResponse({'data':queryset})
 
-
 @login_required(login_url=reverse_lazy('accounts:login'))
 def attendance_report(request):
   
@@ -126,7 +125,11 @@ def attendancedata(request):
         end_date = datetime.today()
 
     daterange   = [start_date, end_date]
-    queryset = list(Attendance.objects.filter(date__range = daterange).values("employee__emp_id","employee__name","date","clock_in","clock_out","is_full_day","is_half_day","is_absent","is_on_leave","latitude","longitude"))
+    queryset = list(Attendance.objects.filter(date__range = daterange).values("employee__emp_id","employee__name","date","clock_in","clock_out","is_full_day","is_half_day","is_absent","is_on_leave","latitude","longitude", "worked_hours"))
+    
+    for record in queryset:
+        record['worked_hours'] = str(record['worked_hours'])
+    
     return JsonResponse({'data':queryset})
 
 

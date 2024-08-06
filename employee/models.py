@@ -187,12 +187,12 @@ class Attendance(models.Model):
                     clock_out_dt = official_clock_out
 
             time_worked = clock_out_dt - clock_in_dt
+            self.worked_hours = time_worked
 
             if time_worked.total_seconds() < 0:
                 time_worked = datetime.combine(current_date, time()) - datetime.combine(current_date, time())
 
             total_hours = time_worked.total_seconds() / 3600
-
             if total_hours >= 8:
                 self.is_full_day = True
                 self.is_half_day = False

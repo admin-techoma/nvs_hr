@@ -49,6 +49,7 @@ $(document).ready(function () {
     }
 
     $('#clockedOut').on('click', function () {
+        ///iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent)
         if( /iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent) ) {
         $('#ClockoutModal').modal('show');
         $('#ClockoutModal .modal-body span').text(getCurrentTime());
@@ -143,8 +144,8 @@ $(document).ready(function () {
     // });
     
     $('#clockedIn').on('click', function () {
-        if( /iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent) ) {
-            $('#ClockinModal').modal('show');
+        if(true) {
+        $('#ClockinModal').modal('show');
         $('#ClockinModal .modal-body span').text(getCurrentTime());
     
         $('.modal-footer .btn-success').one('click', function () {

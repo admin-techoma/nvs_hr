@@ -238,7 +238,7 @@
                                     <label for="CPincode"
                                         class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Pincode:</label>
                                     <input type="tel" class="form-control form-control-sm" id="CPincode"
-                                        disabled value="{{company_data.reg_pin_code|default:''}}"  pattern="[0-9]{6}" title="Please enter exactly 6 digits."
+                                        disabled value="{{company_data.reg_pin_code|default:''}}"  pattern="[0-9]{6}" title="Please enter exactly 6 digits." minlength="6" maxlength="6" 
                                         name="reg_pin_code">
                                 </div>
                             </div>
@@ -281,7 +281,7 @@
                                 <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                     <label for="CCPincode"
                                         class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Pincode:</label>
-                                    <input type="tel" class="form-control form-control-sm" id="CCPincode"  pattern="[0-9]{6}" title="Please enter exactly 6 digits."
+                                    <input type="tel" class="form-control form-control-sm" id="CCPincode"  pattern="[0-9]{6}" title="Please enter exactly 6 digits." minlength="6" maxlength="6" 
                                         disabled value="{{company_data.corp_pin_code|default:''}}"
                                         name="corp_pin_code">
                                 </div>
@@ -296,15 +296,17 @@
                         <div class="row w-100">
                             
                             
-                            <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
-                                <label for="ifsc_code"
+                            <div class="col-12 col-md-4 d-flex mb-3  align-items-center flex-column ">
+                              
+                              <div class="d-flex flex-wrap flex-md-nowrap w-100">  <label for="ifsc_code"
                                     class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">IFSC
                                     Code:</label>
                                 <input type="text" class="form-control form-control-sm " id="ifsc_code" maxlength="11" pattern="[A-Z]{4}0[A-Z0-9]{6}" oninput="this.value = this.value.toUpperCase()"
-                                    disabled value="{{company_data.ifsc_code|default:''}}"
-                                    name="ifsc_code">
-                                    <span class="text-danger" id="ifsc_code-error"></span>
+                                    disabled value="{{company_data.ifsc_code|default:''}}" required
+                                    name="ifsc_code"/>
                                    
+                              </div>
+                              <span class="text-danger" id="ifsc_code-error"></span>
                             </div>
                            
                             <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
@@ -313,14 +315,14 @@
                                     :</label>
                                 <input type="text" class="form-control form-control-sm " id="bank_name"
                                      disabled value="{{company_data.bank_name|default:''}}"
-                                    name="bank_name">
+                                    name="bank_name" readonly>
                             </div>
                             <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                 <label for="branch"
                                     class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Bank Branch
                                     :</label>
                                 <input type="text" class="form-control form-control-sm " id="branch"
-                                disabled value="{{company_data.branch|default:''}}" name="branch">
+                                disabled value="{{company_data.branch|default:''}}" name="branch" readonly>
                             </div>
                             <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                 <label for="CompanyAccountNo"
@@ -478,29 +480,29 @@
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addbranchpin_code" class="form-label">Pin Code</label>
-                                        <input type="tel" step="0" class="form-control form-control-sm" id="Addbranchpin_code" pattern="[0-9]{6}" title="Please enter exactly 6 digits."
-                                            name="pin_code" >
+                                        <input type="tel" step="0" class="form-control form-control-sm" id="Addbranchpin_code" pattern="[0-9]{6}" title="Please enter exactly 6 digits." minlength="6" maxlength="6" 
+                                            name="pin_code" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addbranchemail" class="form-label">Email</label>
                                         <input type="email" class="form-control form-control-sm" id="Addbranchemail"
-                                            name="email" >
+                                            name="email" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addbranchcontact_no" class="form-label">Contact No</label>
                                         <input type="tel" class="form-control form-control-sm" id="Addbranchcontact_no"
-                                            name="contact_no" pattern="[0-9]{10}" maxlength="10" minlength="10">
+                                            name="contact_no" pattern="[0-9]{10}" maxlength="10" minlength="10" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addbranchstart_date" class="form-label">Start Date</label>
                                         <input type="date" class="form-control form-control-sm" id="Addbranchstart_date"
-                                            name="start_date" >
+                                            name="start_date" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
@@ -1312,7 +1314,7 @@
                                         <div class="mb-2">
                                             <label for="AddWeekoffName" class="form-label">Weekoff Name</label>
                                             <input type="text" class="form-control form-control-sm" id="AddWeekoffName"
-                                                name="name">
+                                                name="name" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-12">
@@ -1395,7 +1397,7 @@
                                         <div class="mb-2">
                                             <label for="editWeekoffName" class="form-label">Weekoff Name</label>
                                             <input type="text" class="form-control form-control-sm" id="editWeekoffName"
-                                                value="">
+                                                value="" required>
 
                                         </div>
                                     </div>
@@ -1542,14 +1544,14 @@
                                     <div class="mb-2">
                                         <label for="newholidaymaster" class="form-label">Name</label>
                                         <input type="text" class="form-control form-control-sm" id="newholidaymaster"
-                                            name="name">
+                                            name="name" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addannouncement_year" class="form-label">Year</label>
                                         <input type="date" class="form-control form-control-sm"
-                                            id="Addannouncement_year" name="year">
+                                            id="Addannouncement_year" name="year" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
@@ -1589,14 +1591,14 @@
                                     <div class="mb-2">
                                         <label for="EditholidaymasterName" class="form-label">Company Branch Name</label>
                                         <input type="text" class="form-control form-control-sm"
-                                            id="EditholidaymasterName" name="name">
+                                            id="EditholidaymasterName" name="name" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="EditholidaymasterYear" class="form-label">Year</label>
                                         <input type="date" class="form-control form-control-sm"
-                                            id="EditholidaymasterYear" name="year">
+                                            id="EditholidaymasterYear" name="year" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
@@ -2715,17 +2717,29 @@ $(document).ready(function () {
 				'status': status,
 				'csrfmiddlewaretoken': '{{ csrf_token }}'
 			},
-			success: function (data) {
-				$("#AddBranchModal .modal-body").html(
-					'<div class="alert alert-success">Add New Branch successfully!</div>'
-				);
-				$("#addBranchButton").hide();
+			success: function (data){
+                if (data.success) {
+                    // Display the success message in your HTML template
+                    $('.alert-success').remove(); // Remove previous success messages
+                    var successMessage = ' <div class="alert alert-success" role="alert"><div class="row"><div class="col-10 form-group">Add New Branch successfully!</div><div class="col-2 form-group d-flex justify-content-end"><button type="button" class="btn-close close-success" data-bs-dismiss="alert" aria-label="Close"></button></div></div></div>';
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 'slow');
+                    
+                    $('#alert-container').append(successMessage);
+                    alerttimeout();
+    
+                    // Redirect to /hr/resumes/ after 2000 milliseconds
+                    setTimeout(function() {
+                        window.location.href = '/hr/company_profile/';
+                    }, 2000);
+                } else {
+                    // Handle other success conditions or error responses
+                    alert(data.message);
+                }
+            },
 
-				setTimeout(function () {
-					$("##AddBranchModal").modal('hide');
-					location.reload();
-				}, 2000);
-			},
+
 			error: function (xhr, status, error) {
 				var errorMessage = xhr.responseJSON.error;
 				$("#AddBranchModal .modal-body").html(

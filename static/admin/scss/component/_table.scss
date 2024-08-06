@@ -66,10 +66,13 @@ table {
 }
 
 .salpayrolltable-wrapper {
-  max-height: 21em;
+ 
   height: 100%;
-  border-radius: 0.625em;
+ 
   .table {
+    border: 1px solid ;
+   height: auto;
+   border-radius: 0.625em;
     thead{
       tr{
         border: 0;

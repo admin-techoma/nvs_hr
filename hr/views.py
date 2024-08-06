@@ -1373,7 +1373,7 @@ def add_employee(request, pk):
         employee_instance = Employee.objects.create(
             candidate_id=candidate, emp_id=emp_id, name=name,
             first_name=first_name, middle_name=middle_name, last_name=last_name, email=email, office_email=office_email,
-            address=address, state=state, city=city, country=country, pin_code=pin_code,
+            address=address, state=state, city=city, country=country, pin_code=pin_code,other_contact_no=other_contact_no,
             c_address=c_address, c_state=c_state, c_city=c_city, c_country=c_country, c_pin_code=c_pin_code,
             contact_no=contact_no,dob=dob, doj=doj, pfno=pfno, esicno=esicno, pf_joining_date=pf_joining_date, esic_joining_date=esic_joining_date,
             uanno=uanno, pancard_no=pancard_no, aadhaarcard_no=aadhaarcard_no, account_no=account_no, bank_name=bank_name, ifsc_code=ifsc_code,
@@ -1431,7 +1431,7 @@ def update_personal_info(request, id):
         blood_group = request.POST.get('blood_group')
         email = request.POST.get('email')
         contact_no = request.POST.get('contact_no')
-        other_contact_no = request.POST.get('other_contact_no')
+        other_contact_no = Decimal(request.POST.get("other_contact_no")) if request.POST.get("other_contact_no") else None
         address = request.POST.get('address')
         city = request.POST.get('city')
         state = request.POST.get('state')
@@ -1950,7 +1950,7 @@ def direct_employee(request, pk=None):
         c_country= request.POST.get("c_country")
         c_pin_code= request.POST.get("c_pin_code")
         contact_no= request.POST.get("contact_no")
-        other_contact_no= request.POST.get("other_contact_no")
+        other_contact_no= Decimal(request.POST.get("other_contact_no")) if request.POST.get("other_contact_no") else None
         
         dob = request.POST.get("dob")
         doj = request.POST.get("doj")

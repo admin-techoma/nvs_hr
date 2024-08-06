@@ -519,6 +519,10 @@ $(document).ready(function() {
 // Create a container to display the number of weekoff days
 $('body').append('<div id="weekoffDays"></div>');
 
-$(document).on('click', '.days li.absent, .days li.halfday, .days li.onleave', function() {
-  $('#regularlizationmodal').modal('show');
-});
+// $(document).on('click', '.days li.absent, .days li.halfday, .days li.onleave', function() {
+//   $('#regularlizationmodal').modal('show');
+// });
+
+$(document).on('click', '.days li.absent , .days li.halfday' , function() {
+     $('#regularlizationmodal').modal('show');
+    });

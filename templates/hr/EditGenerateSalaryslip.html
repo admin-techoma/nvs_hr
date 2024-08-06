@@ -595,7 +595,6 @@
                         });
                     });
                 });
-
                 function calculateNewCtc() {
                     var ctc = parseFloat(document.getElementById('fixedctc').value);
                     var ctcAmount = document.getElementById('ctcInput');
@@ -606,7 +605,6 @@
                     calculateSalary(newctc); 
                     ctcAmount.value = newctc;
                 }
-
                 function calculateSalary(ctcAmountValue) {
                     var basic_perc = 60.0;
                     var hra_perc = 30;
@@ -615,7 +613,6 @@
                     var employer_esic_perc = 3.25;
                     var employee_esic_perc = 0.75;
                     var tolerance = 0.01;
-            
                     var ctcAmount = document.getElementById('ctcInput');
                     var basicAmount = document.getElementById('basicAmount');
                     var hraAmount = document.getElementById('hraAmount');
@@ -627,43 +624,34 @@
                     var employeeESIC = document.getElementById('employeeESIC');
                     var employerESIC = document.getElementById('employerESIC');
                     var newCTC = document.getElementById('newCTC');
-            
                     var professionalTax = document.getElementById('professionalTax');
                     var netPay = document.getElementById('netPay');
                     var totaldeduction = document.getElementById('totaldeduction');
-            
                     var ctcAmountValue = parseFloat(ctcAmountValue) || 0;
                     var basicAmountValue = Math.round((basic_perc * ctcAmountValue) / 100);
                     var hraAmountValue = Math.round((hra_perc * basicAmountValue) / 100);
-            
                     var allowances = ctcAmountValue - (basicAmountValue + hraAmountValue);
-            
                     var finalCTC = 0;
                     while (Math.abs(finalCTC - ctcAmountValue) > tolerance) {
                         var grossAmountValue = basicAmountValue + hraAmountValue + allowances;
                         var employerESICValue = grossAmountValue < 21000 ? 0.0325 * grossAmountValue : 0;
                         var employerPFValue = (basicAmountValue + allowances > 15000) ? pf_fix : 0.12 * (grossAmountValue - hraAmountValue);
                         finalCTC = basicAmountValue + hraAmountValue + allowances + employerPFValue + employerESICValue;
-            
                         if (finalCTC < ctcAmountValue) {
                             allowances += tolerance;
                         } else {
                             allowances -= tolerance;
                         }
                     }
-            
                     allowances = Math.round(allowances);
                     grossAmountValue = Math.round(basicAmountValue + hraAmountValue + allowances);
                     employerPFValue = Math.round((basicAmountValue + allowances > 15000) ? pf_fix : 0.12 * (grossAmountValue - hraAmountValue));
                     employerESICValue = Math.round(grossAmountValue < 21000 ? 0.0325 * grossAmountValue : 0);
                     finalCTC = Math.round(basicAmountValue + hraAmountValue + allowances + employerPFValue + employerESICValue);
-            
                     var employeePFValue = employerPFValue;
                     var employeeESICValue = grossAmountValue < 21000 ? Math.round(0.0075 * grossAmountValue) : 0;
-            
                     caValue = allowances * 0.6;
                     saValue = allowances * 0.4;
-            
                     basicAmount.value = basicAmountValue.toFixed(2);
                     hraAmount.value = hraAmountValue.toFixed(2);
                     ca.value = caValue.toFixed(2);

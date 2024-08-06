@@ -167,6 +167,33 @@
 
 });
 </script>
+<script>
+  $(document).ready(function () {
+      $('#ifsc_code').on('input', function () {
+          var ifscCode = $(this).val().toUpperCase();
+          if (ifscCode.length === 11) {
+              $.ajax({
+                  url: 'https://ifsc.razorpay.com/' + ifscCode,
+                  type: 'GET',
+                  success: function (data) {
+                      $('#bank_name').val(data.BANK);
+                      $('#branch').val(data.BRANCH);
+                      $('#ifsc_code-error').text('');
+                  },
+                  error: function () {
+                      $('#bank_name').val('');
+                      $('#branch').val('');
+                      $('#ifsc_code-error').text('Invalid IFSC Code');
+                  }
+              });
+          } else {
+              $('#bank_name').val('');
+              $('#branch').val('');
+              $('#ifsc_code-error').text('IFSC Code must be 11 characters');
+          }
+      });
+  });
+</script>
 {% block extrascript %}  
 {% endblock extrascript %}
 </body>

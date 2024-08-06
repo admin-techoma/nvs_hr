@@ -1305,7 +1305,7 @@ def add_employee(request, pk):
         c_country = request.POST.get("c_country")
         c_pin_code = request.POST.get("c_pin_code")
         contact_no = request.POST.get("contact_no")
-        other_contact_no= request.POST.get("other_contact_no")
+        other_contact_no= Decimal(request.POST.get("other_contact_no")) if request.POST.get("other_contact_no") else None
         emergency_contactname = request.POST.get("emergency_contactname")
         emergency_contactnumber = request.POST.get("emergency_contactnumber")
         emergency_relationas = request.POST.get("emergency_relationas")
@@ -1375,7 +1375,7 @@ def add_employee(request, pk):
             first_name=first_name, middle_name=middle_name, last_name=last_name, email=email, office_email=office_email,
             address=address, state=state, city=city, country=country, pin_code=pin_code,
             c_address=c_address, c_state=c_state, c_city=c_city, c_country=c_country, c_pin_code=c_pin_code,
-            contact_no=contact_no,other_contact_no=other_contact_no, dob=dob, doj=doj, pfno=pfno, esicno=esicno, pf_joining_date=pf_joining_date, esic_joining_date=esic_joining_date,
+            contact_no=contact_no,dob=dob, doj=doj, pfno=pfno, esicno=esicno, pf_joining_date=pf_joining_date, esic_joining_date=esic_joining_date,
             uanno=uanno, pancard_no=pancard_no, aadhaarcard_no=aadhaarcard_no, account_no=account_no, bank_name=bank_name, ifsc_code=ifsc_code,
             branch=branch, reporting_take=reporting_take, company_branch=selected_company_branch, department=selectdepartment,
             designation=designation, reporting_to=reporting_to, documents_id=documents, position=selected_position, gender=selected_gender,

@@ -3021,7 +3021,7 @@ def add_branch_list_details(request):
             company_instance = Company.objects.get(id=company_id)  # Change here to get by ID
 
             if CompanyBranch.objects.filter(company=company_instance, name=name,address=address,state=state,city=city,country=country,pin_code=pin_code,email=email,contact_no=contact_no,start_date=start_date,status=status).exists():
-                return JsonResponse({'error': 'Bank already exists for the selected Bank'}, status=400)
+                return JsonResponse({'error': 'Branch Name already exists'}, status=400)
             
             CompanyBranch.objects.create(company=company_instance, name=name,address=address,state=state,city=city,country=country,pin_code=pin_code,email=email,contact_no=contact_no,start_date=start_date,status=status)
             return redirect('hr:view_company')

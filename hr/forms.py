@@ -117,7 +117,7 @@ class OnboardingKYCForm(forms.ModelForm):
                     }
         labels = {
             'interviewMode': 'Interview Mode',
-            'c_psimg': 'Passport Size c_psimg',
+            'c_psimg': 'Passport Size Photo',
             'c_adhar': 'Adharcard',
             'c_pan': 'Pancard',
             'c_bankDetails': 'Cancel Cheque/Bank-Pass Book First Page',
@@ -182,4 +182,3 @@ class onboardingEducationDetilsForm(forms.ModelForm):
             for field_name in self.fields:
                 if field_name in ['c_bankStatement', 'c_salarySlips']:
                     self.fields[field_name].validators.extend(validators)
-

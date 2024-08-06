@@ -711,7 +711,7 @@ table.dataTable.no-footer {
 .DataTable thead th,
 .dataTable thead th,
 table thead th {
-  border-bottom: 0.063em solid !important;
+  border-bottom: 0.625em solid !important;
   border-bottom-color: var(--color-border-theme) !important;
   background-color: var(--color-tableheaderbg) !important;
   color: var(--color-fg) !important;
@@ -736,7 +736,7 @@ table tbody tr:hover td {
 .DataTable tbody td,
 .dataTable tbody td,
 table tbody td {
-  border-bottom: 0.062em solid !important;
+  border-bottom: 0.625em solid !important;
   border-bottom-color: var(--color-tableheaderbg) !important;
   background-color: var(--color-bg-light) !important;
   color: var(--color-fg) !important;
@@ -1561,7 +1561,7 @@ ul li ::marker {
   align-items: center;
   -webkit-backdrop-filter: blur(0.313em);
           backdrop-filter: blur(0.313em);
-  z-index: 1000;
+  z-index: 9998;
 }
 
 .lds-ring {
@@ -1569,6 +1569,7 @@ ul li ::marker {
   position: relative;
   width: 5em;
   height: 5em;
+  z-index: 9999;
 }
 .lds-ring div {
   box-sizing: border-box;
@@ -1779,9 +1780,9 @@ select:focus {
 }
 
 .sidebar {
-  flex: 0 0 14.75em;
-  width: 14.75em;
-  max-width: 14.75em;
+  flex: 0 0 16.75em;
+  width: 16.75em;
+  max-width: 16.75em;
   background: #14245A;
   height: 100%;
   overflow: hidden;

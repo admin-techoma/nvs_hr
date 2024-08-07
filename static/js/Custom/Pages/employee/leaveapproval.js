@@ -10,7 +10,7 @@ $(document).ready(function() {
             let api = this.api();
      
             api.on('click', 'tbody td .status-select', function () {
-                console.log("abc");
+                // console.log("abc");
                 $('.status-select').on('change', function() {
                     var selectedStatus = $(this).val();
                     var leaveId = $(this).closest('tr').find('input[type="hidden"]').val();

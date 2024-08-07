@@ -109,7 +109,7 @@ $(document).ready(function () {
             }
 
         });}else{
-            window.alert("Use Mobile Device only for punch in");
+            window.alert("Use Mobile Device only for Punch Out");
         }
         
 

@@ -27,7 +27,7 @@ from docx import Document
 from core import settings
 from employee.views import calculate_paid_leave_days
 from employee.models import (Attendance, Department, Designation, Employee,
-                             Gender, LeaveApplication, Position,
+                             Gender, LeaveApplication, LeaveBalance, Position,
                              ResignApplication)
 from payroll.models import Monthly_salary, Payroll
 
@@ -57,7 +57,7 @@ def generate_next_emp_id():
 def get_session(request):
     # Retrieve the latest employee from the database
     emp_id = generate_next_emp_id()
-
+    print("*****************",emp_id)
     # Rest of your code remains unchanged
     employee_name = request.session.get('employee_name', '')
     department = request.session.get('department', '')
@@ -1387,6 +1387,12 @@ def add_employee(request, pk):
             payroll_id=payroll_id,
             emp_id=employee_instance
         )
+        
+        # Create leave balance entry
+        LeaveBalance.objects.create(
+            employee=employee_instance,
+            total_leaves=2
+        )
 
         # Update candidateResume to "IsEmployeeNow"
         if candidate:
@@ -1507,9 +1513,9 @@ def update_work_info(request, id):
         esicno = request.POST.get('esicno')
         esic_joining_date = request.POST.get('esic_joining_date')
         esic_exit_date = request.POST.get('esic_exit_date')
-
+        leavebalance = request.POST.get('leavebalance')
         emp_data = Employee.objects.get(emp_id=id)
-
+        leave_balance = get_object_or_404(LeaveBalance, employee=emp_data)
         # Validate and parse date inputs
         try:
             if doj:
@@ -1561,8 +1567,12 @@ def update_work_info(request, id):
                 emp_data.company_branch = CompanyBranch.objects.get(pk=company_branch_id)
             except CompanyBranch.DoesNotExist:
                 pass
-
+        
+        if leavebalance is not None:
+            leave_balance.total_leaves = int(leavebalance)
+                        
         emp_data.save()
+        leave_balance.save()
         messages.success(request, 'Employee work updated successfully.')
         return redirect('hr:employee_profile', id=id)
     else:
@@ -1783,6 +1793,7 @@ def employee_profile(request, id):
     gender = Gender.objects.all()
     position_all = Position.objects.all()
     company_branch = CompanyBranch.objects.all()
+    leave_balance = LeaveBalance.objects.get(employee=emp_data)
 
     
     
@@ -1820,6 +1831,7 @@ def employee_profile(request, id):
 
     context = {'emp_data': emp_data, 
                'attendances':attendances,
+               'leave_balance': leave_balance,
                'employee_regularization':employee_regularization,
                'onboarding_documents': onboarding_documents,
                'total_absents': total_absents,
@@ -2111,12 +2123,19 @@ def direct_employee(request, pk=None):
             
             employee_instance.save()
 
-        
+        # Create Payroll id entry
         Payroll.objects.create(
             payroll_id=payroll_id,
-            emp_id=employee_instance, 
-           
-    )
+            emp_id=employee_instance,
+        ) 
+    
+        
+        # Create leave balance entry
+        LeaveBalance.objects.create(
+            employee=employee_instance,
+            total_leaves=2
+        )
+        
         messages.success(request, 'Employee Create successfully!')
         return redirect('hr:view_employee')
     context =   {

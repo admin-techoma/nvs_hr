@@ -27,11 +27,16 @@
   }
 
   &:disabled {
-    background-color: #f5f5f5;
+    background-color: $color-disabled;
     /* Light gray background for disabled inputs */
     border: 0.063em solid #ddd;
     /* Gray border */
     cursor: not-allowed;
+  }
+
+  &:read-only {
+    background-color: var(--color-bg);
+    // color: $color-white;
   }
 
 }

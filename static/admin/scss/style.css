@@ -2265,4 +2265,11 @@ main .preview-img {
 
 .footer {
   background: rgba(20, 36, 90, 0.1019607843);
+}/*# sourceMappingURL=style.css.map */ll {
+  height: calc(100vh - 6.25em);
+  overflow-y: auto;
+}
+
+.footer {
+  background: rgba(20, 36, 90, 0.1019607843);
 }/*# sourceMappingURL=style.css.map */

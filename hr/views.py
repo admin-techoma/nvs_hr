@@ -50,9 +50,9 @@ def generate_next_emp_id():
     if last_employee:
         last_emp_id = last_employee.emp_id
         emp_number = int(last_emp_id[5:]) + 1
-        return f'NIBPL{str(emp_number).zfill(3)}'
+        return f'NVSCC{str(emp_number).zfill(3)}'
     else:
-        return 'NIBPL001'
+        return 'NVSCC001'
     
 def get_session(request):
     # Retrieve the latest employee from the database
@@ -964,7 +964,7 @@ def ajax_load_interviewer(request):
     interview_round = request.GET.get('interview_round')
     department_id = request.GET.get('department_id')
     
-    hr_department = Department.objects.get(name='HR')
+    hr_department = Department.objects.get(name='Human Resource')
     admin_department = Department.objects.get(name='Admin')
 
     if interview_round == 'HR Round':

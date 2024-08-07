@@ -95,14 +95,12 @@
                             <span class="bi bi-cash-stack nav-icon"></span>
                             <span class="nav-text">Salary</span></a>
                     </li>
-                    {% if reporting_take == True %}
+                    {% if department == 'Admin' or department == 'Human Resource' %}
                     <li class="nav-item {% if url_name == 'leaves_lists' %}active{% endif %}">
                         <a class="nav-link d-flex" href="{% url 'employee:leaves_lists' %}">
                             <span class="bi bi-bookmark-x nav-icon"></span>
                             <span class="nav-text">Leave Approvals</span></a>
                     </li>
-                    {% endif %}
-                    {% if reporting_take == True %}
                     <li class="nav-item {% if url_name == 'resign_lists' %}active{% endif %}">
                         <a class="nav-link d-flex" href="{% url 'employee:resign_lists'  %}">
                             <span class="bi bi-person-slash nav-icon"></span>

@@ -33,8 +33,9 @@ document.addEventListener('DOMContentLoaded', function() {
         chart: {
             type: 'donut'
         },
-        series: [44, 55, 41, 17, 15],
-        labels: ['Apple', 'Mango', 'Orange', 'Watermelon', 'Pineapple']
+        series: [ 55, 41,],
+        labels: ['Active', 'On Leave'],
+        fill: { color: ['#5FFF9F', '#ff2f2f'] } 
     };
 
     var chart = new ApexCharts(document.querySelector("#Donut"), options);

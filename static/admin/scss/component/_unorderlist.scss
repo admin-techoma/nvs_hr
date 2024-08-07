@@ -12,6 +12,7 @@ ul {
 
 .social-list {
     display:flex;
+    flex-wrap: wrap;
     .social-item {
         margin-left: 0.625em;
     }

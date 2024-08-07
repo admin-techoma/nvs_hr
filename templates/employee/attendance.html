@@ -238,7 +238,7 @@
                 <h1 class="modal-title fs-5" id="LeavemodalLabel">Apply for leave</h1>
                 <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="leaveForm" method="POST" onsubmit="event.preventDefault(); applyLeave();">
+            <form id="leaveForm" method="POST" onsubmit="applyLeave();">
                 {% csrf_token %}
                 <div class="modal-body">
                     <div class="row">
@@ -400,6 +400,7 @@
     "August", "September", "October", "November", "December"
     ];
     function applyLeave() {
+        event.preventDefault();
         const leaveFrom = $('#leavedateFrom').val();
         console.log(leaveFrom);
         const leaveTo = $('#leavedateTo').val();

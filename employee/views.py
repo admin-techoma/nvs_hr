@@ -47,6 +47,7 @@ def get_session(request):
 
      # Fetch the company logo
     company = Company.objects.first()  # Adjust the query as needed to get the correct company
+
     company_logo = company.logo.url if company and company.logo else None
     company_name = company.name if company else "Default Company Name"
             
@@ -68,7 +69,7 @@ def get_session(request):
             context['clockedin'] = True if attendance.clock_in and not attendance.clock_out else False
         else:
             context['clockedin'] = False
-    print(context)
+
     return context
 
 @login_required(login_url=reverse_lazy('accounts:login'))
@@ -400,14 +401,14 @@ def leaves_lists(request):
         approveLeaves = pendingLeaves = rejectedLeaves = 0
         
         # Check if the logged-in employee has reporting_take == True
-        if logged_in_employee.reporting_take:
+        if logged_in_employee.department.name in ['Human Resource','Admin']:
             logged_in_department = logged_in_employee.department
             
             # Filter leave applications based on conditions
-            if logged_in_employee.reporting_take:
+            if logged_in_employee.department.name in ['Human Resource','Admin']:
                 employee_leaves = LeaveApplication.objects.filter(
                     Q(employee__reporting_to=logged_in_employee) |
-                    Q(employee=logged_in_employee, employee__reporting_take=True)
+                    Q(employee=logged_in_employee)
                    # ,leave_status=2  # Filter for pending leaves
                 ).order_by('id') 
                 # Count leave statuses

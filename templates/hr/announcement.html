@@ -303,13 +303,17 @@
                         '<div class="alert alert-success">Announcement list updated successfully!</div>'
                     );
                     // {% comment %} window.location.href = '/hr/announcement_list_master/'; {% endcomment %}
-                    location.reload();
+                    setTimeout(function() {
+                        location.reload();
+                    }, 10000); // 60,000 milliseconds = 1 minute
                 },
                 error: function (xhr, status, error) {
                     $("#Editannouncement_listModal .modal-body").html(
                         '<div class="alert alert-danger">' + xhr.responseJSON.error +
                         '</div>');
-                        location.reload();
+                        setTimeout(function() {
+                            location.reload();
+                        }, 10000); // 60,000 milliseconds = 1 minute
                 }
             });
         });
@@ -324,12 +328,15 @@
                     },
                     success: function (data) {
                         alert('Announcement list deleted successfully');
-                        location
-                            .reload(); // Reload the page to update the announcement list
+                        setTimeout(function() {
+                            location.reload();
+                        }, 10000); // 60,000 milliseconds = 1 minute
+
                     },
                     error: function (xhr, status, error) {
                         alert('Failed to delete announcement list: ' + xhr.responseJSON
                             .error);
+                            
                     }
                 });
             }

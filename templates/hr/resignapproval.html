@@ -44,32 +44,66 @@
                     <div class="card-body">
                         <div class="tablewrapper bg-primarylight w-100">
                             <div class="table-responsive">
-                                <table class="table-responsive overflow-auto" id="resignApprovalTable">
+                                <table id="ResignationApprovalTable" class="dataTable display">
                                     <thead>
                                         <tr>
+                                            <th scope="col">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <label class="form-check-label" for="flexCheckDefault">All</label>
+                                                </div>
+                                            </th>
                                             <th scope="col">Emp Id</th>
                                             <th scope="col">Emp Name</th>
                                             <th scope="col">Resign Date</th>
-                                            {% comment %} <th scope="col">Last Date 2</th> {% endcomment %}
-                                            <th scope="col">Approved by manager</th>
-                                            <th scope="col" class="text-center">Status</th>
+                                            <th scope="col">Last Date</th>
+                                            <th scope="col">Approved by Manager</th>
+                                            <th scope="col">Remarks</th>
+                                            <th scope="col">Action</th>
+                                            <th scope="col">Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="bg-none w-100">
+                                    <tbody class="bg-none">
                                         {% for resigns_application in employee_resigns %}
-                                            <tr>  
-                                                <td>
-                                                    <div class="d-flex align-items-center">{{ resigns_application.employee.emp_id }}</div>
+                                            <tr>
+                                                <td scope="col">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                                        <label class="form-check-label" for="flexCheckDefault"></label>
+                                                    </div>
                                                 </td>
+                                                <td>{{ resigns_application.employee.emp_id }}</td>
                                                 <td>{{ resigns_application.employee.first_name }} {{ resigns_application.employee.last_name }}</td>
                                                 <td>{{ resigns_application.resign_date }}</td>
+                                                <td>
+                                                    {% if resigns_application.resign_status == 1 %}
+                                                        <label id="last_date_{{ resigns_application.id }}" class="text-danger">{{ resigns_application.last_date }}</label>
+                                                    {% else %}
+                                                        <input type="date" class="form-control form-control-sm last-date-input" id="last_date_input_{{ resigns_application.id }}" value="{{ resigns_application.last_date|default:'' }}" style="display:none;">
+                                                        <label id="resign_date_{{ resigns_application.id }}" style="display:none;">{{ resigns_application.resign_date }}</label>
+                                                    {% endif %}
+                                                </td>
                                                 <td>{{ logged_in_employee }}</td>
                                                 <td>
-                                                    <div class="d-flex justify-content-center "> 
-                                                    <button type="button" class="btn custom-button btn-sm" data-bs-toggle="modal" data-bs-target="#Rmapprovemodal">
-                                                       <span class="bi bi-pencil-square"></span>
-                                                      </button>
-                                                    </div>
+                                                    <textarea class="form-control form-control-sm" id="remarks_{{ resigns_application.id }}" rows="1">{{ resigns_application.resign_reason }}</textarea>
+                                                </td>
+                                                <td>
+                                                    <input type='hidden' id='resign_id_{{ resigns_application.id }}' value='{{ resigns_application.id }}' />
+                                                    <select class="form-select status-select" data-resign-id="{{ resigns_application.id }}" aria-label="Default select example">
+                                                        <option selected>Select</option>
+                                                        <option value="1" {% if resigns_application.resign_status == 1 %} selected{% endif %}>Approved</option>
+                                                        <option value="2" {% if resigns_application.resign_status == 2 %} selected{% endif %}>Pending</option>
+                                                        <option value="3" {% if resigns_application.resign_status == 3 %} selected{% endif %}>Rejected</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    {% if resigns_application.resign_status == 1 %}
+                                                        Approved
+                                                    {% elif resigns_application.resign_status == 2 %}
+                                                        Pending
+                                                    {% elif resigns_application.resign_status == 3 %}
+                                                        Rejected
+                                                    {% endif %}
                                                 </td>
                                             </tr>
                                         {% endfor %}
@@ -109,12 +143,12 @@
             </div>
             <div  class="mb-2">
                 <label class="form-label">Resignation Remark</label>
-                <textarea class="form-control form-control-sm" id="remarks_{{ resigns_application.id }}" rows="1"> {{ resigns_application.resign_reason }}</textarea>
+                <textarea class="form-control form-control-sm " id="remarks_{{ resigns_application.id }}" rows="1"> {{ resigns_application.resign_reason }}</textarea>
             </div>
             <div class="mb-2">
                 <label class="form-label">Resignation Status</label>
                 <input type='hidden' id='resign_id' value='{{ resigns_application.id }}' />
-                <select class="form-select status-select form-select-sm" aria-label="Default select example" id="status_{{ forloop.counter }}">
+                <select class="form-select status-select form-control-sm form-select-sm" aria-label="Default select example" id="status_{{ forloop.counter }}">
                     <option selected>Select</option>
                     <option value="1"{% if resigns_application.resign_status == 1 %} selected{% endif %}>Approved</option>
                     <option value="2"{% if resigns_application.resign_status == 2 %} selected{% endif %}>Pending</option>
@@ -132,7 +166,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn custom-button btn-sm resignconfirmbtn">Save changes</button>
+          <button type="button" class="btn custom-button btn-sm">Save changes</button>
         </div>
       </div>
     </div>
@@ -140,47 +174,70 @@
 {%endblock maincontent%}
 {% block extrascript %}
 
-{% comment %} <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelector('.resignconfirmbtn').addEventListener('click', function () {
-            var statusSelect = document.getElementById('status_{{ forloop.counter }}');
-            var status = statusSelect.value;
-            var resignId = document.getElementById('resign_id').value;
-            var remarks = document.getElementById('remarks_{{ resigns_application.id }}').value;
-            var lastWorkingDate = document.querySelector('input[type="date"]').value;
-            var message;
-            if (status == "1") {
-                message = "Resignation approved!";
-            } else if (status == "2") {
-                message = "Resignation is pending!";
-            } else if (status == "3") {
-                message = "Resignation rejected!";
-            } else {
-                message = "Please select a valid status.";
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize DataTables if not already initialized
+        var tableElement = document.querySelector('#ResignationApprovalTable');
+        if (tableElement && !tableElement.classList.contains('dataTable')) {
+            if (typeof DataTable === 'function') {
+                new DataTable('#ResignationApprovalTable', {
+                    responsive: true,
+                    searching: true,
+                    paging: true,
+                    fixedHeader: true
+                });
             }
-            alert(message);
-            location.reload();
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/your-backend-endpoint', true); 
-            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');            
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        console.log("Data sent successfully:", xhr.responseText);
-                    } else {
-                        console.error("Error sending data:", xhr.status, xhr.responseText);
-                    }
-                }
-            };
+        }
     
-            xhr.send(JSON.stringify({
-                resign_id: resignId,
-                status: status,
-                remarks: remarks,
-                last_working_date: lastWorkingDate
-            }));
+        // Event listener for status select changes
+        document.querySelectorAll('.status-select').forEach(function(selectElement) {
+            selectElement.addEventListener('change', function() {
+                var selectedStatus = this.value;
+                var resignId = this.getAttribute('data-resign-id');
+                var remarks = document.getElementById('remarks_' + resignId)?.value || '';
+                var lastDateInput = document.getElementById('last_date_input_' + resignId);
+                var lastDateLabel = document.getElementById('last_date_' + resignId);
+                var resignDateLabel = document.getElementById('resign_date_' + resignId);
+    
+                if (lastDateInput && lastDateLabel && resignDateLabel) {
+                    if (selectedStatus === '1') {  // If status is Approved
+                        var resignDate = new Date(resignDateLabel.textContent);
+                        resignDate.setDate(resignDate.getDate() + 30);
+                        var formattedDate = resignDate.toISOString().slice(0, 10);
+    
+                        lastDateLabel.textContent = formattedDate;
+                        lastDateInput.value = formattedDate;
+                        lastDateInput.style.display = 'none';
+                        lastDateLabel.style.display = 'block';
+                    } else {
+                        lastDateLabel.style.display = 'none';
+                        resignDateLabel.style.display = 'block';
+                    }
+    
+                    // Get CSRF token from cookies
+                    var csrftoken = document.cookie.split(';').find(cookie => cookie.trim().startsWith('csrftoken=')).split('=')[1];
+    
+                    // Send AJAX request
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/employee/update_resign_status/', true);
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                            // Reload the page
+                            location.reload();
+                        }
+                    };
+                    xhr.send(JSON.stringify({
+                        'resign_id': resignId,
+                        'selected_status': selectedStatus,
+                        'remarks': remarks,
+                        'last_date': lastDateInput.value
+                    }));
+                }
+            });
         });
     });
-</script> {% endcomment %}
+</script>
 
     {% endblock extrascript %}

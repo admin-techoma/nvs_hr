@@ -132,11 +132,55 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn custom-button btn-sm">Save changes</button>
+          <button type="button" class="btn custom-button btn-sm resignconfirmbtn">Save changes</button>
         </div>
       </div>
     </div>
   </div>
 {%endblock maincontent%}
 {% block extrascript %}
+
+{% comment %} <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('.resignconfirmbtn').addEventListener('click', function () {
+            var statusSelect = document.getElementById('status_{{ forloop.counter }}');
+            var status = statusSelect.value;
+            var resignId = document.getElementById('resign_id').value;
+            var remarks = document.getElementById('remarks_{{ resigns_application.id }}').value;
+            var lastWorkingDate = document.querySelector('input[type="date"]').value;
+            var message;
+            if (status == "1") {
+                message = "Resignation approved!";
+            } else if (status == "2") {
+                message = "Resignation is pending!";
+            } else if (status == "3") {
+                message = "Resignation rejected!";
+            } else {
+                message = "Please select a valid status.";
+            }
+            alert(message);
+            location.reload();
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/your-backend-endpoint', true); 
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');            
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        console.log("Data sent successfully:", xhr.responseText);
+                    } else {
+                        console.error("Error sending data:", xhr.status, xhr.responseText);
+                    }
+                }
+            };
+    
+            xhr.send(JSON.stringify({
+                resign_id: resignId,
+                status: status,
+                remarks: remarks,
+                last_working_date: lastWorkingDate
+            }));
+        });
+    });
+</script> {% endcomment %}
+
     {% endblock extrascript %}

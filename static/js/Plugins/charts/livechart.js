@@ -111,7 +111,7 @@ grid: {
   }
 },
 title: {
-  text: 'Line with Annotations',
+  text: 'Employees ',
   align: 'left'
 },
 labels: series.monthDataSeries1.dates,

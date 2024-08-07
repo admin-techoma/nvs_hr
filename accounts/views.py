@@ -44,7 +44,7 @@ def login(request):
                 request.session['reporting_take'] = employee.reporting_take
                 request.session['session_email'] = employee.email
 
-                if employee.department.name == 'HR':
+                if employee.department.name == 'Human Resource':
                     return redirect('hr:hr_dashboard')
                 elif employee.department.name == 'Admin':
                     return redirect('hr:admin_dashboard')

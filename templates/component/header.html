@@ -139,7 +139,7 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body primarybgcolor">
-        {% if department == 'HR' or department == 'Admin' %}
+        {% if department == 'Human Resource' or department == 'Admin' %}
             <nav class="overflow-hidden">
                 {% with request.resolver_match.url_name as url_name %}
                 <ul class="nav">
@@ -168,7 +168,7 @@
                             <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
-                    {% elif department == 'HR' %}
+                    {% elif department == 'Human Resource' %}
                     <li class="nav-item {% if url_name == 'hr_dashboard' %}active{% endif %}">
                         <a class="nav-link d-flex" href="{% url 'hr:hr_dashboard' %}">
                             <span class="bi bi-grid nav-icon"></span>

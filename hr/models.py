@@ -54,7 +54,7 @@ class candidateResume(models.Model):
     phone_number            =  models.PositiveIntegerField()
     email                   =  models.EmailField()
     resume                  =  models.FileField(upload_to=resume_upload_path)
-    remarks                 =  models.TextField()
+    remarks                 =  models.CharField(max_length=50,blank=True, null=True)
     status                  =  models.CharField(max_length=20,choices=[('Pending', 'Pending'),('Shortlisted', 'Shortlisted'),('Rejected', 'Rejected'),('Close', 'Close'),('On hold', 'On hold')],default='Pending')
     created_at              =  models.DateTimeField(default=timezone.now, editable=False)
     Exp                     =  models.FloatField(null=True)

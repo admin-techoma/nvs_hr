@@ -53,13 +53,13 @@
             <button class="nav-link" id="Team-tab" data-bs-toggle="tab" data-bs-target="#Team-tab-pane" type="button"
                 role="tab" aria-controls="Team-tab-pane" aria-selected="false">Team</button>
         </li>
-        {% if department == 'HR' or department == 'Admin' %}
+        {% if department == 'Human Resource' or department == 'Admin' %}
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="payroll-tab" data-bs-toggle="tab" data-bs-target="#payroll-tab-pane"
                 type="button" role="tab" aria-controls="payroll-tab-pane" aria-selected="false">Payroll</button>
         </li>
         {% endif %}
-        {% if department == 'HR' or department == 'Admin' %}
+        {% if department == 'Human Resource' or department == 'Admin' %}
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="permission-tab" data-bs-toggle="tab" data-bs-target="#permission-tab-pane"
                 type="button" role="tab" aria-controls="permission-tab-pane" aria-selected="false">Permission</button>
@@ -90,7 +90,7 @@
                             <div class="row">
                                 <div class="col-12 mb-3  border-bottom d-flex justify-content-between">
                                     <h5>Personal Info</h5>
-                                    {% if department == 'HR' or department == 'Admin' %}
+                                    {% if department == 'Human Resource' or department == 'Admin' %}
                                     <div class="d-flex justify-content-end align-items-center mb-2">
                                         <button type="button" id="editPersonalInfoBtn"
                                             class="btn custom-button btn-sm">Edit</button>
@@ -374,7 +374,7 @@
                                 </div>
                             </div>
                         </div>
-                        {% if department == 'HR' or department == 'Admin' %}
+                        {% if department == 'Human Resource' or department == 'Admin' %}
                         <div class="d-flex justify-content-end align-items-center mb-2">
                             <button type="submit" id="savePersonalInfoBtn" class="btn custom-button btn-sm"
                                 disabled>Save
@@ -398,7 +398,7 @@
                                 <th scope="col">Bank Name</th>
                                 <th scope="col">IFSC Code</th>
                                 <th>Bank Branch</th>
-                                {% if department == 'HR' or department == 'Admin' %}
+                                {% if department == 'Human Resource' or department == 'Admin' %}
                                 <th scope="col">Action</th>
                                 {% endif %}
                             </tr>
@@ -412,7 +412,7 @@
                                 <td>{{ emp_data.bank_name|default:'' }}</td>
                                 <td>{{ emp_data.ifsc_code|default:'' }}</td>
                                 <td>{{ emp_data.branch|default:'' }}</td>
-                                {% if department == 'HR' or department == 'Admin' %}
+                                {% if department == 'Human Resource' or department == 'Admin' %}
                                 <td>
                                     <button class="btn btn-sm custom-button me-2" data-bs-toggle="modal" data-bs-target="#bankdetailsedit"><span class="bi bi-eye"></span></button>
                                     <button class="btn btn-sm btn-danger"><span class="bi bi-trash"></span></button>
@@ -483,7 +483,7 @@
                  <div class="modal-footer">
                        <button type="button" class="btn btn-secondary btn-sm"
                            data-bs-dismiss="modal">Close</button>
-                           {% if department == 'HR' or department == 'Admin' %}
+                           {% if department == 'Human Resource' or department == 'Admin' %}
                            <div class="d-flex justify-content-start align-items-center">
                                <button type="submit" id="savebankInfoBtn" class="btn custom-button btn-sm banksaveinfobtn"
                                    disabled>Save
@@ -506,7 +506,7 @@
                             <div class="row  mb-md-3">
                                 <div class="col-12 mb-3  border-bottom d-flex justify-content-between flex-wrap">
                                     <h5>Work</h5>
-                                    {% if department == 'HR' or department == 'Admin' %}
+                                    {% if department == 'Human Resource' or department == 'Admin' %}
                             <div class="d-flex justify-content-end align-items-center  mb-2">
                                 <button type="button" id="editWorkInfoBtn"
                                     class="btn custom-button btn-sm">Edit</button>
@@ -614,7 +614,7 @@
                                 </div>
                             </div>
                         </div>
-                        {% if department == 'HR' or department == 'Admin' %}
+                        {% if department == 'Human Resource' or department == 'Admin' %}
                         <div class="d-flex justify-content-end align-items-center mb-2">
                             <button type="submit" id="saveWorkInfoBtn" class="btn custom-button btn-sm" disabled>Save
                                 Changes</button>
@@ -635,7 +635,7 @@
                             <div class="row mb-md-2">
                                 <div class="col-12 mb-3  border-bottom d-flex justify-content-between flex-wrap">
                                     <h5>Team</h5>
-                                    {% if department == 'HR' or department == 'Admin' %}
+                                    {% if department == 'Human Resource' or department == 'Admin' %}
                                     <div class="d-flex justify-content-end align-items-center mb-2">
                                         <button type="button" id="editTeamInfoBtn"
                                             class="btn custom-button btn-sm">Edit</button>
@@ -657,7 +657,7 @@
                                     </select>
                                 </div>
                                 <div class="mb-1 col-12 col-md-3 d-flex justify-content-start align-items-end">
-                                    {% if department == 'HR' or department == 'Admin' %}
+                                    {% if department == 'Human Resource' or department == 'Admin' %}
                                     <div class="d-flex justify-content-start align-items-center ">
                                         <button type="submit" id="saveTeamInfoBtn" class="btn custom-button btn-sm"
                                             disabled>Save
@@ -717,7 +717,7 @@
                                         {% if onboarding_document.c_psimg %}
                                         <a href="{{ onboarding_document.c_psimg.url }}" target="_blank"
                                             class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
-                                            {% if department == 'HR' or department == 'Admin' %}
+                                            {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal"
                                             data-target="#updateimg" id="updatenewimg">
                                             <i class="bi bi-pencil-square"></i>
@@ -725,7 +725,7 @@
                                         {% else %}
                                         {% endif %}
                                         {% else %}
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal"
                                             data-target="#updateimg" id="updatenewimg">
                                             <i class="bi bi-upload"></i>
@@ -745,7 +745,7 @@
                                             {% if onboarding_document.candidate_id.resume %}
                                             <a href="{{ onboarding_document.candidate_id.resume.url}}" target="_blank"
                                                 class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
-                                            {% if department == 'HR' or department == 'Admin' %}
+                                            {% if department == 'Human Resource' or department == 'Admin' %}
                                             <button type="button" class="btn btn-sm btn-success me-2"
                                                 data-toggle="modal" data-target="#updateresume" id="updatenewresume">
                                                 <i class="bi bi-pencil-square"></i>
@@ -753,7 +753,7 @@
                                             {% else %}
                                             {% endif %}
                                             {% else %}
-                                            {% if department == 'HR' or department == 'Admin' %}
+                                            {% if department == 'Human Resource' or department == 'Admin' %}
                                             <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal"
                                                 data-target="#updateresume" id="updatenewresume">
                                                 <i class="bi bi-upload"></i>
@@ -773,7 +773,7 @@
                                         {% if onboarding_document.c_adhar %}
                                         <a href="{{ onboarding_document.c_adhar.url }}" target="_blank"
                                             class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal"
                                             data-target="#updateaadhaar" id="updatenewaadhaar">
                                             <i class="bi bi-pencil-square"></i>
@@ -781,7 +781,7 @@
                                         {% else %}
                                         {% endif %}
                                         {% else %}
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal"
                                             data-target="#updateaadhaar" id="updatenewaadhaar">
                                             <i class="bi bi-upload"></i>
@@ -800,7 +800,7 @@
                                         {% if onboarding_document.c_pan %}
                                         <a href="{{ onboarding_document.c_pan.url }}" target="_blank"
                                             class="btn btn-sm  custom-button"><i class="bi bi-eye btn-sm"></i></a>
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal"
                                             data-target="#updatepan" id="updatenewpan">
                                             <i class="bi bi-pencil-square"></i>
@@ -808,7 +808,7 @@
                                         {% else %}
                                         {% endif %}
                                         {% else %}
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal"
                                             data-target="#updatepan" id="updatenewpan">
                                             <i class="bi bi-upload"></i>
@@ -827,7 +827,7 @@
                                         {% if onboarding_document.c_bankDetails %}
                                         <a href="{{ onboarding_document.c_bankDetails.url }}" target="_blank"
                                             class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal"
                                             data-target="#updatebankdetails" id="updatenewbankdetails">
                                             <i class="bi bi-pencil-square"></i>
@@ -835,7 +835,7 @@
                                         {% else %}
                                         {% endif %}
                                         {% else %}
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal"
                                             data-target="#updatebankdetails" id="updatenewbankdetails">
                                             <i class="bi bi-upload"></i>
@@ -854,7 +854,7 @@
                                         {% if onboarding_document.c_bankStatement %}
                                         <a href="{{ onboarding_document.c_bankStatement.url }}" target="_blank"
                                             class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal"
                                             data-target="#updatebankstatement" id="updatenewbankstatement">
                                             <i class="bi bi-pencil-square"></i>
@@ -862,7 +862,7 @@
                                         {% else %}
                                         {% endif %}
                                         {% else %}
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal"
                                             data-target="#updatebankstatement" id="updatenewbankstatement">
                                             <i class="bi bi-upload"></i>
@@ -885,7 +885,7 @@
                                         {% else %}
                                         <p>This document is marked as "Not Required".</p>
                                         {% endif %}
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal"
                                             data-target="#updatesalaryslips" id="updatenewsalaryslips">
                                             <i class="bi bi-pencil-square"></i>
@@ -893,7 +893,7 @@
                                         {% else %}
                                         {% endif %}
                                         {% else %}
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal"
                                             data-target="#updatesalaryslips" id="updatenewsalaryslips">
                                             <i class="bi bi-upload"></i>
@@ -914,7 +914,7 @@
                                         {% if onboarding_document.c_expLetter %}
                                         <a href="{{ onboarding_document.c_expLetter.url }}" target="_blank"
                                             class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal"
                                             data-target="#updateexpletter" id="updatenewexpletter">
                                             <i class="bi bi-pencil-square"></i>
@@ -922,7 +922,7 @@
                                         {% else %}
                                         {% endif %}
                                         {% else %}
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal"
                                             data-target="#updateexpletter" id="updatenewexpletter">
                                             <i class="bi bi-upload"></i>
@@ -941,7 +941,7 @@
                                         {% if onboarding_document.c_previousJoiningLetter %}
                                         <a href="{{ onboarding_document.c_previousJoiningLetter.url }}" target="_blank"
                                             class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal"
                                             data-target="#updatepreviousjoiningletter"
                                             id="updatenewpreviousjoiningletter">
@@ -950,7 +950,7 @@
                                         {% else %}
                                         {% endif %}
                                         {% else %}
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal"
                                             data-target="#updatepreviousjoiningletter"
                                             id="updatenewpreviousjoiningletter">
@@ -970,7 +970,7 @@
                                         {% if onboarding_document.c_degree %}
                                         <a href="{{ onboarding_document.c_degree.url }}" target="_blank"
                                             class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal"
                                             data-target="#updatedegree" id="updatenewdegree">
                                             <i class="bi bi-pencil-square"></i>
@@ -978,7 +978,7 @@
                                         {% else %}
                                         {% endif %}
                                         {% else %}
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal"
                                             data-target="#updatedegree" id="updatenewdegree">
                                             <i class="bi bi-upload"></i>
@@ -997,7 +997,7 @@
                                         {% if onboarding_document.c_masters %}
                                         <a href="{{ onboarding_document.c_masters.url }}" target="_blank"
                                             class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal"
                                             data-target="#updatemasters" id="updatenewmasters">
                                             <i class="bi bi-pencil-square"></i>
@@ -1005,7 +1005,7 @@
                                         {% else %}
                                         {% endif %}
                                         {% else %}
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal"
                                             data-target="#updatemasters" id="updatenewmasters">
                                             <i class="bi bi-upload"></i>
@@ -1024,7 +1024,7 @@
                                         {% if onboarding_document.c_HSC %}
                                         <a href="{{ onboarding_document.c_HSC.url }}" target="_blank"
                                             class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal"
                                             data-target="#updatehsc" id="updatenewhsc">
                                             <i class="bi bi-pencil-square"></i>
@@ -1032,7 +1032,7 @@
                                         {% else %}
                                         {% endif %}
                                         {% else %}
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-danger btn-sm me-2" data-toggle="modal"
                                             data-target="#updatehsc" id="updatenewhsc">
                                             <i class="bi bi-upload"></i>
@@ -1051,7 +1051,7 @@
                                         {% if onboarding_document.c_SSC %}
                                         <a href="{{ onboarding_document.c_SSC.url }}" target="_blank"
                                             class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal"
                                             data-target="#updatessc" id="updatenewssc">
                                             <i class="bi bi-pencil-square"></i>
@@ -1059,7 +1059,7 @@
                                         {% else %}
                                         {% endif %}
                                         {% else %}
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class=" btn btn-danger btn-sm me-2" data-toggle="modal"
                                             data-target="#updatessc" id="updatenewssc">
                                             <i class="bi bi-upload"></i>
@@ -1078,7 +1078,7 @@
                                         {% if onboarding_document.c_otherCertificate %}
                                         <a href="{{ onboarding_document.c_otherCertificate.url }}" target="_blank"
                                             class="btn btn-sm custom-button"><i class="bi bi-eye btn-sm"></i></a>
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class="btn btn-sm btn-success me-2" data-toggle="modal"
                                             data-target="#updateothercertificate" id="updatenewothercertificate">
                                             <i class="bi bi-pencil-square"></i>
@@ -1086,7 +1086,7 @@
                                         {% else %}
                                         {% endif %}
                                         {% else %}
-                                        {% if department == 'HR' or department == 'Admin' %}
+                                        {% if department == 'Human Resource' or department == 'Admin' %}
                                         <button type="button" class=" btn btn-danger btn-sm me-2" data-toggle="modal"
                                             data-target="#updateothercertificate" id="updatenewothercertificate">
                                             <i class="bi bi-upload"></i>
@@ -1173,7 +1173,7 @@
                             </div>
                             <div class="row p-2 d-flex">
                                 <div class="col-12">
-                                    {% if department == 'HR' or department == 'Admin' %}
+                                    {% if department == 'Human Resource' or department == 'Admin' %}
                                     <div class="d-flex justify-content-end align-items-center  mb-2">
                                         <button type="button" id="editpayrollInfoBtn"
                                             class="btn custom-button btn-sm">Edit</button>
@@ -1410,7 +1410,7 @@
                             </div>
                         </div>
 
-                        {% if department == 'HR' or department == 'Admin' %}
+                        {% if department == 'Human Resource' or department == 'Admin' %}
                         <div class="d-flex justify-content-end align-items-center mb-2">
                             <button type="submit" id="savepayrollInfoBtn" class="btn custom-button btn-sm load-button" disabled>Save
                                 Changes</button>
@@ -1436,7 +1436,7 @@
                             <div class="row">
                                 <div class="col-12 mb-3  border-bottom d-flex justify-content-between flex-wrap" >
                                     <h5>Permission Details</h5>
-                                    {% if department == 'HR' or department == 'Admin' %}
+                                    {% if department == 'Human Resource' or department == 'Admin' %}
                                     <div class="d-flex justify-content-end align-items-center mb-2">
                                         <button type="button" id="editpermissionInfoBtn"
                                             class="btn custom-button btn-sm">Edit</button>
@@ -1454,7 +1454,7 @@
                                 </div>
 
                             </div>
-                            {% if department == 'HR' or department == 'Admin' %}
+                            {% if department == 'Human Resource' or department == 'Admin' %}
                             <div class="d-flex justify-content-start align-items-center mb-3">
                                 <button type="submit" id="savepermissionInfoBtn" class="btn custom-button btn-sm"
                                     disabled>Save Changes
@@ -1476,7 +1476,7 @@
                                 <h5>Other</h5>
                             </div>
                             <div class="col-12 col-md-3 mb-3">
-                                {% comment %} {% if request.session.department != 'HR' and not
+                                {% comment %} {% if request.session.department != 'Human Resource' and not
                                 request.user.is_superuser %} {% endcomment %}
                                 {% if resign_applied %}
                                 {# If resignation is already applied, display a label #}
@@ -1566,7 +1566,7 @@
                                                 <th scope="col">Half day</th>
                                                 <th scope="col">Absent</th>
                                                 <th scope="col">On leave</th>
-                                                {% if department == 'HR' or department == 'Admin' %}
+                                                {% if department == 'Human Resource' or department == 'Admin' %}
                                                 <th scope="col">Action</th>
                                                 {% endif %}
                                             </tr>
@@ -1606,7 +1606,7 @@
                                                     <i class="bi bi-x-circle-fill text-danger"></i>
                                                     {% endif %}
                                                 </td>
-                                                {% if department == 'HR' or department == 'Admin' %}
+                                                {% if department == 'Human Resource' or department == 'Admin' %}
                                                 <td>
                                                     <button type="button" class="btn btn-sm btn-success me-2 edit-attendance-btn" data-bs-toggle="modal"
                                                     data-bs-target="#attendancemodal" data-employee-id="{{ attendance.employee.emp_id }}" data-date="{{ attendance.date }}">

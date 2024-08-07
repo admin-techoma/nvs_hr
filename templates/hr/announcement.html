@@ -255,11 +255,13 @@
                     $("#AddAnnouncementModal .modal-body").html(
                         '<div class="alert alert-success">Announcement uploaded successfully!</div>'
                     );
+                    location.reload();
                 },
                 error: function (xhr, status, error) {
                     var errorMessage = xhr.responseJSON.error;
                     $("#AddAnnouncementModal .modal-body").html(
                         '<div class="alert alert-danger">' + errorMessage + '</div>');
+                        location.reload();
                 }
             });
         });
@@ -301,11 +303,13 @@
                         '<div class="alert alert-success">Announcement list updated successfully!</div>'
                     );
                     // {% comment %} window.location.href = '/hr/announcement_list_master/'; {% endcomment %}
+                    location.reload();
                 },
                 error: function (xhr, status, error) {
                     $("#Editannouncement_listModal .modal-body").html(
                         '<div class="alert alert-danger">' + xhr.responseJSON.error +
                         '</div>');
+                        location.reload();
                 }
             });
         });

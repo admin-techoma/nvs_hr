@@ -47,6 +47,7 @@ def get_session(request):
 
      # Fetch the company logo
     company = Company.objects.first()  # Adjust the query as needed to get the correct company
+
     company_logo = company.logo.url if company and company.logo else None
     company_name = company.name if company else "Default Company Name"
             
@@ -68,7 +69,7 @@ def get_session(request):
             context['clockedin'] = True if attendance.clock_in and not attendance.clock_out else False
         else:
             context['clockedin'] = False
-    print(context)
+
     return context
 
 @login_required(login_url=reverse_lazy('accounts:login'))

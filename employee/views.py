@@ -401,11 +401,11 @@ def leaves_lists(request):
         approveLeaves = pendingLeaves = rejectedLeaves = 0
         
         # Check if the logged-in employee has reporting_take == True
-        if logged_in_employee.department.name in ['Human Resource','Admin']:
+        if logged_in_employee.reporting_take or logged_in_employee.department.name in ['Human Resource','Admin']:
             logged_in_department = logged_in_employee.department
             
             # Filter leave applications based on conditions
-            if logged_in_employee.department.name in ['Human Resource','Admin']:
+            if logged_in_employee.reporting_take or logged_in_employee.department.name in ['Human Resource','Admin']:
                 employee_leaves = LeaveApplication.objects.filter(
                     Q(employee__reporting_to=logged_in_employee) |
                     Q(employee=logged_in_employee)
@@ -465,11 +465,11 @@ def resign_lists(request):
         logged_in_employee = Employee.objects.get(emp_id=request.user)
         # Check if the logged-in employee has reporting_take == True
         logged_in_employee.name
-        if logged_in_employee.reporting_take:
+        if logged_in_employee.reporting_take or logged_in_employee.department.name in ['Human Resource','Admin']:
             logged_in_department = logged_in_employee.department  # Fetch department from session
             employee_resigns = None  # Default value if conditions don't match
             if logged_in_department.name == logged_in_employee.department.name:
-                if logged_in_employee.reporting_take:
+                if logged_in_employee.reporting_take or logged_in_employee.department.name in ['Human Resource','Admin']:
                     employee_resigns = ResignApplication.objects.filter(employee__department__name=logged_in_department)
     
                     approveResigns = employee_resigns.filter(resign_status=1).count()

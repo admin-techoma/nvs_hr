@@ -1673,7 +1673,7 @@ def update_payroll_info(request, id):
 
             Here are your login details:
             Office Email ID: {emp_data.office_email}
-            URL : http://peoplepulse.buybestpolicy.in
+            URL : https://nvs.techoma.io
             Username: {emp_data.emp_id}
             Password: {password}
 

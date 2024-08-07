@@ -108,7 +108,7 @@ def password_reset_request(request):
             email_template_name = "auth/password_reset_email.txt"
             c = {
             "email":user.email,
-            'domain': 'https://peoplepulse.buybestpolicy.in/',
+            'domain': 'https://nvs.techoma.io/',
             'site_name':'Website',
             "uid": urlsafe_base64_encode(force_bytes(user.pk)),
             "user": user,

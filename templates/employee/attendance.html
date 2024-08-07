@@ -230,6 +230,8 @@
     </div>
     </div>
 </div>
+
+<!-- leave modal 2 -->
 <div class="modal fade" id="Leavemodal" tabindex="-1" aria-labelledby="LeavemodalLabel" data-bs-backdrop="static"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -238,7 +240,7 @@
                 <h1 class="modal-title fs-5" id="LeavemodalLabel">Apply for leave</h1>
                 <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="leaveForm" method="POST" onsubmit="applyLeave();">
+            <form id="leaveForm" method="POST" onsubmit="applyLeave()">
                 {% csrf_token %}
                 <div class="modal-body">
                     <div class="row">
@@ -372,6 +374,46 @@
     </div>
 </div>
 
+<!-- Modal for Leave Apply Success  Message -->
+<div class="modal fade" id="successleaveModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Leave!</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Success message content goes here -->
+                <p> Leave  Apply  Successfully.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal for Regularization Apply Success  Message -->
+<div class="modal fade" id="successregularisationModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Regularization!</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Success message content goes here -->
+                <p> Regularization  Apply  Successfully.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
 <div class="modal fade" id="popupfordelete" tabindex="-1" aria-labelledby="popupfordeleteModalLabel"
     data-bs-backdrop="static" aria-hidden="true">
     <div class="modal-dialog">
@@ -392,23 +434,23 @@
     </div>
 </div>
 <input type="hidden" id="employee_id_hidden" value="{{employee.emp_id}}" />
-{% endblock maincontent %}
+{%endblock maincontent%}
 {% block extrascript %}
 <script>
     const months = [
-    "January", "February", "March", "April", "May", "June", "July",
-    "August", "September", "October", "November", "December"
+        "January", "February", "March", "April", "May", "June", "July",
+        "August", "September", "October", "November", "December"
     ];
+ 
     function applyLeave() {
         event.preventDefault();
         const leaveFrom = $('#leavedateFrom').val();
-        console.log(leaveFrom);
+
         const leaveTo = $('#leavedateTo').val();
         const leaveType = $('#selectLeaveType').val();
         const leaveReason = $('#leaveDescription').val();
         const employee = $('#hiddenSession').val();
-        const csrftoken = $('[name="csrfmiddlewaretoken"]').val(); // Get CSRF token from hidden input field
-
+        const csrftoken = $('[name="csrfmiddlewaretoken"]').val();
         const translateTime = (value) => {
             if (value === '1') {
                 return '11:00';
@@ -429,16 +471,18 @@
 
         const leaveFromTime = translateTime($('#selectTimeFrom').val());
         const leaveToTime = translateTime($('#selectTimeTo').val());
-        const formattedLeaveFrom = formatDate(leaveFrom); 
-        const formattedLeaveTo = formatDate(leaveTo);
+        const formatedleaveFrom = formatDate(leaveFrom); 
+        const formatedleaveTo = formatDate(leaveTo);
 
-        if (new Date(leaveTo) < new Date(leaveFrom)) {
+        if (new Date(leaveTo) < new Date(leaveFrom) || new Date(leaveFrom) > new Date(leaveTo)) {
             $('#Leavemodal').modal('hide');
-            $("#messageModal .modal-body").text(`You can't apply leave from date: ${formattedLeaveFrom} to date: ${formattedLeaveTo}.`);
+            $("#messageModal .modal-body").text(`You can't apply leave from date: ${formatedleaveFrom} to date: ${formatedleaveTo}.`);
             $("#messageModal").modal("show");
             return; // Stop further execution
         }
-
+        // Display status message element
+        const leaveStatus = $('#leaveStatus');
+        
         $.ajax({
             url: `/employee/apply_leave/${employee}/`,
             method: 'POST',
@@ -452,14 +496,89 @@
                 "leave_reason": leaveReason,
             },
             success: function(response) {
-                alert('Leave applied successfully.');
-                // Optionally, you can redirect or perform other actions after submission
-                // window.location.href = '/success-page'; // Redirect to a success page
-            },
-            error: function(xhr, status, error) {
-                alert('Error: ' + error);
+
+                $('#successleaveModal').modal('show');
+
+                
+                    setTimeout(function(){
+                        $("#successleaveModal").modal('hide');
+                        location.reload();
+                    }, 2000);
+                },
+
+                error: function(xhr, status, error) {
+                    alert('Error: ' + error);
+                }
+        });
+    };
+
+
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Handle date selection
+        $(document).on('click', '.days li.absent, .days li.halfday', function() {
+            var selectedDate = $(this).data('date'); // Get the selected date
+            $('#modalDateSelected').val(selectedDate); // Set the selected date in the input field
+            $('#regularlizationmodal').modal('show'); // Show the modal
+        });
+    
+        // Handle form submission
+        $('#attendanceRegForm').submit(function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            // Validate form
+            var isValid = true;
+            $('#attendanceRegForm [required]').each(function() {
+                if ($(this).val() === '') {
+                    isValid = false;
+                    $(this).addClass('is-invalid'); // Add error class
+                } else {
+                    $(this).removeClass('is-invalid'); // Remove error class
+                }
+            });
+    
+            if (isValid) {
+                // Gather form data
+                var formData = {
+                    dateSelected: $('#modalDateSelected').val(),
+                    clockInTime: $('#AddClockinTime').val(),
+                    clockOutTime: $('#AddClockOutTime').val(),
+                    reason: $('#reason').val()
+                };
+
+                const csrftoken = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
+    
+                // Send data via AJAX
+                $.ajax({
+                    url: "{% url 'employee:regularization_request'  %}", // Replace with your backend URL
+                    method: 'POST',
+                    data: formData,
+                    headers: { 'X-CSRFToken': csrftoken },
+                    success: function(response) {
+
+                        $('#successregularisationModal').modal('show');
+        
+                        
+                            setTimeout(function(){
+                                $("#successregularisationModal").modal('hide');
+                                $('#attendanceRegForm')[0].reset();
+                                location.reload();
+                            }, 2000);
+                        },
+                        
+                        
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        $('#regStatus').text('Error submitting request. Please try again.');
+                    }
+                });
+            } else {
+                $('#regStatus').text('Please fill in all required fields.');
             }
         });
-    }
+    });
+
 </script>
+ 
 {% endblock extrascript %}

@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'tempus_dominus',
     'hr.management',
+    'django_celery_beat',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

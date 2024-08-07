@@ -149,10 +149,6 @@ urlpatterns = [
     path('update_holiday_list_details/<int:holiday_list_id>/', views.update_holiday_list_details, name='update_holiday_list_details'),
     path('delete_holiday_list/<int:holiday_list_id>/', views.delete_holiday_list, name='delete_holiday_list'),
 
-
-
-   
-
     #<----------------- Company Policy Tabs URL ----------------->
     path('add_policy_list_details/', views.add_policy_list_details, name='add_policy_list_details'),
     path('get_policy_list_details/<int:policy_list_id>/', views.get_policy_list_details, name='get_policy_list_details'),
@@ -165,6 +161,5 @@ urlpatterns = [
     path('get_announcement_list_details/<int:announcement_list_id>/', views.get_announcement_list_details, name='get_announcement_list_details'),
     path('update_announcement_list_details/<int:announcement_list_id>/', views.update_announcement_list_details, name='update_announcement_list_details'),
     path('delete_announcement_list/<int:announcement_list_id>/', views.delete_announcement_list, name='delete_announcement_list'),
-    
-    
+
 ]   

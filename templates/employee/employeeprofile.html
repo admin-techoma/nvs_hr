@@ -612,6 +612,10 @@
                                         name="esic_exit_date" value="{{emp_data.esic_exit_date|date:'Y-m-d' }}"
                                         disabled>
                                 </div>
+                                <div class="col-12 col-md-3 mb-3">
+                                    <label class="form-label mb-0">Leave Balance</label>
+                                    <input type="number" class="form-control form-control-sm" name="leavebalance" value="{{ leave_balance.total_leaves }}" disabled>
+                                </div>
                             </div>
                         </div>
                         {% if department == 'Human Resource' or department == 'Admin' %}

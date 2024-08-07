@@ -89,7 +89,7 @@
                                                 </td>
                                                 <td>
                                                     <input type='hidden' id='resign_id_{{ resigns_application.id }}' value='{{ resigns_application.id }}' />
-                                                    <select class="form-select status-select" data-resign-id="{{ resigns_application.id }}" aria-label="Default select example">
+                                                    <select class="form-select status-select form-select-sm" data-resign-id="{{ resigns_application.id }}" aria-label="Default select example">
                                                         <option selected>Select</option>
                                                         <option value="1" {% if resigns_application.resign_status == 1 %} selected{% endif %}>Approved</option>
                                                         <option value="2" {% if resigns_application.resign_status == 2 %} selected{% endif %}>Pending</option>

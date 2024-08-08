@@ -122,21 +122,7 @@
     aria-labelledby="offcanvasNavbarLabel">
     <div class="offcanvas-header">
         <div class="d-flex justify-content-center p-2">
-            {% comment %} <div class="">
-                <figure class="Clientlogowrapper mb-0">
-                    <a href="/">
-                        {% if company_logo %}
-                            <img class="Clientlogo img-fluid" src="{{ company_logo }}" alt="Company logo">
-                        {% else %}
-                            <img class="Clientlogo img-fluid" src="/static/admin/img/NIBPL_Logo.png" alt="Default logo">
-                        {% endif %}
-                    </a>
-                </figure>
-                <input class="form-check-input" type="checkbox" value="" id="sideslide">
-                <h6 class="client-brand-name">{{ company_name }}</h6>
-            </div> {% endcomment %}
-
-            <div class="d-block d-sm-flex d-md-none align-items-center p-2 ">
+                  <div class="d-block d-sm-flex  align-items-center p-2 ">
                 <figure class="Clientlogowrapper mb-0 ">
                     <a href="/">
                         {% if company_logo %}
@@ -150,7 +136,7 @@
                 <h6 class="client-brand-name">{{ company_name }}</h6>
             </div>
         </div>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close " data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body primarybgcolor">
         {% if department == 'Human Resource' or department == 'Admin' %}

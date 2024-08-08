@@ -15,7 +15,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import get_template
 from django.urls import reverse_lazy
 from django.views.decorators.cache import cache_control
-# from weasyprint import HTML
+from weasyprint import HTML
 
 from core import settings
 from employee.models import Attendance, Employee
@@ -820,9 +820,10 @@ def month_salaryslip(request,pk):
 def download_salary_pdf(request, pk):
     # Retrieve the Monthly_salary instance
     salary = get_object_or_404(Monthly_salary, pk=pk)
-
+    companies = Company.objects.all()
+    emp_data= Employee.objects.all()
     template_path = 'employee/emppayslip.html'
-    context = {'salary': salary}
+    context = {'salary': salary,'companies': companies,'emp_data':emp_data}
     template = get_template(template_path)
     html_string = template.render(context)
 

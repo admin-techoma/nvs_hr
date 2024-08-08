@@ -2265,7 +2265,16 @@ main .preview-img {
 
 .footer {
   background: rgba(20, 36, 90, 0.1019607843);
-}/*# sourceMappingURL=style.css.map */ll {
+}/*# sourceMappingURL=style.css.map */ 0.063em solid;
+  overflow: hidden;
+}
+.employeeprofilewrapper .employeeprofile {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+.overflowscroll {
   height: calc(100vh - 6.25em);
   overflow-y: auto;
 }

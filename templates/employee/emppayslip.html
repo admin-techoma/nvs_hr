@@ -32,7 +32,7 @@
                 <figure class="Clientlogowrapper mb-0 bg-white">
                     <a href="">
                         {% if company_logo %}
-                            <img class="" src="{{ company_logo }}" alt="Company logo">
+                            <img class="" src="{{ request.scheme }}://{{ request.get_host }}{{ company_logo }}" alt="Company logo">
                         {% else %}
                              <img class="" src="/static/admin/img/logo.png" alt="Default logo">
                         {% endif %}
@@ -46,36 +46,21 @@
                     
                 </div>
                 <p style="font-size:12px; text-align: end;">
-                    {{company.reg_address}},
-                    {{company.reg_city}},
-                    {{company.reg_state}},
-                    {{company.reg_country}},
-                    {{company.reg_pin_code}}.</p>
-                <p style="font-size:12px; text-align: end;">{{company.email_id}}</p>
+                    {{company.reg_address|default:""}}
+                    {{company.reg_city|default:""}}
+                    {{company.reg_state|default:""}}
+                    {{company.reg_country|default:""}}
+                    {{company.reg_pin_code|default:""}}</p>
+                <p style="font-size:12px; text-align: end;">{{company.email_id|default:""}}</p>
                 {% endfor %}
             </div>
         </div>
         </div>
         <div>
             <div style="display: flex; justify-content: center; ">
-                <h5 style="border-bottom: 1px solid #dee2e6;">Payslip for the Month of {{ salary.month }}</h5>
+                <h5 style="border-bottom: 1px solid #dee2e6;">Payslip for the Month of {{ salary.month }} {{ salary.year }} </h5>
             </div>
-            <div style="display: flex; margin-bottom: 10px;" >
-                <div  style="width: 50%;">
-                     <div style="display: flex; align-items: center; font-size:14px;">
-                        <p style="margin: 0;">Payslip No :</p>
-                        <h6 style="display: flex; align-items: center; font-size:14px; margin: 0; margin-left: 10px;">{{salary.id}}</h6>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6"style="width: 50%; display: flex; justify-content: flex-end;"  >
-                    <div style="display:flex; justify-content: flex-end; align-items: center;  font-size:14px; width: 100%; ">
-                        <p  style="margin: 0;">Payslip Date :</p>
-                        <h6 style="display: flex; align-items: center;  font-size:14px; margin: 0; margin-left: 10px; ">
-                            <date style="font-size:14   px;">{{ salary.month }}</date>
-                        </h6>
-                    </div>
-                </div>
-            </div>
+
             <div style="width: 100%;">
                 <h5 style="width: 100%; margin: 0;">Employee Details</h5>
             </div>
@@ -85,11 +70,11 @@
                         <tbody>
                             <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Emp No  </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> {{salary.emp_id}}</span> </p></td></tr>
 
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">D.O.J </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> {{emp_id.doj}}</span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">D.O.J </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> {{salary.emp_id.doj|date:'d-M-Y'}}</span> </p></td></tr>
 
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Department </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> {{salary.department}}</span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Department </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> {{salary.emp_id.department}}</span> </p></td></tr>
 
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Designation </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.designation}}</span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Designation </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.emp_id.designation}}</span> </p></td></tr>
 
                         </tbody>
                     </table>                                  
@@ -97,13 +82,13 @@
                 <div style="width: 50%; padding: 0 5px; "> 
                     <table>
                         <tbody>
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Name </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.name}}</span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Name </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.emp_id.name}}</span> </p></td></tr>
 
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Work Location </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> {{salary.company_branch}}</span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Work Location </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> {{salary.emp_id.company_branch|default:""}}</span> </p></td></tr>
 
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">PF Number </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.pfno}}</span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">PF Number </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.emp_id.pfno|default:""}}</span> </p></td></tr>
 
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">UAN Number </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.uanno}}</span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">UAN Number </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.emp_id.uanno|default:""}}</span> </p></td></tr>
 
                         </tbody>
                     </table> 
@@ -116,22 +101,22 @@
                 <div style="width: 50%; padding-right: 10px; "> 
                     <table style="padding: 0 10px;">
                         <tbody>
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Present  </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> 21.00 </span> </p></td></tr>
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">On Duty </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> 0.00 </span> </p></td></tr>
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Weekly Off </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> 0.00 </span> </p></td></tr>
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Holidays </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0.00</span> </p></td></tr>
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Extra Day </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0.00</span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Present  </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> {{salary.monthly_presentdays|default:""}} </span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">On Duty </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> {{salary.monthly_paiddays|default:""}} </span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Weekly Off </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;"> {{salary.monthly_weekoffdays|default:""}} </span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Holidays </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0</span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Extra Day </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0</span> </p></td></tr>
                         </tbody>
                     </table>   
                 </div>
                 <div style="width: 50%; padding-right: 10px; "> 
                     <table style="padding: 0 10px;" >
                         <tbody>
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Unpaid  </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0.00</span> </p></td></tr>
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Absent </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0.00</span> </p></td></tr>
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Compen. off </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0.00</span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Unpaid  </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.monthly_unpaiddays|default:""}} </span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Absent </td><td>:</td><td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.monthly_absentdays|default:""}} </span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Compen. off </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0</span> </p></td></tr>
                             <tr><td></td></tr>
-                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Paid Days </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">0.00</span> </p></td></tr>
+                            <tr><td><p style="margin: 0; margin-bottom: 2px;  font-size:14px; text-align: start;">Paid Days </td><td>:</td> <td><p style="padding: 0; margin: 0; font-size:14px;"><span style="text-wrap: wrap; text-align: left;">{{salary.monthly_paiddays|default:""}} </span> </p></td></tr>
                         </tbody>
                     </table> 
                 </div>
@@ -200,11 +185,11 @@
                                 </tr>
                             <tr>
                                     <th scope="row" style="margin: 0; font-size:14px; font-weight: 500; " >Professional Tax</th>
-                                    <td style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  " >900</td>
+                                    <td style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  " >{{ salary.monthly_professionalTax }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="margin: 0; font-size:14px; font-weight: 500; " >ESIC</th>
-                                    <td style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  " >1235</td>
+                                    <td style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  " >{{ salary.monthly_employeeesic }}</td>
                                 </tr>
                                 
                                 <tr>
@@ -213,7 +198,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" style="margin: 0; font-size:14px; font-weight: 500; " >Other</th>
-                                    <td style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  " >800</td>
+                                    <td style="text-align:end; margin: 0; font-size:14px; font-weight: 500;  " >{{ salary.monthly_loan_other }}</td>
                                 </tr> 
                             </tbody>
                         </table>
@@ -227,11 +212,11 @@
                         <tbody>
                             <tr>
                                 <td scope="row" style="margin: 0; font-size:14px; font-weight: 500;" >Gross Total
-                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;">1234567</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;">{{ salary.monthly_gross_salary }}</td>
                             </tr>
                             <tr >
                                 <td scope="row" style="margin: 0; font-size:14px; font-weight: 500; " >Monthly CTC</td>
-                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;">1800</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;">{{ salary.monthly_newctc }}</td>
                               </tr>
                         </tbody>
                     </table>
@@ -241,7 +226,7 @@
                         <tbody>
                             <tr >
                                 <td scope="row" style="margin: 0; font-size:14px; font-weight: 500;" >Total Deductions
-                                <td style="text-align:end; margin: 0; font-size:14px; font-weight: 500; ">1234567</td>
+                                <td style="text-align:end; margin: 0; font-size:14px; font-weight: 500; ">{{ salary.monthly_total_deductions }}</td>
                               </tr>                           
                         </tbody>
                     </table>
@@ -267,12 +252,12 @@
                               </tr>
                               <tr >
                                 <td scope="row" style="margin: 0; font-size:14px; font-weight: 500;">Less Deduction</td>
-                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;">200</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;">{{salary.monthly_gross_salary}}</td>
                               </tr>
 
                               <tr >
                                 <td scope="row" style="margin: 0; font-size:14px; font-weight: 500;">Net Salary Payable</td>
-                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;">24800</td>
+                                <td class="text-end" style="text-align:end; margin: 0; font-size:14px; font-weight: 500;">{{salary.monthly_netpay}}</td>
                               </tr>
                            
                         </tbody>

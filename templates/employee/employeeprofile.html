@@ -1749,7 +1749,8 @@
                                     </select>
                                     <button class="btn custom-button m-2"
                                         onclick="downloadSelectedSalarySlip()">Download</button>
-                                    <button class="btn custom-button m-2" onclick="sentMailSelectedSalarySlip()">Send as
+                                       
+                                    <button class="btn custom-button m-2 load-button" onclick="sentMailSelectedSalarySlip()">Send as
                                         Mail</button>
                                 </div>
                             </div>
@@ -2464,6 +2465,8 @@ data-bs-backdrop="static" aria-hidden="true">
 
 
 </script>
+
+
 <script>
     function validateDOB() {
         var dobInput = document.getElementById("createemployeedateofbirth");
@@ -3625,5 +3628,26 @@ data-bs-backdrop="static" aria-hidden="true">
         "August", "September", "October", "November", "December"
     ];
 </script> 
-
+<script>
+    function sentMailSelectedSalarySlip() {
+        var selectedSalaryId = document.getElementById("selectedMonth").value;
+    
+        if (selectedSalaryId) {
+            var emailUrl = "{% url 'employee:salaryslip_mail' salary_id=0 %}".replace('0', selectedSalaryId);
+            
+            fetch(emailUrl)
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to send salary slip.');
+                });
+        } else {
+            alert("Please select a month to send the salary slip.");
+        }
+    }
+  
+  </script>
 {% endblock extrascript %}

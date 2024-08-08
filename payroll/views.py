@@ -2,8 +2,8 @@ import pandas as pd
 from django.http import HttpResponse
 import calendar
 from datetime import datetime, timedelta ,date
-
-from django import template
+from django.template.loader import render_to_string
+from django.template import RequestContext
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -12,7 +12,7 @@ from django.core.mail import send_mail
 from django.db.models import Count, ExpressionWrapper, F, Q
 from django.http import (HttpResponse)
 from django.shortcuts import get_object_or_404, redirect, render
-from django.template.loader import get_template
+from django import template
 from django.urls import reverse_lazy
 from django.views.decorators.cache import cache_control
 from weasyprint import HTML
@@ -24,6 +24,11 @@ from payroll.models import Monthly_salary, Payroll
 
 from .forms import MonthlySalaryForm, PayrollForm
 from .models import Monthly_salary
+from django.core.mail import EmailMessage, send_mail
+from django.template.loader import render_to_string
+import logging
+logger = logging.getLogger(__name__)
+from django import template
 
 register = template.Library()
 @register.filter
@@ -31,46 +36,47 @@ def amount_in_words(value):
     return amount_in_words(value)
 
 
-def get_session(request):
-    employee_name = request.session.get('employee_name', '')
-    department = request.session.get('department', '')
-    designation = request.session.get('designation', '')
-    documents_id = request.session.get('documents_id', '')
-    emp_id = request.session.get('emp_id', '')
-    reporting_take = request.session.get('reporting_take', '')
-    profile_pic = None
-    if documents_id:
-        try:
-            profile_pic = Onboarding.objects.get(doc_id=documents_id)
-        except Onboarding.DoesNotExist:
-            pass
-        except Exception as e:
-            print(f"Error retrieving profile pic: {e}")
-     # Fetch the company logo
-    company = Company.objects.first()  # Adjust the query as needed to get the correct company
-    company_logo = company.logo.url if company and company.logo else None
-    company_name = company.name if company else "Default Company Name"
-        
-    context = {
-        'employee_name': employee_name,
-        'department': department,
-        'designation': designation,
-        'profile_pic': profile_pic,
-        'emp_id': emp_id,
-        'reporting_take':reporting_take,
-        'company_logo': company_logo,  # Add company logo to the context
-        'company_name': company_name
-    }
+# def get_session(request):
+#     employee_name = request.session.get('employee_name', '')
+#     department = request.session.get('department', '')
+#     designation = request.session.get('designation', '')
+#     documents_id = request.session.get('documents_id', '')
+#     emp_id = request.session.get('emp_id', '')
+#     reporting_take = request.session.get('reporting_take', '')
+#     profile_pic = None
+#     if documents_id:
+#         try:
+#             profile_pic = Onboarding.objects.get(doc_id=documents_id)
+#         except Onboarding.DoesNotExist:
+#             pass
+#         except Exception as e:
+#             print(f"Error retrieving profile pic: {e}")
+#      # Fetch the company logo
+#     company = Company.objects.first()  # Adjust the query as needed to get the correct company
+#     company_logo = company.logo.url if company and company.logo else None
+#     company_name = company.name if company else "Default Company Name"
+    
+#     context = {
+#         'employee_name': employee_name,
+#         'department': department,
+#         'designation': designation,
+#         'profile_pic': profile_pic,
+#         'emp_id': emp_id,
+#         'reporting_take':reporting_take,
+#         'company_logo': company_logo,  # Add company logo to the context
+#         'company_name': company_name
+#     }
 
-    if employee_name and department and designation and emp_id:
-        attendance = Attendance.objects.filter(employee=request.user.emp_user, date=date.today()).first()
-        if attendance:
-            context['clock_intime'] = attendance.clock_in
-            context['clockedin'] = True if attendance.clock_in and not attendance.clock_out else False
-        else:
-            context['clockedin'] = False
-    print(context)
-    return context
+#     if employee_name and department and designation and emp_id:
+#         attendance = Attendance.objects.filter(employee=request.user.emp_user, date=date.today()).first()
+#         if attendance:
+#             context['clock_intime'] = attendance.clock_in
+#             context['clockedin'] = True if attendance.clock_in and not attendance.clock_out else False
+#         else:
+#             context['clockedin'] = False
+#     print(context)
+    
+#     return context
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url=reverse_lazy('accounts:login'))
@@ -161,7 +167,7 @@ def add_payroll(request, pk):
     context = {
         'emp_data': emp_data, 'form': form,'payroll': payrollemp
     }
-    context.update(get_session(request))  # Call get_session to retrieve the dictionary
+      # Call get_session to retrieve the dictionary
     request.session.save()
 
     return render(request, 'hr/GenratePayroll.html', context)
@@ -181,7 +187,7 @@ def month_salarylist(request):
         'attendance_data':attendance_data,
         'monthly_salary_data': monthly_salary_data, 
     }
-    context.update(get_session(request))  # Call get_session to retrieve the dictionary
+      # Call get_session to retrieve the dictionary
     request.session.save()
 
     return render (request,'hr/salarylist.html',context)
@@ -309,7 +315,7 @@ def create_salary(request, pk):
         'form': form,
         'absent_days_count':absent_days_count,
     }
-    context.update(get_session(request))
+    
     request.session.save()
 
     return render(request, 'hr/GenerateSalaryslip.html', context)
@@ -415,7 +421,7 @@ def view_beforegenerate_salary(request,pk):
     }
         
 
-    context.update(get_session(request))
+    
     request.session.save()
     return render(request, 'hr/viewbeforeGenerateSalary.html', context)
 
@@ -508,7 +514,7 @@ def edit_beforegenerate_salary(request,pk):
     }
         
 
-    context.update(get_session(request))
+    
     request.session.save()
     return render(request, 'hr/EditbeforeGenerateSalary.html', context)
 
@@ -625,7 +631,7 @@ def month_salary(request):
         }
         
 
-    context.update(get_session(request))
+    
     request.session.save()
 
     return render(request, 'hr/GenerateSalary.html', context)
@@ -812,7 +818,7 @@ def month_salaryslip(request,pk):
     context = {
        'monthly_salary_instance':monthly_salary_instance
     }
-    context.update(get_session(request))  # Call get_session to retrieve the dictionary
+      # Call get_session to retrieve the dictionary
     request.session.save()
 
     return render(request, 'hr/payslip.html', context)
@@ -824,8 +830,8 @@ def download_salary_pdf(request, pk):
     emp_data= Employee.objects.all()
     template_path = 'employee/emppayslip.html'
     context = {'salary': salary,'companies': companies,'emp_data':emp_data}
-    template = get_template(template_path)
-    html_string = template.render(context)
+
+    html_string = render_to_string('employee/emppayslip.html', context=context,request=request)
 
     # Create a PDF file
     pdf_file = HTML(string=html_string).write_pdf()
@@ -836,6 +842,49 @@ def download_salary_pdf(request, pk):
     response.write(pdf_file)
 
     return response
+
+
+
+def mail_salaryslip_pdf(request, pk):
+    salary = get_object_or_404(Monthly_salary, pk=pk)
+    companies = Company.objects.all()
+    emp_data= Employee.objects.all()
+    email = salary.emp_id.email
+    context = {'salary': salary, 'companies': companies,'emp_data':emp_data}
+    # Render HTML template to string
+    html_string = render_to_string('employee/emppayslip.html', context)
+    
+    # Convert the rendered HTML to PDF
+    pdf_file = HTML(string=html_string).write_pdf()
+
+    subject = 'Your Monthly Salary Slip'
+    message = f"""Dear {salary.emp_id.name},
+
+Please find attached your salary slip for {salary.month} {salary.year}.
+
+If you have any questions, please feel free to contact HR.
+
+Best Regards,
+Your Company Name
+"""
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [email]
+    
+    # Create email
+    email_message = EmailMessage(subject, message, email_from, recipient_list)
+    
+    # Attach PDF
+    email_message.attach(f'Salary_Slip_{salary.month}_{salary.year}.pdf', pdf_file, 'application/pdf')
+    
+    try:
+        email_message.send()
+        logger.info(f"Email sent successfully to {', '.join(recipient_list)}")
+        # Display success message
+        messages.success(request, 'Salary Slip Sent to Employee successfully.')
+        return redirect('payroll:view_generatesalary') 
+    except Exception as e:
+        logger.error(f"Error sending email to {', '.join(recipient_list)}: {e}")
+        return HttpResponse("Failed to send salary slip.", status=500)
 
 
 from dateutil.relativedelta import relativedelta
@@ -852,7 +901,7 @@ def view_salary(request , pk):
        'payroll_data':monthly_salary_instance,
        'total_days':days_in_month(monthly_salary_instance.salary_createdon)
     }
-    context.update(get_session(request))  # Call get_session to retrieve the dictionary
+      # Call get_session to retrieve the dictionary
     request.session.save()
 
     return render(request, 'hr/EditGenerateSalaryslip.html', context)
@@ -941,7 +990,7 @@ def view_generatesalary(request):
             'unique_months': months,
             'unique_years': years,
         }
-        context.update(get_session(request))
+        
         request.session.save()
         return render(request, 'hr/view_generatesalary.html', context)
 

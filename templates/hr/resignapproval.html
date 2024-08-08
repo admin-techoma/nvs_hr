@@ -213,10 +213,8 @@
                         lastDateLabel.style.display = 'none';
                         resignDateLabel.style.display = 'block';
                     }
-    
                     // Get CSRF token from cookies
                     var csrftoken = document.cookie.split(';').find(cookie => cookie.trim().startsWith('csrftoken=')).split('=')[1];
-    
                     // Send AJAX request
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', '/employee/update_resign_status/', true);

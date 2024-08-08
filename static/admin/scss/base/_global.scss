@@ -15,7 +15,7 @@ body {
   box-sizing: border-box;
   overflow: hidden;
   font-family: v.$global-font-family !important;
-  font-size:  v.$font-size-body;
+  font-size: v.$font-size-body;
   line-height: 1.5 !important;
   text-transform: capitalize;
   background: transparent;
@@ -77,6 +77,7 @@ input[type="email"] {
 input[type="date"] {
   text-transform: none;
 }
+
 input[type="password"] {
   text-transform: unset;
 }
@@ -114,75 +115,78 @@ input[type="password"] {
 .primarycolorlighter {
   color: $primarycolorlighter;
 }
-.card{ 
-&.border-left-green {
-  border-left: 0.5em solid !important;
-  border-left-color: $color-greenlight !important;
-}
 
-&.border-left-maroon {
-  border-left: 0.5em solid !important;
-  border-left-color: $color-weekoff !important;
-}
+.card {
+  &.border-left-green {
+    border-left: 0.5em solid !important;
+    border-left-color: $color-greenlight !important;
+  }
 
-&.border-left-red {
-  border-left: 0.5em solid !important;
-  border-left-color: $color-red !important;
-}
+  &.border-left-maroon {
+    border-left: 0.5em solid !important;
+    border-left-color: $color-weekoff !important;
+  }
 
-&.border-left-yellow {
-  border-left: 0.5em solid !important;
-  border-left-color: $color-yellow !important;
-  position: relative !important;
+  &.border-left-red {
+    border-left: 0.5em solid !important;
+    border-left-color: $color-red !important;
+  }
 
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    height: 50%;
-    background: $color-orange;
-    left: -0.5em;
-    width: 0.5em;
-    border-top-left-radius: 1.25em;
+  &.border-left-yellow {
+    border-left: 0.5em solid !important;
+    border-left-color: $color-yellow !important;
+    position: relative !important;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      height: 50%;
+      background: $color-orange;
+      left: -0.5em;
+      width: 0.5em;
+      border-top-left-radius: 1.25em;
+    }
+  }
+
+  &.border-left-orange {
+    border-left: 0.5em solid !important;
+    border-left-color: $color-orange !important;
+  }
+
+  &.border-left-purple {
+    border-left: 0.5em solid !important;
+    border-left-color: $color-purple !important;
+  }
+
+  &.border-left-gray {
+    border-left: 0.5em solid !important;
+    border-left-color: $colorgray !important;
+  }
+
+
+  .absentcolor {
+    background: $absent-color;
+  }
+
+  .holiday {
+    background: $colorgray;
+    color: $primarycolor !important;
+  }
+
+  .halfdaycolor {
+    background: $color-yellow;
+    color: $primarycolor !important;
+    position: relative;
+
+    ::after {
+      position: absolute;
+      top: 50%;
+      background-color: $color-orange;
+    }
   }
 }
 
-&.border-left-orange {
-  border-left: 0.5em solid !important;
-  border-left-color: $color-orange !important;
-}
-
-&.border-left-purple {
-  border-left: 0.5em solid !important;
-  border-left-color: $color-purple !important;
-}
-&.border-left-gray {
-  border-left: 0.5em solid !important;
-  border-left-color: $colorgray !important;
-} 
-
-
-.absentcolor {
-  background: $absent-color;
-}
-
-.holiday {
-  background: $colorgray;
-  color: $primarycolor !important;
-}
-
-.halfdaycolor {
-  background: $color-yellow;
-  color: $primarycolor !important;
-  position: relative;
-
-  ::after {
-    position: absolute;
-    top: 50%;
-    background-color: $color-orange;
-  }
-}
-}
 ::marker {
   list-style: none;
 }
@@ -238,25 +242,27 @@ input[type="password"] {
     }
   }
 }
+
 .day {
   // border: 0.063em solid ;
   border-radius: 1.25em;
-  width:3.125em;
+  width: 3.125em;
   height: 3.125em;
   text-align: center;
   cursor: pointer;
 }
+
 /* Define classes for different colors */
 .green {
   .day-switch {
     background-color: $color-green !important;
-    color:  $color-white;
+    color: $color-white;
   }
 }
 
 .red {
   .day-switch {
-    background-color:$color-red !important;
+    background-color: $color-red !important;
     color: $color-white;
   }
 }
@@ -264,13 +270,14 @@ input[type="password"] {
 .yellow {
   .day-switch {
     background-color: $color-yellow !important;
-    color:$color-black;
+    color: $color-black;
   }
 }
 
 /* Style for the table header */
 .national-holiday {
   position: relative;
+
   .festivalname {
     position: absolute;
     display: none;
@@ -297,10 +304,10 @@ input[type="password"] {
   --color-fg: #000000;
   --color-border-theme: #858585;
   --color-text: #000000;
-  --color-tableheaderbg:#e4e7ee;
-  --color-formborder:#556087;
-  --color-form-bg:c.$primarycolorlight;
-  --color-primarybg:#14245A;
+  --color-tableheaderbg: #e4e7ee;
+  --color-formborder: #556087;
+  --color-form-bg: c.$primarycolorlight;
+  --color-primarybg: #14245A;
 }
 
 [data-theme="dark"] {
@@ -309,10 +316,10 @@ input[type="password"] {
   --color-fg: #ffffff;
   --color-border-theme: #a0a2a7;
   --color-text: #eeeeee;
-  --color-tableheaderbg:#556087;
-  --color-formborder:#d3d3d3;
-  --color-form-bg:var(--color-bg-light);
-  --color-primarybg:#fff;
+  --color-tableheaderbg: #556087;
+  --color-formborder: #d3d3d3;
+  --color-form-bg: var(--color-bg-light);
+  --color-primarybg: #fff;
 }
 
 body {
@@ -352,16 +359,21 @@ body {
         margin-bottom: 0;
       }
     }
+
     @media (max-width: 1440px) {
       .card-body {
         .card-title {
           font-size: 1em;
         }
-  
+
         .card-desc {
           font-size: v.$font-size-small;
         }
       }
+    }
+
+    @media (max-width:767px) {
+      margin-bottom: 0.63em;
     }
   }
 
@@ -408,6 +420,7 @@ body {
 
   .modal {
     border: transparent;
+
     .modal-header {
       background: $primarycolor;
       color: var(--color-fg);
@@ -481,9 +494,11 @@ body {
       }
     }
   }
+
   .dataTables_wrapper {
     .dataTables_paginate {
       font-size: v.$font-size-small !important;
+
       .paginate_button.disabled,
       .paginate_button.disabled:hover,
       .paginate_button.disabled:active {
@@ -491,6 +506,7 @@ body {
         color: var(--color-fg) !important;
         border: 0.063em solid transparent;
       }
+
       .paginate_button {
         text-decoration: none !important;
         cursor: pointer;
@@ -499,12 +515,14 @@ body {
         border-radius: 0.125em;
         background: transparent;
         padding: 0.5em 0.5em !important;
+
         &:hover {
           background: $primarycolor;
         }
       }
     }
   }
+
   .breadcrumb-item.active {
     color: var(--color-fg);
   }
@@ -583,47 +601,58 @@ body {
       }
     }
   }
+
   .footer {
     background: var(--color-bg-light);
+
     .copyright-text {
       color: var(--color-fg) !important;
+
       .copyright-brandname {
         color: var(--color-fg) !important;
       }
     }
   }
+
   .nav.nav-tabs {
     border-color: var(--color-bg);
   }
+
   a.edit-button {
     background-color: var(--color-bg-light);
     color: var(--color-fg);
     border: 0.063em solid var(--color-bg-light);
   }
+
   #savepayrollInfoBtn,
   #saveWorkInfoBtn,
   #savePersonalInfoBtn,
   #saveTeamInfoBtn {
     border: 0.063em solid var(--color-bg-light);
   }
+
   .top-header {
     .headerprofilewrapper {
       .notificationdropdown {
         background-color: var(--color-bg-light);
         border: 0.063em solid var(--color-bg-light);
+
         .notification-detail {
           .notification-title {
             color: var(--color-text);
           }
+
           .notification-text {
             color: var(--color-text);
           }
         }
+
         .dropdown-item:hover {
           .notification-detail {
             .notification-title {
               color: var(--color-fg);
             }
+
             .notification-text {
               color: var(--color-fg);
             }
@@ -644,6 +673,7 @@ body {
   .dataTables_length select {
     border: none;
     cursor: pointer;
+
     &:focus-visible {
       outline: none;
     }
@@ -656,6 +686,8 @@ body {
 
 .offcanvas {
   .offcanvas-header {
+    padding: 0.630em;
+
     .Clientlogowrapper {
       .Clientlogo {
         max-width: 4em;
@@ -670,14 +702,16 @@ body {
       font-size: v.$font-size-small !important;
       margin-top: 0.938em;
       margin-bottom: 0.938em;
+
       select {
         color: var(--color-text) !important;
       }
     }
   }
 }
+
 .dataTables_wrapper {
-.dataTables_info {
-  font-size: v.$font-size-small !important;
-}
+  .dataTables_info {
+    font-size: v.$font-size-small !important;
+  }
 }

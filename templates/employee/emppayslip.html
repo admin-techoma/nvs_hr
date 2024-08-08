@@ -26,18 +26,24 @@
     <!-- Include other details as needed -->
     <div >
         <div style="display: flex; justify-content: space-between;">
-       <div>
-            <figure style="padding: 0; margin: 0;">
-            <img src="../../static/admin/img/NIBPL_Logo.png" style="width: 120px;" alt="" srcset="">
-        </figure>
-       
-    </div>
+     
         <div style="width: 50%;">
-            <div>
+            <div><div>
+                <figure class="Clientlogowrapper mb-0 bg-white">
+                    <a href="">
+                        {% if company_logo %}
+                            <img class="" src="{{ company_logo }}" alt="Company logo">
+                        {% else %}
+                             <img class="" src="/static/admin/img/logo.png" alt="Default logo">
+                        {% endif %}
+                    </a>
+                </figure>
+           
+        </div>
                 <div>
                     {% for company in companies %}
                     <h5 style="margin: 0; margin-bottom: 10px; text-align: end;">{{ company.name }}</h5>
-                 
+                    
                 </div>
                 <p style="font-size:12px; text-align: end;">
                     {{company.reg_address}},

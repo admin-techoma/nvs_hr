@@ -830,10 +830,12 @@ def download_salary_pdf(request, pk):
     emp_data= Employee.objects.all()
     template_path = 'employee/emppayslip.html'
     context = {'salary': salary,'companies': companies,'emp_data':emp_data}
-
-    html_string = render_to_string('employee/emppayslip.html', context=context,request=request)
-
-    # Create a PDF file
+    context.update(get_session(request)) 
+    print(context['company_logo'])
+    template = get_template(template_path)
+    html_string = template.render(request=request,context=context)
+    # return render(request,template_path,context=context)
+    
     pdf_file = HTML(string=html_string).write_pdf()
 
     # Create HTTP response with PDF attachment

@@ -49,7 +49,6 @@ ALLOWED_HOSTS = ['*']  # '*', '4992-2402-a00-152-642c-a078-6cb3-b69c-ac8e.ngrok-
 
 INSTALLED_APPS = [
     #MyApps
-   
     'report',
     'payroll',
     'accounts',
@@ -90,6 +89,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
+                'django.template.context_processors.media',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',

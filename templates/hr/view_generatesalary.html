@@ -95,6 +95,9 @@
                                             <a class="btn btn-sm me-1 btn-dark "
                                                 href="{% url 'payroll:download_salary_pdf' all_payroll_applications.pk %}"
                                                 target="_blank"><i class="bi bi-download"></i></a>
+                                            <a class="btn btn-sm  btn-dark custom-button load-button"
+                                                href="{% url 'payroll:mail_salaryslip_pdf' all_payroll_applications.pk %}"><i class="bi bi-envelope-at"></i></a>    
+                                                
                                         </div>
                                     </td>
                                 </tr>

@@ -50,6 +50,8 @@ urlpatterns = [
     #<----------------- Employees Payroll URL----------------------------------------------------->
     path('view_payroll/', views.view_payroll, name='view_payroll'),
     path('employee/download_pdf/<int:salary_id>/', views.download_pdf, name='download_pdf'),
+    path('employee/salaryslip_mail/<int:salary_id>/', views.salaryslip_mail, name='salaryslip_mail'),
+    
    
     
 ]

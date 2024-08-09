@@ -15,8 +15,7 @@ from django.db.models import Case, Count, IntegerField, Q, Value, When
 
 from django.views.decorators.csrf import csrf_exempt
 
-from django.http import (Http404, HttpResponse, HttpResponseRedirect,
-                         JsonResponse)
+from django.http import (Http404, HttpResponse, HttpResponseRedirect,JsonResponse)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
@@ -122,7 +121,7 @@ def admin_dashboard(request):
 @login_required(login_url=reverse_lazy('accounts:login'))
 def hr_dashboard(request):
     context = get_session(request)
-    today = datetime.now()
+    today = datetime.today()
     employees = Employee.objects.filter(dob__day=today.day, dob__month=today.month)
     emp_active= Employee.objects.filter(status='Active').count()
     today_clock_ins_count = Attendance.count_today_clock_ins()
@@ -348,7 +347,7 @@ def schedule_interview(request, candidate_id):
         interview_form = InterviewForm(request.POST)
 
         if interview_form.is_valid():
-          
+
             
             # Save department, designation, and interviewer to the candidateResume instance
             department_id = request.POST.get('department')
@@ -373,15 +372,24 @@ def schedule_interview(request, candidate_id):
 
             # Prepare email context and send emails
             interviwer = request.POST.get('interviewer')
-          
-            interviewDate_obj = request.POST.get('interviewDate')
-            interviewTime_obj = request.POST.get('interviewTime')
+
+            if request.POST.get("interviewDate"):
+                parsed_date = (request.POST.get("interviewDate"))
+                interviewDate = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+            else:
+                interviewDate = None
+            
+            if request.POST.get("interviewTime"):
+                parsed_date = (request.POST.get("interviewTime"))
+                interviewTime = datetime.strptime(parsed_date,"%hh:%mm:%ss").time()
+            else:
+                interviewTime = None
+                
+            
             designationoption = request.POST.get('hiddendesignationoptions')
             interviewMode = request.POST.get('interviewMode')
             
-            interviewDate = datetime.strptime(interviewDate_obj, '%Y-%m-%d').strftime('%d-%m-%Y')
-            interviewTime = datetime.strptime(interviewTime_obj, '%H:%M').strftime('%I:%M %p')
-            
+     
             if interviewMode == 'Online':
                 interviewLinkLocation = request.POST.get('interviewLink')
             else:
@@ -509,7 +517,14 @@ def save_interview_feedback(request, candidate_id):
                 form = InterviewSelectionFeedback(request.POST, instance=candidateResume.objects.get(pk=candidate_id))
                 if form.is_valid():
                     # Retrieve the value of interviewFeedback_date from the form data
-                    interviewFeedback_date = form.cleaned_data['interviewFeedback_date']
+                    
+                    if request.POST.get("interviewFeedback_date"):
+                        parsed_date = (request.POST.get("interviewFeedback_date"))
+                        interviewFeedback_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+                    else:
+                        interviewFeedback_date = None
+            
+                    # interviewFeedback_date = form.cleaned_data['interviewFeedback_date']
                     # Save the form and assign the interviewFeedback_date value to the model field
                     instance = form.save(commit=False)
                     instance.interviewFeedback_date = interviewFeedback_date
@@ -1315,19 +1330,30 @@ def add_employee(request, pk):
             return redirect('hr:add_employee', pk=pk)
         
         
-        dob = request.POST.get("dob")
-        doj = request.POST.get("doj")
-        pf_joining_date = request.POST.get("pf_joining_date", None)
-        esic_joining_date = request.POST.get("esic_joining_date", None)
-
-        try:
-            dob_date = parse_date(dob)
-            doj_date = parse_date(doj)
-            pf_joining_date = parse_date(pf_joining_date) if pf_joining_date and pf_joining_date.strip() else None
-            esic_joining_date = parse_date(esic_joining_date) if esic_joining_date and esic_joining_date.strip() else None
-        except ValueError:
-            raise ValidationError("Invalid date format. Use YYYY-MM-DD.")
-
+        if request.POST.get("pf_joining_date"):
+            parsed_date = (request.POST.get("pf_joining_date"))
+            pf_joining_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            pf_joining_date = None
+            
+        if request.POST.get("esic_joining_date"):
+            parsed_date = (request.POST.get("esic_joining_date"))
+            esic_joining_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            esic_joining_date = None
+        
+        if request.POST.get("dob"):
+            parsed_date = (request.POST.get("dob"))
+            dob = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            dob = None
+            
+        if request.POST.get("doj"):
+            parsed_date = (request.POST.get("doj"))
+            doj = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            doj = None
+        
         pfno = request.POST.get("pfno")
         esicno = request.POST.get("esicno", None)
         uanno = request.POST.get("uanno")
@@ -1428,10 +1454,13 @@ def update_personal_info(request, id):
         middle_name = request.POST.get('middle_name')
         last_name = request.POST.get('last_name')
         name = request.POST.get('name')
-        dob = request.POST.get('dob')
+        if request.POST.get("dob"):
+            parsed_date = (request.POST.get("dob"))
+            dob = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            dob = None
         gender_id = request.POST.get("gender")
         married_status = request.POST.get('married_status')
-          
         pancard_no = request.POST.get('pancard_no')
         aadhaarcard_no = request.POST.get('aadhaarcard_no')
         blood_group = request.POST.get('blood_group')
@@ -1498,43 +1527,64 @@ def update_personal_info(request, id):
     else:
         
         # Handle GET request or other cases
-       pass
+        pass
         
 
 def update_work_info(request, id):
     if request.method == 'POST':
-        doj = request.POST.get('doj')
+
         office_email = request.POST.get('office_email')
-        doe = request.POST.get('doe')
+        
+        if request.POST.get("doj"):
+            parsed_date = (request.POST.get("doj"))
+            doj = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            doj = None
+            
+        if request.POST.get("doe"):
+            parsed_date = (request.POST.get("doe"))
+            doe = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            doe = None
+            
+        if request.POST.get("pf_joining_date"):
+            parsed_date = (request.POST.get("pf_joining_date"))
+            pf_joining_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            pf_joining_date = None
+            
+        if request.POST.get("pf_exit_date"):
+            parsed_date = (request.POST.get("pf_exit_date"))
+            pf_exit_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            pf_exit_date = None
+            
+        if request.POST.get("esic_joining_date"):
+            parsed_date = (request.POST.get("esic_joining_date"))
+            esic_joining_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            esic_joining_date = None
+            
+        if request.POST.get("esic_exit_date"):
+            parsed_date = (request.POST.get("esic_exit_date"))
+            esic_exit_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            esic_exit_date = None
+            
+        
         uanno = request.POST.get('uanno')
         pfno = request.POST.get('pfno')
-        pf_joining_date = request.POST.get('pf_joining_date')
-        pf_exit_date = request.POST.get('pf_exit_date')
         esicno = request.POST.get('esicno')
-        esic_joining_date = request.POST.get('esic_joining_date')
-        esic_exit_date = request.POST.get('esic_exit_date')
         leavebalance = request.POST.get('leavebalance')
         emp_data = Employee.objects.get(emp_id=id)
         leave_balance = get_object_or_404(LeaveBalance, employee=emp_data)
         # Validate and parse date inputs
-        try:
-            if doj:
-                emp_data.doj = parse_date(doj)
-            if doe:
-                emp_data.doe = parse_date(doe)
-            if pf_joining_date:
-                emp_data.pf_joining_date = parse_date(pf_joining_date)
-            if pf_exit_date:
-                emp_data.pf_exit_date = parse_date(pf_exit_date)
-            if esic_joining_date:
-                emp_data.esic_joining_date = parse_date(esic_joining_date)
-            if esic_exit_date:
-                emp_data.esic_exit_date = parse_date(esic_exit_date)
-        except ValidationError:
-            # Handle invalid date format error
-            messages.error(request, 'Invalid date format. Date must be in YYYY-MM-DD format.')
-            return redirect('hr:employee_profile', id=id)
-
+        emp_data.doj=doj
+        emp_data.doe = doe
+        emp_data.pf_joining_date =pf_joining_date
+        emp_data.pf_exit_date = pf_exit_date
+        emp_data.esic_joining_date = esic_joining_date
+        emp_data.esic_exit_date = esic_exit_date
         emp_data.office_email = office_email
         emp_data.uanno = uanno
         emp_data.pfno = pfno
@@ -1610,13 +1660,13 @@ def update_team_info(request, id):
                     # Handle the case when the Gender with the specified ID does not exist
                     pass
 
-           
+
             emp_data.save()
             messages.success(request, 'Employee  Reporting Update successfully.')
             return redirect('hr:employee_profile', id=id)
     else:
         # Handle GET request or other cases
-       pass
+        pass
 
 
 def update_payroll_info(request, id):
@@ -1647,6 +1697,13 @@ def update_payroll_info(request, id):
         payrollemp.net_salary = request.POST.get('net_salary')
         payrollemp.paymentmode = request.POST.get('paymentmode')
         payrollemp.applicable_from = request.POST.get('applicable_from')
+        
+        if request.POST.get("applicable_from"):
+            parsed_date = (request.POST.get("applicable_from"))
+            payrollemp.applicable_from = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            payrollemp.applicable_from = None
+        
         payrollemp.yearlyctc = request.POST.get('yearlyctc')
         payrollemp.save()
 
@@ -1705,26 +1762,25 @@ def update_bank_info(request, id):
     
     if request.method == 'POST':
         
-           
+
             # emp_data.reporting_to = reporting_to
             account_no = request.POST.get('account_no')
             bank_name = request.POST.get('bank_name')
             ifsc_code = request.POST.get('ifsc_code')
             branch = request.POST.get('branch')
-           
+
             emp_data = Employee.objects.get(emp_id=id)
             
             emp_data.account_no = account_no
             emp_data.bank_name = bank_name
             emp_data.ifsc_code = ifsc_code
             emp_data.branch = branch
-           
             emp_data.save()
             messages.success(request, 'Employee  Bank Update successfully.')
             return redirect('hr:employee_profile', id=id)
     else:
         # Handle GET request or other cases
-       pass
+        pass
 
 
 def update_permission_info(request, id):
@@ -1736,7 +1792,7 @@ def update_permission_info(request, id):
             emp_data.reporting_take = True
         else:
             emp_data.reporting_take = False
-           
+
         emp_data.save()
         messages.success(request, 'Employee Permissions Updated successfully.')
         return redirect('hr:employee_profile', id=id)
@@ -1797,7 +1853,7 @@ def employee_profile(request, id):
 
     
     
-     # Get the selected reporting manager
+    # Get the selected reporting manager
     reporting_manager = emp_data.reporting_to
 
     # Get all employees who report to the selected reporting manager
@@ -1830,18 +1886,18 @@ def employee_profile(request, id):
             ).order_by('id')
 
     context = {'emp_data': emp_data, 
-               'attendances':attendances,
-               'leave_balance': leave_balance,
-               'employee_regularization':employee_regularization,
-               'onboarding_documents': onboarding_documents,
-               'total_absents': total_absents,
-               'total_presents':total_presents,
-               'leavedata': leavedata,
-               'payroll_data':payroll_data,
-               'all_monthly_salaries': all_monthly_salaries,
-               'resign_data':resign_data,
-               'employees_reporting_to_selected_manager': employees_reporting_to_selected_manager,
-               'emp':emp,'department_all': department_all,'designation':designation,'gender':gender,'position_all':position_all,'company_branch':company_branch,
+                'attendances':attendances,
+                'leave_balance': leave_balance,
+                'employee_regularization':employee_regularization,
+                'onboarding_documents': onboarding_documents,
+                'total_absents': total_absents,
+                'total_presents':total_presents,
+                'leavedata': leavedata,
+                'payroll_data':payroll_data,
+                'all_monthly_salaries': all_monthly_salaries,
+                'resign_data':resign_data,
+                'employees_reporting_to_selected_manager': employees_reporting_to_selected_manager,
+                'emp':emp,'department_all': department_all,'designation':designation,'gender':gender,'position_all':position_all,'company_branch':company_branch,
                 'bank_details': {
                 'account_no': emp_data.account_no,
                 'bank_name': emp_data.bank_name,
@@ -1858,8 +1914,7 @@ def employee_profile(request, id):
 #@method_decorator(cache_control(no_cache=True, must_revalidate=True, no_store=True), name='dispatch')
 @login_required(login_url=reverse_lazy('accounts:login'))
 def ajax_newdepartment(request):
-   
-    
+
     newdepartment = request.GET.get('newdepartment')
     
     if Department.objects.filter(name=newdepartment).exists():
@@ -1943,7 +1998,7 @@ def direct_employee(request, pk=None):
     
 
     if request.method == 'POST':
-   
+        
         emp_id = request.POST.get("emp_id")
         name = request.POST.get("name")
         email = request.POST.get("email")
@@ -1963,26 +2018,34 @@ def direct_employee(request, pk=None):
         c_pin_code= request.POST.get("c_pin_code")
         contact_no= request.POST.get("contact_no")
         other_contact_no= Decimal(request.POST.get("other_contact_no")) if request.POST.get("other_contact_no") else None
-        
-        dob = request.POST.get("dob")
-        doj = request.POST.get("doj")
         uanno= request.POST.get("uanno")
-
         pfno= request.POST.get("pfno")
         esicno= request.POST.get("esicno")
-        pf_joining_date= request.POST.get("pf_joining_date")
-       
-        esic_joining_date= request.POST.get("pf_joining_date")
-        try:
-            
-
-            dob_date = parse_date(dob)
-            doj_date = parse_date(doj)
-            pf_joining_date = parse_date(str(pf_joining_date))
-            esic_joining_date = parse_date(str(esic_joining_date))
-        except ValueError:
-            raise ValidationError("Invalid date format. Use YYYY-MM-DD.")
         
+        if request.POST.get("pf_joining_date"):
+            parsed_date = (request.POST.get("pf_joining_date"))
+            pf_joining_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            pf_joining_date = None
+            
+        if request.POST.get("esic_joining_date"):
+            parsed_date = (request.POST.get("esic_joining_date"))
+            esic_joining_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            esic_joining_date = None
+        
+        if request.POST.get("dob"):
+            parsed_date = (request.POST.get("dob"))
+            dob = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            dob = None
+            
+        if request.POST.get("doj"):
+            parsed_date = (request.POST.get("doj"))
+            doj = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            doj = None
+            
         pancard_no= request.POST.get("pancard_no")
         aadhaarcard_no= request.POST.get("aadhaarcard_no")
         account_no= request.POST.get("account_no")
@@ -1991,7 +2054,6 @@ def direct_employee(request, pk=None):
         branch= request.POST.get("branch")
         
         reporting_take = request.POST.get("reporting_take") == 'true'
-       
         emergency_contactname = request.POST.get("emergency_contactname")
         emergency_contactnumber = request.POST.get("emergency_contactnumber")
         emergency_relationas = request.POST.get("emergency_relationas")
@@ -2174,7 +2236,7 @@ def add_department_details(request):
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
 
-           
+
 def get_department_details(request, department_id):
     
     try:
@@ -2227,7 +2289,7 @@ def delete_department(request, department_id):
             return JsonResponse({'error': 'Department not found'}, status=404)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
-     
+
 
 def add_designation_details(request):
     if request.method == 'POST': 
@@ -2329,7 +2391,7 @@ def get_position_details(request, position_id):
             'remarks': position_data.remarks,
         }
 
-       
+
 
         return JsonResponse(data)
     except Department.DoesNotExist:
@@ -2475,12 +2537,18 @@ def delete_weekoff(request, weekoff_id):
             return JsonResponse({'error': str(e)}, status=400)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
-      
+
 
 def add_holidaymaster_details(request):
     if request.method == 'POST': 
-        name = request.POST.get('name')  # Corrected to retrieve POST data
-        year = request.POST.get('year') 
+        name = request.POST.get('name') 
+        
+        if request.POST.get("year"):
+            parsed_date = (request.POST.get("year"))
+            year = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            year = None
+            
         remarks = request.POST.get('remarks') 
         try:
             # Check if department already exists
@@ -2524,7 +2592,13 @@ def update_holidaymaster_details(request, holidaymaster_id):
         try:
             holidaymaster_data = HolidayMaster.objects.get(pk=holidaymaster_id)
             new_name = request.POST.get('name')  # Assuming you're sending the updated name via POST request
-            new_year = request.POST.get('year')
+
+            if request.POST.get("year"):
+                parsed_date = (request.POST.get("year"))
+                new_year = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+            else:
+                new_year = None
+
             new_remarks = request.POST.get('remarks')
             # Check if the new name is the same as the existing name
             if new_name == holidaymaster_data.name:
@@ -2559,14 +2633,19 @@ def delete_holidaymaster(request, holidaymaster_id):
             return JsonResponse({'error': str(e)}, status=400)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
-          
 
 def  add_holiday_list_details(request):
     if request.method == 'POST': 
         
 
         holiday_master_id = request.POST.get('holiday_master')
-        date = request.POST.get('date')
+        
+        if request.POST.get("date"):
+            parsed_date = (request.POST.get("date"))
+            date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            date = None
+
         festival_name = request.POST.get('festival_name')
 
         try:
@@ -2605,7 +2684,11 @@ def update_holiday_list_details(request, holiday_list_id):
             holiday_list = HolidayList.objects.get(pk=holiday_list_id)
             holiday_master_id = request.POST.get('holiday_master')
             festival_name = request.POST.get('festival_name')
-            date = request.POST.get('date')
+            if request.POST.get("date"):
+                parsed_date = (request.POST.get("date"))
+                date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+            else:
+                date = None
             
             # Check if a holiday_list with the same holiday_master and festival_name already exists
             if HolidayList.objects.exclude(pk=holiday_list_id).filter(holiday_master_id=holiday_master_id, festival_name=festival_name, date=date).exists():
@@ -2655,7 +2738,7 @@ def add_payroll_details(request):
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
 
-           
+
 
 
 def view_company(request):
@@ -2706,10 +2789,8 @@ def view_company(request):
 @login_required(login_url=reverse_lazy('accounts:login'))
 def company_profile(request, pk):
     company_data = Company.objects.get(pk=pk)
-   
     
     company=Company.objects.all()
-    
     department_all= Department.objects.all()
     designation_all= Designation.objects.all()
     position_all= Position.objects.all()
@@ -2724,18 +2805,18 @@ def company_profile(request, pk):
 
 
     context = {'company_data': company_data, 
-               'company': company,
-               'department_all':department_all,
-               'designation_all':designation_all,
-               'position_all':position_all,
-               'holidaymaster_all':holidaymaster_all,
-               'holiday_list_all':holiday_list_all,
-               'weekoff_all':weekoff_all,
-               'company_bank_all':company_bank_all,
-               'company_branch_all':company_branch_all,
-               'announcementmaster_all':announcementmaster_all,
-               'policiesmaster_all':policiesmaster_all,
-               'company_payroll_all':company_payroll_all
+            'company': company,
+            'department_all':department_all,
+            'designation_all':designation_all,
+            'position_all':position_all,
+            'holidaymaster_all':holidaymaster_all,
+            'holiday_list_all':holiday_list_all,
+            'weekoff_all':weekoff_all,
+            'company_bank_all':company_bank_all,
+            'company_branch_all':company_branch_all,
+            'announcementmaster_all':announcementmaster_all,
+            'policiesmaster_all':policiesmaster_all,
+            'company_payroll_all':company_payroll_all
         }
     context.update(get_session(request))  # Call get_session to retrieve the dictionary
     request.session.save()
@@ -2766,8 +2847,11 @@ def update_company_info(request, id):
         ifsc_code = request.POST.get('ifsc_code')
         branch = request.POST.get('branch')
         
-        start_date = request.POST.get('start_date')
-
+        if request.POST.get("start_date"):
+                parsed_date = (request.POST.get("start_date"))
+                start_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+                start_date = None
         
         status = request.POST.get('status')
         emp_id_series = request.POST.get('emp_id_series')
@@ -3020,7 +3104,7 @@ def delete_bank_list(request, bank_list_id):
             return JsonResponse({'error': 'Bank list not found'}, status=404)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
-     
+
 
 def add_branch_list_details(request):
     if request.method == 'POST': 
@@ -3033,7 +3117,11 @@ def add_branch_list_details(request):
         pin_code = request.POST.get('pin_code')
         email = request.POST.get('email')
         contact_no = request.POST.get('contact_no')
-        start_date = request.POST.get('start_date')
+        if request.POST.get("start_date"):
+                parsed_date = (request.POST.get("start_date"))
+                start_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+                start_date = None
         status = request.POST.get('status')
 
         try:
@@ -3085,24 +3173,27 @@ def update_branch_list_details(request, branch_list_id):
             pin_code = request.POST.get('pin_code')
             email = request.POST.get('email')
             contact_no = request.POST.get('contact_no')
-            start_date_str = request.POST.get('start_date')
-            end_date_str = request.POST.get('end_date')
+            
+            if request.POST.get("start_date"):
+                parsed_date = (request.POST.get("start_date"))
+                start_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+            else:
+                start_date = None
+                
+            if request.POST.get("end_date"):
+                parsed_date = (request.POST.get("end_date"))
+                end_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+            else:
+                end_date = None
+                
+            
             status = request.POST.get('status')
 
             # Try to get the company object based on the provided company ID
             company = get_object_or_404(Company, pk=company_id)
 
             # Parse and validate start date
-            start_date = parse_date(start_date_str)
-            if not start_date:
-                raise ValidationError('Invalid start date format. Must be in YYYY-MM-DD format.')
-
-            # Parse and validate end date (if provided)
-            if end_date_str:
-                end_date = parse_date(end_date_str)
-                if not end_date:
-                    raise ValidationError('Invalid end date format. Must be in YYYY-MM-DD format.')
-
+            
             # Update the branch list details
             branch_list.company = company
             branch_list.name = name
@@ -3114,7 +3205,7 @@ def update_branch_list_details(request, branch_list_id):
             branch_list.email = email
             branch_list.contact_no = contact_no
             branch_list.start_date = start_date
-            branch_list.end_date = end_date if end_date_str else None
+            branch_list.end_date = end_date
             branch_list.status = status
             branch_list.save()
 
@@ -3139,7 +3230,7 @@ def delete_branch_list(request, branch_list_id):
             return JsonResponse({'error': 'Branch list not found'}, status=404)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
-     
+
 
 
 
@@ -3148,7 +3239,13 @@ def add_policy_list_details(request):
     if request.method == 'POST': 
         company_id = request.POST.get('company')
         name = request.POST.get('name')
-        created_on = request.POST.get('created_on')
+        
+        if request.POST.get("created_on"):
+                parsed_date = (request.POST.get("created_on"))
+                created_on = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+                created_on = None
+                
         remarks = request.POST.get('remarks')
         file = request.POST.get('file')
         status = request.POST.get('status')
@@ -3180,7 +3277,7 @@ def get_policy_list_details(request, policy_list_id):
             'file_url': policy_list.file.url if policy_list.file else None,  # Get file URL
             
             'status' : policy_list.status,
-          
+
         }
         return JsonResponse(data)
     except Company.DoesNotExist:
@@ -3192,17 +3289,22 @@ def update_policy_list_details(request, policy_list_id):
             policy_list = Policies.objects.get(pk=policy_list_id)
             company_id = request.POST.get('company')
             name = request.POST.get('name')
-            created_on = request.POST.get('created_on')
+
+            if request.POST.get("created_on"):
+                parsed_date = (request.POST.get("created_on"))
+                created_on = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+            else:
+                    created_on = None
             remarks = request.POST.get('remarks')
             file = request.POST.get('file')
             status = request.POST.get('status')
-           
+
 
             # Try to get the company object based on the provided company ID
             company = get_object_or_404(Company, pk=company_id)
 
             # Update the policy list details
-      
+
             policy_list.company = company
             policy_list.name = name
             policy_list.created_on = created_on
@@ -3220,7 +3322,7 @@ def update_policy_list_details(request, policy_list_id):
             
             else:
                 pass
-           
+
             policy_list.save()
 
             return JsonResponse({'success': 'Policy list updated successfully!'})
@@ -3243,19 +3345,19 @@ def delete_policy_list(request, policy_list_id):
             return JsonResponse({'error': str(e)}, status=400)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
-          
+
 
 def announcement_list(request):
     context = get_session(request)
     emp_data = Employee.objects.all()
     company=Company.objects.all()
     announcementmaster_all= Announcement.objects.all()
- 
+
     context.update({
         'emp_data': emp_data,
         'company':company,
         'announcementmaster_all':announcementmaster_all,
-       
+        
     })
     
     request.session.save()
@@ -3267,7 +3369,13 @@ def add_announcement_list_details(request):
     if request.method == 'POST': 
         company_id = request.POST.get('company')
         name = request.POST.get('name')
-        created_on = request.POST.get('created_on')
+        
+        if request.POST.get("created_on"):
+                parsed_date = (request.POST.get("created_on"))
+                created_on = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+                created_on = None
+                
         message = request.POST.get('message')
         file = request.POST.get('file')
         status = request.POST.get('status')
@@ -3306,22 +3414,23 @@ def update_announcement_list_details(request, announcement_list_id):
             announcement_list = Announcement.objects.get(pk=announcement_list_id)
             company_id = request.POST.get('company')
             name = request.POST.get('name')
-            created_on = request.POST.get('created_on')
+            if request.POST.get("created_on"):
+                parsed_date = (request.POST.get("created_on"))
+                created_on = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+            else:
+                    created_on = None
             message = request.POST.get('message')
             file = request.POST.get('file')
             status = request.POST.get('status')
-           
 
             # Try to get the company object based on the provided company ID
             company = get_object_or_404(Company, pk=company_id)
 
             # Update the announcement list details
-      
             announcement_list.company = company
             announcement_list.name = name
             announcement_list.created_on = created_on
             announcement_list.message = message
-       
             announcement_list.status = status
 
             # Check if a new  file is uploaded
@@ -3357,4 +3466,3 @@ def delete_announcement_list(request, announcement_list_id):
             return JsonResponse({'error': str(e)}, status=400)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
-          

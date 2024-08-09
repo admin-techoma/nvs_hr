@@ -57,7 +57,7 @@ def generate_next_emp_id():
 def get_session(request):
     # Retrieve the latest employee from the database
     emp_id = generate_next_emp_id()
-    print("*****************",emp_id)
+    
     # Rest of your code remains unchanged
     employee_name = request.session.get('employee_name', '')
     department = request.session.get('department', '')

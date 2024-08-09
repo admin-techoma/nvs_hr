@@ -15,6 +15,7 @@ urlpatterns = [
     path('create_salary/<str:pk>/', views.create_salary, name='create_salary'),
     path('month_salaryslip/<str:pk>/', views.month_salaryslip, name='month_salaryslip'),
     path('convert_html_to_pdf/<int:pk>/', views.download_salary_pdf, name='download_salary_pdf'),
+    path('mail_salaryslip_pdf/<int:pk>/', views.mail_salaryslip_pdf, name='mail_salaryslip_pdf'),
     path('view_generatesalary/', views.view_generatesalary, name='view_generatesalary'),
     path('view_salary/<int:pk>/', views.view_salary, name='view_salary'),
     path('edit_salary/<str:id>/', views.edit_salary, name='edit_salary'),

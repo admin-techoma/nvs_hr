@@ -25,6 +25,12 @@ from hr.models import Company, CompanyBranch, Onboarding
 from payroll.models import Monthly_salary, Payroll
 from employee.models import (Attendance, Department, Designation, Employee, Gender, LeaveApplication, LeaveBalance, Position, ResignApplication)
 
+from django.core.mail import EmailMessage, send_mail
+from django.template.loader import render_to_string
+import logging
+logger = logging.getLogger(__name__)
+from django import template
+register = template.Library()
 
 random_pass_generator = string.ascii_letters + string.digits
 
@@ -925,7 +931,44 @@ def download_pdf(request, salary_id):
     return response
 
 
+def salaryslip_mail(request, salary_id):
+    salary = get_object_or_404(Monthly_salary, id=salary_id)
+    companies = Company.objects.all()
+    emp_data= Employee.objects.all()
+    email = salary.emp_id.email
+    context = {'salary': salary, 'companies': companies,'emp_data':emp_data}
+    # Render HTML template to string
+    html_string = render_to_string('employee/emppayslip.html', context)
+    
+    # Convert the rendered HTML to PDF
+    pdf_file = HTML(string=html_string).write_pdf()
 
+    subject = 'Your Monthly Salary Slip'
+    message = f"""Dear {salary.emp_id.name},
+
+Please find attached your salary slip for {salary.month} {salary.year}.
+
+If you have any questions, please feel free to contact HR.
+
+Best Regards,
+Your Company Name
+"""
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [email]
+    
+    # Create email
+    email_message = EmailMessage(subject, message, email_from, recipient_list)
+    
+    # Attach PDF
+    email_message.attach(f'Salary_Slip_{salary.month}_{salary.year}.pdf', pdf_file, 'application/pdf')
+    
+    try:
+        email_message.send()
+        logger.info(f"Email sent successfully to {', '.join(recipient_list)}")
+        return HttpResponse("Salary slip sent successfully.")
+    except Exception as e:
+        logger.error(f"Error sending email to {', '.join(recipient_list)}: {e}")
+        return HttpResponse("Failed to send salary slip.", status=500)
 
 def password_change(request, emp_id):
     emp_data = get_object_or_404(Employee, emp_user=request.user)

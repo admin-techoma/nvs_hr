@@ -113,7 +113,13 @@ def add_payroll(request, pk):
         payrollemp.total_deduction = request.POST.get('total_deduction')
         payrollemp.net_salary = request.POST.get('net_salary')
         payrollemp.paymentmode = request.POST.get('paymentmode')
-        payrollemp.applicable_from = request.POST.get('applicable_from')
+        
+        if request.POST.get("applicable_from"):
+            parsed_date = (request.POST.get("applicable_from"))
+            payrollemp.applicable_from = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            payrollemp.applicable_from = None
+            
         payrollemp.yearlyctc = request.POST.get('yearlyctc')
         payrollemp.save()
 
@@ -235,8 +241,20 @@ def create_salary(request, pk):
             monthly_salary_instance.payroll_id = payroll_data
             monthly_salary_instance.emp_id = employee
             monthly_salary_instance.name = ename
-            monthly_salary_instance.month = datetime(current_date.year, current_date.month, 1).date()  # Set the current month
-            monthly_salary_instance.year = datetime(current_date.year, 1, 1).date()  # Set the current year
+            
+            if request.POST.get("month"):
+                parsed_date = (request.POST.get("month"))
+                monthly_salary_instance.month= datetime.strptime(parsed_date,"%d-%m-%Y").date()
+            else:
+                monthly_salary_instance.month = None
+            
+            if request.POST.get("year"):
+                parsed_date = (request.POST.get("year"))
+                monthly_salary_instance.year= datetime.strptime(parsed_date,"%d-%m-%Y").date()
+            else:
+                monthly_salary_instance.year = None
+                
+             # Set the current year
             monthly_salary_instance.total_full_day = total_absent_days
             monthly_salary_instance.fixed_ctc = request.POST.get('fixed_ctc')
             monthly_salary_instance.fixed_basic = request.POST.get('fixed_basic')
@@ -270,12 +288,14 @@ def create_salary(request, pk):
             monthly_salary_instance.monthly_petrol = request.POST.get('monthly_petrol')
             monthly_salary_instance.monthly_bonus = request.POST.get('monthly_bonus')
             monthly_salary_instance.monthly_incentive = request.POST.get('monthly_incentive', '')
+            
             try:
                 monthly_salary_instance.monthly_incentive = float(monthly_salary_instance.monthly_incentive)
             except ValueError:
                 print(f"Invalid value for 'monthly_incentive': {monthly_salary_instance.monthly_incentive}")
                 # You can handle the error here, e.g., set a default value or add an error to the form
                 monthly_salary_instance.monthly_incentive = 0
+                
             monthly_salary_instance.monthly_otherallowance = request.POST.get('monthly_otherallowance')
             monthly_salary_instance.monthly_arrears = request.POST.get('monthly_arrears')
             monthly_salary_instance.monthly_presentdays = request.POST.get('monthly_presentdays')
@@ -284,18 +304,13 @@ def create_salary(request, pk):
             monthly_salary_instance.monthly_paiddays = request.POST.get('monthly_paiddays')
             monthly_salary_instance.monthly_weekoffdays = request.POST.get('monthly_weekoffdays')
             monthly_salary_instance.salary_createdon = request.POST.get('salary_createdon')
-            if monthly_salary_instance.salary_createdon:
-                try:
-                    monthly_salary_instance.salary_createdon = datetime.strptime(monthly_salary_instance.salary_createdon, '%Y-%m-%d').date()
-                except ValueError:
-                    print(f"Invalid value for 'salary_createdon': {monthly_salary_instance.salary_createdon}")
-                    # Handle the error, set a default value, or add an error to the form
-                    monthly_salary_instance.salary_createdon = datetime.now().date()  # Default value or handle it according to your logic
+            
+            if request.POST.get("salary_createdon"):
+                parsed_date = (request.POST.get("salary_createdon"))
+                monthly_salary_instance.salary_createdon = datetime.strptime(parsed_date,"%d-%m-%Y").date()
             else:
-                # Handle the case when salary_createdon is None (not provided in the request)
-                monthly_salary_instance.salary_createdon = datetime.now().date()
-# ...
-
+                monthly_salary_instance.salary_createdon = None
+                
             monthly_salary_instance.payment_status = request.POST.get('payment_status')
             monthly_salary_instance.remarks = request.POST.get('monthly_salary_instance.remarks', '')
             monthly_salary_instance.total_half_day = request.POST.get('total_half_day')
@@ -953,8 +968,6 @@ def edit_salary(request , id):
         payroll_data.monthly_paiddays = monthly_paiddays
     
 
-
-           
         payroll_data.save()
 
         
@@ -963,7 +976,7 @@ def edit_salary(request , id):
     else:
         
         # Handle GET request or other cases
-       pass
+        pass
 
 
 

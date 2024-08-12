@@ -131,7 +131,7 @@
                                
                                         <label for="CompanyStartDate" class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Start Date:</label>
                                         <div class="input-group date" id="CompanyStartDate" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#CompanyStartDate"  value="{{company_data.start_date|date:'Y-m-d'}}" name="start_date" disabled/>
+                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#CompanyStartDate"  value="{{company_data.start_date|date:'d-m-Y'}}" name="start_date" disabled/>
                                             <div class="input-group-append" data-target="#CompanyStartDate" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -610,8 +610,8 @@
                                     </div>
                                     <div class="mb-2">
                                         <label for="Editbranch_start_date" class="form-label mb-0">Start date</label>
-                                        <div class="input-group date" id="Editbranch_start_date" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Editbranch_start_date" name="start_date"/>
+                                        <div class="input-group date" id="" data-target-input="nearest">
+                                            <input type="text" class="form-control form-control-sm datetimepicker-input" id = "Editbranch_start_date" data-target="#Editbranch_start_date" name="start_date" />
                                             <div class="input-group-append" data-target="#Editbranch_start_date" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -619,8 +619,8 @@
                                     </div>
                                     <div class="mb-2">
                                         <label for="Editbranch_end_date" class="form-label mb-0">end_date</label>
-                                        <div class="input-group date" id="Editbranch_end_date" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Editbranch_end_date" name="end_date" />
+                                        <div class="input-group date" id="" data-target-input="nearest">
+                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Editbranch_end_date" id ="Editbranch_end_date" name="end_date" />
                                             <div class="input-group-append" data-target="#Editbranch_end_date" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -1568,8 +1568,8 @@
                                 <div class="col-12 col-md-12">
                                     <div class="mb-3">
                                         <label for="Addannouncement_year" class="form-label mb-0">Year</label>
-                                        <div class="input-group date" id="Addannouncement_year" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Addannouncement_year" name="year" />
+                                        <div class="input-group date"  data-target-input="nearest">
+                                            <input type="text" id="Addannouncement_year" class="form-control form-control-sm datetimepicker-input" data-target="#Addannouncement_year" name="year" />
                                             <div class="input-group-append" data-target="#Addannouncement_year" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -1619,8 +1619,8 @@
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="EditholidaymasterYear" class="form-label mb-0">Year</label>
-                                        <div class="input-group date" id="EditholidaymasterYear" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#EditholidaymasterYear" name="year" />
+                                        <div class="input-group date" data-target-input="nearest">
+                                            <input type="text" id="EditholidaymasterYear"  class="form-control form-control-sm datetimepicker-input" data-target="#EditholidaymasterYear" name="year" />
                                             <div class="input-group-append" data-target="#EditholidaymasterYear" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -1700,7 +1700,7 @@
                                     {% for holiday_list in holiday_list_all %}
                                     <tr>
                                         <td>{{ holiday_list.holiday_master }}</td>
-                                        <td>{{ holiday_list.date | date:'d-M-Y' }}</td>
+                                        <td>{{ holiday_list.date|date:'d-M-Y'}}</td>
                                         <td>{{ holiday_list.festival_name }}</td>
                                         <td>
                                             <div class="d-flex justify-content-center">
@@ -1758,8 +1758,8 @@
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
                                         <label for="Addholiday_listDate" class="form-label mb-0">Holiday Date</label>
-                                        <div class="input-group date" id="Addholiday_listDate" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Addholiday_listDate" name="date"/>
+                                        <div class="input-group date"  data-target-input="nearest">
+                                            <input type="text" id="Addholiday_listDate" class="form-control form-control-sm datetimepicker-input" data-target="#Addholiday_listDate" name="date"/>
                                             <div class="input-group-append" data-target="#Addholiday_listDate" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -1814,8 +1814,8 @@
                                 
                                     <div class="mb-2">
                                         <label for="Editholiday_listDate" class="form-label mb-0">Holiday Date</label>
-                                        <div class="input-group date" id="Editholiday_listDate" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Editholiday_listDate" name="date" />
+                                        <div class="input-group date" data-target-input="nearest">
+                                            <input type="text"  id="Editholiday_listDate"  class="form-control form-control-sm datetimepicker-input" data-target="#Editholiday_listDate" name="date" />
                                             <div class="input-group-append" data-target="#Editholiday_listDate" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -2146,7 +2146,7 @@
                                     <tr>
                                         <td>{{ policy_list.company }}</td>
                                         <td>{{ policy_list.name}}</td>
-                                        <td>{{ policy_list.created_on }}</td>
+                                        <td>{{ policy_list.created_on|date:'d-m-Y' }}</td>
                                         <td>{{ policy_list.remarks }}</td>
                                         <td>
                                             {% if policy_list.file %}
@@ -2219,8 +2219,8 @@
                                    
                                     <div class="mb-2">
                                         <label for="Addpolicy_created_on" class="form-label mb-0">Created on</label>
-                                        <div class="input-group date" id="Addpolicy_created_on" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Addpolicy_created_on" name="created_on" />
+                                        <div class="input-group date" data-target-input="nearest">
+                                            <input type="text" id="Addpolicy_created_on"  class="form-control form-control-sm datetimepicker-input" data-target="#Addpolicy_created_on" name="created_on" />
                                             <div class="input-group-append" data-target="#Addpolicy_created_on" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -2303,8 +2303,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="Editpolicy_created_on" class="form-label mb-0">created_on</label>
-                                        <div class="input-group date" id="Editpolicy_created_on" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Editpolicy_created_on" name="created_on" />
+                                        <div class="input-group date"  data-target-input="nearest">
+                                            <input type="text" id="Editpolicy_created_on" class="form-control form-control-sm datetimepicker-input" data-target="#Editpolicy_created_on" name="created_on" />
                                             <div class="input-group-append" data-target="#Editpolicy_created_on" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -3347,7 +3347,7 @@ $('.edit-holidaymaster').on('click', function () {
 		success: function (data) {
 			$('#EditholidaymasterId').val(data.id);
 			$('#EditholidaymasterName').val(data.name);
-			$('#EditholidaymasterYear').val(data.year);
+			$('#EditholidaymasterYear').val(data.year);  // This will now be in d-m-Y format
 			$('#EditholidaymasterRemarks').val(data.remarks);
 			$('#EditholidaymasterModal').modal('show');
 		},

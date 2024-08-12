@@ -2596,6 +2596,7 @@ def update_holidaymaster_details(request, holidaymaster_id):
             if request.POST.get("year"):
                 parsed_date = (request.POST.get("year"))
                 new_year = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+                print("*************",new_year)
             else:
                 new_year = None
 

@@ -71,9 +71,15 @@
                         <div class="mb-3 col-12 col-md-6 col-xl-4 px-2">
                             <label for="createemployeedateofbirth" class="form-label mb-0 mb-0">Date of
                                 Birth</label>
-                            <input type="date" class="form-control form-control-sm" id="createemployeedateofbirth"
-                                name="dob" placeholder="YYYY-MM-DD" required oninput="validateDOB()" data-min-age="18">
-                            <div id="dobError" class="text-danger"></div>
+                                <div class="input-group date" id="createemployeedateofbirth" data-target-input="nearest">
+                                    <input type="text" name="dob" class="form-control form-control-sm datetimepicker-input" data-target="#createemployeedateofbirth"  required oninput="validateDOB()" data-min-age="18" />
+                                    <div class="input-group-append" data-target="#createemployeedateofbirth" data-toggle="datetimepicker" >
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                          
+                          
+                                <div id="dobError" class="text-danger"></div>
                             <div id="currentAge"></div>
                         </div>
                         <div class="mb-3 col-12 col-md-6 col-xl-4 px-2">
@@ -239,8 +245,17 @@
                     <div class="mb-3 col-12 col-md-4 col-xl-3">
                         <label for="createemployeedateofjoin" class="form-label mb-0 mb-0">Employee Date of
                             Joining</label>
-                        <input type="date" class="form-control form-control-sm" id="createdirectemployeedateofjoin" name="doj"
-                            placeholder="YYYY-MM-DD" required>
+                        {% comment %} <input type="date" class="form-control form-control-sm" id="createdirectemployeedateofjoin" name="doj"
+                            placeholder="YYYY-MM-DD" required> {% endcomment %}
+
+                            <div class="input-group date" id="createdirectemployeedateofjoin" data-target-input="nearest">
+                                <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#createdirectemployeedateofjoin" name="doj"/>
+                                <div class="input-group-append" data-target="#createdirectemployeedateofjoin" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+
+
                     </div>
                     {% comment %} <div id="totalLeaveDaysContainer" class="mb-3 col-12 col-md-4 col-xl-3">
                         <label for="totalLeaveDays" class="form-label mb-0 mb-0">Total Available Leave Days</label>
@@ -268,7 +283,13 @@
                     </div>
                     <div class="mb-3 col-12 col-md-4 col-xl-3">
                         <label for="pf_joining_date" class="form-label mb-0 mb-0">PF Joining Date</label>
-                        <input type="date" class="form-control form-control-sm" id="pf_joining_date" name="pf_joining_date" placeholder="YYYY-MM-DD">
+                        {% comment %} <input type="date" class="form-control form-control-sm" id="pf_joining_date" name="pf_joining_date" placeholder="YYYY-MM-DD"> {% endcomment %}
+                        <div class="input-group date" id="pf_joining_date" data-target-input="nearest">
+                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#pf_joining_date" name="pf_joining_date"/>
+                            <div class="input-group-append" data-target="#pf_joining_date" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-3 col-12 col-md-4 col-xl-3">
                         <label for="createemployeeesicnumber" class="form-label mb-0 mb-0">ESIC Number</label>
@@ -276,7 +297,14 @@
                     </div>
                     <div class="mb-3 col-12 col-md-4 col-xl-3">
                         <label for="esic_joining_date" class="form-label mb-0 mb-0">ESIC Joining Date</label>
-                        <input type="date" class="form-control form-control-sm" id="esic_joining_date" name="esic_joining_date" placeholder="YYYY-MM-DD">
+                        {% comment %} <input type="date" class="form-control form-control-sm" id="esic_joining_date" name="esic_joining_date" placeholder="YYYY-MM-DD"> {% endcomment %}
+                        <div class="input-group date" id="esic_joining_date" data-target-input="nearest">
+                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#esic_joining_date" name="esic_joining_date" />
+                            <div class="input-group-append" data-target="#esic_joining_date" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+
                     </div> 
                     <div class="col-md-12  border-bottom mb-2">
                         <h5>Bank details</h5>
@@ -296,8 +324,7 @@
                     </div>
                     <div class="mb-3 col-12 col-md-4 col-xl-3">
                         <label class="form-label" for="odpremium">Bank Account Number</label>
-                        <input type="tel" class="form-control form-control-sm" id="account_no" name="account_no" maxlength="21" minlength="8"  title="Please enter a 21-digit decimal number." required />
-                                      
+                        <input type="tel" class="form-control form-control-sm" id="account_no" name="account_no" maxlength="21" minlength="8"  title="Please enter a 21-digit decimal number." required />                
                     </div>
                 </div>
                     <div class="row w-100">
@@ -755,5 +782,232 @@
         }
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new tempusDominus.TempusDominus(document.getElementById('createemployeedateofbirth'),{
+            display: {
+                icons: {
+                    type: 'icons',
+                    time: 'fa-solid fa-clock',
+                    date: 'fa-solid fa-calendar',
+                    up: 'fa-solid fa-arrow-up',
+                    down: 'fa-solid fa-arrow-down',
+                    previous: 'fa-solid fa-chevron-left',
+                    next: 'fa-solid fa-chevron-right',
+                    today: 'fa-solid fa-calendar-check',
+                    clear: 'fa-solid fa-trash',
+                    close: 'fa-solid fa-xmark'
+                },
+                sideBySide: false,
+                calendarWeeks: false,
+                viewMode: 'calendar',
+                toolbarPlacement: 'bottom',
+                keepOpen: false,
+                buttons: {
+                    today: true,
+                    clear: true,
+                    close: true
+                },
+                components: {
+                    calendar: true,
+                    date: true,
+                    month: true,
+                    year: true,
+                    decades: true,
+                    clock: false,   // Hide clock
+                    hours: false,   // Hide hours
+                    minutes: false, // Hide minutes
+                    seconds: false  // Hide seconds
+                },
+                inline: false,
+                theme: 'auto'
+            },
+            localization: {
+                format: 'dd-MM-yyyy'
+            },
+            restrictions: {
+               
+                disabledDates: [],
+                enabledDates: [],
+                daysOfWeekDisabled: [],
+                disabledTimeIntervals: [],
+                disabledHours: [],
+                enabledHours: []
+              }
+        });
+    });
+ </script>
+
+ 
+
+ <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new tempusDominus.TempusDominus(document.getElementById('createdirectemployeedateofjoin'),{
+            display: {
+                icons: {
+                    type: 'icons',
+                    time: 'fa-solid fa-clock',
+                    date: 'fa-solid fa-calendar',
+                    up: 'fa-solid fa-arrow-up',
+                    down: 'fa-solid fa-arrow-down',
+                    previous: 'fa-solid fa-chevron-left',
+                    next: 'fa-solid fa-chevron-right',
+                    today: 'fa-solid fa-calendar-check',
+                    clear: 'fa-solid fa-trash',
+                    close: 'fa-solid fa-xmark'
+                },
+                sideBySide: false,
+                calendarWeeks: false,
+                viewMode: 'calendar',
+                toolbarPlacement: 'bottom',
+                keepOpen: false,
+                buttons: {
+                    today: true,
+                    clear: true,
+                    close: true
+                },
+                components: {
+                    calendar: true,
+                    date: true,
+                    month: true,
+                    year: true,
+                    decades: true,
+                    clock: false,   // Hide clock
+                    hours: false,   // Hide hours
+                    minutes: false, // Hide minutes
+                    seconds: false  // Hide seconds
+                },
+                inline: false,
+                theme: 'auto'
+            },
+            localization: {
+                format: 'dd-MM-yyyy'
+            },
+            restrictions: {
+               
+                disabledDates: [],
+                enabledDates: [],
+                daysOfWeekDisabled: [],
+                disabledTimeIntervals: [],
+                disabledHours: [],
+                enabledHours: []
+              }
+        });
+    });
+ </script>
+
+ <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new tempusDominus.TempusDominus(document.getElementById('pf_joining_date'),{
+            display: {
+                icons: {
+                    type: 'icons',
+                    time: 'fa-solid fa-clock',
+                    date: 'fa-solid fa-calendar',
+                    up: 'fa-solid fa-arrow-up',
+                    down: 'fa-solid fa-arrow-down',
+                    previous: 'fa-solid fa-chevron-left',
+                    next: 'fa-solid fa-chevron-right',
+                    today: 'fa-solid fa-calendar-check',
+                    clear: 'fa-solid fa-trash',
+                    close: 'fa-solid fa-xmark'
+                },
+                sideBySide: false,
+                calendarWeeks: false,
+                viewMode: 'calendar',
+                toolbarPlacement: 'bottom',
+                keepOpen: false,
+                buttons: {
+                    today: true,
+                    clear: true,
+                    close: true
+                },
+                components: {
+                    calendar: true,
+                    date: true,
+                    month: true,
+                    year: true,
+                    decades: true,
+                    clock: false,   // Hide clock
+                    hours: false,   // Hide hours
+                    minutes: false, // Hide minutes
+                    seconds: false  // Hide seconds
+                },
+                inline: false,
+                theme: 'auto'
+            },
+            localization: {
+                format: 'dd-MM-yyyy'
+            },
+            restrictions: {
+               
+                disabledDates: [],
+                enabledDates: [],
+                daysOfWeekDisabled: [],
+                disabledTimeIntervals: [],
+                disabledHours: [],
+                enabledHours: []
+              }
+        });
+    });
+ </script>
+ esic_joining_date
+
+ <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new tempusDominus.TempusDominus(document.getElementById('esic_joining_date'),{
+            display: {
+                icons: {
+                    type: 'icons',
+                    time: 'fa-solid fa-clock',
+                    date: 'fa-solid fa-calendar',
+                    up: 'fa-solid fa-arrow-up',
+                    down: 'fa-solid fa-arrow-down',
+                    previous: 'fa-solid fa-chevron-left',
+                    next: 'fa-solid fa-chevron-right',
+                    today: 'fa-solid fa-calendar-check',
+                    clear: 'fa-solid fa-trash',
+                    close: 'fa-solid fa-xmark'
+                },
+                sideBySide: false,
+                calendarWeeks: false,
+                viewMode: 'calendar',
+                toolbarPlacement: 'bottom',
+                keepOpen: false,
+                buttons: {
+                    today: true,
+                    clear: true,
+                    close: true
+                },
+                components: {
+                    calendar: true,
+                    date: true,
+                    month: true,
+                    year: true,
+                    decades: true,
+                    clock: false,   // Hide clock
+                    hours: false,   // Hide hours
+                    minutes: false, // Hide minutes
+                    seconds: false  // Hide seconds
+                },
+                inline: false,
+                theme: 'auto'
+            },
+            localization: {
+                format: 'dd-MM-yyyy'
+            },
+            restrictions: {
+               
+                disabledDates: [],
+                enabledDates: [],
+                daysOfWeekDisabled: [],
+                disabledTimeIntervals: [],
+                disabledHours: [],
+                enabledHours: []
+              }
+        });
+    });
+ </script>
 
 {% endblock extrascript %}

@@ -247,12 +247,7 @@
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label for="leavedateFrom" class="form-label mb-0">Select date from</label>
-                                <div class="input-group date" id="leavedateFrom" data-target-input="nearest">
-                                    <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#leavedateFrom"/>
-                                    <div class="input-group-append" data-target="#leavedateFrom" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
+                                <input type="date" class="form-control" id="leavedateFrom" name="leavedateFrom" required>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -268,12 +263,7 @@
                         <div class="col-12 col-md-6">
                             <div class="mb-3">
                                 <label for="leavedateTo" class="form-label mb-0">Select date To</label>
-                                <div class="input-group date" id="leavedateTo" data-target-input="nearest">
-                                    <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#leavedateTo"/>
-                                    <div class="input-group-append" data-target="#leavedateTo" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
+                                <input type="date" class="form-control" id="leavedateTo" name="leavedateTo">
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -590,117 +580,5 @@
     });
 
 </script>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new tempusDominus.TempusDominus(document.getElementById('leavedateFrom', 'leavedateTo'), {
-                display: {
-                    icons: {
-                        type: 'icons',
-                        time: 'fa-solid fa-clock',
-                        date: 'fa-solid fa-calendar',
-                        up: 'fa-solid fa-arrow-up',
-                        down: 'fa-solid fa-arrow-down',
-                        previous: 'fa-solid fa-chevron-left',
-                        next: 'fa-solid fa-chevron-right',
-                        today: 'fa-solid fa-calendar-check',
-                        clear: 'fa-solid fa-trash',
-                        close: 'fa-solid fa-xmark'
-                    },
-                    sideBySide: false,
-                    calendarWeeks: false,
-                    viewMode: 'calendar',
-                    toolbarPlacement: 'bottom',
-                    keepOpen: false,
-                    buttons: {
-                        today: true,
-                        clear: true,
-                        close: true
-                    },
-                    components: {
-                        calendar: true,
-                        date: true,
-                        month: true,
-                        year: true,
-                        decades: true,
-                        clock: false,   // Hide clock
-                        hours: false,   // Hide hours
-                        minutes: false, // Hide minutes
-                        seconds: false  // Hide seconds
-                    },
-                    inline: false,
-                    theme: 'auto'
-                },
-                localization: {
-                    format: 'dd-MM-yyyy'
-                },
-                restrictions: {
-                    minDate: new Date(),
-                    maxDate: undefined,
-                    disabledDates: ['15-08-2024','19-08-2024'],
-                    enabledDates: [],
-                    daysOfWeekDisabled: [0,6],
-                    disabledTimeIntervals: [],
-                    disabledHours: [],
-                    enabledHours: []
-                  }
-            });
-
-            new tempusDominus.TempusDominus(document.getElementById('leavedateTo'), {
-                display: {
-                    icons: {
-                        type: 'icons',
-                        time: 'fa-solid fa-clock',
-                        date: 'fa-solid fa-calendar',
-                        up: 'fa-solid fa-arrow-up',
-                        down: 'fa-solid fa-arrow-down',
-                        previous: 'fa-solid fa-chevron-left',
-                        next: 'fa-solid fa-chevron-right',
-                        today: 'fa-solid fa-calendar-check',
-                        clear: 'fa-solid fa-trash',
-                        close: 'fa-solid fa-xmark'
-                    },
-                    sideBySide: false,
-                    calendarWeeks: false,
-                    viewMode: 'calendar',
-                    toolbarPlacement: 'bottom',
-                    keepOpen: false,
-                    buttons: {
-                        today: true,
-                        clear: true,
-                        close: true
-                    },
-                    components: {
-                        calendar: true,
-                        date: true,
-                        month: true,
-                        year: true,
-                        decades: true,
-                        clock: false,   // Hide clock
-                        hours: false,   // Hide hours
-                        minutes: false, // Hide minutes
-                        seconds: false  // Hide seconds
-                    },
-                    inline: false,
-                    theme: 'auto'
-                },
-                localization: {
-                    format: 'dd-MM-yyyy'
-                },
-                restrictions: {
-                    minDate: new Date(),
-                    maxDate: undefined,
-                    disabledDates: ['15-08-2024','19-08-2024'],
-                    enabledDates: [],
-                    daysOfWeekDisabled: [0,6],
-                    disabledTimeIntervals: [],
-                    disabledHours: [],
-                    enabledHours: []
-                  }
-            });
-        });
-     </script>
-
  
 {% endblock extrascript %}

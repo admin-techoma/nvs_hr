@@ -128,17 +128,11 @@
                                     oninput="this.value = this.value.toUpperCase()">
                             </div>
                             <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
-                               
-                                        <label for="CompanyStartDate" class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Start Date:</label>
-                                        <div class="input-group date" id="CompanyStartDate" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#CompanyStartDate"  value="{{company_data.start_date|date:'Y-m-d'}}" disabled/>
-                                            <div class="input-group-append" data-target="#CompanyStartDate" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
-                                  
-
-
+                                <label for="CompanyStartDate"
+                                    class="form-label text-nowrap me-2 mb-md-0 col-12 col-sm-12 col-md-5">Start Date:</label>
+                                <input type="date" class="form-control form-control-sm" id="CompanyStartDate"
+                                    placeholder="" disabled
+                                    value="{{company_data.start_date|date:'Y-m-d'}}" name="start_date" required>
                             </div>
                             <div class="col-12 col-md-4 d-flex mb-3 align-items-center flex-wrap flex-md-nowrap">
                                 <label for="CompanyEmployeeId"
@@ -506,13 +500,9 @@
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
-                                        <label for="Addbranchstart_date" class="form-label mb-0">Start date</label>
-                                        <div class="input-group date" id="Addbranchstart_date" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Addbranchstart_date"/>
-                                            <div class="input-group-append" data-target="#Addbranchstart_date" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
+                                        <label for="Addbranchstart_date" class="form-label">Start Date</label>
+                                        <input type="date" class="form-control form-control-sm" id="Addbranchstart_date"
+                                            name="start_date" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
@@ -609,22 +599,14 @@
                                             id="Editbranch_contact_no" name="contact_no" required>
                                     </div>
                                     <div class="mb-2">
-                                        <label for="Editbranch_start_date" class="form-label mb-0">Start date</label>
-                                        <div class="input-group date" id="Editbranch_start_date" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Editbranch_start_date"/>
-                                            <div class="input-group-append" data-target="#Editbranch_start_date" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
+                                        <label for="Editbranch_start_date" class="form-label">start_date</label>
+                                        <input type="date" class="form-control form-control-sm"
+                                            id="Editbranch_start_date" name="start_date" required>
                                     </div>
                                     <div class="mb-2">
-                                        <label for="Editbranch_end_date" class="form-label mb-0">end_date</label>
-                                        <div class="input-group date" id="Editbranch_end_date" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Editbranch_end_date"/>
-                                            <div class="input-group-append" data-target="#Editbranch_end_date" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
+                                        <label for="Editbranch_end_date" class="form-label">end_date</label>
+                                        <input type="date" class="form-control form-control-sm" id="Editbranch_end_date"
+                                            name="end_date">
                                     </div>
                                     <div class="mb-2">
                                         <label for="Editbranch_status" class="form-label">Status:</label>
@@ -1566,14 +1548,10 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
-                                    <div class="mb-3">
-                                        <label for="Addannouncement_year" class="form-label mb-0">Year</label>
-                                        <div class="input-group date" id="Addannouncement_year" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Addannouncement_year"/>
-                                            <div class="input-group-append" data-target="#Addannouncement_year" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
+                                    <div class="mb-2">
+                                        <label for="Addannouncement_year" class="form-label">Year</label>
+                                        <input type="date" class="form-control form-control-sm"
+                                            id="Addannouncement_year" name="year" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
@@ -1618,13 +1596,9 @@
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
-                                        <label for="EditholidaymasterYear" class="form-label mb-0">Year</label>
-                                        <div class="input-group date" id="EditholidaymasterYear" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#EditholidaymasterYear"/>
-                                            <div class="input-group-append" data-target="#EditholidaymasterYear" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
+                                        <label for="EditholidaymasterYear" class="form-label">Year</label>
+                                        <input type="date" class="form-control form-control-sm"
+                                            id="EditholidaymasterYear" name="year" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
@@ -1757,13 +1731,9 @@
                                 </div>
                                 <div class="col-12 col-md-12">
                                     <div class="mb-2">
-                                        <label for="Addholiday_listDate" class="form-label mb-0">Holiday Date</label>
-                                        <div class="input-group date" id="Addholiday_listDate" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Addholiday_listDate"/>
-                                            <div class="input-group-append" data-target="#Addholiday_listDate" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
+                                        <label for="Addholiday_listDate" class="form-label">Holiday Date</label>
+                                        <input type="date" class="form-control form-control-sm" id="Addholiday_listDate"
+                                            name="date" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
@@ -1811,15 +1781,10 @@
                                             {% endfor %}
                                         </select>
                                     </div>
-                                
                                     <div class="mb-2">
-                                        <label for="Editholiday_listDate" class="form-label mb-0">Holiday Date</label>
-                                        <div class="input-group date" id="Editholiday_listDate" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Editholiday_listDate"/>
-                                            <div class="input-group-append" data-target="#Editholiday_listDate" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
+                                        <label for="Editholiday_listDate" class="form-label">Holiday Date</label>
+                                        <input type="date" class="form-control form-control-sm"
+                                            id="Editholiday_listDate" name="date" required>
                                     </div>
                                     <div class="mb-2">
                                         <label for="Editholiday_listfestival_name" class="form-label">Festival
@@ -2216,15 +2181,11 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12">
-                                   
                                     <div class="mb-2">
-                                        <label for="Addpolicy_created_on" class="form-label mb-0">Created on</label>
-                                        <div class="input-group date" id="Addpolicy_created_on" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Addpolicy_created_on"/>
-                                            <div class="input-group-append" data-target="#Addpolicy_created_on" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
+                                        <label for="Addpolicy_created_on" class="form-label">created_on
+                                        </label>
+                                        <input type="date" class="form-control form-control-sm"
+                                            id="Addpolicy_created_on" name="created_on" required>
                                     </div>
                                 </div>
 
@@ -2301,14 +2262,10 @@
                                         <input type="text" class="form-control form-control-sm"
                                             id="Editpolicy_listpolicy_name" name="name" required>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="Editpolicy_created_on" class="form-label mb-0">created_on</label>
-                                        <div class="input-group date" id="Editpolicy_created_on" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Editpolicy_created_on"/>
-                                            <div class="input-group-append" data-target="#Editpolicy_created_on" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
+                                    <div class="mb-2">
+                                        <label for="Editpolicy_created_on" class="form-label">created_on</label>
+                                        <input type="date" class="form-control form-control-sm"
+                                            id="Editpolicy_created_on" name="created_on" required>
                                     </div>
                                     <div class="mb-2">
                                         <label for="Editpolicy_remarks" class="form-label">remarks</label>
@@ -3760,584 +3717,4 @@ $('.delete-policy_list').on('click', function () {
 });
 
 </script>
-
-
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new tempusDominus.TempusDominus(document.getElementById('CompanyStartDate'),{
-                display: {
-                    icons: {
-                        type: 'icons',
-                        time: 'fa-solid fa-clock',
-                        date: 'fa-solid fa-calendar',
-                        up: 'fa-solid fa-arrow-up',
-                        down: 'fa-solid fa-arrow-down',
-                        previous: 'fa-solid fa-chevron-left',
-                        next: 'fa-solid fa-chevron-right',
-                        today: 'fa-solid fa-calendar-check',
-                        clear: 'fa-solid fa-trash',
-                        close: 'fa-solid fa-xmark'
-                    },
-                    sideBySide: false,
-                    calendarWeeks: false,
-                    viewMode: 'calendar',
-                    toolbarPlacement: 'bottom',
-                    keepOpen: false,
-                    buttons: {
-                        today: true,
-                        clear: true,
-                        close: true
-                    },
-                    components: {
-                        calendar: true,
-                        date: true,
-                        month: true,
-                        year: true,
-                        decades: true,
-                        clock: false,   // Hide clock
-                        hours: false,   // Hide hours
-                        minutes: false, // Hide minutes
-                        seconds: false  // Hide seconds
-                    },
-                    inline: false,
-                    theme: 'auto'
-                },
-                localization: {
-                    format: 'dd-MM-yyyy'
-                },
-                restrictions: {
-                    minDate: undefined,
-                    maxDate: new Date(),
-                    disabledDates: [],
-                    enabledDates: [],
-                    daysOfWeekDisabled: [],
-                    disabledTimeIntervals: [],
-                    disabledHours: [],
-                    enabledHours: []
-                  }
-            });
-          
-          
-        });
-
-</script>
-    
-     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new tempusDominus.TempusDominus(document.getElementById('Addbranchstart_date'),{
-                display: {
-                    icons: {
-                        type: 'icons',
-                        time: 'fa-solid fa-clock',
-                        date: 'fa-solid fa-calendar',
-                        up: 'fa-solid fa-arrow-up',
-                        down: 'fa-solid fa-arrow-down',
-                        previous: 'fa-solid fa-chevron-left',
-                        next: 'fa-solid fa-chevron-right',
-                        today: 'fa-solid fa-calendar-check',
-                        clear: 'fa-solid fa-trash',
-                        close: 'fa-solid fa-xmark'
-                    },
-                    sideBySide: false,
-                    calendarWeeks: false,
-                    viewMode: 'calendar',
-                    toolbarPlacement: 'bottom',
-                    keepOpen: false,
-                    buttons: {
-                        today: true,
-                        clear: true,
-                        close: true
-                    },
-                    components: {
-                        calendar: true,
-                        date: true,
-                        month: true,
-                        year: true,
-                        decades: true,
-                        clock: false,   // Hide clock
-                        hours: false,   // Hide hours
-                        minutes: false, // Hide minutes
-                        seconds: false  // Hide seconds
-                    },
-                    inline: false,
-                    theme: 'auto'
-                },
-                localization: {
-                    format: 'dd-MM-yyyy'
-                },
-                restrictions: {
-                    minDate: undefined,
-                    maxDate: new Date(),
-                    disabledDates: [],
-                    enabledDates: [],
-                    daysOfWeekDisabled: [],
-                    disabledTimeIntervals: [],
-                    disabledHours: [],
-                    enabledHours: []
-                  }
-            });
-          
-          
-        });
-
-     </script>
-
-     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new tempusDominus.TempusDominus(document.getElementById('Editbranch_start_date'),{
-                display: {
-                    icons: {
-                        type: 'icons',
-                        time: 'fa-solid fa-clock',
-                        date: 'fa-solid fa-calendar',
-                        up: 'fa-solid fa-arrow-up',
-                        down: 'fa-solid fa-arrow-down',
-                        previous: 'fa-solid fa-chevron-left',
-                        next: 'fa-solid fa-chevron-right',
-                        today: 'fa-solid fa-calendar-check',
-                        clear: 'fa-solid fa-trash',
-                        close: 'fa-solid fa-xmark'
-                    },
-                    sideBySide: false,
-                    calendarWeeks: false,
-                    viewMode: 'calendar',
-                    toolbarPlacement: 'bottom',
-                    keepOpen: false,
-                    buttons: {
-                        today: true,
-                        clear: true,
-                        close: true
-                    },
-                    components: {
-                        calendar: true,
-                        date: true,
-                        month: true,
-                        year: true,
-                        decades: true,
-                        clock: false,   // Hide clock
-                        hours: false,   // Hide hours
-                        minutes: false, // Hide minutes
-                        seconds: false  // Hide seconds
-                    },
-                    inline: false,
-                    theme: 'auto'
-                },
-                localization: {
-                    format: 'dd-MM-yyyy'
-                },
-                restrictions: {
-                    minDate: undefined,
-                    maxDate: new Date(),
-                    disabledDates: [],
-                    enabledDates: [],
-                    daysOfWeekDisabled: [],
-                    disabledTimeIntervals: [],
-                    disabledHours: [],
-                    enabledHours: []
-                  }
-            });
-          
-          
-        });
-
-     </script>
-
-
-     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new tempusDominus.TempusDominus(document.getElementById('Editbranch_end_date'),{
-                display: {
-                    icons: {
-                        type: 'icons',
-                        time: 'fa-solid fa-clock',
-                        date: 'fa-solid fa-calendar',
-                        up: 'fa-solid fa-arrow-up',
-                        down: 'fa-solid fa-arrow-down',
-                        previous: 'fa-solid fa-chevron-left',
-                        next: 'fa-solid fa-chevron-right',
-                        today: 'fa-solid fa-calendar-check',
-                        clear: 'fa-solid fa-trash',
-                        close: 'fa-solid fa-xmark'
-                    },
-                    sideBySide: false,
-                    calendarWeeks: false,
-                    viewMode: 'calendar',
-                    toolbarPlacement: 'bottom',
-                    keepOpen: false,
-                    buttons: {
-                        today: true,
-                        clear: true,
-                        close: true
-                    },
-                    components: {
-                        calendar: true,
-                        date: true,
-                        month: true,
-                        year: true,
-                        decades: true,
-                        clock: false,   // Hide clock
-                        hours: false,   // Hide hours
-                        minutes: false, // Hide minutes
-                        seconds: false  // Hide seconds
-                    },
-                    inline: false,
-                    theme: 'auto'
-                },
-                localization: {
-                    format: 'dd-MM-yyyy'
-                },
-                restrictions: {
-                    minDate: undefined,
-                    maxDate: new Date(),
-                    disabledDates: [],
-                    enabledDates: [],
-                    daysOfWeekDisabled: [],
-                    disabledTimeIntervals: [],
-                    disabledHours: [],
-                    enabledHours: []
-                  }
-            });
-        });
-     </script>
-     
-
-     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new tempusDominus.TempusDominus(document.getElementById('Addannouncement_year'),{
-                display: {
-                    icons: {
-                        type: 'icons',
-                        time: 'fa-solid fa-clock',
-                        date: 'fa-solid fa-calendar',
-                        up: 'fa-solid fa-arrow-up',
-                        down: 'fa-solid fa-arrow-down',
-                        previous: 'fa-solid fa-chevron-left',
-                        next: 'fa-solid fa-chevron-right',
-                        today: 'fa-solid fa-calendar-check',
-                        clear: 'fa-solid fa-trash',
-                        close: 'fa-solid fa-xmark'
-                    },
-                    sideBySide: false,
-                    calendarWeeks: false,
-                    viewMode: 'calendar',
-                    toolbarPlacement: 'bottom',
-                    keepOpen: false,
-                    buttons: {
-                        today: true,
-                        clear: true,
-                        close: true
-                    },
-                    components: {
-                        calendar: true,
-                        date: false,
-                        month: false,
-                        year: true,
-                        decades: false,
-                        clock: false,   // Hide clock
-                        hours: false,   // Hide hours
-                        minutes: false, // Hide minutes
-                        seconds: false  // Hide seconds
-                    },
-                    inline: false,
-                    theme: 'auto'
-                },
-                localization: {
-                    format: 'dd-MM-yyyy'
-                },
-                restrictions: {
-                   
-                    disabledDates: [],
-                    enabledDates: [],
-                    daysOfWeekDisabled: [],
-                    disabledTimeIntervals: [],
-                    disabledHours: [],
-                    enabledHours: []
-                  }
-            });
-        });
-     </script>
-
-     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new tempusDominus.TempusDominus(document.getElementById('EditholidaymasterYear'),{
-                display: {
-                    icons: {
-                        type: 'icons',
-                        time: 'fa-solid fa-clock',
-                        date: 'fa-solid fa-calendar',
-                        up: 'fa-solid fa-arrow-up',
-                        down: 'fa-solid fa-arrow-down',
-                        previous: 'fa-solid fa-chevron-left',
-                        next: 'fa-solid fa-chevron-right',
-                        today: 'fa-solid fa-calendar-check',
-                        clear: 'fa-solid fa-trash',
-                        close: 'fa-solid fa-xmark'
-                    },
-                    sideBySide: false,
-                    calendarWeeks: false,
-                    viewMode: 'calendar',
-                    toolbarPlacement: 'bottom',
-                    keepOpen: false,
-                    buttons: {
-                        today: true,
-                        clear: true,
-                        close: true
-                    },
-                    components: {
-                        calendar: true,
-                        date: false,
-                        month: false,
-                        year: true,
-                        decades: false,
-                        clock: false,   // Hide clock
-                        hours: false,   // Hide hours
-                        minutes: false, // Hide minutes
-                        seconds: false  // Hide seconds
-                    },
-                    inline: false,
-                    theme: 'auto'
-                },
-                localization: {
-                    format: 'dd-MM-yyyy'
-                },
-                restrictions: {
-                   
-                    disabledDates: [],
-                    enabledDates: [],
-                    daysOfWeekDisabled: [],
-                    disabledTimeIntervals: [],
-                    disabledHours: [],
-                    enabledHours: []
-                  }
-            });
-        });
-     </script>
-
-     
-     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new tempusDominus.TempusDominus(document.getElementById('Addholiday_listDate'),{
-                display: {
-                    icons: {
-                        type: 'icons',
-                        time: 'fa-solid fa-clock',
-                        date: 'fa-solid fa-calendar',
-                        up: 'fa-solid fa-arrow-up',
-                        down: 'fa-solid fa-arrow-down',
-                        previous: 'fa-solid fa-chevron-left',
-                        next: 'fa-solid fa-chevron-right',
-                        today: 'fa-solid fa-calendar-check',
-                        clear: 'fa-solid fa-trash',
-                        close: 'fa-solid fa-xmark'
-                    },
-                    sideBySide: false,
-                    calendarWeeks: false,
-                    viewMode: 'calendar',
-                    toolbarPlacement: 'bottom',
-                    keepOpen: false,
-                    buttons: {
-                        today: true,
-                        clear: true,
-                        close: true
-                    },
-                    components: {
-                        calendar: true,
-                        date: true,
-                        month: true,
-                        year: true,
-                        decades: true,
-                        clock: false,   // Hide clock
-                        hours: false,   // Hide hours
-                        minutes: false, // Hide minutes
-                        seconds: false  // Hide seconds
-                    },
-                    inline: false,
-                    theme: 'auto'
-                },
-                localization: {
-                    format: 'dd-MM-yyyy'
-                },
-                restrictions: {
-                   
-                    disabledDates: [],
-                    enabledDates: [],
-                    daysOfWeekDisabled: [],
-                    disabledTimeIntervals: [],
-                    disabledHours: [],
-                    enabledHours: []
-                  }
-            });
-        });
-     </script>
-     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new tempusDominus.TempusDominus(document.getElementById('Editholiday_listDate'),{
-                display: {
-                    icons: {
-                        type: 'icons',
-                        time: 'fa-solid fa-clock',
-                        date: 'fa-solid fa-calendar',
-                        up: 'fa-solid fa-arrow-up',
-                        down: 'fa-solid fa-arrow-down',
-                        previous: 'fa-solid fa-chevron-left',
-                        next: 'fa-solid fa-chevron-right',
-                        today: 'fa-solid fa-calendar-check',
-                        clear: 'fa-solid fa-trash',
-                        close: 'fa-solid fa-xmark'
-                    },
-                    sideBySide: false,
-                    calendarWeeks: false,
-                    viewMode: 'calendar',
-                    toolbarPlacement: 'bottom',
-                    keepOpen: false,
-                    buttons: {
-                        today: true,
-                        clear: true,
-                        close: true
-                    },
-                    components: {
-                        calendar: true,
-                        date: true,
-                        month: true,
-                        year: true,
-                        decades: true,
-                        clock: false,   // Hide clock
-                        hours: false,   // Hide hours
-                        minutes: false, // Hide minutes
-                        seconds: false  // Hide seconds
-                    },
-                    inline: false,
-                    theme: 'auto'
-                },
-                localization: {
-                    format: 'dd-MM-yyyy'
-                },
-                restrictions: {
-                   
-                    disabledDates: [],
-                    enabledDates: [],
-                    daysOfWeekDisabled: [],
-                    disabledTimeIntervals: [],
-                    disabledHours: [],
-                    enabledHours: []
-                  }
-            });
-        });
-     </script>
-     
-     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new tempusDominus.TempusDominus(document.getElementById('Addpolicy_created_on'),{
-                display: {
-                    icons: {
-                        type: 'icons',
-                        time: 'fa-solid fa-clock',
-                        date: 'fa-solid fa-calendar',
-                        up: 'fa-solid fa-arrow-up',
-                        down: 'fa-solid fa-arrow-down',
-                        previous: 'fa-solid fa-chevron-left',
-                        next: 'fa-solid fa-chevron-right',
-                        today: 'fa-solid fa-calendar-check',
-                        clear: 'fa-solid fa-trash',
-                        close: 'fa-solid fa-xmark'
-                    },
-                    sideBySide: false,
-                    calendarWeeks: false,
-                    viewMode: 'calendar',
-                    toolbarPlacement: 'bottom',
-                    keepOpen: false,
-                    buttons: {
-                        today: true,
-                        clear: true,
-                        close: true
-                    },
-                    components: {
-                        calendar: true,
-                        date: true,
-                        month: true,
-                        year: true,
-                        decades: true,
-                        clock: false,   // Hide clock
-                        hours: false,   // Hide hours
-                        minutes: false, // Hide minutes
-                        seconds: false  // Hide seconds
-                    },
-                    inline: false,
-                    theme: 'auto'
-                },
-                localization: {
-                    format: 'dd-MM-yyyy'
-                },
-                restrictions: {
-                   
-                    disabledDates: [],
-                    enabledDates: [],
-                    daysOfWeekDisabled: [],
-                    disabledTimeIntervals: [],
-                    disabledHours: [],
-                    enabledHours: []
-                  }
-            });
-        });
-     </script>
-
-     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new tempusDominus.TempusDominus(document.getElementById('Editpolicy_created_on'),{
-                display: {
-                    icons: {
-                        type: 'icons',
-                        time: 'fa-solid fa-clock',
-                        date: 'fa-solid fa-calendar',
-                        up: 'fa-solid fa-arrow-up',
-                        down: 'fa-solid fa-arrow-down',
-                        previous: 'fa-solid fa-chevron-left',
-                        next: 'fa-solid fa-chevron-right',
-                        today: 'fa-solid fa-calendar-check',
-                        clear: 'fa-solid fa-trash',
-                        close: 'fa-solid fa-xmark'
-                    },
-                    sideBySide: false,
-                    calendarWeeks: false,
-                    viewMode: 'calendar',
-                    toolbarPlacement: 'bottom',
-                    keepOpen: false,
-                    buttons: {
-                        today: true,
-                        clear: true,
-                        close: true
-                    },
-                    components: {
-                        calendar: true,
-                        date: true,
-                        month: true,
-                        year: true,
-                        decades: true,
-                        clock: false,   // Hide clock
-                        hours: false,   // Hide hours
-                        minutes: false, // Hide minutes
-                        seconds: false  // Hide seconds
-                    },
-                    inline: false,
-                    theme: 'auto'
-                },
-                localization: {
-                    format: 'dd-MM-yyyy'
-                },
-                restrictions: {
-                   
-                    disabledDates: [],
-                    enabledDates: [],
-                    daysOfWeekDisabled: [],
-                    disabledTimeIntervals: [],
-                    disabledHours: [],
-                    enabledHours: []
-                  }
-            });
-        });
-     </script>
-    
- 
 {% endblock extrascript %}

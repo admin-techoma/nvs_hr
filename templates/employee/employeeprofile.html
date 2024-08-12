@@ -139,17 +139,10 @@
                                     </div>
                                     <div class="col-12  col-md-4 mb-3 px-2">
                                         <label class="form-label mb-0">Date of Birth</label>
-                                        {% comment %} <input type="date" class="form-control form-control-sm"  
-                                            id="createemployeedateofbirth"   required
-                                            oninput="validateDOB()" data-min-age="18" "
-                                            name="dob"> {% endcomment %}
-                                            <div class="input-group date" id="createemployeedateofbirth" data-target-input="nearest">
-                                                <input type="text" class="form-control form-control-sm datetimepicker-input" disabled data-target="#createemployeedateofbirth" name="dob" value="{{emp_data.dob|date:'Y-m-d'}}">
-                                                <div class="input-group-append" data-target="#createemployeedateofbirth" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                </div>
-                                            </div>
-
+                                        <input type="date" class="form-control form-control-sm" disabled 
+                                            id="createemployeedateofbirth" name="dob"  required
+                                            oninput="validateDOB()" data-min-age="18" value="{{emp_data.dob|date:'Y-m-d'}}"
+                                            name="dob">
                                         <div id="dobError" class="text-danger"></div>
                                         <div id="currentAge"></div>
                                     </div> 
@@ -521,14 +514,8 @@
                                 </div>
                                 <div class="col-12 col-md-3 mb-3">
                                     <label class="form-label mb-0">Joining Date</label>
-                                    {% comment %} <input type="date" class="form-control form-control-sm " 
-                                    > {% endcomment %}
-                                     <div class="input-group date" id="workJoiningDate" data-target-input="nearest">
-                                        <input type="text" class="form-control form-control-sm datetimepicker-input" disabled  name="doj" data-target="#workJoiningDate"  value="{{emp_data.doj|date:'Y-m-d'}}"  />
-                                        <div class="input-group-append" data-target="#workJoiningDate" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                    </div>
+                                    <input type="date" class="form-control form-control-sm " disabled 
+                                     value="{{emp_data.doj|date:'Y-m-d'}}" name="doj">
                                 </div>
                                 <div class="col-12 col-md-3 mb-3">
                                     <label class="form-label mb-0">Department </label>
@@ -581,14 +568,8 @@
                                 </div>
                                 <div class="col-12 col-md-3 mb-3">
                                     <label class="form-label mb-0">Exit date</label>
-                                    {% comment %} <input type="date" class="form-control form-control-sm" disabled 
-                                     > {% endcomment %}
-                                     <div class="input-group date" id="workExitDate" data-target-input="nearest">
-                                        <input type="text" class="form-control form-control-sm datetimepicker-input" disabled name="doe" value="{{emp_data.doe|date:'Y-m-d'}}"  data-target="#workExitDate"  />
-                                        <div class="input-group-append" data-target="#workExitDate" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                    </div>
+                                    <input type="date" class="form-control form-control-sm" disabled 
+                                     name="doe" value="{{emp_data.doe|date:'Y-m-d'}}">
                                 </div>
                                 <div class="col-12 col-md-3 mb-3">
                                     <label class="form-label mb-0">UAN Number </label>
@@ -602,26 +583,14 @@
                                 </div>
                                 <div class="col-12 col-md-3 mb-3">
                                     <label class="form-label mb-0">PF Joining Date</label>
-                                    {% comment %} <input type="date" class="form-control form-control-sm" 
-                                       
-                                        disabled> {% endcomment %}
-                                        <div class="input-group date" id="pf_joining_date" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" disabled  name="pf_joining_date" value="{{emp_data.pf_joining_date|date:'Y-m-d'}}"  data-target="#pf_joining_date"  />
-                                            <div class="input-group-append" data-target="#pf_joining_date" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
+                                    <input type="date" class="form-control form-control-sm" 
+                                        name="pf_joining_date" value="{{emp_data.pf_joining_date|date:'Y-m-d'}}"
+                                        disabled>
                                 </div>
                                 <div class="col-12 col-md-3 mb-3">
                                     <label class="form-label mb-0">PF Exit Date</label>
-                                    {% comment %} <input type="date" class="form-control form-control-sm"
-                                        disabled> {% endcomment %}
-                                        <div class="input-group date" id="pf_Exit_date" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" disabled   name="pf_exit_date" value="{{emp_data.pf_exit_date|date:'Y-m-d'}}"  />
-                                            <div class="input-group-append" data-target="#pf_Exit_date" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
+                                    <input type="date" class="form-control form-control-sm"
+                                        name="pf_exit_date" value="{{emp_data.pf_exit_date|date:'Y-m-d'}}" disabled>
                                 </div>
                                 <div class="col-12 col-md-3 mb-3">
                                     <label class="form-label mb-0">ESIC Number </label>
@@ -630,27 +599,15 @@
                                 </div>
                                 <div class="col-12 col-md-3 mb-3">
                                     <label class="form-label mb-0">ESIC Joining Date</label>
-                                    {% comment %} <input type="date" class="form-control form-control-sm"
+                                    <input type="date" class="form-control form-control-sm"
                                         name="esic_joining_date" value="{{emp_data.esic_joining_date|date:'Y-m-d' }}"
-                                        disabled> {% endcomment %}
-                                        <div class="input-group date" id="esic_joining_date" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" disabled     name="esic_joining_date" value="{{emp_data.esic_joining_date|date:'Y-m-d' }}"  />
-                                            <div class="input-group-append" data-target="#esic_joining_date" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>   
+                                        disabled>
                                 </div>
                                 <div class="col-12 col-md-3 mb-3">
                                     <label class="form-label mb-0">ESIC Exit Date</label>
-                                    {% comment %} <input type="date" class="form-control form-control-sm"
+                                    <input type="date" class="form-control form-control-sm"
                                         name="esic_exit_date" value="{{emp_data.esic_exit_date|date:'Y-m-d' }}"
-                                        disabled> {% endcomment %}
-                                        <div class="input-group date" id="eSICExitDate" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" disabled      name="esic_exit_date" value="{{emp_data.esic_exit_date|date:'Y-m-d' }}" />
-                                            <div class="input-group-append" data-target="#eSICExitDate" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div> 
+                                        disabled>
                                 </div>
                                 <div class="col-12 col-md-3 mb-3">
                                     <label class="form-label mb-0">Leave Balance</label>
@@ -1867,14 +1824,8 @@
                                 <label for="exampleInputEmail1" class="form-label mb-0 form-control-sm mb-0 ps-0">Date
                                     of
                                     Resign</label>
-                                {% comment %} <input type="date" class="form-control form-control-sm" id="resign_date"
-                                    name="resign_date" required > {% endcomment %}
-                                    <div class="input-group date" id="resign_date" data-target-input="nearest">
-                                        <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#resign_date"  name="resign_date" />
-                                        <div class="input-group-append" data-target="#resign_date" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                    </div>
+                                <input type="date" class="form-control form-control-sm" id="resign_date"
+                                    name="resign_date" required >
                             </div>
                         </div>
                         <script>
@@ -3695,561 +3646,4 @@ data-bs-backdrop="static" aria-hidden="true">
     }
   
   </script>
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        new tempusDominus.TempusDominus(document.getElementById('createemployeedateofbirth'),{
-            display: {
-                icons: {
-                    type: 'icons',
-                    time: 'fa-solid fa-clock',
-                    date: 'fa-solid fa-calendar',
-                    up: 'fa-solid fa-arrow-up',
-                    down: 'fa-solid fa-arrow-down',
-                    previous: 'fa-solid fa-chevron-left',
-                    next: 'fa-solid fa-chevron-right',
-                    today: 'fa-solid fa-calendar-check',
-                    clear: 'fa-solid fa-trash',
-                    close: 'fa-solid fa-xmark'
-                },
-                sideBySide: false,
-                calendarWeeks: false,
-                viewMode: 'calendar',
-                toolbarPlacement: 'bottom',
-                keepOpen: false,
-                buttons: {
-                    today: true,
-                    clear: true,
-                    close: true
-                },
-                components: {
-                    calendar: true,
-                    date: true,
-                    month: true,
-                    year: true,
-                    decades: true,
-                    clock: false,   // Hide clock
-                    hours: false,   // Hide hours
-                    minutes: false, // Hide minutes
-                    seconds: false  // Hide seconds
-                },
-                inline: false,
-                theme: 'auto'
-            },
-            localization: {
-                format: 'dd-MM-yyyy'
-            },
-           
-        });
-    });
- </script>
-
- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        new tempusDominus.TempusDominus(document.getElementById('workJoiningDate'),{
-            display: {
-                icons: {
-                    type: 'icons',
-                    time: 'fa-solid fa-clock',
-                    date: 'fa-solid fa-calendar',
-                    up: 'fa-solid fa-arrow-up',
-                    down: 'fa-solid fa-arrow-down',
-                    previous: 'fa-solid fa-chevron-left',
-                    next: 'fa-solid fa-chevron-right',
-                    today: 'fa-solid fa-calendar-check',
-                    clear: 'fa-solid fa-trash',
-                    close: 'fa-solid fa-xmark'
-                },
-                sideBySide: false,
-                calendarWeeks: false,
-                viewMode: 'calendar',
-                toolbarPlacement: 'bottom',
-                keepOpen: false,
-                buttons: {
-                    today: true,
-                    clear: true,
-                    close: true
-                },
-                components: {
-                    calendar: true,
-                    date: true,
-                    month: true,
-                    year: true,
-                    decades: true,
-                    clock: false,   // Hide clock
-                    hours: false,   // Hide hours
-                    minutes: false, // Hide minutes
-                    seconds: false  // Hide seconds
-                },
-                inline: false,
-                theme: 'auto'
-            },
-            localization: {
-                format: 'dd-MM-yyyy'
-            },
-            restrictions: {
-               
-                disabledDates: [],
-                enabledDates: [],
-                daysOfWeekDisabled: [],
-                disabledTimeIntervals: [],
-                disabledHours: [],
-                enabledHours: []
-              }
-        });
-    });
- </script>
-
- 
-
- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        new tempusDominus.TempusDominus(document.getElementById('workExitDate'),{
-            display: {
-                icons: {
-                    type: 'icons',
-                    time: 'fa-solid fa-clock',
-                    date: 'fa-solid fa-calendar',
-                    up: 'fa-solid fa-arrow-up',
-                    down: 'fa-solid fa-arrow-down',
-                    previous: 'fa-solid fa-chevron-left',
-                    next: 'fa-solid fa-chevron-right',
-                    today: 'fa-solid fa-calendar-check',
-                    clear: 'fa-solid fa-trash',
-                    close: 'fa-solid fa-xmark'
-                },
-                sideBySide: false,
-                calendarWeeks: false,
-                viewMode: 'calendar',
-                toolbarPlacement: 'bottom',
-                keepOpen: false,
-                buttons: {
-                    today: true,
-                    clear: true,
-                    close: true
-                },
-                components: {
-                    calendar: true,
-                    date: true,
-                    month: true,
-                    year: true,
-                    decades: true,
-                    clock: false,   // Hide clock
-                    hours: false,   // Hide hours
-                    minutes: false, // Hide minutes
-                    seconds: false  // Hide seconds
-                },
-                inline: false,
-                theme: 'auto'
-            },
-            localization: {
-                format: 'dd-MM-yyyy'
-            },
-            restrictions: {
-               
-                disabledDates: [],
-                enabledDates: [],
-                daysOfWeekDisabled: [],
-                disabledTimeIntervals: [],
-                disabledHours: [],
-                enabledHours: []
-              }
-        });
-    });
- </script>
-
- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        new tempusDominus.TempusDominus(document.getElementById('pf_joining_date'),{
-            display: {
-                icons: {
-                    type: 'icons',
-                    time: 'fa-solid fa-clock',
-                    date: 'fa-solid fa-calendar',
-                    up: 'fa-solid fa-arrow-up',
-                    down: 'fa-solid fa-arrow-down',
-                    previous: 'fa-solid fa-chevron-left',
-                    next: 'fa-solid fa-chevron-right',
-                    today: 'fa-solid fa-calendar-check',
-                    clear: 'fa-solid fa-trash',
-                    close: 'fa-solid fa-xmark'
-                },
-                sideBySide: false,
-                calendarWeeks: false,
-                viewMode: 'calendar',
-                toolbarPlacement: 'bottom',
-                keepOpen: false,
-                buttons: {
-                    today: true,
-                    clear: true,
-                    close: true
-                },
-                components: {
-                    calendar: true,
-                    date: true,
-                    month: true,
-                    year: true,
-                    decades: true,
-                    clock: false,   // Hide clock
-                    hours: false,   // Hide hours
-                    minutes: false, // Hide minutes
-                    seconds: false  // Hide seconds
-                },
-                inline: false,
-                theme: 'auto'
-            },
-            localization: {
-                format: 'dd-MM-yyyy'
-            },
-            restrictions: {
-               
-                disabledDates: [],
-                enabledDates: [],
-                daysOfWeekDisabled: [],
-                disabledTimeIntervals: [],
-                disabledHours: [],
-                enabledHours: []
-              }
-        });
-    });
- </script>
- 
-
- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        new tempusDominus.TempusDominus(document.getElementById('pf_Exit_date'),{
-            display: {
-                icons: {
-                    type: 'icons',
-                    time: 'fa-solid fa-clock',
-                    date: 'fa-solid fa-calendar',
-                    up: 'fa-solid fa-arrow-up',
-                    down: 'fa-solid fa-arrow-down',
-                    previous: 'fa-solid fa-chevron-left',
-                    next: 'fa-solid fa-chevron-right',
-                    today: 'fa-solid fa-calendar-check',
-                    clear: 'fa-solid fa-trash',
-                    close: 'fa-solid fa-xmark'
-                },
-                sideBySide: false,
-                calendarWeeks: false,
-                viewMode: 'calendar',
-                toolbarPlacement: 'bottom',
-                keepOpen: false,
-                buttons: {
-                    today: true,
-                    clear: true,
-                    close: true
-                },
-                components: {
-                    calendar: true,
-                    date: true,
-                    month: true,
-                    year: true,
-                    decades: true,
-                    clock: false,   // Hide clock
-                    hours: false,   // Hide hours
-                    minutes: false, // Hide minutes
-                    seconds: false  // Hide seconds
-                },
-                inline: false,
-                theme: 'auto'
-            },
-            localization: {
-                format: 'dd-MM-yyyy'
-            },
-            restrictions: {
-               
-                disabledDates: [],
-                enabledDates: [],
-                daysOfWeekDisabled: [],
-                disabledTimeIntervals: [],
-                disabledHours: [],
-                enabledHours: []
-              }
-        });
-    });
- </script>
- 
- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        new tempusDominus.TempusDominus(document.getElementById('esic_joining_date'),{
-            display: {
-                icons: {
-                    type: 'icons',
-                    time: 'fa-solid fa-clock',
-                    date: 'fa-solid fa-calendar',
-                    up: 'fa-solid fa-arrow-up',
-                    down: 'fa-solid fa-arrow-down',
-                    previous: 'fa-solid fa-chevron-left',
-                    next: 'fa-solid fa-chevron-right',
-                    today: 'fa-solid fa-calendar-check',
-                    clear: 'fa-solid fa-trash',
-                    close: 'fa-solid fa-xmark'
-                },
-                sideBySide: false,
-                calendarWeeks: false,
-                viewMode: 'calendar',
-                toolbarPlacement: 'bottom',
-                keepOpen: false,
-                buttons: {
-                    today: true,
-                    clear: true,
-                    close: true
-                },
-                components: {
-                    calendar: true,
-                    date: true,
-                    month: true,
-                    year: true,
-                    decades: true,
-                    clock: false,   // Hide clock
-                    hours: false,   // Hide hours
-                    minutes: false, // Hide minutes
-                    seconds: false  // Hide seconds
-                },
-                inline: false,
-                theme: 'auto'
-            },
-            localization: {
-                format: 'dd-MM-yyyy'
-            },
-            restrictions: {
-               
-                disabledDates: [],
-                enabledDates: [],
-                daysOfWeekDisabled: [],
-                disabledTimeIntervals: [],
-                disabledHours: [],
-                enabledHours: []
-              }
-        });
-    });
- </script>
- 
- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        new tempusDominus.TempusDominus(document.getElementById('esic_exit_date'),{
-            display: {
-                icons: {
-                    type: 'icons',
-                    time: 'fa-solid fa-clock',
-                    date: 'fa-solid fa-calendar',
-                    up: 'fa-solid fa-arrow-up',
-                    down: 'fa-solid fa-arrow-down',
-                    previous: 'fa-solid fa-chevron-left',
-                    next: 'fa-solid fa-chevron-right',
-                    today: 'fa-solid fa-calendar-check',
-                    clear: 'fa-solid fa-trash',
-                    close: 'fa-solid fa-xmark'
-                },
-                sideBySide: false,
-                calendarWeeks: false,
-                viewMode: 'calendar',
-                toolbarPlacement: 'bottom',
-                keepOpen: false,
-                buttons: {
-                    today: true,
-                    clear: true,
-                    close: true
-                },
-                components: {
-                    calendar: true,
-                    date: true,
-                    month: true,
-                    year: true,
-                    decades: true,
-                    clock: false,   // Hide clock
-                    hours: false,   // Hide hours
-                    minutes: false, // Hide minutes
-                    seconds: false  // Hide seconds
-                },
-                inline: false,
-                theme: 'auto'
-            },
-            localization: {
-                format: 'dd-MM-yyyy'
-            },
-            restrictions: {
-               
-                disabledDates: [],
-                enabledDates: [],
-                daysOfWeekDisabled: [],
-                disabledTimeIntervals: [],
-                disabledHours: [],
-                enabledHours: []
-              }
-        });
-    });
- </script>
- 
-
- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        new tempusDominus.TempusDominus(document.getElementById('esic_joining_date'),{
-            display: {
-                icons: {
-                    type: 'icons',
-                    time: 'fa-solid fa-clock',
-                    date: 'fa-solid fa-calendar',
-                    up: 'fa-solid fa-arrow-up',
-                    down: 'fa-solid fa-arrow-down',
-                    previous: 'fa-solid fa-chevron-left',
-                    next: 'fa-solid fa-chevron-right',
-                    today: 'fa-solid fa-calendar-check',
-                    clear: 'fa-solid fa-trash',
-                    close: 'fa-solid fa-xmark'
-                },
-                sideBySide: false,
-                calendarWeeks: false,
-                viewMode: 'calendar',
-                toolbarPlacement: 'bottom',
-                keepOpen: false,
-                buttons: {
-                    today: true,
-                    clear: true,
-                    close: true
-                },
-                components: {
-                    calendar: true,
-                    date: true,
-                    month: true,
-                    year: true,
-                    decades: true,
-                    clock: false,   // Hide clock
-                    hours: false,   // Hide hours
-                    minutes: false, // Hide minutes
-                    seconds: false  // Hide seconds
-                },
-                inline: false,
-                theme: 'auto'
-            },
-            localization: {
-                format: 'dd-MM-yyyy'
-            },
-            restrictions: {
-               
-                disabledDates: [],
-                enabledDates: [],
-                daysOfWeekDisabled: [],
-                disabledTimeIntervals: [],
-                disabledHours: [],
-                enabledHours: []
-              }
-        });
-    });
- </script>
- eSICExitDate
- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        new tempusDominus.TempusDominus(document.getElementById('eSICExitDate'),{
-            display: {
-                icons: {
-                    type: 'icons',
-                    time: 'fa-solid fa-clock',
-                    date: 'fa-solid fa-calendar',
-                    up: 'fa-solid fa-arrow-up',
-                    down: 'fa-solid fa-arrow-down',
-                    previous: 'fa-solid fa-chevron-left',
-                    next: 'fa-solid fa-chevron-right',
-                    today: 'fa-solid fa-calendar-check',
-                    clear: 'fa-solid fa-trash',
-                    close: 'fa-solid fa-xmark'
-                },
-                sideBySide: false,
-                calendarWeeks: false,
-                viewMode: 'calendar',
-                toolbarPlacement: 'bottom',
-                keepOpen: false,
-                buttons: {
-                    today: true,
-                    clear: true,
-                    close: true
-                },
-                components: {
-                    calendar: true,
-                    date: true,
-                    month: true,
-                    year: true,
-                    decades: true,
-                    clock: false,   // Hide clock
-                    hours: false,   // Hide hours
-                    minutes: false, // Hide minutes
-                    seconds: false  // Hide seconds
-                },
-                inline: false,
-                theme: 'auto'
-            },
-            localization: {
-                format: 'dd-MM-yyyy'
-            },
-            restrictions: {
-               
-                disabledDates: [],
-                enabledDates: [],
-                daysOfWeekDisabled: [],
-                disabledTimeIntervals: [],
-                disabledHours: [],
-                enabledHours: []
-              }
-        });
-    });
- </script>
- 
-
- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        new tempusDominus.TempusDominus(document.getElementById('resign_date'),{
-            display: {
-                icons: {
-                    type: 'icons',
-                    time: 'fa-solid fa-clock',
-                    date: 'fa-solid fa-calendar',
-                    up: 'fa-solid fa-arrow-up',
-                    down: 'fa-solid fa-arrow-down',
-                    previous: 'fa-solid fa-chevron-left',
-                    next: 'fa-solid fa-chevron-right',
-                    today: 'fa-solid fa-calendar-check',
-                    clear: 'fa-solid fa-trash',
-                    close: 'fa-solid fa-xmark'
-                },
-                sideBySide: false,
-                calendarWeeks: false,
-                viewMode: 'calendar',
-                toolbarPlacement: 'bottom',
-                keepOpen: false,
-                buttons: {
-                    today: true,
-                    clear: true,
-                    close: true
-                },
-                components: {
-                    calendar: true,
-                    date: true,
-                    month: true,
-                    year: true,
-                    decades: true,
-                    clock: false,   // Hide clock
-                    hours: false,   // Hide hours
-                    minutes: false, // Hide minutes
-                    seconds: false  // Hide seconds
-                },
-                inline: false,
-                theme: 'auto'
-            },
-            localization: {
-                format: 'dd-MM-yyyy'
-            },
-            restrictions: {
-               
-                disabledDates: [],
-                enabledDates: [],
-                daysOfWeekDisabled: [],
-                disabledTimeIntervals: [],
-                disabledHours: [],
-                enabledHours: []
-              }
-        });
-    });
- </script>
 {% endblock extrascript %}

@@ -141,6 +141,7 @@
                     <div class="col-12 mb-2  interviewmodeLink hide">
                         <label for="id_interviewTime" class="form-label">Online Interview Link</label>
                         <input type="text" name="interviewLink" class="form-control form-control-sm">
+                        
                     </div>
                         <div class="col-12 mb-2">
                             <label for="edit_remarks" class="form-label">Remarks</label>
@@ -199,7 +200,14 @@
                 </div>
                 <div class="col-3 form-group ">
                     <label for="{{interviewFeedbackForm.interviewFeedback.id_for_label}}" class="form-label mb-0 mb-0">Interview Feedback Date</label>
-                    <span>{{interviewFeedbackForm.interviewFeedback_date}}</span>
+                    
+                    <div class="input-group date" id="id_interviewFeedback_date" data-target-input="nearest">
+                        <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#id_interviewFeedback_date" name="interviewFeedback_date"/>
+                        <div class="input-group-append" data-target="#id_interviewFeedback_date" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                   
                 </div>
                 <div class="col-5 form-group text-end mt-4">
                     <input type="submit" name="interviewFeedbackSave" id="interviewFeedbackSave" value="Save"
@@ -269,13 +277,26 @@
                             <label for="id_interviewMode" class="form-label mb-0">Mode of Interview</label>
                             {{InterviewFieldsets.interviewMode}}
                         </div>
+
+                        
                         <div class="mb-3 col-12">
                             <label for="id_interviewDate" class="form-label mb-0">Date of Interview</label>
-                            {{InterviewFieldsets.interviewDate}}
+                            <div class="input-group date" id="id_interviewDate" data-target-input="nearest">
+                                <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#id_interviewDate" name="interviewDate"/>
+                                <div class="input-group-append" data-target="#id_interviewDate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3 col-12">
                             <label for="id_interviewTime" class="form-label mb-0">Time of Interview</label>
-                            {{InterviewFieldsets.interviewTime}}
+                            {% comment %} {{InterviewFieldsets.interviewTime}} {% endcomment %}
+                            <div class="input-group date" id="id_interviewTime" data-target-input="nearest">
+                                <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#id_interviewTime" name="interviewTime"/>
+                                <div class="input-group-append" data-target="#id_interviewTime" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3 col-12 interviewmodeLink hide">
                             <label for="id_interviewTime" class="form-label mb-0">Online Interview Link</label>
@@ -473,6 +494,168 @@
     
 
     </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                new tempusDominus.TempusDominus(document.getElementById('id_interviewDate'),{
+                    display: {
+                        icons: {
+                            type: 'icons',
+                            time: 'fa-solid fa-clock',
+                            date: 'fa-solid fa-calendar',
+                            up: 'fa-solid fa-arrow-up',
+                            down: 'fa-solid fa-arrow-down',
+                            previous: 'fa-solid fa-chevron-left',
+                            next: 'fa-solid fa-chevron-right',
+                            today: 'fa-solid fa-calendar-check',
+                            clear: 'fa-solid fa-trash',
+                            close: 'fa-solid fa-xmark'
+                        },
+                        sideBySide: false,
+                        calendarWeeks: false,
+                        viewMode: 'calendar',
+                        toolbarPlacement: 'bottom',
+                        keepOpen: false,
+                        buttons: {
+                            today: true,
+                            clear: true,
+                            close: true
+                        },
+                        components: {
+                            calendar: true,
+                            date: true,
+                            month: true,
+                            year: true,
+                            decades: true,
+                            clock: false,   // Hide clock
+                            hours: false,   // Hide hours
+                            minutes: false, // Hide minutes
+                            seconds: false  // Hide seconds
+                        },
+                        inline: false,
+                        theme: 'auto'
+                    },
+                    localization: {
+                        format: 'dd-MM-yyyy'
+                    },
+                    restrictions: {
+                        disabledDates: [],
+                        enabledDates: [],
+                        daysOfWeekDisabled: [],
+                        disabledTimeIntervals: [],
+                        disabledHours: [],
+                        enabledHours: []
+                      }
+                });
+            });
+         </script>
+         <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                new tempusDominus.TempusDominus(document.getElementById('id_interviewTime'),{
+                    display: {
+                        icons: {
+                            type: 'icons',
+                            time: 'fa-solid fa-clock',
+                            date: 'fa-solid fa-calendar',
+                            up: 'fa-solid fa-arrow-up',
+                            down: 'fa-solid fa-arrow-down',
+                            previous: 'fa-solid fa-chevron-left',
+                            next: 'fa-solid fa-chevron-right',
+                            today: 'fa-solid fa-calendar-check',
+                            clear: 'fa-solid fa-trash',
+                            close: 'fa-solid fa-xmark'
+                        },
+                        sideBySide: false,
+                        calendarWeeks: false,
+                        viewMode: 'clock',
+                        toolbarPlacement: 'bottom',
+                        keepOpen: false,
+                        buttons: {
+                            today: true,
+                            clear: true,
+                            close: true
+                        },
+                        components: {
+                            calendar: false,
+                            date: false,
+                            month: false,
+                            year: false,
+                            decades: false,
+                            clock: true,   // Hide clock
+                            hours: true,   // Hide hours
+                            minutes: true, // Hide minutes
+                            seconds: true  // Hide seconds
+                        },
+                        inline: false,
+                        theme: 'auto'
+                    },
+                    localization: {
+                        format: 'dd-MM-yyyy'
+                    },
+                    restrictions: {
+                        disabledDates: [],
+                        enabledDates: [],
+                        daysOfWeekDisabled: [],
+                        disabledTimeIntervals: [],
+                        disabledHours: [],
+                        enabledHours: []
+                      }
+                });
+            });
+         </script>
+         <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                new tempusDominus.TempusDominus(document.getElementById('id_interviewFeedback_date'),{
+                    display: {
+                        icons: {
+                            type: 'icons',
+                            time: 'fa-solid fa-clock',
+                            date: 'fa-solid fa-calendar',
+                            up: 'fa-solid fa-arrow-up',
+                            down: 'fa-solid fa-arrow-down',
+                            previous: 'fa-solid fa-chevron-left',
+                            next: 'fa-solid fa-chevron-right',
+                            today: 'fa-solid fa-calendar-check',
+                            clear: 'fa-solid fa-trash',
+                            close: 'fa-solid fa-xmark'
+                        },
+                        sideBySide: false,
+                        calendarWeeks: false,
+                        viewMode: 'calendar',
+                        toolbarPlacement: 'bottom',
+                        keepOpen: false,
+                        buttons: {
+                            today: true,
+                            clear: true,
+                            close: true
+                        },
+                        components: {
+                            calendar: true,
+                            date: true,
+                            month: true,
+                            year: true,
+                            decades: true,
+                            clock: false,   // Hide clock
+                            hours: false,   // Hide hours
+                            minutes: false, // Hide minutes
+                            seconds: false  // Hide seconds
+                        },
+                        inline: false,
+                        theme: 'auto'
+                    },
+                    localization: {
+                        format: 'dd-MM-yyyy'
+                    },
+                    restrictions: {
+                        disabledDates: [],
+                        enabledDates: [],
+                        daysOfWeekDisabled: [],
+                        disabledTimeIntervals: [],
+                        disabledHours: [],
+                        enabledHours: []
+                      }
+                });
+            });
+         </script>
 
 
 {% endblock extrascript %}

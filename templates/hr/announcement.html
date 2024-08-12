@@ -114,8 +114,14 @@
                                 <div class="mb-2">
                                     <label for="Addannouncement_created_on" class="form-label">created_on
                                     </label>
-                                    <input type="date" class="form-control form-control-sm"
-                                        id="Addannouncement_created_on" name="created_on" required>
+                                    {% comment %} <input type="date" class="form-control form-control-sm"
+                                        id="Addannouncement_created_on" name="created_on" required> {% endcomment %}
+                                        <div class="input-group date" id="Addannouncement_created_on" data-target-input="nearest">
+                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Addannouncement_created_on" name="created_on" required/>
+                                            <div class="input-group-append" data-target="#Addannouncement_created_on" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12">
@@ -191,8 +197,15 @@
                                 </div>
                                 <div class="mb-2">
                                     <label for="Editannouncement_created_on" class="form-label">Created On</label>
-                                    <input type="date" class="form-control form-control-sm"
-                                        id="Editannouncement_created_on" name="created_on" required>
+                                    {% comment %} <input type="date" class="form-control form-control-sm"
+                                        id="Editannouncement_created_on" name="created_on" required> {% endcomment %}
+                                        
+                                        <div class="input-group date" id="Editannouncement_created_on" data-target-input="nearest">
+                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Editannouncement_created_on" name="created_on" required/>
+                                            <div class="input-group-append" data-target="#Editannouncement_created_on" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
                                 </div>
                                 <div class="mb-2">
                                     <label for="Editannouncement_message" class="form-label">Message</label>
@@ -341,4 +354,118 @@
         });
     });
 </script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new tempusDominus.TempusDominus(document.getElementById('Addannouncement_created_on'),{
+            display: {
+                icons: {
+                    type: 'icons',
+                    time: 'fa-solid fa-clock',
+                    date: 'fa-solid fa-calendar',
+                    up: 'fa-solid fa-arrow-up',
+                    down: 'fa-solid fa-arrow-down',
+                    previous: 'fa-solid fa-chevron-left',
+                    next: 'fa-solid fa-chevron-right',
+                    today: 'fa-solid fa-calendar-check',
+                    clear: 'fa-solid fa-trash',
+                    close: 'fa-solid fa-xmark'
+                },
+                sideBySide: false,
+                calendarWeeks: false,
+                viewMode: 'calendar',
+                toolbarPlacement: 'bottom',
+                keepOpen: false,
+                buttons: {
+                    today: true,
+                    clear: true,
+                    close: true
+                },
+                components: {
+                    calendar: true,
+                    date: true,
+                    month: true,
+                    year: true,
+                    decades: true,
+                    clock: false,   // Hide clock
+                    hours: false,   // Hide hours
+                    minutes: false, // Hide minutes
+                    seconds: false  // Hide seconds
+                },
+                inline: false,
+                theme: 'auto'
+            },
+            localization: {
+                format: 'dd-MM-yyyy'
+            },
+            restrictions: {
+               
+                disabledDates: [],
+                enabledDates: [],
+                daysOfWeekDisabled: [],
+                disabledTimeIntervals: [],
+                disabledHours: [],
+                enabledHours: []
+              }
+        });
+    });
+ </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new tempusDominus.TempusDominus(document.getElementById('Editannouncement_created_on'),{
+            display: {
+                icons: {
+                    type: 'icons',
+                    time: 'fa-solid fa-clock',
+                    date: 'fa-solid fa-calendar',
+                    up: 'fa-solid fa-arrow-up',
+                    down: 'fa-solid fa-arrow-down',
+                    previous: 'fa-solid fa-chevron-left',
+                    next: 'fa-solid fa-chevron-right',
+                    today: 'fa-solid fa-calendar-check',
+                    clear: 'fa-solid fa-trash',
+                    close: 'fa-solid fa-xmark'
+                },
+                sideBySide: false,
+                calendarWeeks: false,
+                viewMode: 'calendar',
+                toolbarPlacement: 'bottom',
+                keepOpen: false,
+                buttons: {
+                    today: true,
+                    clear: true,
+                    close: true
+                },
+                components: {
+                    calendar: true,
+                    date: true,
+                    month: true,
+                    year: true,
+                    decades: true,
+                    clock: false,   // Hide clock
+                    hours: false,   // Hide hours
+                    minutes: false, // Hide minutes
+                    seconds: false  // Hide seconds
+                },
+                inline: false,
+                theme: 'auto'
+            },
+            localization: {
+                format: 'dd-MM-yyyy'
+            },
+            restrictions: {
+               
+                disabledDates: [],
+                enabledDates: [],
+                daysOfWeekDisabled: [],
+                disabledTimeIntervals: [],
+                disabledHours: [],
+                enabledHours: []
+              }
+        });
+    });
+ </script>
+
 {% endblock extrascript %}

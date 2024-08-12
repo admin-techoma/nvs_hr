@@ -63,8 +63,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    
+    'bootstrap_datepicker_plus',
+    'tempus_dominus',
     'hr.management',
     'django_celery_beat',
 ]

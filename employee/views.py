@@ -141,7 +141,10 @@ def rmdash(request):
 def request_regularization(request):
     print(request.POST)
     
+    
     filterdate =  datetime.strptime(request.POST.get('dateSelected'), '%d-%m-%Y')
+    
+
     attendance = get_object_or_404(Attendance, date=filterdate,employee=request.user.emp_user)
     
     if request.method == 'POST':
@@ -337,9 +340,20 @@ def apply_leave(request, emp_id):
     employee = get_object_or_404(Employee, emp_id=emp_id)
 
     if request.method == 'POST':
-        leave_from = request.POST.get('leave_from')
+        if request.POST.get("leave_from"):
+            parsed_date = (request.POST.get("leave_from"))
+            leave_from = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            leave_from = None
+            
         leave_from_time = request.POST.get('select_Time_From')
-        leave_to = request.POST.get('leave_to')
+        
+        if request.POST.get("leave_to"):
+            parsed_date = (request.POST.get("leave_to"))
+            leave_to = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            leave_to = None
+            
         leave_to_time = request.POST.get('select_Time_To')
         leave_type = request.POST.get('leave_type')
         leave_reason = request.POST.get('leave_reason')
@@ -453,8 +467,18 @@ def leaves_lists(request):
 def apply_resign(request, employee_id):
     employee = get_object_or_404(Employee, emp_id=employee_id)
     if request.method == 'POST':
-        resign_date = request.POST.get('resign_date')
-        last_date = request.POST.get('last_date')
+        if request.POST.get("resign_date"):
+            parsed_date = (request.POST.get("resign_date"))
+            resign_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            resign_date = None
+            
+        if request.POST.get("last_date"):
+            parsed_date = (request.POST.get("last_date"))
+            last_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            last_date = None
+            
         resign_reason = request.POST.get('resign_reason')
         resign_application = ResignApplication.objects.create(
             employee=employee,
@@ -508,6 +532,8 @@ def update_leave_status(request):
         leave_id = request.POST.get('leave_id')
         selected_status = request.POST.get('selected_status')
         remarks = request.POST.get('remarks')
+        
+        
         # Perform the necessary logic here based on the received data
         try:
             # Get the LeaveApplication object
@@ -517,6 +543,7 @@ def update_leave_status(request):
             leave_application.save()
 
             leave_from_date = leave_application.leave_from_date
+            
             leave_to_date = leave_application.leave_to_date
             
             if selected_status == '1':
@@ -548,8 +575,13 @@ def update_resign_status(request):
         resign_id = request.POST.get('resign_id')
         selected_status = request.POST.get('selected_status')
         remarks = request.POST.get('remarks')
-        last_date = request.POST.get('last_date')
-
+        
+        if request.POST.get("last_date"):
+            parsed_date = (request.POST.get("last_date"))
+            last_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+        else:
+            last_date = None
+        
         try:
             resign_application = ResignApplication.objects.get(id=resign_id)
             resign_application.resign_status = selected_status

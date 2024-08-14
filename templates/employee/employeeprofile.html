@@ -1631,8 +1631,8 @@
                                             <tr>
                                                 <td>{{ forloop.counter }}</td>
                                                 <td>{{ attendance.date|date:'d-m-Y' }}</td>
-                                                <td>{{ attendance.clock_in }}</td>
-                                                <td>{{ attendance.clock_out }}</td>
+                                                <td>{{ attendance.clock_in|default:'' }}</td>
+                                                <td>{{ attendance.clock_out|default:'' }}</td>
                                                 <td>
                                                     {% if attendance.is_full_day %}
                                                     <i class="bi bi-check-circle-fill text-success"></i>
@@ -1756,8 +1756,8 @@
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
                                             <td>{{ regularization.date|date:'d-m-Y' }}</td>
-                                            <td>{{ regularization.requested_clock_in }}</td>
-                                            <td>{{ regularization.requested_clock_out }}</td>
+                                            <td>{{ regularization.requested_clock_in|default:''  }}</td>
+                                            <td>{{ regularization.requested_clock_out|default:''  }}</td>
                                             <td>
                                                 <textarea class="form-control form-control-sm" name="remarks" rows="1" disabled >{{ regularization.remarks|default:''}}</textarea>
                                             </td>

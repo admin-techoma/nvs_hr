@@ -284,6 +284,8 @@ $(document).ready(function() {
     { date: "26-1-2024", label: "Republic Day" },
     { date: "25-3-2024", label: "Holi" },
     { date: "15-8-2024", label: "Independence Day" },
+    { date: "19-8-2024", label: "Rakshabandhan" },
+    { date: "19-8-2024", label: "Janmashtami" },
     { date: "2-10-2024", label: "Gandhi Jayanti" },
     { date: "12-10-2024", label: "Dussehra" },
     { date: "31-10-2024", label: "Diwali" },

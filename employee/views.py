@@ -578,7 +578,7 @@ def update_resign_status(request):
         
         if request.POST.get("last_date"):
             parsed_date = (request.POST.get("last_date"))
-            last_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+            last_date = datetime.strptime(parsed_date, "%Y-%m-%d").date()
         else:
             last_date = None
         

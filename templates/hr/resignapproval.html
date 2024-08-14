@@ -239,7 +239,6 @@
         });
     });
 </script> {% endcomment %}
-
 <script>
     $(document).ready(function() {
              $('#ResignationApprovalTable').DataTable({
@@ -248,7 +247,6 @@
                  paging: true,
                  fixedHeader: true,
              });
-
              $('.status-select').on('change', function() {
                  var selectedStatus = $(this).val();
                  var row = $(this).closest('tr');
@@ -271,9 +269,7 @@
                      lastDateLabel.hide();
                      resignDateLabel.show();
                  }
-
                  const csrftoken = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
-
                  $.ajax({
                      type: 'POST',
                      url: '/employee/update_resign_status/',
@@ -293,10 +289,8 @@
                      }
                  });
              });
-
              $('#responseresignModal').on('hidden.bs.modal', function () {
                  location.reload();
              });
          });</script>
-
     {% endblock extrascript %}

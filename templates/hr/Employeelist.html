@@ -68,7 +68,7 @@
                                                 <td class="text-lowercase text-nowrap">{{ employee.email }}</td>
                                                 <td class="text-nowrap" >{{ employee.department }}</td>
                                                 <td class="text-nowrap" >{{ employee.designation }}</td>
-                                                <td class="text-nowrap" >{{ employee.doj}}</td>
+                                                <td class="text-nowrap" >{{ employee.doj|date:'d-m-Y'}}</td>
                                                 <td>
                                                     {% if employee.documents_id %}
                                                         {% if employee.documents_id.c_adhar and employee.documents_id.c_psimg and employee.documents_id.c_HSC %}

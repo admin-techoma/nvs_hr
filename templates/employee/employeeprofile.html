@@ -144,7 +144,7 @@
                                             oninput="validateDOB()" data-min-age="18" "
                                             name="dob"> {% endcomment %}
                                             <div class="input-group date" id="createemployeedateofbirth" data-target-input="nearest">
-                                                <input type="text" class="form-control form-control-sm datetimepicker-input" disabled data-target="#createemployeedateofbirth" name="dob" value="{{emp_data.dob|date:'Y-m-d'}}">
+                                                <input type="text" class="form-control form-control-sm datetimepicker-input" disabled data-target="#createemployeedateofbirth" name="dob" value="{{emp_data.dob|date:'d-m-Y'}}">
                                                 <div class="input-group-append" data-target="#createemployeedateofbirth" data-toggle="datetimepicker">
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
@@ -173,10 +173,7 @@
                                     </div>
                                     <div class="col-12 col-md-4 mb-3 px-2">
                                         <label class="form-label mb-0">Aadhar Card Number</label>
-                                        <input type="Text" class="form-control form-control-sm" disabled 
-                                            value="{{emp_data.aadhaarcard_no|default:''}}" name="aadhaarcard_no"
-                                            pattern="[0-9]{12}"
-                                            title="Invalid Aadhar Card Number entered. Please enter a 12-digit decimal number.">
+                                        <input type="tel" class="form-control form-control-sm" value="{{emp_data.aadhaarcard_no|default:''}}" name="aadhaarcard_no"  maxlength="12" minlength="12" pattern="[0-9]{12}"  title="Invalid Aadhar Card Number entered. Please enter a 12-digit decimal number." disabled>
                                     </div>
                                     <div class="col-12  col-md-4 mb-3 px-2">
                                         <label class="form-label mb-0">PAN Card Number</label>
@@ -223,14 +220,14 @@
                                 </div>
                                 <div class="col-12 col-md-3 mb-3">
                                     <label class="form-label mb-0">Phone Number</label>
-                                    <input type="Number" disabled class="form-control form-control-sm "
+                                    <input type="tel" disabled class="form-control form-control-sm "
                                         name="contact_no" autocomplete="off"
-                                        pattern="[0-9]{10}" maxlength="10" minlength="10"
+                                        pattern="[0-9]{10}" maxlength="10" minlength="10" required
                                         value="{{emp_data.contact_no}}">
                                 </div>
                                 <div class="col-12 col-md-3 mb-3">
                                     <label class="form-label mb-0">Alternative Phone Number</label>
-                                    <input type="Number" class="form-control form-control-sm" name="other_contact_no"
+                                    <input type="tel" class="form-control form-control-sm" name="other_contact_no" pattern="[0-9]{10}" maxlength="10" minlength="10"
                                         value="{{emp_data.other_contact_no}}" disabled>
                                 </div>
                             </div>
@@ -319,9 +316,9 @@
                                         id="emergency_contactname" name="emergency_contactname" value="{{emp_data.emergency_contactname}}" required>
                                 </div>
                                 <div class="col-12 col-md-3 mb-3">
-                                    <label class="form-label mb-0">Mobile No</label>
+                                    <label class="form-label mb-0">Phone No</label>
                                     
-                                        <input type="Number" disabled class="form-control form-control-sm "
+                                        <input type="tel" disabled class="form-control form-control-sm"
                                         name="emergency_contactnumber"  autocomplete="off"
                                         pattern="[0-9]{10}" maxlength="10" minlength="10"
                                         value="{{emp_data.emergency_contactnumber}}" required>
@@ -524,7 +521,7 @@
                                     {% comment %} <input type="date" class="form-control form-control-sm " 
                                     > {% endcomment %}
                                      <div class="input-group date" id="workJoiningDate" data-target-input="nearest">
-                                        <input type="text" class="form-control form-control-sm datetimepicker-input" disabled  name="doj" data-target="#workJoiningDate"  value="{{emp_data.doj|date:'Y-m-d'}}"  />
+                                        <input type="text" class="form-control form-control-sm datetimepicker-input" disabled  name="doj" data-target="#workJoiningDate"  value="{{emp_data.doj|date:'d-m-Y'}}"  />
                                         <div class="input-group-append" data-target="#workJoiningDate" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
@@ -584,7 +581,7 @@
                                     {% comment %} <input type="date" class="form-control form-control-sm" disabled 
                                      > {% endcomment %}
                                      <div class="input-group date" id="workExitDate" data-target-input="nearest">
-                                        <input type="text" class="form-control form-control-sm datetimepicker-input" disabled name="doe" value="{{emp_data.doe|date:'Y-m-d'}}"  data-target="#workExitDate"  />
+                                        <input type="text" class="form-control form-control-sm datetimepicker-input" disabled name="doe" value="{{emp_data.doe|date:'d-m-Y'}}"  data-target="#workExitDate"  />
                                         <div class="input-group-append" data-target="#workExitDate" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
@@ -593,7 +590,7 @@
                                 <div class="col-12 col-md-3 mb-3">
                                     <label class="form-label mb-0">UAN Number </label>
                                     <input type="Number" class="form-control form-control-sm"
-                                        name="uanno" value="{{emp_data.uanno|default:'' }}" disabled>
+                                        name="uanno" value="{{emp_data.uanno|default:'0' }}" disabled>
                                 </div>
                                 <div class="col-12 col-md-3 mb-3">
                                     <label class="form-label mb-0">PF Number </label>
@@ -606,7 +603,7 @@
                                        
                                         disabled> {% endcomment %}
                                         <div class="input-group date" id="pf_joining_date" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" disabled  name="pf_joining_date" value="{{emp_data.pf_joining_date|date:'Y-m-d'}}"  data-target="#pf_joining_date"  />
+                                            <input type="text" class="form-control form-control-sm datetimepicker-input" disabled  name="pf_joining_date" value="{{emp_data.pf_joining_date|date:'d-m-Y'}}"  data-target="#pf_joining_date"  />
                                             <div class="input-group-append" data-target="#pf_joining_date" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -617,7 +614,7 @@
                                     {% comment %} <input type="date" class="form-control form-control-sm"
                                         disabled> {% endcomment %}
                                         <div class="input-group date" id="pf_Exit_date" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" disabled   name="pf_exit_date" value="{{emp_data.pf_exit_date|date:'Y-m-d'}}"  />
+                                            <input type="text" class="form-control form-control-sm datetimepicker-input" disabled   name="pf_exit_date" value="{{emp_data.pf_exit_date|date:'d-m-Y'}}"  />
                                             <div class="input-group-append" data-target="#pf_Exit_date" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -1194,8 +1191,16 @@
                                 </div>
                                 <div class="col-12 col-md-4 d-flex align-items-center mb-2">
                                     <label class="form-label mb-0 w-50 mb-0">Joining Date </label>
-                                    <input type="date" class="form-control form-control-sm " name="doj" disabled
-                                        value="{{emp_data.doj|date:'Y-m-d'}}" />
+
+                                    <div class="input-group date" id="doj" data-target-input="nearest">
+                                        <input type="text" class="form-control form-control-sm datetimepicker-input" disabled name="doj" value="{{emp_data.doj|date:'d-m-Y'}}"  data-target="#applicable_from"  />
+                                        <div class="input-group-append" data-target="#doj" data-toggle="datetimepicker">
+                                            {% comment %} <div class="input-group-text"><i class="fa fa-calendar"></i></div> {% endcomment %}
+                                        </div>
+                                    </div>
+
+
+                                    
                                 </div>
                                 <div class="col-12 col-md-4 d-flex align-items-center">
                                     <label class="form-label mb-0 w-50 mb-0">Pancard</label>
@@ -1210,9 +1215,15 @@
                                 </div>
                                 <div class="col-12 col-md-4 d-flex align-items-center">
                                     <label class="form-label mb-0 w-50 mb-0">Applicable from</label>
-                                    <input type="date" class="form-control form-control-sm" id="applicable_from"
-                                        name="applicable_from" value="{{payroll_data.applicable_from|date:'Y-m-d'}}"
-                                        disabled />
+
+                                    <div class="input-group date" id="applicable_from" data-target-input="nearest">
+                                        <input type="text" class="form-control form-control-sm datetimepicker-input" disabled name="applicable_from" value="{{payroll_data.applicable_from|date:'d-m-Y'}}"  data-target="#applicable_from"  />
+                                        <div class="input-group-append" data-target="#applicable_from" data-toggle="datetimepicker">
+                                            {% comment %} <div class="input-group-text"><i class="fa fa-calendar"></i></div> {% endcomment %}
+                                        </div>
+                                    </div>
+
+                                    
                                 </div>
                             </div>
                             <div class="row p-2 d-flex">

@@ -173,9 +173,7 @@
   </div> {% endcomment %}
 {%endblock maincontent%}
 {% block extrascript %}
-
 {% comment %} <script>
-   
     document.addEventListener('DOMContentLoaded', function() {
         var tableElement = document.querySelector('#ResignationApprovalTable');
         if (tableElement && !tableElement.classList.contains('dataTable')) {
@@ -188,7 +186,6 @@
                 });
             }
         }
-    
         // Event listener for status select changes
         document.querySelectorAll('.status-select').forEach(function(selectElement) {
             selectElement.addEventListener('change', function() {
@@ -214,7 +211,6 @@
                         lastDateInput.style.display = 'block';
                         resignDateLabel.style.display = 'block';
                     }
-    
                     // Get CSRF token from cookies
                     var csrftoken = document.cookie.split('; ').find(cookie => cookie.startsWith('csrftoken=')).split('=')[1];
                     // Send AJAX request

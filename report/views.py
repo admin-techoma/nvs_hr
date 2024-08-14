@@ -305,6 +305,7 @@ def interviewsdata(request):
     start_date = request.GET.get('from')
     end_date = request.GET.get('to')
 
+ 
     if start_date:
         start_date = datetime.strptime(start_date,'%Y-%m-%d')
     else:

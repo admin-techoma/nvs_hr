@@ -174,11 +174,15 @@
                     { data: "designation__name" },
                     { data: "remarks" },
                     { data: "interviewFeedback" },
-                    { data: "interviewFeedback_date" },
+                    { data: "interviewFeedback_date", 
+                        render: function (data) {
+                            return moment(data).format('DD-MM-YYYY');  // Format as d-m-Y
+                        }
+                    },
                     {
                         data: "created_at",
                         render: function (data) {
-                            return moment(data).format('DD-MM-YYYY');
+                            return moment(data).format('DD-MM-YYYY');  // Format as d-m-Y
                         }
                     },
                 ],

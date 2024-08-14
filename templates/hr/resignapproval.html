@@ -74,13 +74,13 @@
                                                 </td>
                                                 <td>{{ resigns_application.employee.emp_id }}</td>
                                                 <td>{{ resigns_application.employee.first_name }} {{ resigns_application.employee.last_name }}</td>
-                                                <td>{{ resigns_application.resign_date }}</td>
+                                                <td>{{ resigns_application.resign_date|date:'d-m-Y' }}</td>
                                                 <td>
                                                     {% if resigns_application.resign_status == 1 %}
                                                         <label id="last_date_{{ resigns_application.id }}" class="text-danger">{{ resigns_application.last_date }}</label>
                                                     {% else %}
-                                                        <input type="date" class="form-control form-control-sm last-date-input" id="last_date_input_{{ resigns_application.id }}" value="{{ resigns_application.last_date|default:'' }}" style="display:none;">
-                                                        <label id="resign_date_{{ resigns_application.id }}" style="display:none;">{{ resigns_application.resign_date }}</label>
+                                                        <input type="date" class="form-control form-control-sm last-date-input" id="last_date_input_{{ resigns_application.id }}" value="{{ resigns_application.last_date|date:'d-m-Y'  }}" style="display:none;">
+                                                        <label id="resign_date_{{ resigns_application.id }}" style="display:none;">{{ resigns_application.resign_date|date:'d-m-Y'  }}</label>
                                                     {% endif %}
                                                 </td>
                                                 <td>{{ logged_in_employee }}</td>
@@ -174,7 +174,7 @@
 {%endblock maincontent%}
 {% block extrascript %}
 
-<script>
+{% comment %} <script>
     document.addEventListener('DOMContentLoaded', function() {
       
         var tableElement = document.querySelector('#ResignationApprovalTable');
@@ -236,6 +236,6 @@
             });
         });
     });
-</script>
+</script> {% endcomment %}
 
     {% endblock extrascript %}

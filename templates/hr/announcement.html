@@ -41,7 +41,7 @@
                         <tr>
                             <td>{{ announcement_list.company }}</td>
                             <td>{{ announcement_list.name}}</td>
-                            <td>{{ announcement_list.created_on }}</td>
+                            <td>{{ announcement_list.created_on|date:'d-m-Y' }}</td>
                             <td>{{ announcement_list.message }}</td>
                             <td>
                                 {% if announcement_list.file %}
@@ -116,8 +116,8 @@
                                     </label>
                                     {% comment %} <input type="date" class="form-control form-control-sm"
                                         id="Addannouncement_created_on" name="created_on" required> {% endcomment %}
-                                        <div class="input-group date" id="Addannouncement_created_on" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Addannouncement_created_on" name="created_on" required/>
+                                        <div class="input-group date"  data-target-input="nearest">
+                                            <input type="text" id="Addannouncement_created_on" class="form-control form-control-sm datetimepicker-input" data-target="#Addannouncement_created_on" name="created_on" required/>
                                             <div class="input-group-append" data-target="#Addannouncement_created_on" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -200,8 +200,8 @@
                                     {% comment %} <input type="date" class="form-control form-control-sm"
                                         id="Editannouncement_created_on" name="created_on" required> {% endcomment %}
                                         
-                                        <div class="input-group date" id="Editannouncement_created_on" data-target-input="nearest">
-                                            <input type="text" class="form-control form-control-sm datetimepicker-input" data-target="#Editannouncement_created_on" name="created_on" required/>
+                                        <div class="input-group date" data-target-input="nearest">
+                                            <input type="text" id="Editannouncement_created_on"  class="form-control form-control-sm datetimepicker-input" data-target="#Editannouncement_created_on" name="created_on" required/>
                                             <div class="input-group-append" data-target="#Editannouncement_created_on" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>

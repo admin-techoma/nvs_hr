@@ -72,8 +72,8 @@
                                 </td>
                                 <td class="text-nowrap">{{ leave_application.employee.name }}</td>
                                 <td class="text-nowrap">{{ leave_application|calculate_paid_leave_days }}</td>
-                                <td class="text-nowrap">{{ leave_application.leave_from_date }}</td>
-                                <td class="text-nowrap">{{ leave_application.leave_to_date }}</td>
+                                <td class="text-nowrap">{{ leave_application.leave_from_date|date:'d-m-Y' }}</td>
+                                <td class="text-nowrap">{{ leave_application.leave_to_date|date:'d-m-Y' }}</td>
                                 <td class="text-nowrap">{{ leave_application.leave_type }}</td>
                                 <td class="text-nowrap">{{ logged_in_employee }}</td>
                                 <td> <div class=""><textarea class="form-control form-control-sm"
@@ -152,7 +152,7 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ regularization.employee.name }}</td>
-                                <td>{{ regularization.date }}</td>
+                                <td>{{ regularization.date|date:'d-m-Y' }}</td>
                                 <td>{{ regularization.requested_clock_in }}</td>
                                 <td>{{ regularization.requested_clock_out }}</td>
                                 <td>

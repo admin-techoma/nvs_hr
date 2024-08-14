@@ -1012,8 +1012,10 @@ def view_employee(request):
     
     emp_data = Employee.objects.all()
     
-    for employee in emp_data:
-        employee.doj = employee.doj.strftime('%Y-%m-%d')
+    # for employee in emp_data:
+    #     employee.doj = employee.doj.strftime('%Y-%m-%d')
+        
+    
         
     onboarding_exists = Onboarding.objects.all()
     
@@ -2596,6 +2598,7 @@ def update_holidaymaster_details(request, holidaymaster_id):
             if request.POST.get("year"):
                 parsed_date = (request.POST.get("year"))
                 new_year = datetime.strptime(parsed_date,"%d-%m-%Y").date()
+                print("*************",new_year)
             else:
                 new_year = None
 
@@ -3268,11 +3271,12 @@ def get_policy_list_details(request, policy_list_id):
     
     try:
         policy_list = Policies.objects.get(pk=policy_list_id)
+        formatted_date = policy_list.created_on.strftime('%d-%m-%Y') 
         data = {
             'id': policy_list.id,            
             'company_id' : policy_list.company_id,
             'name' : policy_list.name,
-            'created_on' : policy_list.created_on,
+            'created_on' : formatted_date,
             'remarks' : policy_list.remarks,
             'file_url': policy_list.file.url if policy_list.file else None,  # Get file URL
             
@@ -3312,6 +3316,8 @@ def update_policy_list_details(request, policy_list_id):
             policy_list.file = file
             policy_list.status = status
 
+            
+            
             # Check if a new  file is uploaded
             if 'file' in request.FILES:
                 # Delete the old logo file if it exists
@@ -3396,11 +3402,12 @@ def add_announcement_list_details(request):
 def get_announcement_list_details(request, announcement_list_id):
     try:
         announcement_list = Announcement.objects.get(pk=announcement_list_id)
+        formatted_date = announcement_list.created_on.strftime('%d-%m-%Y') 
         data = {
             'id': announcement_list.id,            
             'company_id' : announcement_list.company_id,
             'name' : announcement_list.name,
-            'created_on' : announcement_list.created_on,
+            'created_on' : formatted_date,
             'message' : announcement_list.message,
             'file_url': announcement_list.file.url if announcement_list.file else None,  # Get file URL
             'status' : announcement_list.status,
@@ -3432,7 +3439,9 @@ def update_announcement_list_details(request, announcement_list_id):
             announcement_list.created_on = created_on
             announcement_list.message = message
             announcement_list.status = status
+            announcement_list.file = file
 
+            
             # Check if a new  file is uploaded
             if 'file' in request.FILES:
                 # Delete the old logo file if it exists

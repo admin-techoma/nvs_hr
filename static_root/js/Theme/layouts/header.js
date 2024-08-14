@@ -109,7 +109,7 @@ $(document).ready(function () {
             }
 
         });}else{
-            window.alert("Use Mobile Device only for punch in");
+            window.alert("Use Mobile Device only for Punch Out");
         }
         
 
@@ -177,8 +177,7 @@ $(document).ready(function () {
     // });
     
     $('#clockedIn').on('click', function () {
-        ///iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent)
-        if ( true) {
+        if ( /iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent)) {
             $('#ClockinModal').modal('show');
         $('#ClockinModal .modal-body span').text(getCurrentTime());
             

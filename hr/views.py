@@ -2062,13 +2062,13 @@ def direct_employee(request, pk=None):
 
         
         department_id = request.POST.get("department")
-        selectdepartment = Department.objects.get(pk=department_id)
+        selectdepartment = Department.objects.get(id=department_id)
+
+        designation_id = request.POST.get("designation")
+        designation = Designation.objects.get(id=designation_id)
 
         company_branch_id = request.POST.get("company_branch")
         company_branch = CompanyBranch.objects.get(pk=company_branch_id)
-
-        designation_id = request.POST.get("designation")
-        designation = Designation.objects.get(pk=designation_id)
 
         reporting_to_id = request.POST.get('reporting_to')
         if reporting_to_id:

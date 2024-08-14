@@ -425,7 +425,7 @@
                                         <label for="adddepartmentname" class="form-label">Department</label>
                                         <select class="form-select form-select-sm" id="adddepartment" name="department">
                                             {% for department_all in department_all %}
-                                            <option value="{{ department_all.name }}">{{ department_all.name }}</option>
+                                            <option value="{{ department_all.id }}">{{ department_all.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>

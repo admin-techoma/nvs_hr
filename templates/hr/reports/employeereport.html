@@ -289,25 +289,46 @@
                     }, {
                         data: "other_contact_no"
                     }, {
-                        data: "dob"
+                        data: "dob",
+                        render: function (data) {
+                            return moment(data).format('DD-MM-YYYY');  // Format as d-m-Y
+                        }
                     }, {
-                        data: "doj"
+                        data: "doj",
+                        render: function (data) {
+                            return moment(data).format('DD-MM-YYYY');  // Format as d-m-Y
+                        }
                     }, {
-                        data: "doe"
+                        data: "doe",
+                        render: function (data) {
+                            return moment(data).format('DD-MM-YYYY');  // Format as d-m-Y
+                        }
                     }, {
                         data: "pfno"
                     }, {
-                        data: "pf_joining_date"
+                        data: "pf_joining_date",
+                        render: function (data) {
+                            return moment(data).format('DD-MM-YYYY');  // Format as d-m-Y
+                        }
                     }, {
-                        data: "pf_exit_date"
+                        data: "pf_exit_date",
+                        render: function (data) {
+                            return moment(data).format('DD-MM-YYYY');  // Format as d-m-Y
+                        }
                     }, {
                         data: "uanno"
                     }, {
                         data: "esicno"
                     }, {
-                        data: "esic_joining_date"
+                        data: "esic_joining_date",
+                        render: function (data) {
+                            return moment(data).format('DD-MM-YYYY');  // Format as d-m-Y
+                        }
                     }, {
-                        data: "esic_exit_date"
+                        data: "esic_exit_date",
+                        render: function (data) {
+                            return moment(data).format('DD-MM-YYYY');  // Format as d-m-Y
+                        }
                     }, {
                         data: "pancard_no"
                     }, {

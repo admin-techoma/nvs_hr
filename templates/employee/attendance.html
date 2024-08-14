@@ -133,8 +133,8 @@
                                     {% for leave in leavedata %}
                                     <tr>
                                         <td>{{forloop.counter }}</td>
-                                        <td>{{leave.leave_from_date}}</td>
-                                        <td>{{leave.leave_to_date}}</td>
+                                        <td>{{leave.leave_from_date|date:'d-m-Y'}}</td>
+                                        <td>{{leave.leave_to_date|date:'d-m-Y'}}</td>
                                         <td>{{ leave|calculate_paid_leave_days }} Days</td>
                                         <td>{% if leave.leave_status == 1 %}
                                             Approved

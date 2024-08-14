@@ -199,11 +199,17 @@
                 }, {
                     data: "employee__emp_id"
                 }, {
-                    data: "leave_from_date"
+                    data: "leave_from_date",
+                    render: function (data) {
+                        return moment(data).format('DD-MM-YYYY');  // Format as d-m-Y
+                    }
                 }, {
                     data: "leave_from_time"
                 }, {
-                    data: "leave_to_date"
+                    data: "leave_to_date",
+                    render: function (data) {
+                        return moment(data).format('DD-MM-YYYY');  // Format as d-m-Y
+                    }
                 }, {
                     data: "leave_to_time"
                 }, {

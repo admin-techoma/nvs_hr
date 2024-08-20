@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'core',
     'employee',
     'hr',
+    'import_export',
 
     #Default Apps
     'django.contrib.admin',

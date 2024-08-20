@@ -17,10 +17,12 @@ click-plugins==1.1.1
 click-repl==0.3.0
 cron-descriptor==1.4.3
 cssselect2==0.7.0
+diff-match-patch==20230430
 Django==4.2.6
 django-bootstrap-datepicker-plus==5.0.4
 django-celery-beat==2.6.0
 django-cors-headers==4.3.1
+django-import-export==4.1.1
 django-tempus-dominus==5.1.2.17
 django-timezone-field==7.0
 docopt==0.6.2
@@ -74,6 +76,7 @@ rsa==4.9
 setuptools==72.1.0
 six==1.16.0
 sqlparse==0.4.4
+tablib==3.5.0
 tinycss2==1.2.1
 typing_extensions==4.8.0
 tzdata==2023.4

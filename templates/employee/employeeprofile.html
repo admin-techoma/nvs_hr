@@ -101,17 +101,15 @@
                                 </div>
                                 <div class="col-12 col-md-3 mb-3 d-flex flex-column">
                                     <div class="d-flex justify-content-center mb-1">
-                                    <figure class="employeeprofilewrapper  justify-content-center align-items-center">
-                                        {% comment %} <img src="/media/{{documents.c_psimg.url}}"
-                                            class="employeeprofile img-fluid" alt="profile Pic" /> {% endcomment %}
-                                        {% if documents and documents.c_psimg %}
-                                        <img src="{{documents.c_psimg.url}}" alt="img" class="employeeprofile img-fluid"
-                                            alt="profile Pic">
-                                        {% else %}
-                                        <img src="{% static 'admin/img/avtar.jpg' %}" alt="profile Pic"
-                                            class="employeeprofile img-fluid">
-                                        {% endif %}
-                                    </figure>
+                                        <figure class="employeeprofilewrapper  justify-content-center align-items-center">
+                                            {% for document in onboarding_documents %}
+                                            {% if document.c_psimg %}
+                                            <img src="{{ document.c_psimg.url }}" alt="Profile Pic" class="employeeprofile img-fluid">
+                                            {% else %}
+                                            <img src="{% static 'admin/img/avtar.jpg' %}" alt="Default profile Pic" class="employeeprofile img-fluid">
+                                            {% endif %}
+                                            {% endfor %}
+                                        </figure>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label mb-0">Name (As per Aadhar Card)</label>

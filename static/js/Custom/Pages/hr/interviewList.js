@@ -147,36 +147,45 @@ $(document).ready(function () {
 
     $('#interviewFeedbackForm').submit(function (e) {
         e.preventDefault(); // Prevent the default form submission
+    
         var interviewFeedbackId = $('#interviewFeedbackId').val();
-        // Submit the interviewFeedbackForm
+    
         $.ajax({
             type: 'POST',
             url: `/hr/save-interview-feedback/${interviewFeedbackId}/`,
             data: $('#interviewFeedbackForm').serialize(),
             success: function (data) {
                 if (data.success) {
-                    // Display the success message in your HTML template
+                    // Display success message
                     $('.alert-success').remove(); // Remove previous success messages
-                    var successMessage = ' <div class="alert alert-success" role="alert"><div class="row"><div class="col-10 form-group">Candidate Completed All Interview Rounds Successfully.</div><div class="col-2 form-group d-flex justify-content-end"><button type="button" class="btn-close close-success" data-bs-dismiss="alert" aria-label="Close"></button></div></div></div>';
-                    $('html, body').animate({
-                        scrollTop: 0
-                    }, 'slow');
-                    
+                    var successMessage = `
+                        <div class="alert alert-success" role="alert">
+                            <div class="row">
+                                <div class="col-10 form-group">
+                                    Candidate Completed All Interview Rounds Successfully.
+                                </div>
+                                <div class="col-2 form-group d-flex justify-content-end">
+                                    <button type="button" class="btn-close close-success" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>`;
                     $('#alert-container').append(successMessage);
-                    alerttimeout();
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
     
-                    // Redirect to /hr/resumes/ after 2000 milliseconds
-                    setTimeout(function() {
-                        window.location.href = '/hr/resumes/';
-                    }, 2000);
+                    // Redirect after 2 seconds
+                    setTimeout(function () {
+                        // window.location.href = '/hr/resumes/';
+                    }, 3000);
                 } else {
-                    // Handle other success conditions or error responses
+                    // Display error message
                     alert(data.message);
                 }
+            },
+            error: function () {
+                alert('An error occurred while saving data. Please try again.');
             }
         });
     });
-    
     $("#departmentoptions").change(function () {
         var id = $(this).val();
         var designationSelect = $("#designationoptions");

@@ -510,34 +510,41 @@ def create_interview(request):
 def save_interview_feedback(request, candidate_id):
     if request.method == 'POST':
         try:
-            resume = candidateResume.objects.get(pk=candidate_id)
-            interviewFeedbackForm = InterviewSelectionFeedback(request.POST, instance=resume)
-            if interviewFeedbackForm.is_valid():
-                interviewFeedbackForm.save()
-                form = InterviewSelectionFeedback(request.POST, instance=candidateResume.objects.get(pk=candidate_id))
-                if form.is_valid():
-                    # Retrieve the value of interviewFeedback_date from the form data
-                    
-                    if request.POST.get("interviewFeedback_date"):
-                        parsed_date = (request.POST.get("interviewFeedback_date"))
-                        interviewFeedback_date = datetime.strptime(parsed_date,"%d-%m-%Y").date()
-                    else:
-                        interviewFeedback_date = None
-            
-                    # interviewFeedback_date = form.cleaned_data['interviewFeedback_date']
-                    # Save the form and assign the interviewFeedback_date value to the model field
-                    instance = form.save(commit=False)
-                    instance.interviewFeedback_date = interviewFeedback_date
-                    instance.save()
+            # Get the candidate record
+            resume = get_object_or_404(candidateResume, pk=candidate_id)
 
-                    return JsonResponse({'success': True, 'message': 'Data saved successfully'})
-                else:
-                    return JsonResponse({'success': False, 'message': 'Form validation failed'})
-            else:
-                return JsonResponse({'success': False, 'message': 'Interview feedback form validation failed'})
+            # Retrieve POST data
+            remarks = request.POST.get('remarks', '').strip()
+            interviewFeedback = request.POST.get('interviewFeedback', '').strip()
+            interviewFeedback_date_str = request.POST.get('interviewFeedback_date', '').strip()
+
+            # Validate 'interviewFeedback_date'
+            interviewFeedback_date = None
+            if interviewFeedback_date_str:
+                try:
+                    # Parse the date string (format: "DD-MM-YYYY")
+                    interviewFeedback_date = datetime.strptime(interviewFeedback_date_str, "%d-%m-%Y").date()
+                except ValueError:
+                    return JsonResponse({'success': False, 'message': 'Invalid date format. Use DD-MM-YYYY.'})
+
+            # Validate 'interviewFeedback'
+            valid_feedback_choices = ['Pending', 'Selected', 'Rejected']
+            if interviewFeedback not in valid_feedback_choices:
+                return JsonResponse({'success': False, 'message': 'Invalid feedback choice.'})
+
+            # Update the candidate record
+            resume.remarks = remarks
+            resume.interviewFeedback = interviewFeedback
+            resume.interviewFeedback_date = interviewFeedback_date
+            resume.save()
+
+            # Return success response
+            return JsonResponse({'success': True, 'message': 'Data saved successfully.'})
         except Exception as e:
-            return JsonResponse({'success': False, 'message': 'Internal Server Error'})
-    return JsonResponse({'success': False, 'message': 'Invalid request method'})
+            return JsonResponse({'success': False, 'message': f'Internal Server Error: {str(e)}'})
+
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'})
+
     
 def onboarding_list(request):
     candidate_resumes = candidateResume.objects.filter(

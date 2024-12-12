@@ -190,33 +190,44 @@
             {% csrf_token %}
             <div class="row">
                 <div class="col-2 form-group">
-                    <label for="{{interviewFeedbackForm.remarks.id_for_label}}" class="form-label mb-0 mb-0"> Interview Remarks</label>
-                    {{interviewFeedbackForm.remarks}}
+                    <label for="id_remarks" class="form-label mb-0">Interview Remarks</label>
+                    <input type="text" id="id_remarks" name="remarks" value="{{resume.remarks}}" class="form-control form-control-sm" placeholder="Enter remarks" />
                 </div>
                 <div class="col-2 form-group">
-                    <label for="{{interviewFeedbackForm.interviewFeedback.id_for_label}}" class="form-label mb-0 mb-0"> Interview
-                        Feedback</label>
-                    {{interviewFeedbackForm.interviewFeedback}}
+                    <label for="id_interviewFeedback" class="form-label mb-0">Interview Feedback</label>
+                    <!-- <select id="id_interviewFeedback" name="interviewFeedback" value="{{resume.interviewFeedback}}"  class="form-select form-select-sm">
+                        <option value="Pending">Pending</option>
+                        <option value="Selected">Selected</option>
+                        <option value="Rejected">Rejected</option>
+                    </select> -->
+                    <select  class="form-control form-control-sm" name="interviewFeedback" id="id_interviewFeedback">
+                        <option value="Pending" {% if resume.interviewFeedback == 'Pending' %}selected{% endif %}>
+                            Pending
+                        </option>
+                        <option value="Selected" {% if resume.interviewFeedback == 'Selected' %}selected{% endif %}>
+                            Selected
+                        </option>
+                        <option value="Rejected" {% if resume.interviewFeedback == 'Rejected' %}selected{% endif %}>
+                            Rejected</option>    
+                    </select>
+
                 </div>
-                <div class="col-3 form-group ">
-                    <label for="{{interviewFeedbackForm.interviewFeedback.id_for_label}}" class="form-label mb-0 mb-0">Interview Feedback Date</label>
-                    
-                    <div class="input-group date"  data-target-input="nearest">
-                        <input type="text" id="id_interviewFeedback_date" class="form-control form-control-sm datetimepicker-input" data-target="#id_interviewFeedback_date" name="interviewFeedback_date"/>
+                <div class="col-3 form-group">
+                    <label for="id_interviewFeedback_date" class="form-label mb-0">Interview Feedback Date</label>
+                    <div class="input-group date">
+                        <input type="text" id="id_interviewFeedback_date" class="form-control form-control-sm datetimepicker-input" value="{{resume.interviewFeedback_date|date:'d-m-Y'}}"  name="interviewFeedback_date" placeholder="DD-MM-YYYY" />
                         <div class="input-group-append" data-target="#id_interviewFeedback_date" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
                     </div>
-                   
                 </div>
                 <div class="col-5 form-group text-end mt-4">
-                    <input type="submit" name="interviewFeedbackSave" id="interviewFeedbackSave" value="Save"
-                        class="btn custom-button btn-sm load-button">
-                    <input type="hidden" name="interviewFeedbackId" id="interviewFeedbackId"
-                        value="{{resume.candidate_id}}" />
+                    <input type="submit" name="interviewFeedbackSave" id="interviewFeedbackSave" value="Save" class="btn custom-button btn-sm ">
+                    <input type="hidden" name="interviewFeedbackId" id="interviewFeedbackId" value="{{ resume.candidate_id }}" />
                 </div>
             </div>
         </form>
+        <div id="alert-container"></div>
     </div>
 </div>
 <div class="modal fade" id="scheduleinterviewModal" tabindex="-1" aria-labelledby="scheduleinterviewModalLabel" aria-hidden="true">
@@ -491,6 +502,7 @@
             $('.interviewmodeLink').hide();
         }
     });
+    
     
 
     </script>
